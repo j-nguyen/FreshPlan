@@ -11,7 +11,7 @@ import UIKit
 public final class LoginAssembler: AssemblerProtocol {
 	public static func make() -> UIViewController {
 		let viewModel = LoginViewModel()
-
-		return LoginViewController(viewModel: viewModel)
+		let router = LoginRouter()
+		return LoginViewController(viewModel: viewModel, router: router)
 	}
 }

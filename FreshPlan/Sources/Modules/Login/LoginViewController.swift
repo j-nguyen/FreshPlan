@@ -7,13 +7,16 @@
 //
 
 import UIKit
+import SnapKit
 
 public class LoginViewController: UIViewController {
 	private var viewModel: LoginViewModelProtocol!
+	private var router: LoginRouter!
 	
-	public convenience init(viewModel: LoginViewModelProtocol) {
+	public convenience init(viewModel: LoginViewModelProtocol, router: LoginRouter) {
 		self.init(nibName: nil, bundle: nil)
 		self.viewModel = viewModel
+		self.router = router
 	}
 	
 	public required init?(coder aDecoder: NSCoder) {

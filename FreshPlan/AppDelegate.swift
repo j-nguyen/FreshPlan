@@ -14,12 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-		// Override point for customization after application launch.
-		
+		// set up the window size
+		window = UIWindow(frame: UIScreen.main.bounds)
+		guard let window = self.window else { fatalError("no window") }
 		// setup window to make sure
-		window?.rootViewController = LoginAssembler.make()
-		window?.makeKeyAndVisible()
-		window?.backgroundColor = UIColor.white
+		window.rootViewController = LoginAssembler.make()
+		window.makeKeyAndVisible()
+		window.backgroundColor = UIColor.white
 		
 		return true
 	}
