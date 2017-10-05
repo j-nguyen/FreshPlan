@@ -318,7 +318,7 @@ DEPENDENCIES:
   - RxCocoa (~> 3.0)
   - RxDataSources
   - RxSwift (~> 3.0)
-  - SnapKit
+  - SnapKit (~> 3.2)
   - SwiftyJSON
   - SwiftyUserDefaults
 
@@ -336,6 +336,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SwiftyUserDefaults: 0f1d45fc3aafb9064dac661e367f8f83fe21a4b4
 
-PODFILE CHECKSUM: 1db42ffdd31e2a58517b1508fb253eedf4b3a6a2
+PODFILE CHECKSUM: 67c304aa65daa75c82bdd42416b4d994616f1075
 
 COCOAPODS: 1.3.1

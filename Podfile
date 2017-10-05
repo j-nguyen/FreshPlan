@@ -4,7 +4,7 @@ platform :ios, '11.0'
 target 'FreshPlan' do
   use_frameworks!
  
-  pod 'SnapKit'
+  pod 'SnapKit', '~> 3.2'
   pod 'RxSwift', '~> 3.0'
   pod 'RxCocoa', '~> 3.0'
   pod 'JWTDecode'

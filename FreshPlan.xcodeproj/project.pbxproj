@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40426D091F86B85500875179 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D081F86B85500875179 /* LoginViewController.swift */; };
+		40426D0B1F86B85E00875179 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D0A1F86B85E00875179 /* LoginViewModel.swift */; };
+		40426D0D1F86B86800875179 /* LoginAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D0C1F86B86800875179 /* LoginAssembler.swift */; };
+		40426D101F86B90000875179 /* AssemblerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D0F1F86B90000875179 /* AssemblerProtocol.swift */; };
+		40426D131F86BBC300875179 /* SwiftyUserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D121F86BBC300875179 /* SwiftyUserDefaults+.swift */; };
 		409A55351F86B0D200EB29A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409A55341F86B0D200EB29A4 /* AppDelegate.swift */; };
-		409A55371F86B0D200EB29A4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409A55361F86B0D200EB29A4 /* ViewController.swift */; };
 		409A553C1F86B0D200EB29A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 409A553B1F86B0D200EB29A4 /* Assets.xcassets */; };
 		409A553F1F86B0D200EB29A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 409A553D1F86B0D200EB29A4 /* LaunchScreen.storyboard */; };
 		409A554A1F86B0D200EB29A4 /* FreshPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409A55491F86B0D200EB29A4 /* FreshPlanTests.swift */; };
@@ -34,9 +38,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		40426D081F86B85500875179 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		40426D0A1F86B85E00875179 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		40426D0C1F86B86800875179 /* LoginAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAssembler.swift; sourceTree = "<group>"; };
+		40426D0F1F86B90000875179 /* AssemblerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblerProtocol.swift; sourceTree = "<group>"; };
+		40426D121F86BBC300875179 /* SwiftyUserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftyUserDefaults+.swift"; sourceTree = "<group>"; };
 		409A55311F86B0D200EB29A4 /* FreshPlan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreshPlan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		409A55341F86B0D200EB29A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		409A55361F86B0D200EB29A4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		409A553B1F86B0D200EB29A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		409A553E1F86B0D200EB29A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		409A55401F86B0D200EB29A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -85,6 +93,58 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		40426D041F86B7E500875179 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				40426D061F86B7F200875179 /* Models */,
+				40426D051F86B7EE00875179 /* Modules */,
+				40426D0E1F86B8EC00875179 /* Protocols */,
+				40426D111F86BBA500875179 /* Extensions */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		40426D051F86B7EE00875179 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				40426D071F86B84800875179 /* Login */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		40426D061F86B7F200875179 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		40426D071F86B84800875179 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				40426D081F86B85500875179 /* LoginViewController.swift */,
+				40426D0A1F86B85E00875179 /* LoginViewModel.swift */,
+				40426D0C1F86B86800875179 /* LoginAssembler.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		40426D0E1F86B8EC00875179 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				40426D0F1F86B90000875179 /* AssemblerProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		40426D111F86BBA500875179 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				40426D121F86BBC300875179 /* SwiftyUserDefaults+.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		409A55281F86B0D200EB29A4 = {
 			isa = PBXGroup;
 			children = (
@@ -111,10 +171,10 @@
 			isa = PBXGroup;
 			children = (
 				409A55341F86B0D200EB29A4 /* AppDelegate.swift */,
-				409A55361F86B0D200EB29A4 /* ViewController.swift */,
 				409A553B1F86B0D200EB29A4 /* Assets.xcassets */,
 				409A553D1F86B0D200EB29A4 /* LaunchScreen.storyboard */,
 				409A55401F86B0D200EB29A4 /* Info.plist */,
+				40426D041F86B7E500875179 /* Sources */,
 			);
 			path = FreshPlan;
 			sourceTree = "<group>";
@@ -358,8 +418,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				409A55371F86B0D200EB29A4 /* ViewController.swift in Sources */,
+				40426D131F86BBC300875179 /* SwiftyUserDefaults+.swift in Sources */,
+				40426D091F86B85500875179 /* LoginViewController.swift in Sources */,
 				409A55351F86B0D200EB29A4 /* AppDelegate.swift in Sources */,
+				40426D101F86B90000875179 /* AssemblerProtocol.swift in Sources */,
+				40426D0D1F86B86800875179 /* LoginAssembler.swift in Sources */,
+				40426D0B1F86B85E00875179 /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +524,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -509,6 +574,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -523,7 +589,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.stclaircollege.FreshPlan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -538,7 +604,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.stclaircollege.FreshPlan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
