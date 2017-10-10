@@ -9,6 +9,8 @@
 import UIKit
 import SnapKit
 import MaterialComponents
+import RxSwift
+import RxGesture
 
 public class LoginViewController: UIViewController {
 	private var viewModel: LoginViewModelProtocol!
@@ -27,6 +29,9 @@ public class LoginViewController: UIViewController {
 	// MARK - Floating Placeholder Input
 	private var emailFieldController: MDCTextInputController!
 	private var passwordFieldController: MDCTextInputController!
+	
+	// MARK - Disposable Bag
+	private let disposeBag = DisposeBag()
 	
 	public convenience init(viewModel: LoginViewModelProtocol, router: LoginRouter) {
 		self.init(nibName: nil, bundle: nil)
@@ -121,6 +126,7 @@ public class LoginViewController: UIViewController {
 		
 		registerLabel.attributedText = mutableString
 		registerLabel.font = UIFont(name: "Helvetica Neue", size: 11)
+		registerLabel.isUserInteractionEnabled = true
 		
 		view.addSubview(registerLabel)
 		
@@ -128,5 +134,15 @@ public class LoginViewController: UIViewController {
 			make.bottom.equalTo(view).offset(-10)
 			make.centerX.equalTo(view)
 		}
+		
+		// register click label
+		registerLabel.rx
+			.tapGesture()
+			.when(.recognized)
+			.subscribe(onNext: { [weak self] _ in
+				guard let this = self else { return }
+				try? this.router.route(from: this, to: LoginRouter.Routes.login.rawValue)
+			})
+			.disposed(by: disposeBag)
 	}
 }

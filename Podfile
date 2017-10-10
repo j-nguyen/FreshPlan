@@ -9,6 +9,7 @@ target 'FreshPlan' do
   pod 'RxCocoa', '~> 3.0'
   pod 'JWTDecode'
   pod 'RxDataSources'
+  pod 'RxGesture'
   pod 'Moya/RxSwift'
   pod 'SwiftyJSON'
   pod 'SwiftyUserDefaults'
