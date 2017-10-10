@@ -33,6 +33,7 @@ extension LoginRouter: RouterProtocol {
 			window.rootViewController = LoginAssembler.make()
 			break
 		case .register:
+			window.rootViewController = RegisterAssembler.make()
 			break
 		}
 	}

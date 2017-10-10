@@ -135,7 +135,7 @@ public class LoginViewController: UIViewController {
 			.filter { $0 }
 			.subscribe(onNext: { [weak self] _ in
 				guard let this = self else { return }
-				return
+//				try? this.router.route(from: this, to: LoginRouter.Routes.)
 			})
 			.disposed(by: disposeBag)
 		
@@ -143,7 +143,8 @@ public class LoginViewController: UIViewController {
 			.asObservable()
 			.filter { $0 }
 			.subscribe(onNext: { [weak self] _ in 
-				
+				guard let this = self else { return }
+//				try? this.router.route(from: this, to: LoginRouter.Routes.register.rawValue)
 			})
 			.disposed(by: disposeBag)
 	}
@@ -177,7 +178,7 @@ public class LoginViewController: UIViewController {
 			.when(.recognized)
 			.subscribe(onNext: { [weak self] _ in
 				guard let this = self else { return }
-				try? this.router.route(from: this, to: LoginRouter.Routes.login.rawValue)
+				try? this.router.route(from: this, to: LoginRouter.Routes.register.rawValue)
 			})
 			.disposed(by: disposeBag)
 	}
