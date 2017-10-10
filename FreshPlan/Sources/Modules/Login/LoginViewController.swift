@@ -128,6 +128,16 @@ public class LoginViewController: UIViewController {
 			.disposed(by: disposeBag)
 		
 		viewModel.loginTap = loginButton.rx.tap.asObservable()
+		viewModel.bindButtons()
+		
+		viewModel.loginNext
+			.asObservable()
+			.filter { $0 }
+			.subscribe(onNext: { [weak self] _ in
+				guard let this = self else { return }
+				return
+			})
+			.disposed(by: disposeBag)
 	}
 	
 	fileprivate func prepareRegisterLabel() {
