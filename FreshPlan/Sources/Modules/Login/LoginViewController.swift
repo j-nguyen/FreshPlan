@@ -23,7 +23,6 @@ public class LoginViewController: UIViewController {
 	
 	// MARK - UILabel
 	private var registerLabel: UILabel!
-	private var registerClickLabel: UILabel!
 	
 	// MARK - Floating Placeholder Input
 	private var emailFieldController: MDCTextInputController!
@@ -54,6 +53,7 @@ public class LoginViewController: UIViewController {
 		prepareEmailField()
 		preparePasswordField()
 		prepareLoginButton()
+		prepareRegisterLabel()
 	}
 	
 	// MARK - Preparing Views
@@ -104,6 +104,29 @@ public class LoginViewController: UIViewController {
 			make.left.equalTo(10)
 			make.right.equalTo(-10)
 			make.width.equalTo(300)
+		}
+	}
+	
+	fileprivate func prepareRegisterLabel() {
+		registerLabel = UILabel()
+		// we want the last bit to be blue
+		let registerText =  "Don't have an account? Sign up here!"
+		let mutableString = NSMutableAttributedString(attributedString: NSAttributedString(string: registerText))
+		
+		mutableString.addAttribute(
+			NSForegroundColorAttributeName,
+			value: MDCPalette.lightBlue.accent700!,
+			range: NSRange(location: 22, length: 14)
+		)
+		
+		registerLabel.attributedText = mutableString
+		registerLabel.font = UIFont(name: "Helvetica Neue", size: 11)
+		
+		view.addSubview(registerLabel)
+		
+		registerLabel.snp.makeConstraints { make in
+			make.bottom.equalTo(view).offset(-10)
+			make.centerX.equalTo(view)
 		}
 	}
 }
