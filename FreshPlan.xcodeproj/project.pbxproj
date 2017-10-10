@@ -16,6 +16,14 @@
 		40426D151F86BC9C00875179 /* RouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D141F86BC9C00875179 /* RouterProtocol.swift */; };
 		40426D1A1F86C12600875179 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D191F86C12600875179 /* LoginRouter.swift */; };
 		40497D1F1F8CF3A500A4E046 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40497D1E1F8CF3A500A4E046 /* UIColor+.swift */; };
+		408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082D1F8D267A006BCA8E /* RegisterViewController.swift */; };
+		408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082F1F8D2716006BCA8E /* RegisterRouter.swift */; };
+		408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D08311F8D271F006BCA8E /* RegisterViewModel.swift */; };
+		408D08341F8D274A006BCA8E /* RegisterAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D08331F8D274A006BCA8E /* RegisterAssembler.swift */; };
+		408D08371F8D2818006BCA8E /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D08361F8D2818006BCA8E /* VerifyViewController.swift */; };
+		408D08391F8D285E006BCA8E /* VerifyAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D08381F8D285E006BCA8E /* VerifyAssembler.swift */; };
+		408D083B1F8D2865006BCA8E /* VerifyRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D083A1F8D2865006BCA8E /* VerifyRouter.swift */; };
+		408D083D1F8D286D006BCA8E /* VerifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D083C1F8D286D006BCA8E /* VerifyViewModel.swift */; };
 		409A55351F86B0D200EB29A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409A55341F86B0D200EB29A4 /* AppDelegate.swift */; };
 		409A553C1F86B0D200EB29A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 409A553B1F86B0D200EB29A4 /* Assets.xcassets */; };
 		409A553F1F86B0D200EB29A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 409A553D1F86B0D200EB29A4 /* LaunchScreen.storyboard */; };
@@ -51,6 +59,14 @@
 		40426D141F86BC9C00875179 /* RouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterProtocol.swift; sourceTree = "<group>"; };
 		40426D191F86C12600875179 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
 		40497D1E1F8CF3A500A4E046 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		408D082D1F8D267A006BCA8E /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		408D082F1F8D2716006BCA8E /* RegisterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouter.swift; sourceTree = "<group>"; };
+		408D08311F8D271F006BCA8E /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		408D08331F8D274A006BCA8E /* RegisterAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterAssembler.swift; sourceTree = "<group>"; };
+		408D08361F8D2818006BCA8E /* VerifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
+		408D08381F8D285E006BCA8E /* VerifyAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyAssembler.swift; sourceTree = "<group>"; };
+		408D083A1F8D2865006BCA8E /* VerifyRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyRouter.swift; sourceTree = "<group>"; };
+		408D083C1F8D286D006BCA8E /* VerifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyViewModel.swift; sourceTree = "<group>"; };
 		409A55311F86B0D200EB29A4 /* FreshPlan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreshPlan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		409A55341F86B0D200EB29A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		409A553B1F86B0D200EB29A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -124,6 +140,8 @@
 		40426D051F86B7EE00875179 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				408D08351F8D280B006BCA8E /* Verify */,
+				408D082C1F8D266C006BCA8E /* Register */,
 				40426D071F86B84800875179 /* Login */,
 			);
 			path = Modules;
@@ -163,6 +181,28 @@
 				40497D1E1F8CF3A500A4E046 /* UIColor+.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		408D082C1F8D266C006BCA8E /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				408D082D1F8D267A006BCA8E /* RegisterViewController.swift */,
+				408D082F1F8D2716006BCA8E /* RegisterRouter.swift */,
+				408D08311F8D271F006BCA8E /* RegisterViewModel.swift */,
+				408D08331F8D274A006BCA8E /* RegisterAssembler.swift */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
+		408D08351F8D280B006BCA8E /* Verify */ = {
+			isa = PBXGroup;
+			children = (
+				408D08361F8D2818006BCA8E /* VerifyViewController.swift */,
+				408D08381F8D285E006BCA8E /* VerifyAssembler.swift */,
+				408D083A1F8D2865006BCA8E /* VerifyRouter.swift */,
+				408D083C1F8D286D006BCA8E /* VerifyViewModel.swift */,
+			);
+			path = Verify;
 			sourceTree = "<group>";
 		};
 		409A55281F86B0D200EB29A4 = {
@@ -443,15 +483,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				40426D131F86BBC300875179 /* SwiftyUserDefaults+.swift in Sources */,
+				408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */,
 				40426D151F86BC9C00875179 /* RouterProtocol.swift in Sources */,
+				408D08391F8D285E006BCA8E /* VerifyAssembler.swift in Sources */,
+				408D08371F8D2818006BCA8E /* VerifyViewController.swift in Sources */,
 				40426D091F86B85500875179 /* LoginViewController.swift in Sources */,
+				408D083B1F8D2865006BCA8E /* VerifyRouter.swift in Sources */,
+				408D083D1F8D286D006BCA8E /* VerifyViewModel.swift in Sources */,
 				400FC2161F897BA200B3098B /* FreshPlan.swift in Sources */,
+				408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */,
 				409A55351F86B0D200EB29A4 /* AppDelegate.swift in Sources */,
 				40426D101F86B90000875179 /* AssemblerProtocol.swift in Sources */,
+				408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */,
 				40426D1A1F86C12600875179 /* LoginRouter.swift in Sources */,
 				40426D0D1F86B86800875179 /* LoginAssembler.swift in Sources */,
 				40426D0B1F86B85E00875179 /* LoginViewModel.swift in Sources */,
 				40497D1F1F8CF3A500A4E046 /* UIColor+.swift in Sources */,
+				408D08341F8D274A006BCA8E /* RegisterAssembler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
