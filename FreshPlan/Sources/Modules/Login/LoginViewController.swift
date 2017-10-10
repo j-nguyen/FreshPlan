@@ -59,6 +59,8 @@ public class LoginViewController: UIViewController {
 		preparePasswordField()
 		prepareLoginButton()
 		prepareRegisterLabel()
+		// bind the buttons
+		viewModel.bindButtons()
 	}
 	
 	// MARK - Preparing Views
@@ -79,11 +81,17 @@ public class LoginViewController: UIViewController {
 			make.right.equalTo(-10)
 			make.width.equalTo(300)
 		}
+		
+		emailField.rx.text
+			.orEmpty
+			.bind(to: viewModel.email)
+			.disposed(by: disposeBag)
 	}
 	
 	fileprivate func preparePasswordField() {
 		passwordField = MDCTextField()
 		passwordField.placeholder = "Password"
+		passwordField.isSecureTextEntry = true
 		
 		passwordFieldController = MDCTextInputControllerDefault(textInput: passwordField)
 		
@@ -95,6 +103,11 @@ public class LoginViewController: UIViewController {
 			make.right.equalTo(-10)
 			make.width.equalTo(300)
 		}
+		
+		passwordField.rx.text
+			.orEmpty
+			.bind(to: viewModel.password)
+			.disposed(by: disposeBag)
 	}
 	
 	fileprivate func prepareLoginButton() {
@@ -110,6 +123,10 @@ public class LoginViewController: UIViewController {
 			make.right.equalTo(-10)
 			make.width.equalTo(300)
 		}
+		
+		viewModel.loginEnabled
+			.bind(to: loginButton.rx.isEnabled)
+			.disposed(by: disposeBag)
 	}
 	
 	fileprivate func prepareRegisterLabel() {
