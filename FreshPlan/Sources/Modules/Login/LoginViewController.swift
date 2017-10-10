@@ -25,6 +25,7 @@ public class LoginViewController: UIViewController {
 	
 	// MARK - UILabel
 	private var registerLabel: UILabel!
+	private var errorLabel: UILabel!
 	
 	// MARK - Floating Placeholder Input
 	private var emailFieldController: MDCTextInputController!
@@ -59,8 +60,6 @@ public class LoginViewController: UIViewController {
 		preparePasswordField()
 		prepareLoginButton()
 		prepareRegisterLabel()
-		// bind the buttons
-		viewModel.bindButtons()
 	}
 	
 	// MARK - Preparing Views
@@ -127,6 +126,8 @@ public class LoginViewController: UIViewController {
 		viewModel.loginEnabled
 			.bind(to: loginButton.rx.isEnabled)
 			.disposed(by: disposeBag)
+		
+		viewModel.loginTap = loginButton.rx.tap.asObservable()
 	}
 	
 	fileprivate func prepareRegisterLabel() {

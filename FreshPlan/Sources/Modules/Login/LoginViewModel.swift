@@ -6,6 +6,8 @@
 //  Copyright © 2017 St Clair College. All rights reserved.
 //
 
+import SwiftyJSON
+import SwiftyUserDefaults
 import RxSwift
 import Moya
 
@@ -14,14 +16,14 @@ public protocol LoginViewModelProtocol {
 	var password: Variable<String> { get }
 	var loginEnabled: Observable<Bool> { get }
 	// events
-	var loginTap: Variable<Void>! { get set }
+	var loginTap: Observable<Void>! { get set }
 	func bindButtons()
 }
 
 public class LoginViewModel: LoginViewModelProtocol {
 	private let provider: RxMoyaProvider<FreshPlan>
 	
-	public var loginTap: Variable<Void>!
+	public var loginTap: Observable<Void>!
 	
 	public var email: Variable<String> = Variable("")
 	public var password: Variable<String> = Variable("")
@@ -37,6 +39,14 @@ public class LoginViewModel: LoginViewModelProtocol {
 	}
 	
 	public func bindButtons() {
+		loginTap
+			.map { self.loginRequest(email: self.email.value, password: self.password.value) }
 		
+	}
+	
+	private func loginRequest(email: String, password: String) -> Observable<JSON> {
+		return self.provider.request(.login(email, password))
+			.mapJSON()
+			.map { JSON($0) }
 	}
 }
