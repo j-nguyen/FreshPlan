@@ -28,6 +28,7 @@ extension VerifyRouter: RouterProtocol {
 		
 		switch route {
 		case .register:
+			window.rootViewController = RegisterAssembler.make()
 			break
 		}
 	}

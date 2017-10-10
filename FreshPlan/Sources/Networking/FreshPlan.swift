@@ -35,35 +35,19 @@ extension FreshPlan: TargetType {
 			return .post
 		}
 	}
-	
-	// our parameters set
-	public var parameters: [String : Any]? {
-		switch self {
-		case let .login(email, password):
-			return ["email": email, "password": password]
-		case let .register(firstName, lastName, email, password):
-			return [
-				"firstName": firstName,
-				"lastName": lastName,
-				"email": email,
-				"password": password
-			]
-		}
-	}
-	
-	// what type of parameter is this? JSON, or URL encoded
-	public var parameterEncoding: ParameterEncoding {
-		switch self {
-		case .login, .register:
-			return JSONEncoding.default
-		}
-	}
-	
+
 	// this is used primarily for a request, (file could be added)
 	public var task: Task {
 		switch self {
-		case .login, .register:
-			return .request
+		case let .login(email, password):
+			return .requestParameters(parameters: ["email": email, "password": password], encoding: JSONEncoding.default)
+		case let .register(firstName, lastName, email, password):
+			return .requestParameters(
+				parameters: ["firstName": firstName,
+				             "lastName": lastName,
+				             "email": email,
+				             "password": password],
+			encoding: JSONEncoding.default)
 		}
 	}
 	

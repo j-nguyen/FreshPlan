@@ -152,7 +152,7 @@ public class LoginViewController: UIViewController {
 	fileprivate func prepareRegisterLabel() {
 		registerLabel = UILabel()
 		// we want the last bit to be blue
-		let registerText =  "Don't have an account? Sign up here!"
+		let registerText = "Don't have an account? Sign up here!"
 		let mutableString = NSMutableAttributedString(attributedString: NSAttributedString(string: registerText))
 		
 		mutableString.addAttribute(
