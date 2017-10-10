@@ -13,5 +13,6 @@ target 'FreshPlan' do
   pod 'Moya/RxSwift'
   pod 'SwiftyJSON'
   pod 'SwiftyUserDefaults'
+  pod 'RxOptional'
   pod 'MaterialComponents'
 end
