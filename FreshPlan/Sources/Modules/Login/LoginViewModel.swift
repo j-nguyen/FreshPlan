@@ -18,7 +18,8 @@ public protocol LoginViewModelProtocol {
 	var loginEnabled: Observable<Bool> { get }
 	// events
 	var loginTap: Observable<Void>! { get set }
-	var loginNext: Variable<Bool> { get }
+	var loginSuccess: Variable<Bool> { get }
+	var loginUnverified: Variable<Bool> { get }
 	func bindButtons()
 }
 
@@ -39,15 +40,34 @@ public class LoginViewModel: LoginViewModelProtocol {
 		}
 	}
 	
-	public var loginNext: Variable<Bool> = Variable(false)
+	public var loginSuccess: Variable<Bool> = Variable(false)
+	public var loginUnverified: Variable<Bool> = Variable(false)
 	
 	public init(provider: RxMoyaProvider<FreshPlan>) {
 		self.provider = provider
 	}
 	
 	public func bindButtons() {
-		loginTap
-			.flatMap { self.loginRequest(email: self.email.value, password: self.password.value) }
+		
+		let response = self.loginRequest(email: self.email.value, password: self.password.value)
+			.share()
+		
+		// filter out for unverified so we can move the user to verified controller
+		let tap = loginTap
+			.flatMap { response }
+			.share()
+		
+		tap
+			.filter(statusCode: 403)
+			.map { $0.statusCode == 403 }
+			.bind(to: self.loginUnverified)
+			.disposed(by: disposeBag)
+		
+		// this one checks for the lgoinSuccess
+		tap
+			.filterSuccessfulStatusCodes()
+			.mapJSON()
+			.map { JSON($0) }
 			.map { json -> Bool in
 				if let message = json["reason"].string {
 					self.error.value = message
@@ -56,13 +76,11 @@ public class LoginViewModel: LoginViewModelProtocol {
 				Defaults[.jwt] = json["token"].stringValue
 				return true
 			}
-			.bind(to: self.loginNext)
+			.bind(to: self.loginSuccess)
 			.disposed(by: disposeBag)
 	}
 	
-	private func loginRequest(email: String, password: String) -> Observable<JSON> {
+	private func loginRequest(email: String, password: String) -> Observable<Response> {
 		return self.provider.request(.login(email, password))
-			.mapJSON()
-			.map { JSON($0) }
 	}
 }

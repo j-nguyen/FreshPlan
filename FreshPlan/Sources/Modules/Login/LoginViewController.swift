@@ -130,12 +130,20 @@ public class LoginViewController: UIViewController {
 		viewModel.loginTap = loginButton.rx.tap.asObservable()
 		viewModel.bindButtons()
 		
-		viewModel.loginNext
+		viewModel.loginSuccess
 			.asObservable()
 			.filter { $0 }
 			.subscribe(onNext: { [weak self] _ in
 				guard let this = self else { return }
 				return
+			})
+			.disposed(by: disposeBag)
+		
+		viewModel.loginUnverified
+			.asObservable()
+			.filter { $0 }
+			.subscribe(onNext: { [weak self] _ in 
+				
 			})
 			.disposed(by: disposeBag)
 	}
