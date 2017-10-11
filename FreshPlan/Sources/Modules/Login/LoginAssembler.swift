@@ -17,6 +17,6 @@ public final class LoginAssembler: AssemblerProtocol {
 	}
 	
 	private static var provider: RxMoyaProvider<FreshPlan> {
-		return RxMoyaProvider<FreshPlan>()
+		return RxMoyaProvider<FreshPlan>(plugins: [NetworkLoggerPlugin()])
 	}
 }

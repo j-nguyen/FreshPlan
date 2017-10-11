@@ -1,5 +1,5 @@
 //
-//  VerifyRouter.swift
+//  HomeRouter.swift
 //  FreshPlan
 //
 //  Created by Johnny Nguyen on 2017-10-10.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-public class VerifyRouter {
+public class HomeRouter {
 	public enum Routes: String {
-		case register
+		case login
 	}
 	
 	fileprivate enum RouteError: Error {
@@ -18,17 +18,13 @@ public class VerifyRouter {
 	}
 }
 
-extension VerifyRouter: RouterProtocol {
+extension HomeRouter: RouterProtocol {
 	public func route(from context: UIViewController, to route: String, parameters: [String : Any]?) throws {
-		guard let route = Routes(rawValue: route) else {
-			throw RouteError.invalidRoute("This is an invalid route!")
-		}
 		
-		guard let window = UIApplication.shared.keyWindow else { return }
+		guard let route = Routes(rawValue: route) else { throw RouteError.invalidRoute("Invalid route!") }
 		
 		switch route {
-		case .register:
-			window.rootViewController = RegisterAssembler.make()
+		case .login:
 			break
 		}
 	}

@@ -10,8 +10,9 @@ import UIKit
 
 public class LoginRouter {
 	public enum Routes: String {
-		case login
 		case register
+		case verify
+		case home
 	}
 	
 	fileprivate enum RouteError: Error {
@@ -29,11 +30,14 @@ extension LoginRouter: RouterProtocol {
 		guard let window = UIApplication.shared.keyWindow else { return }
 		
 		switch route {
-		case .login:
-			window.rootViewController = LoginAssembler.make()
-			break
 		case .register:
 			window.rootViewController = RegisterAssembler.make()
+			break
+		case .home:
+			window.rootViewController = HomeAssembler.make()
+			break
+		case .verify:
+			window.rootViewController = VerifyAssembler.make()
 			break
 		}
 	}

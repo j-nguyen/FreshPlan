@@ -11,13 +11,14 @@ import SnapKit
 import MaterialComponents
 import RxSwift
 import RxGesture
+import RxOptional
 
 public class LoginViewController: UIViewController {
 	private var viewModel: LoginViewModelProtocol!
 	private var router: LoginRouter!
 	
 	// MARK - Buttons
-	private var loginButton: MDCFlatButton!
+	private var loginButton: MDCButton!
 	
 	// MARK - TextField
 	private var emailField: MDCTextField!
@@ -25,7 +26,6 @@ public class LoginViewController: UIViewController {
 	
 	// MARK - UILabel
 	private var registerLabel: UILabel!
-	private var errorLabel: UILabel!
 	
 	// MARK - Floating Placeholder Input
 	private var emailFieldController: MDCTextInputController!
@@ -52,6 +52,21 @@ public class LoginViewController: UIViewController {
 		super.viewDidLoad()
 		// load views
 		prepareView()
+		prepareErrorBinding()
+	}
+	
+	fileprivate func prepareErrorBinding() {
+		viewModel.error
+			.asObservable()
+			.filterEmpty()
+			.subscribe(onNext: { [weak self] reason in
+				guard let this = self else { return }
+				// create a snack bar displaying the reason
+				let message = MDCSnackbarMessage()
+				message.text = reason
+				MDCSnackbarManager.show(message)
+			})
+			.disposed(by: disposeBag)
 	}
 	
 	fileprivate func prepareView() {
@@ -75,7 +90,7 @@ public class LoginViewController: UIViewController {
 		view.addSubview(emailField)
 		
 		emailField.snp.makeConstraints { make in
-			make.top.equalTo(150)
+			make.top.equalTo(100)
 			make.left.equalTo(10)
 			make.right.equalTo(-10)
 			make.width.equalTo(300)
@@ -91,6 +106,7 @@ public class LoginViewController: UIViewController {
 		passwordField = MDCTextField()
 		passwordField.placeholder = "Password"
 		passwordField.isSecureTextEntry = true
+		passwordField.returnKeyType = .done
 		
 		passwordFieldController = MDCTextInputControllerDefault(textInput: passwordField)
 		
@@ -110,7 +126,7 @@ public class LoginViewController: UIViewController {
 	}
 	
 	fileprivate func prepareLoginButton() {
-		loginButton = MDCFlatButton()
+		loginButton = MDCButton()
 		loginButton.setTitle("Login", for: .normal)
 		loginButton.backgroundColor = MDCPalette.lightBlue.tint800
 		
@@ -135,7 +151,7 @@ public class LoginViewController: UIViewController {
 			.filter { $0 }
 			.subscribe(onNext: { [weak self] _ in
 				guard let this = self else { return }
-//				try? this.router.route(from: this, to: LoginRouter.Routes.)
+				try? this.router.route(from: this, to: LoginRouter.Routes.home.rawValue)
 			})
 			.disposed(by: disposeBag)
 		
@@ -144,7 +160,7 @@ public class LoginViewController: UIViewController {
 			.filter { $0 }
 			.subscribe(onNext: { [weak self] _ in 
 				guard let this = self else { return }
-//				try? this.router.route(from: this, to: LoginRouter.Routes.register.rawValue)
+				try? this.router.route(from: this, to: LoginRouter.Routes.verify.rawValue)
 			})
 			.disposed(by: disposeBag)
 	}
@@ -152,7 +168,7 @@ public class LoginViewController: UIViewController {
 	fileprivate func prepareRegisterLabel() {
 		registerLabel = UILabel()
 		// we want the last bit to be blue
-		let registerText =  "Don't have an account? Sign up here!"
+		let registerText = "Don't have an account? Sign up here!"
 		let mutableString = NSMutableAttributedString(attributedString: NSAttributedString(string: registerText))
 		
 		mutableString.addAttribute(

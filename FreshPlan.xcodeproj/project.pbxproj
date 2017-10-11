@@ -16,6 +16,10 @@
 		40426D151F86BC9C00875179 /* RouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D141F86BC9C00875179 /* RouterProtocol.swift */; };
 		40426D1A1F86C12600875179 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D191F86C12600875179 /* LoginRouter.swift */; };
 		40497D1F1F8CF3A500A4E046 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40497D1E1F8CF3A500A4E046 /* UIColor+.swift */; };
+		405C5A981F8D94E700AC8F9F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A971F8D94E700AC8F9F /* HomeViewController.swift */; };
+		405C5A9A1F8D94FA00AC8F9F /* HomeAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A991F8D94FA00AC8F9F /* HomeAssembler.swift */; };
+		405C5A9C1F8D950500AC8F9F /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A9B1F8D950500AC8F9F /* HomeViewModel.swift */; };
+		405C5A9E1F8D953500AC8F9F /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A9D1F8D953500AC8F9F /* HomeRouter.swift */; };
 		408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082D1F8D267A006BCA8E /* RegisterViewController.swift */; };
 		408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082F1F8D2716006BCA8E /* RegisterRouter.swift */; };
 		408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D08311F8D271F006BCA8E /* RegisterViewModel.swift */; };
@@ -59,6 +63,10 @@
 		40426D141F86BC9C00875179 /* RouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterProtocol.swift; sourceTree = "<group>"; };
 		40426D191F86C12600875179 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
 		40497D1E1F8CF3A500A4E046 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		405C5A971F8D94E700AC8F9F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		405C5A991F8D94FA00AC8F9F /* HomeAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAssembler.swift; sourceTree = "<group>"; };
+		405C5A9B1F8D950500AC8F9F /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		405C5A9D1F8D953500AC8F9F /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		408D082D1F8D267A006BCA8E /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		408D082F1F8D2716006BCA8E /* RegisterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouter.swift; sourceTree = "<group>"; };
 		408D08311F8D271F006BCA8E /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -140,6 +148,7 @@
 		40426D051F86B7EE00875179 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				405C5A961F8D94CA00AC8F9F /* Home */,
 				408D08351F8D280B006BCA8E /* Verify */,
 				408D082C1F8D266C006BCA8E /* Register */,
 				40426D071F86B84800875179 /* Login */,
@@ -181,6 +190,17 @@
 				40497D1E1F8CF3A500A4E046 /* UIColor+.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		405C5A961F8D94CA00AC8F9F /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				405C5A971F8D94E700AC8F9F /* HomeViewController.swift */,
+				405C5A991F8D94FA00AC8F9F /* HomeAssembler.swift */,
+				405C5A9B1F8D950500AC8F9F /* HomeViewModel.swift */,
+				405C5A9D1F8D953500AC8F9F /* HomeRouter.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		408D082C1F8D266C006BCA8E /* Register */ = {
@@ -421,9 +441,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/JWTDecode/JWTDecode.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
 				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionAnimator/MotionAnimator.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionInterchange/MotionInterchange.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionTransitioning/MotionTransitioning.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
@@ -438,9 +462,13 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JWTDecode.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFTextAccessibility.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionAnimator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionInterchange.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionTransitioning.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
@@ -483,7 +511,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				40426D131F86BBC300875179 /* SwiftyUserDefaults+.swift in Sources */,
+				405C5A9A1F8D94FA00AC8F9F /* HomeAssembler.swift in Sources */,
 				408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */,
+				405C5A981F8D94E700AC8F9F /* HomeViewController.swift in Sources */,
 				40426D151F86BC9C00875179 /* RouterProtocol.swift in Sources */,
 				408D08391F8D285E006BCA8E /* VerifyAssembler.swift in Sources */,
 				408D08371F8D2818006BCA8E /* VerifyViewController.swift in Sources */,
@@ -496,10 +526,12 @@
 				40426D101F86B90000875179 /* AssemblerProtocol.swift in Sources */,
 				408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */,
 				40426D1A1F86C12600875179 /* LoginRouter.swift in Sources */,
+				405C5A9C1F8D950500AC8F9F /* HomeViewModel.swift in Sources */,
 				40426D0D1F86B86800875179 /* LoginAssembler.swift in Sources */,
 				40426D0B1F86B85E00875179 /* LoginViewModel.swift in Sources */,
 				40497D1F1F8CF3A500A4E046 /* UIColor+.swift in Sources */,
 				408D08341F8D274A006BCA8E /* RegisterAssembler.swift in Sources */,
+				405C5A9E1F8D953500AC8F9F /* HomeRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

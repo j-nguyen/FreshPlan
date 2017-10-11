@@ -28,6 +28,7 @@ extension RegisterRouter: RouterProtocol {
 		
 		switch route {
 		case .register:
+			window.rootViewController = RegisterAssembler.make()
 			break
 		}
 	}
