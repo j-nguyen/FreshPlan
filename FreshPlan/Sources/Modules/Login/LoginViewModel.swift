@@ -48,40 +48,42 @@ public class LoginViewModel: LoginViewModelProtocol {
 	}
 	
 	public func bindButtons() {
-		
-		let response = self.loginRequest(email: self.email.value, password: self.password.value)
-			.share()
-		
 		// filter out for unverified so we can move the user to verified controller
-		let tap = loginTap
-			.flatMap { response }
-			.share()
+		let tap = loginTap.flatMap { self.loginRequest(email: self.email.value, password: self.password.value) }
+
+		let response = tap.share()
 		
-		tap
-			.filter(statusCode: 403)
-			.map { $0.statusCode == 403 }
-			.bind(to: self.loginUnverified)
-			.disposed(by: disposeBag)
-		
-		// this one checks for the lgoinSuccess
-		tap
-			.filterSuccessfulStatusCodes()
+		response
+			.filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
 			.mapJSON()
 			.map { JSON($0) }
 			.map { json -> Bool in
-				if let message = json["reason"].string {
-					self.error.value = message
-					return false
+				if let token = json["token"].string {
+					Defaults[.jwt] = token
+					return true
 				}
-				Defaults[.jwt] = json["token"].stringValue
-				return true
+				return false
 			}
 			.bind(to: self.loginSuccess)
 			.disposed(by: disposeBag)
+		
+		response
+			.filter { $0.statusCode > 299 }
+			.mapJSON()
+			.map { JSON($0) }
+			.map { $0["reason"].stringValue }
+			.bind(to: self.error)
+			.disposed(by: disposeBag)
+		
+		response
+			.filter { $0.statusCode == 403 }
+			.map { $0.statusCode == 403 }
+			.bind(to: self.loginUnverified)
+			.disposed(by: disposeBag)
+
 	}
 	
 	private func loginRequest(email: String, password: String) -> Observable<Response> {
-		return self.provider.request(.login(email, password))
-			.asObservable()
+		return self.provider.request(.login(email, password)).asObservable()
 	}
 }

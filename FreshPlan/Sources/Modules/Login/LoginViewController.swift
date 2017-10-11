@@ -17,7 +17,7 @@ public class LoginViewController: UIViewController {
 	private var router: LoginRouter!
 	
 	// MARK - Buttons
-	private var loginButton: MDCFlatButton!
+	private var loginButton: MDCButton!
 	
 	// MARK - TextField
 	private var emailField: MDCTextField!
@@ -56,6 +56,7 @@ public class LoginViewController: UIViewController {
 	
 	fileprivate func prepareView() {
 		view.backgroundColor = UIColor.grayBackgroundColor
+		prepareErrorLabel()
 		prepareEmailField()
 		preparePasswordField()
 		prepareLoginButton()
@@ -63,6 +64,24 @@ public class LoginViewController: UIViewController {
 	}
 	
 	// MARK - Preparing Views
+	
+	fileprivate func prepareErrorLabel() {
+		errorLabel = UILabel()
+		errorLabel.textColor = .red
+		errorLabel.font = UIFont(name: "Helvetica Neue", size: 14)
+		
+		view.addSubview(errorLabel)
+		
+		errorLabel.snp.makeConstraints { make in
+			make.top.equalTo(view).offset(100)
+			make.centerX.equalTo(view)
+		}
+		
+		viewModel.error
+			.asObservable()
+			.bind(to: errorLabel.rx.text)
+			.disposed(by: disposeBag)
+	}
 	
 	fileprivate func prepareEmailField() {
 		emailField = MDCTextField()
@@ -75,7 +94,7 @@ public class LoginViewController: UIViewController {
 		view.addSubview(emailField)
 		
 		emailField.snp.makeConstraints { make in
-			make.top.equalTo(150)
+			make.top.equalTo(errorLabel.snp.bottom).offset(10)
 			make.left.equalTo(10)
 			make.right.equalTo(-10)
 			make.width.equalTo(300)
@@ -91,6 +110,7 @@ public class LoginViewController: UIViewController {
 		passwordField = MDCTextField()
 		passwordField.placeholder = "Password"
 		passwordField.isSecureTextEntry = true
+		passwordField.returnKeyType = .done
 		
 		passwordFieldController = MDCTextInputControllerDefault(textInput: passwordField)
 		
@@ -110,7 +130,7 @@ public class LoginViewController: UIViewController {
 	}
 	
 	fileprivate func prepareLoginButton() {
-		loginButton = MDCFlatButton()
+		loginButton = MDCButton()
 		loginButton.setTitle("Login", for: .normal)
 		loginButton.backgroundColor = MDCPalette.lightBlue.tint800
 		
@@ -135,7 +155,7 @@ public class LoginViewController: UIViewController {
 			.filter { $0 }
 			.subscribe(onNext: { [weak self] _ in
 				guard let this = self else { return }
-//				try? this.router.route(from: this, to: LoginRouter.Routes.)
+				try? this.router.route(from: this, to: LoginRouter.Routes.home.rawValue)
 			})
 			.disposed(by: disposeBag)
 		
@@ -144,7 +164,7 @@ public class LoginViewController: UIViewController {
 			.filter { $0 }
 			.subscribe(onNext: { [weak self] _ in 
 				guard let this = self else { return }
-//				try? this.router.route(from: this, to: LoginRouter.Routes.register.rawValue)
+				try? this.router.route(from: this, to: LoginRouter.Routes.verify.rawValue)
 			})
 			.disposed(by: disposeBag)
 	}
