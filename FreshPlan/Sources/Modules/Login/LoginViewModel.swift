@@ -10,6 +10,7 @@ import SwiftyJSON
 import SwiftyUserDefaults
 import RxSwift
 import Moya
+import MaterialComponents.MaterialSnackbar
 
 public protocol LoginViewModelProtocol {
 	var email: Variable<String> { get }
@@ -58,11 +59,8 @@ public class LoginViewModel: LoginViewModelProtocol {
 			.mapJSON()
 			.map { JSON($0) }
 			.map { json -> Bool in
-				if let token = json["token"].string {
-					Defaults[.jwt] = token
-					return true
-				}
-				return false
+				Defaults[.jwt] = json["token"].stringValue
+				return true
 			}
 			.bind(to: self.loginSuccess)
 			.disposed(by: disposeBag)
@@ -72,7 +70,7 @@ public class LoginViewModel: LoginViewModelProtocol {
 			.mapJSON()
 			.map { JSON($0) }
 			.map { $0["reason"].stringValue }
-			.bind(to: self.error)
+			.bind(to: error)
 			.disposed(by: disposeBag)
 		
 		response

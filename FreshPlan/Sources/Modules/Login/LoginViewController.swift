@@ -11,6 +11,7 @@ import SnapKit
 import MaterialComponents
 import RxSwift
 import RxGesture
+import RxOptional
 
 public class LoginViewController: UIViewController {
 	private var viewModel: LoginViewModelProtocol!
@@ -25,7 +26,6 @@ public class LoginViewController: UIViewController {
 	
 	// MARK - UILabel
 	private var registerLabel: UILabel!
-	private var errorLabel: UILabel!
 	
 	// MARK - Floating Placeholder Input
 	private var emailFieldController: MDCTextInputController!
@@ -52,11 +52,25 @@ public class LoginViewController: UIViewController {
 		super.viewDidLoad()
 		// load views
 		prepareView()
+		prepareErrorBinding()
+	}
+	
+	fileprivate func prepareErrorBinding() {
+		viewModel.error
+			.asObservable()
+			.filterEmpty()
+			.subscribe(onNext: { [weak self] reason in
+				guard let this = self else { return }
+				// create a snack bar displaying the reason
+				let message = MDCSnackbarMessage()
+				message.text = reason
+				MDCSnackbarManager.show(message)
+			})
+			.disposed(by: disposeBag)
 	}
 	
 	fileprivate func prepareView() {
 		view.backgroundColor = UIColor.grayBackgroundColor
-		prepareErrorLabel()
 		prepareEmailField()
 		preparePasswordField()
 		prepareLoginButton()
@@ -64,24 +78,6 @@ public class LoginViewController: UIViewController {
 	}
 	
 	// MARK - Preparing Views
-	
-	fileprivate func prepareErrorLabel() {
-		errorLabel = UILabel()
-		errorLabel.textColor = .red
-		errorLabel.font = UIFont(name: "Helvetica Neue", size: 14)
-		
-		view.addSubview(errorLabel)
-		
-		errorLabel.snp.makeConstraints { make in
-			make.top.equalTo(view).offset(100)
-			make.centerX.equalTo(view)
-		}
-		
-		viewModel.error
-			.asObservable()
-			.bind(to: errorLabel.rx.text)
-			.disposed(by: disposeBag)
-	}
 	
 	fileprivate func prepareEmailField() {
 		emailField = MDCTextField()
@@ -94,7 +90,7 @@ public class LoginViewController: UIViewController {
 		view.addSubview(emailField)
 		
 		emailField.snp.makeConstraints { make in
-			make.top.equalTo(errorLabel.snp.bottom).offset(10)
+			make.top.equalTo(100)
 			make.left.equalTo(10)
 			make.right.equalTo(-10)
 			make.width.equalTo(300)
