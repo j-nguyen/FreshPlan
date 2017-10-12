@@ -10,7 +10,6 @@ import SwiftyJSON
 import SwiftyUserDefaults
 import RxSwift
 import Moya
-import MaterialComponents.MaterialSnackbar
 
 public protocol LoginViewModelProtocol {
 	var email: Variable<String> { get }
