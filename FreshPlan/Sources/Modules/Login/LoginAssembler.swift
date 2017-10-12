@@ -16,7 +16,7 @@ public final class LoginAssembler: AssemblerProtocol {
 		return LoginViewController(viewModel: viewModel, router: router)
 	}
 	
-	private static var provider: RxMoyaProvider<FreshPlan> {
-		return RxMoyaProvider<FreshPlan>(plugins: [NetworkLoggerPlugin()])
+	private static var provider: MoyaProvider<FreshPlan> {
+		return MoyaProvider<FreshPlan>(plugins: [NetworkLoggerPlugin(verbose: true)])
 	}
 }

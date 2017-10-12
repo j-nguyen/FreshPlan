@@ -25,7 +25,7 @@ public protocol LoginViewModelProtocol {
 }
 
 public class LoginViewModel: LoginViewModelProtocol {
-	private let provider: RxMoyaProvider<FreshPlan>
+	private let provider: MoyaProvider<FreshPlan>
 	
 	private let disposeBag = DisposeBag()
 	
@@ -44,7 +44,7 @@ public class LoginViewModel: LoginViewModelProtocol {
 	public var loginSuccess: Variable<Bool> = Variable(false)
 	public var loginUnverified: Variable<Bool> = Variable(false)
 	
-	public init(provider: RxMoyaProvider<FreshPlan>) {
+	public init(provider: MoyaProvider<FreshPlan>) {
 		self.provider = provider
 	}
 	
@@ -78,10 +78,10 @@ public class LoginViewModel: LoginViewModelProtocol {
 			.map { $0.statusCode == 403 }
 			.bind(to: self.loginUnverified)
 			.disposed(by: disposeBag)
-
+	
 	}
 	
 	private func loginRequest(email: String, password: String) -> Observable<Response> {
-		return self.provider.request(.login(email, password)).asObservable()
+		return self.provider.rx.request(.login(email, password)).asObservable()
 	}
 }
