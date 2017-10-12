@@ -18,8 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window = UIWindow(frame: UIScreen.main.bounds)
 		guard let window = self.window else { fatalError("no window") }
 		// setup window to make sure
-		window.rootViewController = VerifyAssembler.make()
-//		window.rootViewController = LoginAssembler.make()
+		window.rootViewController = LoginAssembler.make()
 		window.makeKeyAndVisible()
 		window.backgroundColor = UIColor.white
 		

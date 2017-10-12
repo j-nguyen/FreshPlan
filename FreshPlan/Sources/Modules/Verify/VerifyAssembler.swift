@@ -9,9 +9,9 @@
 import UIKit
 import Moya
 
-public final class VerifyAssembler: AssemblerProtocol {
-	public static func make() -> UIViewController {
-		let viewModel = VerifyViewModel(provider: provider, email: "String")
+public final class VerifyAssembler {
+	public static func make(email: String) -> UIViewController {
+		let viewModel = VerifyViewModel(provider: provider, email: email)
 		let router = VerifyRouter()
 		
 		return VerifyViewController(router: router, viewModel: viewModel)

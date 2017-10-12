@@ -9,7 +9,7 @@
 import UIKit
 import Moya
 
-public final class LoginAssembler: AssemblerProtocol {
+public final class LoginAssembler {
 	public static func make() -> UIViewController {
 		let viewModel = LoginViewModel(provider: provider)
 		let router = LoginRouter()
