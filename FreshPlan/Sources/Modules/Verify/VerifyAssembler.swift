@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import Moya
 
 public final class VerifyAssembler: AssemblerProtocol {
 	public static func make() -> UIViewController {
-		let viewModel = VerifyViewModel()
+		let viewModel = VerifyViewModel(provider: provider, email: "String")
 		let router = VerifyRouter()
 		
 		return VerifyViewController(router: router, viewModel: viewModel)
+	}
+	
+	public static var provider: MoyaProvider<FreshPlan> {
+		return MoyaProvider<FreshPlan>(plugins: [NetworkLoggerPlugin(verbose: true)])
 	}
 }
