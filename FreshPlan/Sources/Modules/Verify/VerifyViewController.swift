@@ -51,14 +51,28 @@ public final class VerifyViewController: UIViewController {
 		view.backgroundColor = .blueBackgroundColor
 		prepareVerifyTextField()
 		prepareSubmitButton()
+		prepareDismissKeyboard()
+	}
+	
+	fileprivate func prepareDismissKeyboard() {
+		view.rx.tapGesture()
+			.when(.recognized)
+			.asObservable()
+			.subscribe(onNext: { [weak self] _ in
+				guard let this = self else { return }
+				this.verifyTextField.resignFirstResponder()
+			})
+			.disposed(by: disposeBag)
 	}
 	
 	fileprivate func prepareVerifyTextField() {
 		verifyTextField = UITextField()
 		verifyTextField.borderStyle = .roundedRect
+		verifyTextField.keyboardType = .numberPad
 		verifyTextField.returnKeyType = .done
 		verifyTextField.font = UIFont(name: "Helvetica Neue", size: 28)
 		verifyTextField.placeholder = "Verification Code"
+		verifyTextField.textAlignment = .center
 		
 		view.addSubview(verifyTextField)
 		
@@ -66,16 +80,8 @@ public final class VerifyViewController: UIViewController {
 			make.centerY.equalTo(view).offset(-75)
 			make.centerX.equalTo(view)
 			make.width.equalTo(350)
-			make.height.equalTo(75)
+			make.height.equalTo(60)
 		}
-		
-		// returns the textfield when u press done
-		verifyTextField.rx.controlEvent(.editingDidEnd)
-			.subscribe(onNext: { [weak self] in
-				guard let this = self else { return }
-				this.verifyTextField.resignFirstResponder()
-			})
-			.disposed(by: disposeBag)
 	}
 	
 	fileprivate func prepareSubmitButton() {
@@ -88,8 +94,8 @@ public final class VerifyViewController: UIViewController {
 		submitButton.snp.makeConstraints { make in
 			make.top.equalTo(verifyTextField.snp.bottom).offset(15)
 			make.centerX.equalTo(view)
-			make.width.equalTo(300)
-			make.height.equalTo(75)
+			make.width.equalTo(350)
+			make.height.equalTo(60)
 		}
 	}
 }
