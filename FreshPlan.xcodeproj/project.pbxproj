@@ -357,7 +357,7 @@
 				TargetAttributes = {
 					409A55301F86B0D200EB29A4 = {
 						CreatedOnToolsVersion = 9.0;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					409A55441F86B0D200EB29A4 = {
 						CreatedOnToolsVersion = 9.0;
@@ -692,11 +692,15 @@
 			baseConfigurationReference = F2535B961F6CEAE83F9AC1E5 /* Pods-FreshPlan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 35PYRYEWH9;
 				INFOPLIST_FILE = FreshPlan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fractalpoint.freshplan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "1a6ea855-9345-4536-a50a-87d9698e6fbf";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development net.fractalpoint.freshplan";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -707,11 +711,15 @@
 			baseConfigurationReference = 961AF7C9502FB2E5362945B5 /* Pods-FreshPlan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 35PYRYEWH9;
 				INFOPLIST_FILE = FreshPlan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fractalpoint.freshplan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "41eb7c6c-b49d-49e4-83c4-d05d136274b4";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore net.fractalpoint.freshplan";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
