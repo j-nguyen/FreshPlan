@@ -13,6 +13,7 @@ import Moya
 public enum FreshPlan {
 	case login(String, String)
 	case register(String, String, String, String)
+	case verify(String, Int)
 }
 
 extension FreshPlan: TargetType {
@@ -25,13 +26,15 @@ extension FreshPlan: TargetType {
 			return "/auth/login"
 		case .register:
 			return "/auth/register"
+		case .verify:
+			return "/auth/verify"
 		}
 	}
 	
 	// type of method (POST/GET/PATCH/DELETE)
 	public var method: Moya.Method {
 		switch self {
-		case .login, .register:
+		case .login, .register, .verify:
 			return .post
 		}
 	}
@@ -48,6 +51,8 @@ extension FreshPlan: TargetType {
 				             "email": email,
 				             "password": password],
 			encoding: JSONEncoding.default)
+		case let .verify(email, code):
+			return .requestParameters(parameters: ["email": email, "code": code], encoding: JSONEncoding.default)
 		}
 	}
 	
@@ -58,7 +63,7 @@ extension FreshPlan: TargetType {
 	
 	public var headers: [String: String]? {
 		switch self {
-		case .login, .register:
+		case .login, .register, .verify:
 			return ["Content-Type": "application/json"]
 		}
 	}
