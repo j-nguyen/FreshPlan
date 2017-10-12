@@ -8,10 +8,24 @@
 
 import UIKit
 import RxSwift
+import MaterialComponents
 
 public final class VerifyViewController: UIViewController {
 	private var router: VerifyRouter!
 	private var viewModel: VerifyViewModelProtocol!
+	
+	private let disposeBag = DisposeBag()
+	
+	// hide status bar
+	public override var prefersStatusBarHidden: Bool {
+		return true
+	}
+	
+	//: MARK - Text Fields
+	private var verifyTextField: UITextField!
+	
+	//: MARK - Button
+	private var submitButton: MDCButton!
 	
 	public convenience init(router: VerifyRouter, viewModel: VerifyViewModel) {
 		self.init(nibName: nil, bundle: nil)
@@ -25,5 +39,57 @@ public final class VerifyViewController: UIViewController {
 	
 	public required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
+	}
+	
+	public override func viewDidLoad() {
+		super.viewDidLoad()
+		// prepare views here
+		prepareView()
+	}
+	
+	fileprivate func prepareView() {
+		view.backgroundColor = .blueBackgroundColor
+		prepareVerifyTextField()
+		prepareSubmitButton()
+	}
+	
+	fileprivate func prepareVerifyTextField() {
+		verifyTextField = UITextField()
+		verifyTextField.borderStyle = .roundedRect
+		verifyTextField.returnKeyType = .done
+		verifyTextField.font = UIFont(name: "Helvetica Neue", size: 28)
+		verifyTextField.placeholder = "Verification Code"
+		
+		view.addSubview(verifyTextField)
+		
+		verifyTextField.snp.makeConstraints { make in
+			make.centerY.equalTo(view).offset(-75)
+			make.centerX.equalTo(view)
+			make.width.equalTo(350)
+			make.height.equalTo(75)
+		}
+		
+		// returns the textfield when u press done
+		verifyTextField.rx.controlEvent(.editingDidEnd)
+			.subscribe(onNext: { [weak self] in
+				guard let this = self else { return }
+				this.verifyTextField.resignFirstResponder()
+			})
+			.disposed(by: disposeBag)
+	}
+	
+	fileprivate func prepareSubmitButton() {
+		submitButton = MDCButton()
+		submitButton.setTitle("Submit", for: .normal)
+		submitButton.backgroundColor = .greenBackgroundColor
+	
+		view.addSubview(submitButton)
+		
+		submitButton.snp.makeConstraints { make in
+			make.top.equalTo(verifyTextField.snp.bottom).offset(15)
+			make.centerX.equalTo(view)
+			make.width.equalTo(300)
+			make.height.equalTo(75)
+		}
 	}
 }
