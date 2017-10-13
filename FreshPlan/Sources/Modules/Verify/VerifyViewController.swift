@@ -25,6 +25,7 @@ public final class VerifyViewController: UIViewController {
 	private var submitButton: MDCButton!
 	
 	//: MARK - Left Button Item
+	private var closeButton: UIBarButtonItem!
 	
 	public convenience init(router: VerifyRouter, viewModel: VerifyViewModel) {
 		self.init(nibName: nil, bundle: nil)
@@ -48,8 +49,8 @@ public final class VerifyViewController: UIViewController {
 		prepareView()
 	}
 	
-	public override var childViewControllerForStatusBarStyle: UIViewController? {
-		return headerViewController
+	public override var preferredStatusBarStyle: UIStatusBarStyle {
+		return .lightContent
 	}
 	
 	fileprivate func prepareView() {
@@ -68,7 +69,27 @@ public final class VerifyViewController: UIViewController {
 		appBar.navigationBar.backgroundColor = .blueBackgroundColor
 		appBar.headerViewController.headerView.backgroundColor = .blueBackgroundColor
 		
-//		appBar.navigationBar.leftBarButtonItem =
+		closeButton = UIBarButtonItem(
+			image: UIImage(named: "ic_close")?.withRenderingMode(.alwaysTemplate),
+			style: .plain,
+			target: nil,
+			action: nil
+		)
+		
+		closeButton.tintColor = .white
+		
+		closeButton.rx.tap
+			.asObservable()
+			.subscribe(onNext: { [weak self] in
+				guard let this = self else { return }
+				this.dismiss(animated: true, completion: nil)
+			})
+			.disposed(by: disposeBag)
+		
+		appBar.navigationBar.leftBarButtonItem = closeButton
+		
+		let mutator = MDCNavigationBarTextColorAccessibilityMutator()
+		mutator.mutate(appBar.navigationBar)
 	}
 	
 	fileprivate func prepareErrorSnackBar() {
