@@ -37,10 +37,8 @@ extension LoginRouter: RouterProtocol {
 			window.rootViewController = HomeAssembler.make()
 			break
 		case .verify:
-			
 			guard let params = parameters, let email = params["email"] as? String else { return }
-			
-			window.rootViewController = VerifyAssembler.make(email: email)
+			context.present(VerifyAssembler.make(email: email), animated: true, completion: nil)
 			break
 		}
 	}

@@ -200,8 +200,7 @@ public class LoginViewController: UIViewController {
 			.when(.recognized)
 			.subscribe(onNext: { [weak self] _ in
 				guard let this = self else { return }
-				this.present(VerifyAssembler.make(email: "jnguyen1236@gmail.com"), animated: true, completion: nil)
-//				try? this.router.route(from: this, to: LoginRouter.Routes.register.rawValue)
+				try? this.router.route(from: this, to: LoginRouter.Routes.register.rawValue)
 			})
 			.disposed(by: disposeBag)
 	}
