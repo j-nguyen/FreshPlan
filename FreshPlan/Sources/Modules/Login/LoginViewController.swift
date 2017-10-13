@@ -92,7 +92,6 @@ public class LoginViewController: UIViewController {
 			make.top.equalTo(100)
 			make.left.equalTo(view).inset(20)
 			make.right.equalTo(view).inset(20)
-			make.width.equalTo(300)
 		}
 		
 		emailField.rx.controlEvent(.editingDidEndOnExit)
@@ -122,7 +121,6 @@ public class LoginViewController: UIViewController {
 			make.top.equalTo(emailField.snp.bottom).offset(10)
 			make.left.equalTo(view).inset(20)
 			make.right.equalTo(view).inset(20)
-			make.width.equalTo(300)
 		}
 		
 		passwordField.rx.text
@@ -143,7 +141,6 @@ public class LoginViewController: UIViewController {
 			make.left.equalTo(view).inset(20)
 			make.right.equalTo(view).inset(20)
 			make.height.equalTo(50)
-			make.width.equalTo(300)
 		}
 		
 		viewModel.loginEnabled

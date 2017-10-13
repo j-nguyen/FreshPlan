@@ -16,10 +16,7 @@ public final class VerifyViewController: UIViewController {
 	
 	private let disposeBag = DisposeBag()
 	
-	// hide status bar
-	public override var prefersStatusBarHidden: Bool {
-		return true
-	}
+	fileprivate let appBar = MDCAppBar()
 	
 	//: MARK - Text Fields
 	private var verifyTextField: UITextField!
@@ -27,10 +24,15 @@ public final class VerifyViewController: UIViewController {
 	//: MARK - Button
 	private var submitButton: MDCButton!
 	
+	//: MARK - Left Button Item
+	private var closeButton: UIBarButtonItem!
+	
 	public convenience init(router: VerifyRouter, viewModel: VerifyViewModel) {
 		self.init(nibName: nil, bundle: nil)
 		self.viewModel = viewModel
 		self.router = router
+		
+		self.addChildViewController(appBar.headerViewController)
 	}
 	
 	public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -47,11 +49,62 @@ public final class VerifyViewController: UIViewController {
 		prepareView()
 	}
 	
+	public override var preferredStatusBarStyle: UIStatusBarStyle {
+		return .lightContent
+	}
+	
 	fileprivate func prepareView() {
 		view.backgroundColor = .blueBackgroundColor
 		prepareVerifyTextField()
 		prepareSubmitButton()
 		prepareDismissKeyboard()
+		prepareErrorSnackBar()
+		prepareAppBar()
+	}
+	
+	// MARK : Preparing Views and Bindings
+	
+	fileprivate func prepareAppBar() {
+		appBar.addSubviewsToParent()
+		appBar.navigationBar.backgroundColor = .blueBackgroundColor
+		appBar.headerViewController.headerView.backgroundColor = .blueBackgroundColor
+		
+		closeButton = UIBarButtonItem(
+			image: UIImage(named: "ic_close")?.withRenderingMode(.alwaysTemplate),
+			style: .plain,
+			target: nil,
+			action: nil
+		)
+		
+		closeButton.tintColor = .white
+		
+		closeButton.rx.tap
+			.asObservable()
+			.subscribe(onNext: { [weak self] in
+				guard let this = self else { return }
+				this.dismiss(animated: true, completion: nil)
+			})
+			.disposed(by: disposeBag)
+		
+		appBar.navigationBar.leftBarButtonItem = closeButton
+		
+		let mutator = MDCNavigationBarTextColorAccessibilityMutator()
+		mutator.mutate(appBar.navigationBar)
+	}
+	
+	fileprivate func prepareErrorSnackBar() {
+		viewModel.error
+			.asObservable()
+			.filterEmpty()
+			.subscribe(onNext: { [weak self] reason in
+				guard let this = self else { return }
+				if this.verifyTextField.becomeFirstResponder() { this.verifyTextField.resignFirstResponder() }
+				// create snackbar
+				let message = MDCSnackbarMessage()
+				message.text = reason
+				MDCSnackbarManager.show(message)
+			})
+			.disposed(by: disposeBag)
 	}
 	
 	fileprivate func prepareDismissKeyboard() {
@@ -82,6 +135,13 @@ public final class VerifyViewController: UIViewController {
 			make.width.equalTo(350)
 			make.height.equalTo(60)
 		}
+		
+		verifyTextField.rx.text
+			.orEmpty
+			.map { Int($0) }
+			.filterNil()
+			.bind(to: viewModel.verificationCode)
+			.disposed(by: disposeBag)
 	}
 	
 	fileprivate func prepareSubmitButton() {
@@ -97,5 +157,17 @@ public final class VerifyViewController: UIViewController {
 			make.width.equalTo(350)
 			make.height.equalTo(60)
 		}
+		
+		viewModel.submitTap = submitButton.rx.tap.asObservable()
+		viewModel.bindButton()
+		
+		viewModel.submitSuccess
+			.asObservable()
+			.filter { $0 }
+			.subscribe(onNext: { [weak self] _ in
+				guard let this = self else { return }
+				this.dismiss(animated: true, completion: nil)
+			})
+			.disposed(by: disposeBag)
 	}
 }
