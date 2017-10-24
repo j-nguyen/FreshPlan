@@ -1,12 +1,12 @@
-platform :ios, '11.0'
-# use_frameworks!
+platform :ios, '10.3'
+use_frameworks!
 
 target 'FreshPlan' do
-  use_frameworks!
+  # use_frameworks!
  
-  pod 'SnapKit', '~> 3.2'
-  pod 'RxSwift', '~> 3.0'
-  pod 'RxCocoa', '~> 3.0'
+  pod 'SnapKit'
+  pod 'RxSwift'
+  pod 'RxCocoa'
   pod 'JWTDecode'
   pod 'RxDataSources'
   pod 'RxGesture'
