@@ -363,11 +363,11 @@ DEPENDENCIES:
   - JWTDecode
   - MaterialComponents
   - Moya/RxSwift
-  - RxCocoa (~> 4.0)
+  - RxCocoa
   - RxDataSources
   - RxGesture
   - RxOptional
-  - RxSwift (~> 4.0)
+  - RxSwift
   - SnapKit
   - SwiftyJSON
   - SwiftyUserDefaults
@@ -393,6 +393,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SwiftyUserDefaults: 0f1d45fc3aafb9064dac661e367f8f83fe21a4b4
 
-PODFILE CHECKSUM: 2a56e1048b82485bcc5522ec7f431a7109328db1
+PODFILE CHECKSUM: 8bcb540f073bcc033c34a66398e476e85d3a0628
 
 COCOAPODS: 1.3.1
