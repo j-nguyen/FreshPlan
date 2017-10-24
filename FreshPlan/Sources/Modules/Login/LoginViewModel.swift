@@ -50,33 +50,32 @@ public class LoginViewModel: LoginViewModelProtocol {
 		let tap = loginTap
 			.flatMap { self.loginRequest(email: self.email.value, password: self.password.value) }
 		
-//		tap
-//			.filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
-//			.mapJSON()
-//			.map { try? JSONDecoder. }
-//			.map { json -> Bool in
-//				Defaults[.jwt] = json["token"].stringValue
-//				return true
-//			}
-//			.bind(to: self.loginSuccess)
-//			.disposed(by: disposeBag)
+		tap
+			.filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
+			.map { $0.data }
+			.map { try? JSONDecoder().decode(Token.self, from: $0) }
+			.filterNil()
+			.map {
+				UserDefaults.standard.set($0.token, forKey: "token")
+				return true
+			}
+			.bind(to: self.loginSuccess)
+			.disposed(by: disposeBag)
 		
 		tap
 			.filter { $0.statusCode > 299 }
 			.map { $0.data }
 			.map { try? JSONDecoder().decode(ResponseError.self, from: $0) }
-			.map { $0.value }
 			.filterNil()
 			.map { $0.reason }
 			.bind(to: error)
 			.disposed(by: disposeBag)
 		
-//		tap
-//			.filter { $0.statusCode == 403 }
-//			.map { $0.statusCode == 403 }
-//			.bind(to: self.loginUnverified)
-//			.disposed(by: disposeBag)
-	
+		tap
+			.filter { $0.statusCode == 403 }
+			.map { $0.statusCode == 403 }
+			.bind(to: self.loginUnverified)
+			.disposed(by: disposeBag)
 	}
 	
 	private func loginRequest(email: String, password: String) -> Observable<Response> {

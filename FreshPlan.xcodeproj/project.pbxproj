@@ -31,6 +31,7 @@
 		409A553F1F86B0D200EB29A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 409A553D1F86B0D200EB29A4 /* LaunchScreen.storyboard */; };
 		409A554A1F86B0D200EB29A4 /* FreshPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409A55491F86B0D200EB29A4 /* FreshPlanTests.swift */; };
 		409A55551F86B0D200EB29A4 /* FreshPlanUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409A55541F86B0D200EB29A4 /* FreshPlanUITests.swift */; };
+		40A311361F9EF503000FAFEB /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A311351F9EF503000FAFEB /* Token.swift */; };
 		40BD70101F910F53005B3B9D /* MeetupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD700F1F910F53005B3B9D /* MeetupController.swift */; };
 		40BD70121F910FD6005B3B9D /* MeetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD70111F910FD6005B3B9D /* MeetupViewModel.swift */; };
 		40BD70141F910FFA005B3B9D /* MeetupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD70131F910FFA005B3B9D /* MeetupRouter.swift */; };
@@ -87,6 +88,7 @@
 		409A55501F86B0D200EB29A4 /* FreshPlanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreshPlanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		409A55541F86B0D200EB29A4 /* FreshPlanUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshPlanUITests.swift; sourceTree = "<group>"; };
 		409A55561F86B0D200EB29A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		40A311351F9EF503000FAFEB /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		40BD700F1F910F53005B3B9D /* MeetupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupController.swift; sourceTree = "<group>"; };
 		40BD70111F910FD6005B3B9D /* MeetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupViewModel.swift; sourceTree = "<group>"; };
 		40BD70131F910FFA005B3B9D /* MeetupRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupRouter.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				40BE778F1F9ED2310011C899 /* ResponseError.swift */,
+				40A311351F9EF503000FAFEB /* Token.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -536,6 +539,7 @@
 				40426D091F86B85500875179 /* LoginViewController.swift in Sources */,
 				408D083B1F8D2865006BCA8E /* VerifyRouter.swift in Sources */,
 				408D083D1F8D286D006BCA8E /* VerifyViewModel.swift in Sources */,
+				40A311361F9EF503000FAFEB /* Token.swift in Sources */,
 				400FC2161F897BA200B3098B /* FreshPlan.swift in Sources */,
 				408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */,
 				409A55351F86B0D200EB29A4 /* AppDelegate.swift in Sources */,
