@@ -355,9 +355,7 @@ PODS:
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
   - RxSwift (4.0.0)
-  - SnapKit (4.0.0)
-  - SwiftyJSON (3.1.4)
-  - SwiftyUserDefaults (3.0.0)
+  - SnapKit (3.2.0)
 
 DEPENDENCIES:
   - JWTDecode
@@ -368,9 +366,7 @@ DEPENDENCIES:
   - RxGesture
   - RxOptional
   - RxSwift
-  - SnapKit
-  - SwiftyJSON
-  - SwiftyUserDefaults
+  - SnapKit (~> 3.2)
 
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
@@ -389,10 +385,8 @@ SPEC CHECKSUMS:
   RxGesture: c278eb05b187abd47e11e65464ae4de53ab71d95
   RxOptional: e5448d3e21024489e07c31f6a262f2b50c975367
   RxSwift: fd680d75283beb5e2559486f3c0ff852f0d35334
-  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
-  SwiftyUserDefaults: 0f1d45fc3aafb9064dac661e367f8f83fe21a4b4
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: 8bcb540f073bcc033c34a66398e476e85d3a0628
+PODFILE CHECKSUM: 7e0b6f39e07170f8548503e93e43c242f50b5f51
 
 COCOAPODS: 1.3.1

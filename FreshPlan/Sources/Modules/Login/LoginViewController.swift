@@ -17,17 +17,20 @@ public class LoginViewController: UIViewController {
 	private var viewModel: LoginViewModelProtocol!
 	private var router: LoginRouter!
 	
-	// MARK - Buttons
+	// MARK: - Stack Views
+	private var stackView: UIStackView!
+	
+	// MARK: - Buttons
 	private var loginButton: MDCButton!
 	
-	// MARK - TextField
+	// MARK: - TextField
 	private var emailField: MDCTextField!
 	private var passwordField: MDCTextField!
 	
-	// MARK - UILabel
+	// MARK: - UILabel
 	private var registerLabel: UILabel!
 	
-	// MARK - Floating Placeholder Input
+	// MARK: - Floating Placeholder Input
 	private var emailFieldController: MDCTextInputController!
 	private var passwordFieldController: MDCTextInputController!
 	
@@ -70,6 +73,7 @@ public class LoginViewController: UIViewController {
 	
 	fileprivate func prepareView() {
 		view.backgroundColor = .grayBackgroundColor
+		prepareStackView()
 		prepareEmailField()
 		preparePasswordField()
 		prepareLoginButton()
@@ -77,21 +81,34 @@ public class LoginViewController: UIViewController {
 	}
 	
 	// MARK - Preparing Views
+
+	fileprivate func prepareStackView() {
+		stackView = UIStackView()
+		stackView.axis = .vertical
+		stackView.alignment = .center
+		stackView.distribution = .fill
+		stackView.spacing = 10
+		
+		view.addSubview(stackView)
+		
+		stackView.snp.makeConstraints { make in
+			make.center.equalTo(view)
+		}
+	}
 	
 	fileprivate func prepareEmailField() {
 		emailField = MDCTextField()
 		emailField.placeholder = "Email Address"
 		emailField.returnKeyType = .next
 		emailField.keyboardType = .emailAddress
+		emailField.autocapitalizationType = .none
 		
 		emailFieldController = MDCTextInputControllerDefault(textInput: emailField)
 		
-		view.addSubview(emailField)
+		stackView.addArrangedSubview(emailField)
 		
 		emailField.snp.makeConstraints { make in
-			make.top.equalTo(100)
-			make.left.equalTo(view).inset(20)
-			make.right.equalTo(view).inset(20)
+			make.width.equalTo(view).inset(20)
 		}
 		
 		emailField.rx.controlEvent(.editingDidEndOnExit)
@@ -115,12 +132,10 @@ public class LoginViewController: UIViewController {
 		
 		passwordFieldController = MDCTextInputControllerDefault(textInput: passwordField)
 		
-		view.addSubview(passwordField)
+		stackView.addArrangedSubview(passwordField)
 		
 		passwordField.snp.makeConstraints { make in
-			make.top.equalTo(emailField.snp.bottom).offset(10)
-			make.left.equalTo(view).inset(20)
-			make.right.equalTo(view).inset(20)
+			make.width.equalTo(view).inset(20)
 		}
 		
 		passwordField.rx.text
@@ -134,12 +149,10 @@ public class LoginViewController: UIViewController {
 		loginButton.setTitle("Login", for: .normal)
 		loginButton.backgroundColor = MDCPalette.lightBlue.tint800
 		
-		view.addSubview(loginButton)
+		stackView.addArrangedSubview(loginButton)
 		
 		loginButton.snp.makeConstraints { make in
-			make.top.equalTo(passwordField.snp.bottom).offset(15)
-			make.left.equalTo(view).inset(20)
-			make.right.equalTo(view).inset(20)
+			make.width.equalTo(view).inset(20)
 			make.height.equalTo(50)
 		}
 		
