@@ -17,17 +17,20 @@ public class LoginViewController: UIViewController {
 	private var viewModel: LoginViewModelProtocol!
 	private var router: LoginRouter!
 	
-	// MARK - Buttons
+	// MARK: - Stack Views
+	private var stackView: UIStackView!
+	
+	// MARK: - Buttons
 	private var loginButton: MDCButton!
 	
-	// MARK - TextField
+	// MARK: - TextField
 	private var emailField: MDCTextField!
 	private var passwordField: MDCTextField!
 	
-	// MARK - UILabel
+	// MARK: - UILabel
 	private var registerLabel: UILabel!
 	
-	// MARK - Floating Placeholder Input
+	// MARK: - Floating Placeholder Input
 	private var emailFieldController: MDCTextInputController!
 	private var passwordFieldController: MDCTextInputController!
 	
@@ -70,6 +73,7 @@ public class LoginViewController: UIViewController {
 	
 	fileprivate func prepareView() {
 		view.backgroundColor = .grayBackgroundColor
+		prepareStackView()
 		prepareEmailField()
 		preparePasswordField()
 		prepareLoginButton()
@@ -77,6 +81,11 @@ public class LoginViewController: UIViewController {
 	}
 	
 	// MARK - Preparing Views
+
+	fileprivate func prepareStackView() {
+		stackView = UIStackView()
+		stackView.alignment = .center
+	}
 	
 	fileprivate func prepareEmailField() {
 		emailField = MDCTextField()

@@ -6,8 +6,6 @@
 //  Copyright © 2017 St Clair College. All rights reserved.
 //
 
-import SwiftyJSON
-import SwiftyUserDefaults
 import RxSwift
 import Moya
 
@@ -49,34 +47,35 @@ public class LoginViewModel: LoginViewModelProtocol {
 	
 	public func bindButtons() {
 		// filter out for unverified so we can move the user to verified controller
-		let tap = loginTap.flatMap { self.loginRequest(email: self.email.value, password: self.password.value) }
-
-		let response = tap.share()
+		let tap = loginTap
+			.flatMap { self.loginRequest(email: self.email.value, password: self.password.value) }
 		
-		response
-			.filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
-			.mapJSON()
-			.map { JSON($0) }
-			.map { json -> Bool in
-				Defaults[.jwt] = json["token"].stringValue
-				return true
-			}
-			.bind(to: self.loginSuccess)
-			.disposed(by: disposeBag)
+//		tap
+//			.filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
+//			.mapJSON()
+//			.map { try? JSONDecoder. }
+//			.map { json -> Bool in
+//				Defaults[.jwt] = json["token"].stringValue
+//				return true
+//			}
+//			.bind(to: self.loginSuccess)
+//			.disposed(by: disposeBag)
 		
-		response
+		tap
 			.filter { $0.statusCode > 299 }
-			.mapJSON()
-			.map { JSON($0) }
-			.map { $0["reason"].stringValue }
+			.map { $0.data }
+			.map { try? JSONDecoder().decode(ResponseError.self, from: $0) }
+			.map { $0.value }
+			.filterNil()
+			.map { $0.reason }
 			.bind(to: error)
 			.disposed(by: disposeBag)
 		
-		response
-			.filter { $0.statusCode == 403 }
-			.map { $0.statusCode == 403 }
-			.bind(to: self.loginUnverified)
-			.disposed(by: disposeBag)
+//		tap
+//			.filter { $0.statusCode == 403 }
+//			.map { $0.statusCode == 403 }
+//			.bind(to: self.loginUnverified)
+//			.disposed(by: disposeBag)
 	
 	}
 	

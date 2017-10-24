@@ -8,7 +8,6 @@
 
 import RxSwift
 import RxOptional
-import SwiftyJSON
 import Moya
 
 public protocol VerifyViewModelProtocol {
@@ -49,13 +48,13 @@ public class VerifyViewModel: VerifyViewModelProtocol {
 			.bind(to: submitSuccess)
 			.disposed(by: disposeBag)
 		
-		response
-			.filter { $0.statusCode >= 300 }
-			.mapJSON()
-			.map { JSON($0) }
-			.map { $0["reason"].stringValue }
-			.bind(to: error)
-			.disposed(by: disposeBag)
+//		response
+//			.filter { $0.statusCode >= 300 }
+//			.mapJSON()
+//			.map { JSON($0) }
+//			.map { $0["reason"].stringValue }
+//			.bind(to: error)
+//			.disposed(by: disposeBag)
 	}
 	
 	private func requestVerification(email: String, code: Int) -> Observable<Response> {
