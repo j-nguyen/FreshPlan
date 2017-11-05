@@ -37,24 +37,20 @@ public class VerifyViewModel: VerifyViewModelProtocol {
 	
 	public func bindButton() {
 		
-		let response = submitTap
-			.flatMap { self.requestVerification(email: self.email, code: self.verificationCode.value) }
-			.share()
-		
-		// TODO: I probably need to fix this type of issue
+		let response = submitTap.flatMap { self.requestVerification(email: self.email, code: self.verificationCode.value) }
+
 		response
 			.filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
 			.map { $0.statusCode >= 200 && $0.statusCode <= 299 }
 			.bind(to: submitSuccess)
 			.disposed(by: disposeBag)
 		
-//		response
-//			.filter { $0.statusCode >= 300 }
-//			.mapJSON()
-//			.map { JSON($0) }
-//			.map { $0["reason"].stringValue }
-//			.bind(to: error)
-//			.disposed(by: disposeBag)
+		response
+			.filter { $0.statusCode >= 300 }
+			.map { try JSONDecoder().decode(ResponseError.self, from: $0.data) }
+			.map { $0.reason }
+			.bind(to: error)
+			.disposed(by: disposeBag)
 	}
 	
 	private func requestVerification(email: String, code: Int) -> Observable<Response> {
