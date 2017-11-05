@@ -168,9 +168,8 @@ public class LoginViewController: UIViewController {
 			.filter { $0 }
 			.subscribe(onNext: { [weak self] _ in
 				guard let this = self else { return }
-				guard let text = this.emailField.text else { return }
 				
-				try? this.router.route(from: this, to: LoginRouter.Routes.home.rawValue, parameters: ["email": text])
+				try? this.router.route(from: this, to: LoginRouter.Routes.home.rawValue)
 			})
 			.disposed(by: disposeBag)
 		
@@ -179,7 +178,9 @@ public class LoginViewController: UIViewController {
 			.filter { $0 }
 			.subscribe(onNext: { [weak self] _ in 
 				guard let this = self else { return }
-				try? this.router.route(from: this, to: LoginRouter.Routes.verify.rawValue)
+				guard let text = this.emailField.text else { return }
+				
+				try? this.router.route(from: this, to: LoginRouter.Routes.verify.rawValue, parameters: ["email": text])
 			})
 			.disposed(by: disposeBag)
 	}
