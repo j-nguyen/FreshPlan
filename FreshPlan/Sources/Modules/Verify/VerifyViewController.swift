@@ -18,6 +18,9 @@ public final class VerifyViewController: UIViewController {
 	
 	fileprivate let appBar = MDCAppBar()
 	
+	//: MARK - StackView
+	private var stackView: UIStackView!
+	
 	//: MARK - Text Fields
 	private var verifyTextField: UITextField!
 	
@@ -55,6 +58,7 @@ public final class VerifyViewController: UIViewController {
 	
 	fileprivate func prepareView() {
 		view.backgroundColor = .blueBackgroundColor
+		prepareStackView()
 		prepareVerifyTextField()
 		prepareSubmitButton()
 		prepareDismissKeyboard()
@@ -118,20 +122,32 @@ public final class VerifyViewController: UIViewController {
 			.disposed(by: disposeBag)
 	}
 	
+	fileprivate func prepareStackView() {
+		stackView = UIStackView()
+		stackView.alignment = .center
+		stackView.axis = .vertical
+		stackView.distribution = .fill
+		stackView.spacing = 10
+		
+		view.addSubview(stackView)
+		
+		stackView.snp.makeConstraints { make in
+			make.center.equalTo(view)
+		}
+	}
+	
 	fileprivate func prepareVerifyTextField() {
 		verifyTextField = UITextField()
 		verifyTextField.borderStyle = .roundedRect
 		verifyTextField.keyboardType = .numberPad
 		verifyTextField.returnKeyType = .done
-		verifyTextField.font = UIFont(name: "Helvetica Neue", size: 28)
+		verifyTextField.font = MDCTypography.headlineFont()
 		verifyTextField.placeholder = "Verification Code"
 		verifyTextField.textAlignment = .center
 		
-		view.addSubview(verifyTextField)
+		stackView.addArrangedSubview(verifyTextField)
 		
 		verifyTextField.snp.makeConstraints { make in
-			make.centerY.equalTo(view).offset(-75)
-			make.centerX.equalTo(view)
 			make.width.equalTo(350)
 			make.height.equalTo(60)
 		}
@@ -149,11 +165,9 @@ public final class VerifyViewController: UIViewController {
 		submitButton.setTitle("Submit", for: .normal)
 		submitButton.backgroundColor = .greenBackgroundColor
 	
-		view.addSubview(submitButton)
+		stackView.addArrangedSubview(submitButton)
 		
 		submitButton.snp.makeConstraints { make in
-			make.top.equalTo(verifyTextField.snp.bottom).offset(15)
-			make.centerX.equalTo(view)
 			make.width.equalTo(350)
 			make.height.equalTo(60)
 		}
