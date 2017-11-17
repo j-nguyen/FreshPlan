@@ -269,10 +269,9 @@
 			isa = PBXGroup;
 			children = (
 				409A55341F86B0D200EB29A4 /* AppDelegate.swift */,
-				409A553B1F86B0D200EB29A4 /* Assets.xcassets */,
 				409A553D1F86B0D200EB29A4 /* LaunchScreen.storyboard */,
-				409A55401F86B0D200EB29A4 /* Info.plist */,
 				40426D041F86B7E500875179 /* Sources */,
+				409B2BF61FBE63DF000A7F16 /* Resources */,
 			);
 			path = FreshPlan;
 			sourceTree = "<group>";
@@ -304,6 +303,15 @@
 				409B2BF41FBE6234000A7F16 /* ProfileAssembler.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		409B2BF61FBE63DF000A7F16 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				409A553B1F86B0D200EB29A4 /* Assets.xcassets */,
+				409A55401F86B0D200EB29A4 /* Info.plist */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		40BD700E1F910F41005B3B9D /* Meetup */ = {
@@ -741,7 +749,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 35PYRYEWH9;
-				INFOPLIST_FILE = FreshPlan/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/FreshPlan/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fractalpoint.freshplan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -760,7 +768,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 35PYRYEWH9;
-				INFOPLIST_FILE = FreshPlan/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/FreshPlan/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fractalpoint.freshplan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
