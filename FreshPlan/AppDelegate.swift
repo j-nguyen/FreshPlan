@@ -19,11 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		guard let window = self.window else { fatalError("no window") }
 		// setup window to make sure
 		// check to make sure if token exists or not
-//		if let _ = UserDefaults.standard.string(forKey: "token") {
+		if let _ = UserDefaults.standard.string(forKey: "token") {
 			window.rootViewController = HomeAssembler.make()
-//		} else {
-//			window.rootViewController = LoginAssembler.make()
-//		}
+		} else {
+			window.rootViewController = LoginAssembler.make()
+		}
 		window.makeKeyAndVisible()
 		window.backgroundColor = UIColor.white
 		

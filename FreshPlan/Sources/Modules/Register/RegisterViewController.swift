@@ -16,6 +16,9 @@ public final class RegisterViewController: UIViewController {
 	private var router: RegisterRouter!
 	private var viewModel: RegisterViewModelProtocol!
     
+    // MARK: - Stack Views
+    private var stackView: UIStackView!
+    
     // MARK - Labels
     private var loginInLabel: UILabel!
     
@@ -36,6 +39,20 @@ public final class RegisterViewController: UIViewController {
     // MARK - Buttons
     private var signUpButton: MDCButton!
 	
+    public convenience init(router: RegisterRouter, viewModel: RegisterViewModel) {
+        self.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+        self.router = router
+    }
+    
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     // loads the view
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +61,7 @@ public final class RegisterViewController: UIViewController {
     
     //
     fileprivate func prepareView() {
+        prepareStackView()
         prepareLoginInLabel()
         prepareFirstName()
         prepareLastName()
@@ -52,6 +70,20 @@ public final class RegisterViewController: UIViewController {
         preparePassword()
         prepareSignUpButton()
         
+    }
+    
+    fileprivate func prepareStackView() {
+        stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        stackView.spacing = 10
+        
+        view.addSubview(stackView)
+        
+        stackView.snp.makeConstraints { make in
+            make.center.equalTo(view)
+        }
     }
     
     fileprivate func prepareLoginInLabel() {
@@ -66,7 +98,7 @@ public final class RegisterViewController: UIViewController {
         )
         
         loginInLabel.attributedText = mutableString
-        loginInLabel.font = UIFont(name: "Helvetica Neue", size: 11)
+        loginInLabel.font = MDCTypography.body1Font()
         loginInLabel.isUserInteractionEnabled = true
         
         view.addSubview(loginInLabel)
@@ -84,13 +116,10 @@ public final class RegisterViewController: UIViewController {
         
         firstNameFieldController = MDCTextInputControllerDefault(textInput: firstNameField)
         
-        view.addSubview(firstNameField)
+        stackView.addArrangedSubview(firstNameField)
         
         firstNameField.snp.makeConstraints { make in
-            make.top.equalTo(100)
-            make.left.equalTo(10)
-            make.right.equalTo(-10)
-            make.width.equalTo(300)
+            make.width.equalTo(view).inset(20)
         }
     }
     
@@ -101,13 +130,10 @@ public final class RegisterViewController: UIViewController {
         
         lastNameFieldController = MDCTextInputControllerDefault(textInput: lastNameField)
         
-        view.addSubview(lastNameField)
+        stackView.addArrangedSubview(lastNameField)
         
         lastNameField.snp.makeConstraints { make in
-            make.top.equalTo(firstNameField.snp.bottom).offset(10)
-            make.left.equalTo(10)
-            make.right.equalTo(-10)
-            make.width.equalTo(300)
+            make.width.equalTo(view).inset(20)
         }
     }
     
@@ -118,14 +144,10 @@ public final class RegisterViewController: UIViewController {
         
         displayNameFieldController = MDCTextInputControllerDefault(textInput: displayNameField)
         
-        view.addSubview(displayNameField)
+        stackView.addArrangedSubview(displayNameField)
         
         displayNameField.snp.makeConstraints { make in
-            make.top.equalTo(lastNameField.snp.bottom).offset(10)
-            make.left.equalTo(10)
-            make.right.equalTo(-10)
-            make.width.equalTo(300)
-            
+            make.width.equalTo(view).inset(20)
         }
     }
     
@@ -137,14 +159,10 @@ public final class RegisterViewController: UIViewController {
         
         emailFieldController = MDCTextInputControllerDefault(textInput: emailField)
         
-        view.addSubview(emailField)
+        stackView.addArrangedSubview(emailField)
         
         emailField.snp.makeConstraints { make in
-            make.top.equalTo(displayNameField.snp.bottom).offset(10)
-            make.left.equalTo(10)
-            make.right.equalTo(-10)
-            make.width.equalTo(300)
-            
+            make.width.equalTo(view).inset(20)
         }
     }
     
@@ -156,14 +174,10 @@ public final class RegisterViewController: UIViewController {
         
         passwordFieldController = MDCTextInputControllerDefault(textInput: passwordField)
         
-        view.addSubview(passwordField)
+        stackView.addArrangedSubview(passwordField)
         
         passwordField.snp.makeConstraints { make in
-            make.top.equalTo(emailField.snp.bottom).offset(10)
-            make.left.equalTo(10)
-            make.right.equalTo(-10)
-            make.width.equalTo(300)
-            
+            make.width.equalTo(view).inset(20)
         }
         
     }
@@ -173,28 +187,10 @@ public final class RegisterViewController: UIViewController {
         signUpButton.setTitle("Sign Up", for: .normal)
         signUpButton.backgroundColor = MDCPalette.lightBlue.tint800
         
-        view.addSubview(signUpButton)
+        stackView.addArrangedSubview(signUpButton)
         
         signUpButton.snp.makeConstraints { make in
-            make.top.equalTo(passwordField.snp.bottom).offset(15)
-            make.left.equalTo(10)
-            make.right.equalTo(-10)
-            make.width.equalTo(300)
+            make.width.equalTo(view).inset(20)
         }
     }
-    
-	public convenience init(router: RegisterRouter, viewModel: RegisterViewModel) {
-		self.init(nibName: nil, bundle: nil)
-		self.viewModel = viewModel
-		self.router = router
-	}
-	
-    //
-	public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-	}
-	
-	public required init?(coder aDecoder: NSCoder) {
-		super.init(coder: aDecoder)
-	}
 }
