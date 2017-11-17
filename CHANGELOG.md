@@ -1,7 +1,6 @@
 # Change Log
 
-## [Unreleased](https://github.com/j-nguyen/FreshPlan/tree/HEAD)
-
+## [v0.1.0](https://github.com/j-nguyen/FreshPlan/tree/v0.1.0) (2017-11-17)
 **Implemented enhancements:**
 
 - Switch to Swift 4 [\#41](https://github.com/j-nguyen/FreshPlan/issues/41)
