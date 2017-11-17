@@ -13,6 +13,6 @@ public final class RegisterAssembler {
 		let viewModel = RegisterViewModel()
 		let router = RegisterRouter()
 		
-		return RegisterViewController(router: router, viewModel: viewModel)
+		return RegisterViewController(viewModel: viewModel, router: router)
 	}
 }

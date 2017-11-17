@@ -14,6 +14,6 @@ public final class MeetupAssembler {
 		let viewModel = MeetupViewModel()
 		let router = MeetupRouter()
 		
-		return MeetupController(router: router, viewModel: viewModel)
+		return MeetupController(viewModel: viewModel, router: router)
 	}
 }

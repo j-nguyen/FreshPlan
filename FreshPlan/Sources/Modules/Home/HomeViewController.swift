@@ -12,7 +12,7 @@ public final class HomeViewController: UITabBarController {
 	public var viewModel: HomeViewModelProtocol!
 	public var router: HomeRouter!
 	
-	public convenience init(router: HomeRouter, viewModel: HomeViewModel) {
+	public convenience init(viewModel: HomeViewModel, router: HomeRouter) {
 		self.init(nibName: nil, bundle: nil)
 		self.viewModel = viewModel
 		self.router = router

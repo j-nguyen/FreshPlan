@@ -14,6 +14,6 @@ public final class HomeAssembler {
 		let viewModel = HomeViewModel()
 		let router = HomeRouter()
 		
-		return HomeViewController(router: router, viewModel: viewModel)
+		return HomeViewController(viewModel: viewModel, router: router)
 	}
 }
