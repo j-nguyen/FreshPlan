@@ -34,7 +34,12 @@ public final class HomeViewController: UITabBarController {
 		super.viewWillAppear(animated)
 		// set up the tabs
 		let meetupController = MeetupAssembler.make()
-		meetupController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(named: "ic_home")?.withRenderingMode(.alwaysTemplate), tag: 0)
+		
+		meetupController.tabBarItem = UITabBarItem(
+			title: "Home",
+			image: UIImage(named: "ic_home")?.withRenderingMode(.alwaysTemplate),
+			tag: 0
+		)
 		
 		setViewControllers([meetupController], animated: animated)
 	}
