@@ -9,9 +9,9 @@
 import UIKit
 
 public protocol RouterProtocol {
-	func route(
+	func route (
 		from context: UIViewController,
 		to route: String,
 		parameters: [String: Any]?
-	)
+	) throws
 }

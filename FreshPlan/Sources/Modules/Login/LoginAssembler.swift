@@ -7,11 +7,16 @@
 //
 
 import UIKit
+import Moya
 
-public final class LoginAssembler: AssemblerProtocol {
+public final class LoginAssembler {
 	public static func make() -> UIViewController {
-		let viewModel = LoginViewModel()
+		let viewModel = LoginViewModel(provider: provider)
 		let router = LoginRouter()
 		return LoginViewController(viewModel: viewModel, router: router)
+	}
+	
+	private static var provider: MoyaProvider<FreshPlan> {
+		return MoyaProvider<FreshPlan>(plugins: [NetworkLoggerPlugin(verbose: true)])
 	}
 }
