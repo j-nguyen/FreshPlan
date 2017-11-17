@@ -79,6 +79,7 @@ public class LoginViewModel: LoginViewModelProtocol {
 	}
 	
 	private func loginRequest(email: String, password: String) -> Observable<Response> {
-		return self.provider.rx.request(.login(email, password)).asObservable()
+		return self.provider.rx.request(.login(email, password))
+			.asObservable()
 	}
 }

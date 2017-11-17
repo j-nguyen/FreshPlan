@@ -18,7 +18,6 @@ extension UIColor {
 	}
 	
 	static var greenBackgroundColor: UIColor {
-		// rgba(46, 204, 113,1.0)
 		return UIColor(red: 46 / 255, green: 204 / 255, blue: 113 / 255, alpha: 1)
 	}
 }
