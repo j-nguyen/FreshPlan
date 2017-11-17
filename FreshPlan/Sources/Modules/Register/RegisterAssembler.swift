@@ -14,5 +14,5 @@ public final class RegisterAssembler: AssemblerProtocol {
 		let router = RegisterRouter()
 		
 		return RegisterViewController(router: router, viewModel: viewModel)
-	}
+    }
 }
