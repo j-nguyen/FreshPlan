@@ -39,7 +39,7 @@ public final class RegisterViewController: UIViewController {
     // MARK - Buttons
     private var signUpButton: MDCButton!
 	
-    public convenience init(router: RegisterRouter, viewModel: RegisterViewModel) {
+    public convenience init(viewModel: RegisterViewModel, router: RegisterRouter) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
         self.router = router
