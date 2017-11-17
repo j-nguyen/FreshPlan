@@ -23,6 +23,6 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 	public init(provider: MoyaProvider<FreshPlan>) {
 		self.provider = provider
 		
-		
+		// set up the friends list in here
 	}
 }
