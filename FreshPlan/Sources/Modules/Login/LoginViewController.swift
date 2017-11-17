@@ -17,17 +17,20 @@ public class LoginViewController: UIViewController {
 	private var viewModel: LoginViewModelProtocol!
 	private var router: LoginRouter!
 	
-	// MARK - Buttons
+	// MARK: - Stack Views
+	private var stackView: UIStackView!
+	
+	// MARK: - Buttons
 	private var loginButton: MDCButton!
 	
-	// MARK - TextField
+	// MARK: - TextField
 	private var emailField: MDCTextField!
 	private var passwordField: MDCTextField!
 	
-	// MARK - UILabel
+	// MARK: - UILabel
 	private var registerLabel: UILabel!
 	
-	// MARK - Floating Placeholder Input
+	// MARK: - Floating Placeholder Input
 	private var emailFieldController: MDCTextInputController!
 	private var passwordFieldController: MDCTextInputController!
 	
@@ -59,8 +62,7 @@ public class LoginViewController: UIViewController {
 		viewModel.error
 			.asObservable()
 			.filterEmpty()
-			.subscribe(onNext: { [weak self] reason in
-				guard let this = self else { return }
+			.subscribe(onNext: { reason in
 				// create a snack bar displaying the reason
 				let message = MDCSnackbarMessage()
 				message.text = reason
@@ -70,7 +72,8 @@ public class LoginViewController: UIViewController {
 	}
 	
 	fileprivate func prepareView() {
-		view.backgroundColor = UIColor.grayBackgroundColor
+		view.backgroundColor = .grayBackgroundColor
+		prepareStackView()
 		prepareEmailField()
 		preparePasswordField()
 		prepareLoginButton()
@@ -78,23 +81,42 @@ public class LoginViewController: UIViewController {
 	}
 	
 	// MARK - Preparing Views
+
+	fileprivate func prepareStackView() {
+		stackView = UIStackView()
+		stackView.axis = .vertical
+		stackView.alignment = .center
+		stackView.distribution = .fill
+		stackView.spacing = 10
+		
+		view.addSubview(stackView)
+		
+		stackView.snp.makeConstraints { make in
+			make.center.equalTo(view)
+		}
+	}
 	
 	fileprivate func prepareEmailField() {
 		emailField = MDCTextField()
 		emailField.placeholder = "Email Address"
 		emailField.returnKeyType = .next
 		emailField.keyboardType = .emailAddress
+		emailField.autocapitalizationType = .none
 		
 		emailFieldController = MDCTextInputControllerDefault(textInput: emailField)
 		
-		view.addSubview(emailField)
+		stackView.addArrangedSubview(emailField)
 		
 		emailField.snp.makeConstraints { make in
-			make.top.equalTo(100)
-			make.left.equalTo(10)
-			make.right.equalTo(-10)
-			make.width.equalTo(300)
+			make.width.equalTo(view).inset(20)
 		}
+		
+		emailField.rx.controlEvent(.editingDidEndOnExit)
+			.subscribe(onNext: { [weak self] in
+				guard let this = self else { return }
+				this.passwordField.becomeFirstResponder()
+			})
+			.disposed(by: disposeBag)
 		
 		emailField.rx.text
 			.orEmpty
@@ -110,13 +132,10 @@ public class LoginViewController: UIViewController {
 		
 		passwordFieldController = MDCTextInputControllerDefault(textInput: passwordField)
 		
-		view.addSubview(passwordField)
+		stackView.addArrangedSubview(passwordField)
 		
 		passwordField.snp.makeConstraints { make in
-			make.top.equalTo(emailField.snp.bottom).offset(10)
-			make.left.equalTo(10)
-			make.right.equalTo(-10)
-			make.width.equalTo(300)
+			make.width.equalTo(view).inset(20)
 		}
 		
 		passwordField.rx.text
@@ -130,13 +149,11 @@ public class LoginViewController: UIViewController {
 		loginButton.setTitle("Login", for: .normal)
 		loginButton.backgroundColor = MDCPalette.lightBlue.tint800
 		
-		view.addSubview(loginButton)
+		stackView.addArrangedSubview(loginButton)
 		
 		loginButton.snp.makeConstraints { make in
-			make.top.equalTo(passwordField.snp.bottom).offset(15)
-			make.left.equalTo(10)
-			make.right.equalTo(-10)
-			make.width.equalTo(300)
+			make.width.equalTo(view).inset(20)
+			make.height.equalTo(50)
 		}
 		
 		viewModel.loginEnabled
@@ -151,6 +168,7 @@ public class LoginViewController: UIViewController {
 			.filter { $0 }
 			.subscribe(onNext: { [weak self] _ in
 				guard let this = self else { return }
+				
 				try? this.router.route(from: this, to: LoginRouter.Routes.home.rawValue)
 			})
 			.disposed(by: disposeBag)
@@ -160,7 +178,9 @@ public class LoginViewController: UIViewController {
 			.filter { $0 }
 			.subscribe(onNext: { [weak self] _ in 
 				guard let this = self else { return }
-				try? this.router.route(from: this, to: LoginRouter.Routes.verify.rawValue)
+				guard let text = this.emailField.text else { return }
+				
+				try? this.router.route(from: this, to: LoginRouter.Routes.verify.rawValue, parameters: ["email": text])
 			})
 			.disposed(by: disposeBag)
 	}
@@ -178,13 +198,13 @@ public class LoginViewController: UIViewController {
 		)
 		
 		registerLabel.attributedText = mutableString
-		registerLabel.font = UIFont(name: "Helvetica Neue", size: 11)
+		registerLabel.font = UIFont(name: "Helvetica Neue", size: 16)
 		registerLabel.isUserInteractionEnabled = true
 		
 		view.addSubview(registerLabel)
 		
 		registerLabel.snp.makeConstraints { make in
-			make.bottom.equalTo(view).offset(-10)
+			make.bottom.equalTo(view).inset(20)
 			make.centerX.equalTo(view)
 		}
 		

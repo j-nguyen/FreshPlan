@@ -1,18 +1,22 @@
-platform :ios, '11.0'
-# use_frameworks!
+platform :ios, '10.3'
+inhibit_all_warnings!
+use_frameworks!
 
 target 'FreshPlan' do
-  use_frameworks!
- 
-  pod 'SnapKit', '~> 3.2'
-  pod 'RxSwift', '~> 3.0'
-  pod 'RxCocoa', '~> 3.0'
+  pod 'SnapKit'
+  pod 'RxSwift'
+  pod 'RxCocoa'
   pod 'JWTDecode'
   pod 'RxDataSources'
   pod 'RxGesture'
   pod 'Moya/RxSwift'
-  pod 'SwiftyJSON'
-  pod 'SwiftyUserDefaults'
   pod 'RxOptional'
   pod 'MaterialComponents'
+end
+
+post_install do |installer|
+  installer.pods_project.build_configurations.each do |config|
+    # Configure Pod targets
+    config.build_settings['SWIFT_VERSION'] = '4.0'
+  end
 end

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public final class RegisterAssembler: AssemblerProtocol {
+public final class RegisterAssembler {
 	public static func make() -> UIViewController {
 		let viewModel = RegisterViewModel()
 		let router = RegisterRouter()
