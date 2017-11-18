@@ -32,8 +32,9 @@ public final class HomeViewController: UITabBarController {
 	
 	public override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		// set up the tabs
+		//: MARK - View Controllers
 		let meetupController = MeetupAssembler.make()
+		let profileController = ProfileAssembler.make()
 		
 		meetupController.tabBarItem = UITabBarItem(
 			title: "Home",
@@ -41,6 +42,12 @@ public final class HomeViewController: UITabBarController {
 			tag: 0
 		)
 		
-		setViewControllers([meetupController], animated: animated)
+		profileController.tabBarItem = UITabBarItem(
+			title: "Profile",
+			image: UIImage(named: "ic_account_circle")?.withRenderingMode(.alwaysTemplate),
+			tag: 1
+		)
+		
+		setViewControllers([meetupController, profileController], animated: animated)
 	}
 }
