@@ -48,6 +48,8 @@ public final class HomeViewController: UITabBarController {
 			tag: 1
 		)
 		
-		setViewControllers([meetupController, profileController], animated: animated)
+		let viewControllers = [meetupController, profileController].flatMap { UINavigationController(rootViewController: $0) }
+		
+		setViewControllers(viewControllers, animated: animated)
 	}
 }
