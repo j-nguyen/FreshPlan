@@ -63,7 +63,7 @@ public final class ProfileViewController: UIViewController {
 	}
 	
 	private func prepareNavigationBar() {
-		appBar.headerViewController.headerView.backgroundColor = MDCPalette.blue.tint400
+		appBar.headerViewController.headerView.backgroundColor = MDCPalette.blue.tint700
 		appBar.headerViewController.headerView.trackingScrollView = self.profileTableView
 		appBar.navigationBar.tintColor = UIColor.white
 		appBar.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor: UIColor.white ]

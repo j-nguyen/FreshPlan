@@ -26,3 +26,16 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 		// set up the friends list in here
 	}
 }
+
+//: MARK - Section Models
+extension ProfileViewModel {
+	public enum SectionModel {
+		case email(description: String)
+	}
+	
+	public enum SectionItem {
+		case profile(title: String, imageUrl: String, order: Int)
+		case friends(title: String, order: Int)
+		case friendRequests(title: String, order: Int)
+	}
+}
