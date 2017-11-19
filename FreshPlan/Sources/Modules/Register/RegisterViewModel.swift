@@ -39,7 +39,7 @@ public class RegisterViewModel: RegisterViewModelProtocol {
 
     public var signUpEnabled: Observable<Bool> {
         return Observable.combineLatest(firstName.asObservable(), lastName.asObservable(), displayName.asObservable(), email.asObservable(), password.asObservable()) { (firstName, lastName, displayName, email, password) -> Bool in
-            return !firstName.isEmpty && lastName.isEmpty && displayName.isEmpty && !email.isEmpty && !password.isEmpty
+            return !firstName.isEmpty && !lastName.isEmpty && !displayName.isEmpty && !email.isEmpty && !password.isEmpty
         }
     }
     

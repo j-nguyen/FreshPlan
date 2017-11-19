@@ -95,21 +95,31 @@ public final class RegisterViewController: UIViewController {
         let mutableString = NSMutableAttributedString(attributedString: NSAttributedString(string: registerText))
         
         mutableString.addAttribute(
-						NSAttributedStringKey.foregroundColor,
+            NSAttributedStringKey.foregroundColor,
             value: MDCPalette.lightBlue.accent700!,
             range: NSRange(location: 24, length: 15)
         )
         
         loginInLabel.attributedText = mutableString
-        loginInLabel.font = MDCTypography.body1Font()
+        loginInLabel.font = UIFont(name: "Helvetica Neue", size: 16)
         loginInLabel.isUserInteractionEnabled = true
         
         view.addSubview(loginInLabel)
         
         loginInLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(view).offset(-10)
+            make.bottom.equalTo(view).inset(20)
             make.centerX.equalTo(view)
         }
+
+        
+        loginInLabel.rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let this = self else { return }
+                try? this.router.route(from: this, to: RegisterRouter.Routes.login.rawValue, parameters: nil)
+            })
+            .disposed(by: disposeBag)
     }
     
     fileprivate func prepareFirstName() {
@@ -171,7 +181,7 @@ public final class RegisterViewController: UIViewController {
     
     fileprivate func prepareEmail() {
         emailField = MDCTextField()
-        emailField.placeholder = "Email"
+        emailField.placeholder = "Email Address"
         emailField.keyboardType = .emailAddress
         emailField.returnKeyType = .next
         
@@ -219,6 +229,7 @@ public final class RegisterViewController: UIViewController {
         
         signUpButton.snp.makeConstraints { make in
             make.width.equalTo(view).inset(20)
+            make.height.equalTo(50)
         }
         
         viewModel.signUpEnabled
@@ -233,20 +244,8 @@ public final class RegisterViewController: UIViewController {
             .filter { $0 }
             .subscribe(onNext: { [weak self] _ in
                 guard let this = self else { return }
-                guard let text = this.emailField.text else { return }
                 
-                try? this.router.route(from: this, to: RegisterRouter.Routes.login.rawValue, parameters: ["email": text])
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.signUpUnverified
-            .asObservable()
-            .filter { $0 }
-            .subscribe(onNext: { [weak self] _ in
-                guard let this = self else { return }
-                guard let text = this.emailField.text else { return }
-                
-                try? this.router.route(from: this, to: LoginRouter.Routes.verify.rawValue, parameters: ["email": text])
+                try? this.router.route(from: this, to: RegisterRouter.Routes.login.rawValue, parameters: nil)
             })
             .disposed(by: disposeBag)
     }
