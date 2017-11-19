@@ -38,6 +38,9 @@ public final class RegisterViewController: UIViewController {
     
     // MARK - Buttons
     private var signUpButton: MDCButton!
+    
+    // MARK - Dispoable bag
+    private let disposeBag = DisposeBag()
 	
     public convenience init(viewModel: RegisterViewModel, router: RegisterRouter) {
         self.init(nibName: nil, bundle: nil)
@@ -121,6 +124,11 @@ public final class RegisterViewController: UIViewController {
         firstNameField.snp.makeConstraints { make in
             make.width.equalTo(view).inset(20)
         }
+        
+        firstNameField.rx.text
+            .orEmpty
+            .bind(to: viewModel.firstName)
+            .disposed(by: disposeBag)
     }
     
     fileprivate func prepareLastName() {
@@ -135,6 +143,11 @@ public final class RegisterViewController: UIViewController {
         lastNameField.snp.makeConstraints { make in
             make.width.equalTo(view).inset(20)
         }
+        
+        lastNameField.rx.text
+            .orEmpty
+            .bind(to: viewModel.lastName)
+            .disposed(by: disposeBag)
     }
     
     fileprivate func prepareDisplayName() {
@@ -149,6 +162,11 @@ public final class RegisterViewController: UIViewController {
         displayNameField.snp.makeConstraints { make in
             make.width.equalTo(view).inset(20)
         }
+        
+        displayNameField.rx.text
+            .orEmpty
+            .bind(to: viewModel.displayName)
+            .disposed(by: disposeBag)
     }
     
     fileprivate func prepareEmail() {
@@ -164,6 +182,11 @@ public final class RegisterViewController: UIViewController {
         emailField.snp.makeConstraints { make in
             make.width.equalTo(view).inset(20)
         }
+        
+        emailField.rx.text
+            .orEmpty
+            .bind(to: viewModel.email)
+            .disposed(by: disposeBag)
     }
     
     fileprivate func preparePassword() {
@@ -180,6 +203,11 @@ public final class RegisterViewController: UIViewController {
             make.width.equalTo(view).inset(20)
         }
         
+        passwordField.rx.text
+            .orEmpty
+            .bind(to: viewModel.password)
+            .disposed(by: disposeBag)
+        
     }
     
     fileprivate func prepareSignUpButton() {
@@ -192,5 +220,34 @@ public final class RegisterViewController: UIViewController {
         signUpButton.snp.makeConstraints { make in
             make.width.equalTo(view).inset(20)
         }
+        
+        viewModel.signUpEnabled
+            .bind(to: signUpButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        viewModel.signUpTap = signUpButton.rx.tap.asObservable()
+        viewModel.bindButtons()
+        
+        viewModel.signUpSuccess
+            .asObservable()
+            .filter { $0 }
+            .subscribe(onNext: { [weak self] _ in
+                guard let this = self else { return }
+                guard let text = this.emailField.text else { return }
+                
+                try? this.router.route(from: this, to: RegisterRouter.Routes.login.rawValue, parameters: ["email": text])
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.signUpUnverified
+            .asObservable()
+            .filter { $0 }
+            .subscribe(onNext: { [weak self] _ in
+                guard let this = self else { return }
+                guard let text = this.emailField.text else { return }
+                
+                try? this.router.route(from: this, to: LoginRouter.Routes.verify.rawValue, parameters: ["email": text])
+            })
+            .disposed(by: disposeBag)
     }
 }

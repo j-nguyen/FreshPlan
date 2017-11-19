@@ -11,6 +11,7 @@ import UIKit
 public class RegisterRouter {
 	public enum Routes: String {
 		case register
+        case login
 	}
 	
 	fileprivate enum RouteError: Error {
@@ -30,6 +31,10 @@ extension RegisterRouter: RouterProtocol {
 		case .register:
 			window.rootViewController = RegisterAssembler.make()
 			break
+        case .login:
+            window.rootViewController = LoginAssembler.make()
+            break
 		}
+    
 	}
 }
