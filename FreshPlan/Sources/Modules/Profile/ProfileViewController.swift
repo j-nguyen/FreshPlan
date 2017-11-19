@@ -20,6 +20,9 @@ public final class ProfileViewController: UIViewController {
 	//: MARK - AppBar
 	fileprivate let appBar: MDCAppBar = MDCAppBar()
 	
+	//: MARK - DisposeBag
+	private let disposeBag: DisposeBag = DisposeBag()
+	
 	//: MARK - TableView
 	private var profileTableView: UITableView!
 	
@@ -39,11 +42,14 @@ public final class ProfileViewController: UIViewController {
 		super.init(coder: aDecoder)
 	}
 	
-	public override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
+	public override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
 		
-		// sets up the nav to be hidden
-		navigationController?.setNavigationBarHidden(false, animated: animated)
+		navigationController?.setNavigationBarHidden(true, animated: animated)
+	}
+	
+	public override var childViewControllerForStatusBarStyle: UIViewController? {
+		return appBar.headerViewController
 	}
 	
 	public override func viewDidLoad() {
@@ -52,21 +58,25 @@ public final class ProfileViewController: UIViewController {
 	}
 	
 	private func prepareView() {
-		
+		prepareNavigationBar()
 		appBar.addSubviewsToParent()
 	}
 	
 	private func prepareNavigationBar() {
-		appBar.headerViewController.headerView.backgroundColor =
-		appBar.headerViewController.headerView.trackingScrollView = profileTableView
+		appBar.headerViewController.headerView.backgroundColor = MDCPalette.blue.tint400
+		appBar.headerViewController.headerView.trackingScrollView = self.profileTableView
 		appBar.navigationBar.tintColor = UIColor.white
+		appBar.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor: UIColor.white ]
 		
-		Observable.just("")
+		Observable.just("Profile")
+			.bind(to: navigationItem.rx.title)
+			.disposed(by: disposeBag)
+		
+		appBar.navigationBar.observe(navigationItem)
 	}
 	
 	private func prepareProfileTableView() {
 		profileTableView = UITableView()
 		
-		profileTableView
 	}
 }
