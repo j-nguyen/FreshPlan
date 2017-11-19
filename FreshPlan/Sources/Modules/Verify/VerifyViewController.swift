@@ -30,7 +30,7 @@ public final class VerifyViewController: UIViewController {
 	//: MARK - Left Button Item
 	private var closeButton: UIBarButtonItem!
 	
-	public convenience init(router: VerifyRouter, viewModel: VerifyViewModel) {
+	public convenience init(viewModel: VerifyViewModel, router: VerifyRouter) {
 		self.init(nibName: nil, bundle: nil)
 		self.viewModel = viewModel
 		self.router = router

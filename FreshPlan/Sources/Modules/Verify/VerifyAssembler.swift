@@ -14,7 +14,7 @@ public final class VerifyAssembler {
 		let viewModel = VerifyViewModel(provider: provider, email: email)
 		let router = VerifyRouter()
 		
-		return VerifyViewController(router: router, viewModel: viewModel)
+		return VerifyViewController(viewModel: viewModel, router: router)
 	}
 	
 	public static var provider: MoyaProvider<FreshPlan> {

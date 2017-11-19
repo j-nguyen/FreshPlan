@@ -31,6 +31,12 @@
 		409A553F1F86B0D200EB29A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 409A553D1F86B0D200EB29A4 /* LaunchScreen.storyboard */; };
 		409A554A1F86B0D200EB29A4 /* FreshPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409A55491F86B0D200EB29A4 /* FreshPlanTests.swift */; };
 		409A55551F86B0D200EB29A4 /* FreshPlanUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409A55541F86B0D200EB29A4 /* FreshPlanUITests.swift */; };
+		409B2BEF1FBE6192000A7F16 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BEE1FBE6192000A7F16 /* ProfileViewController.swift */; };
+		409B2BF11FBE619B000A7F16 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BF01FBE619B000A7F16 /* ProfileViewModel.swift */; };
+		409B2BF31FBE61F5000A7F16 /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BF21FBE61F5000A7F16 /* ProfileRouter.swift */; };
+		409B2BF51FBE6234000A7F16 /* ProfileAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BF41FBE6234000A7F16 /* ProfileAssembler.swift */; };
+		409B2BF81FBE64F9000A7F16 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BF71FBE64F9000A7F16 /* User.swift */; };
+		409B2BFA1FBE65AF000A7F16 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BF91FBE65AF000A7F16 /* Friend.swift */; };
 		40A311361F9EF503000FAFEB /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A311351F9EF503000FAFEB /* Token.swift */; };
 		40BD70101F910F53005B3B9D /* MeetupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD700F1F910F53005B3B9D /* MeetupController.swift */; };
 		40BD70121F910FD6005B3B9D /* MeetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD70111F910FD6005B3B9D /* MeetupViewModel.swift */; };
@@ -88,6 +94,12 @@
 		409A55501F86B0D200EB29A4 /* FreshPlanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreshPlanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		409A55541F86B0D200EB29A4 /* FreshPlanUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshPlanUITests.swift; sourceTree = "<group>"; };
 		409A55561F86B0D200EB29A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		409B2BEE1FBE6192000A7F16 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		409B2BF01FBE619B000A7F16 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		409B2BF21FBE61F5000A7F16 /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
+		409B2BF41FBE6234000A7F16 /* ProfileAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAssembler.swift; sourceTree = "<group>"; };
+		409B2BF71FBE64F9000A7F16 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		409B2BF91FBE65AF000A7F16 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		40A311351F9EF503000FAFEB /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		40BD700F1F910F53005B3B9D /* MeetupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupController.swift; sourceTree = "<group>"; };
 		40BD70111F910FD6005B3B9D /* MeetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupViewModel.swift; sourceTree = "<group>"; };
@@ -156,6 +168,7 @@
 		40426D051F86B7EE00875179 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				409B2BED1FBE6129000A7F16 /* Profile */,
 				40BD700E1F910F41005B3B9D /* Meetup */,
 				405C5A961F8D94CA00AC8F9F /* Home */,
 				408D08351F8D280B006BCA8E /* Verify */,
@@ -170,6 +183,8 @@
 			children = (
 				40BE778F1F9ED2310011C899 /* ResponseError.swift */,
 				40A311351F9EF503000FAFEB /* Token.swift */,
+				409B2BF71FBE64F9000A7F16 /* User.swift */,
+				409B2BF91FBE65AF000A7F16 /* Friend.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -260,10 +275,9 @@
 			isa = PBXGroup;
 			children = (
 				409A55341F86B0D200EB29A4 /* AppDelegate.swift */,
-				409A553B1F86B0D200EB29A4 /* Assets.xcassets */,
 				409A553D1F86B0D200EB29A4 /* LaunchScreen.storyboard */,
-				409A55401F86B0D200EB29A4 /* Info.plist */,
 				40426D041F86B7E500875179 /* Sources */,
+				409B2BF61FBE63DF000A7F16 /* Resources */,
 			);
 			path = FreshPlan;
 			sourceTree = "<group>";
@@ -284,6 +298,26 @@
 				409A55561F86B0D200EB29A4 /* Info.plist */,
 			);
 			path = FreshPlanUITests;
+			sourceTree = "<group>";
+		};
+		409B2BED1FBE6129000A7F16 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				409B2BEE1FBE6192000A7F16 /* ProfileViewController.swift */,
+				409B2BF01FBE619B000A7F16 /* ProfileViewModel.swift */,
+				409B2BF21FBE61F5000A7F16 /* ProfileRouter.swift */,
+				409B2BF41FBE6234000A7F16 /* ProfileAssembler.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		409B2BF61FBE63DF000A7F16 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				409A553B1F86B0D200EB29A4 /* Assets.xcassets */,
+				409A55401F86B0D200EB29A4 /* Info.plist */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		40BD700E1F910F41005B3B9D /* Meetup */ = {
@@ -530,14 +564,18 @@
 				408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */,
 				40BD70121F910FD6005B3B9D /* MeetupViewModel.swift in Sources */,
 				405C5A981F8D94E700AC8F9F /* HomeViewController.swift in Sources */,
+				409B2BF81FBE64F9000A7F16 /* User.swift in Sources */,
 				40426D151F86BC9C00875179 /* RouterProtocol.swift in Sources */,
 				40BD70141F910FFA005B3B9D /* MeetupRouter.swift in Sources */,
+				409B2BF11FBE619B000A7F16 /* ProfileViewModel.swift in Sources */,
+				409B2BEF1FBE6192000A7F16 /* ProfileViewController.swift in Sources */,
 				408D08391F8D285E006BCA8E /* VerifyAssembler.swift in Sources */,
 				408D08371F8D2818006BCA8E /* VerifyViewController.swift in Sources */,
 				40426D091F86B85500875179 /* LoginViewController.swift in Sources */,
 				408D083B1F8D2865006BCA8E /* VerifyRouter.swift in Sources */,
 				408D083D1F8D286D006BCA8E /* VerifyViewModel.swift in Sources */,
 				40A311361F9EF503000FAFEB /* Token.swift in Sources */,
+				409B2BF51FBE6234000A7F16 /* ProfileAssembler.swift in Sources */,
 				400FC2161F897BA200B3098B /* FreshPlan.swift in Sources */,
 				408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */,
 				409A55351F86B0D200EB29A4 /* AppDelegate.swift in Sources */,
@@ -546,12 +584,14 @@
 				40BD70161F911022005B3B9D /* MeetupAssembler.swift in Sources */,
 				405C5A9C1F8D950500AC8F9F /* HomeViewModel.swift in Sources */,
 				40426D0D1F86B86800875179 /* LoginAssembler.swift in Sources */,
+				409B2BF31FBE61F5000A7F16 /* ProfileRouter.swift in Sources */,
 				40426D0B1F86B85E00875179 /* LoginViewModel.swift in Sources */,
 				40497D1F1F8CF3A500A4E046 /* UIColor+.swift in Sources */,
 				408D08341F8D274A006BCA8E /* RegisterAssembler.swift in Sources */,
 				40BE77901F9ED2310011C899 /* ResponseError.swift in Sources */,
 				405C5A9E1F8D953500AC8F9F /* HomeRouter.swift in Sources */,
 				40BD70101F910F53005B3B9D /* MeetupController.swift in Sources */,
+				409B2BFA1FBE65AF000A7F16 /* Friend.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -715,13 +755,13 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 35PYRYEWH9;
-				INFOPLIST_FILE = FreshPlan/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/FreshPlan/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fractalpoint.freshplan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1a6ea855-9345-4536-a50a-87d9698e6fbf";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development net.fractalpoint.freshplan";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -734,13 +774,13 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 35PYRYEWH9;
-				INFOPLIST_FILE = FreshPlan/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/FreshPlan/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fractalpoint.freshplan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "41eb7c6c-b49d-49e4-83c4-d05d136274b4";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore net.fractalpoint.freshplan";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
