@@ -30,12 +30,79 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 //: MARK - Section Models
 extension ProfileViewModel {
 	public enum SectionModel {
-		case email(description: String)
+		case profile(order: Int, title: String, imageUrl: String, items: [SectionItem])
+		case friends(order: Int, title: String, items: [SectionItem])
+		case friendRequests(order: Int, title: String, items: [SectionItem])
 	}
 	
 	public enum SectionItem {
-		case profile(title: String, imageUrl: String, order: Int)
-		case friends(title: String, order: Int)
-		case friendRequests(title: String, order: Int)
+		case email(order: Int, description: String)
+		case displayName(order: Int, name: String)
+		case friend(order: Int, displayName: String)
+	}
+}
+
+//: MARK - SectionModelType
+extension ProfileViewModel.SectionModel: SectionModelType {
+	public typealias Item = ProfileViewModel.SectionItem
+	
+	public var items: [ProfileViewModel.SectionItem] {
+		switch self {
+		case let .profile(_, _, _, items):
+			return items.map { $0 }
+		case let .friendRequests(_, _, items):
+			return items.map { $0 }
+		case let .friends(_, _, items):
+			return items.map { $0 }
+		}
+	}
+	
+	public init(original: ProfileViewModel.SectionModel, items: [Item]) {
+		switch original {
+		case let .profile(order: order, title: title, imageUrl: imageUrl, items: _):
+			self = .profile(order: order, title: title, imageUrl: imageUrl, items: items)
+		case let .friends(order: order, title: title, items: _):
+			self = .friends(order: order, title: title, items: items)
+		case let .friendRequests(order: order, title: title, items: _):
+			self = .friendRequests(order: order, title: title, items: items)
+		}
+	}
+	
+	public var order: Int {
+		switch self {
+		case let .friendRequests(order, _, _):
+			return order
+		case let .friends(order, _, _):
+			return order
+		case let .profile(order, _, _, _):
+			return order
+		}
+	}
+	
+	public var title: String {
+		switch self {
+		case let .profile(_, title, _, _):
+			return title
+		case let .friendRequests(_, title, _):
+			return title
+		case let .friends(_, title, _):
+			return title
+		}
+	}
+	
+	public var imageUrl: String {
+		switch self {
+		case let .profile(_, _, imageUrl, _):
+			return imageUrl
+		default:
+			return ""
+		}
+	}
+}
+
+//: MARK - Equatable
+extension ProfileViewModel.SectionModel: Equatable {
+	public static func ==(lhs: ProfileViewModel.SectionModel, rhs: ProfileViewModel.SectionModel) -> Bool {
+		return lhs.order == rhs.order
 	}
 }
