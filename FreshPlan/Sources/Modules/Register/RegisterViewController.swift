@@ -92,7 +92,7 @@ public final class RegisterViewController: UIViewController {
         let mutableString = NSMutableAttributedString(attributedString: NSAttributedString(string: registerText))
         
         mutableString.addAttribute(
-            NSForegroundColorAttributeName,
+						NSAttributedStringKey.foregroundColor,
             value: MDCPalette.lightBlue.accent700!,
             range: NSRange(location: 24, length: 15)
         )
