@@ -10,20 +10,48 @@ import Foundation
 import RxSwift
 import RxDataSources
 import Moya
+import JWTDecode
 
 public protocol ProfileViewModelProtocol {
-	var friends: Variable<[Friend]> { get }
+	
 }
 
 public class ProfileViewModel: ProfileViewModelProtocol {
 	private let provider: MoyaProvider<FreshPlan>!
 	
-	public var friends: Variable<[Friend]> = Variable([])
+	private let disposeBag: DisposeBag = DisposeBag()
 	
 	public init(provider: MoyaProvider<FreshPlan>) {
 		self.provider = provider
 		
-		// set up the friends list in here
+		//: MARK - User Setup
+		let user = Observable.just(UserDefaults.standard.string(forKey: "token"))
+			.filterNil()
+			.map { token -> Int in
+				let jwt = try? decode(jwt: token)
+				guard let userId = jwt?.body["userId"] as? Int else { fatalError() }
+				return userId
+			}
+			.flatMap { self.requestUser(userId: $0) }
+			.map { try? JSONDecoder().decode(User.self, from: $0) }
+			.filterNil()
+		
+		let email = user.map { SectionItem.email(order: 0, description: $0.email) }
+		let displayName = user.map { SectionItem.displayName(order: 1, name: $0.displayName) }
+		
+		let userInfo = Observable.from([email, displayName])
+			.flatMap { $0 }
+			.toArray()
+		
+		user
+			.map { SectionModel.profile(order: 0, title: "\($0.firstName) \($0.lastName)", imageUrl: $0.profileUrl, items: userInfo)}
+		
+	}
+	
+	private func requestUser(userId: Int) -> Observable<Data> {
+		return provider.rx.request(.user(userId))
+			.asObservable()
+			.map { $0.data }
 	}
 }
 
