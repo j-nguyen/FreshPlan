@@ -101,7 +101,7 @@ public final class RegisterViewController: UIViewController {
         )
         
         loginInLabel.attributedText = mutableString
-        loginInLabel.font = UIFont(name: "Helvetica Neue", size: 16)
+        loginInLabel.font = MDCTypography.body1Font()
         loginInLabel.isUserInteractionEnabled = true
         
         view.addSubview(loginInLabel)
