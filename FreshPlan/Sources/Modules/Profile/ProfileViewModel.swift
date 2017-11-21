@@ -13,11 +13,14 @@ import Moya
 import JWTDecode
 
 public protocol ProfileViewModelProtocol {
-	
+	var profileItems: Variable<[ProfileViewModel.SectionModel]> { get }
 }
 
 public class ProfileViewModel: ProfileViewModelProtocol {
 	private let provider: MoyaProvider<FreshPlan>!
+	
+	private var items: Variable<[SectionItem]> = Variable([])
+	public var profileItems: Variable<[ProfileViewModel.SectionModel]> = Variable([])
 	
 	private let disposeBag: DisposeBag = DisposeBag()
 	
@@ -25,13 +28,7 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 		self.provider = provider
 		
 		//: MARK - User Setup
-		let user = Observable.just(UserDefaults.standard.string(forKey: "token"))
-			.filterNil()
-			.map { token -> Int in
-				let jwt = try? decode(jwt: token)
-				guard let userId = jwt?.body["userId"] as? Int else { fatalError() }
-				return userId
-			}
+		let user = Token.getJWT()
 			.flatMap { self.requestUser(userId: $0) }
 			.map { try? JSONDecoder().decode(User.self, from: $0) }
 			.filterNil()
@@ -39,12 +36,17 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 		let email = user.map { SectionItem.email(order: 0, description: $0.email) }
 		let displayName = user.map { SectionItem.displayName(order: 1, name: $0.displayName) }
 		
-		let userInfo = Observable.from([email, displayName])
+		Observable.from([email, displayName])
 			.flatMap { $0 }
 			.toArray()
+			.bind(to: items)
+			.disposed(by: disposeBag)
 		
 		user
-			.map { SectionModel.profile(order: 0, title: "\($0.firstName) \($0.lastName)", imageUrl: $0.profileUrl, items: userInfo)}
+			.map { SectionModel.profile(order: 0, title: "\($0.firstName) \($0.lastName)", imageUrl: $0.profileUrl, items: self.items.value) }
+			.toArray()
+			.bind(to: profileItems)
+			.disposed(by: disposeBag)
 		
 	}
 	

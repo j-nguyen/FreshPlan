@@ -25,6 +25,7 @@ public final class ProfileViewController: UIViewController {
 	
 	//: MARK - TableView
 	private var profileTableView: UITableView!
+	private var dataSource: RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>!
 	
 	public convenience init(viewModel: ProfileViewModel, router: ProfileRouter) {
 		self.init(nibName: nil, bundle: nil)
