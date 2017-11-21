@@ -71,7 +71,8 @@ public final class ProfileUserHeaderCell: UITableViewCell {
 		contentView.addSubview(profileImageView)
 		
 		profileImageView.snp.makeConstraints { make in
-			make.centerY.equalTo(contentView)
+			make.top.equalTo(contentView).inset(10)
+			make.bottom.equalTo(contentView).inset(10)
 			make.left.equalTo(contentView).offset(10)
 			make.width.equalTo(50)
 			make.height.equalTo(50)
@@ -99,11 +100,23 @@ public final class ProfileUserHeaderCell: UITableViewCell {
 				this.profileImageView.isHidden = false
 				this.profileImageView.image = image
 			})
-//			.bind(to: profileImageView.rx.image)
 			.disposed(by: disposeBag)
 	}
 	
 	private func prepareFullNameLabel() {
+		fullNameLabel = UILabel()
+		fullNameLabel.font = MDCTypography.headlineFont()
 		
+		contentView.addSubview(fullNameLabel)
+		
+		fullNameLabel.snp.makeConstraints { make in
+			make.left.equalTo(profileImageView.snp.right).offset(10)
+			make.centerY.equalTo(contentView)
+		}
+		
+		fullName
+			.asObservable()
+			.bind(to: fullNameLabel.rx.text)
+			.disposed(by: disposeBag)
 	}
 }

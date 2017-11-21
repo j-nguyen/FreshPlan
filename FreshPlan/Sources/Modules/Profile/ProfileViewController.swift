@@ -79,10 +79,11 @@ public final class ProfileViewController: UIViewController {
 	
 	private func prepareProfileTableView() {
 		profileTableView = UITableView()
-		profileTableView.rowHeight = 80
-		profileTableView.estimatedRowHeight = UITableViewAutomaticDimension
+		profileTableView.estimatedRowHeight = 100
+		profileTableView.rowHeight = UITableViewAutomaticDimension
 		profileTableView.rx.setDelegate(self).disposed(by: disposeBag)
 		profileTableView.registerCell(ProfileUserHeaderCell.self)
+		profileTableView.registerCell(UITableViewCell.self)
 	
 		view.addSubview(profileTableView)
 		
@@ -96,14 +97,14 @@ public final class ProfileViewController: UIViewController {
 				cell.fullName.on(.next(fullName))
 				cell.profileURL.on(.next(profileURL))
 				return cell
-//			case let .displayName(_, name):
-//				guard let cell = table.dequeueReusableCell(withIdentifier: "defaultCell") else { fatalError() }
-//				cell.textLabel?.text = name
-//				return cell
-//			case let .email(_, description):
-//				guard let cell = table.dequeueReusableCell(withIdentifier: "defaultCell") else { fatalError() }
-//				cell.textLabel?.text = description
-//				return cell
+			case let .displayName(_, name):
+				let cell = table.dequeueCell(ofType: UITableViewCell.self, for: index)
+				cell.textLabel?.text = name
+				return cell
+			case let .email(_, description):
+				let cell = table.dequeueCell(ofType: UITableViewCell.self, for: index)
+				cell.textLabel?.text = description
+				return cell
 			default:
 				return UITableViewCell()
 			}
@@ -141,7 +142,7 @@ extension ProfileViewController: UITableViewDelegate {
 		}
 	}
 
-	public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+	public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
 		let headerView = appBar.headerViewController.headerView
 		if scrollView == headerView.trackingScrollView {
 			headerView.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
