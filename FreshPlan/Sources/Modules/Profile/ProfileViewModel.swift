@@ -33,12 +33,14 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 			.map(User.self, using: JSONDecoder.Decode)
 			.share()
 		
-		let email = user.map { SectionItem.email(order: 0, description: $0.email) }
-		let displayName = user.map { SectionItem.displayName(order: 1, name: $0.displayName) }
+		let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, firstName: $0.firstName, lastName: $0.lastName) }
+		let email = user.map { SectionItem.email(order: 1, description: $0.email) }
+		let displayName = user.map { SectionItem.displayName(order: 2, name: $0.displayName) }
 		
-		Observable.from([displayName, email])
+		Observable.from([profile, displayName, email])
 			.flatMap { $0 }
 			.toArray()
+			.map { $0.sorted(by: { $0.order < $1.order }) }
 			.map { SectionModel.profile(order: 0, title: "My Profile", items: $0) }
 			.toArray()
 			.bind(to: profileItems)
@@ -60,6 +62,7 @@ extension ProfileViewModel {
 	}
 	
 	public enum SectionItem {
+		case profile(order: Int, profileURL: String, firstName: String, lastName: String)
 		case email(order: Int, description: String)
 		case displayName(order: Int, name: String)
 		case friend(order: Int, displayName: String)
@@ -118,6 +121,29 @@ extension ProfileViewModel.SectionModel: SectionModelType {
 //: MARK - Equatable
 extension ProfileViewModel.SectionModel: Equatable {
 	public static func ==(lhs: ProfileViewModel.SectionModel, rhs: ProfileViewModel.SectionModel) -> Bool {
+		return lhs.order == rhs.order
+	}
+}
+
+//: MARK - SectionItem
+extension ProfileViewModel.SectionItem {
+	public var order: Int {
+		switch self {
+		case let .profile(order, _, _, _):
+			return order
+		case let .displayName(order, _):
+			return order
+		case let .email(order, _):
+			return order
+		case let .friend(order, _):
+			return order
+		}
+	}
+}
+
+//: MARK - Equatable
+extension ProfileViewModel.SectionItem: Equatable {
+	public static func ==(lhs: ProfileViewModel.SectionItem, rhs: ProfileViewModel.SectionItem) -> Bool {
 		return lhs.order == rhs.order
 	}
 }

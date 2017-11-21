@@ -12,7 +12,7 @@ import UIKit
 //: MARK - UITableViewCell
 //// this registers the cell, and returns the type back too. This will make it easier for us to check for guards
 extension UITableView {
-	public func register<T: UITableViewCell>(_: T.Type) {
+	public func registerCell<T: UITableViewCell>(_: T.Type) {
 		register(T.self, forCellReuseIdentifier: String(describing: T.self))
 	}
 	

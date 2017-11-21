@@ -79,8 +79,8 @@ public final class ProfileViewController: UIViewController {
 	
 	private func prepareProfileTableView() {
 		profileTableView = UITableView()
-		profileTableView.register(UITableViewCell.self, forCellReuseIdentifier: "defaultCell")
-		
+		profileTableView.registerCell(ProfileUserHeaderCell.self)
+	
 		view.addSubview(profileTableView)
 		
 		profileTableView.snp.makeConstraints { $0.edges.equalTo(view) }
