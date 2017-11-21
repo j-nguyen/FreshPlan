@@ -57,5 +57,10 @@ public class RegisterViewModel: RegisterViewModelProtocol {
         
     }
     
+    private func registerRequest(firstName: String, lastName: String, displayName: String, email: String, password: String) -> Observable<Response> {
+        return self.provider.rx.request(.register(firstName, lastName, displayName, email, password))
+            .asObservable()
+    }
+    
 	
 }
