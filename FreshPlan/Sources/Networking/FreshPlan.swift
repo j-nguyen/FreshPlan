@@ -18,7 +18,7 @@ public enum FreshPlan {
 }
 
 extension FreshPlan: TargetType {
-	public var baseURL: URL { return URL(string: "https://fractalpoint.net/api/v1")! }
+	public var baseURL: URL { return URL(string: "https://johnnynguyen.ca/api/v1")! }
 	
 	// the specified path for each endpoint
 	public var path: String {
@@ -30,7 +30,7 @@ extension FreshPlan: TargetType {
 		case .verify:
 			return "/auth/verify"
 		case let .user(userId):
-			return "/user/\(userId)"
+			return "/users/\(userId)"
 		}
 	}
 	

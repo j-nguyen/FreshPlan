@@ -59,6 +59,7 @@ public final class ProfileViewController: UIViewController {
 	}
 	
 	private func prepareView() {
+		prepareProfileTableView()
 		prepareNavigationBar()
 		appBar.addSubviewsToParent()
 	}
@@ -86,21 +87,31 @@ public final class ProfileViewController: UIViewController {
 		
 		// set up data sources
 		dataSource = RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>(configureCell: { (dataSource, table, index, _) in
-			let cell: UITableViewCell = UITableViewCell(style: .subtitle, reuseIdentifier: "defaultCell")
 			switch dataSource[index] {
 			case let .displayName(_, name):
+				guard let cell = table.dequeueReusableCell(withIdentifier: "defaultCell") else { fatalError() }
+				print ("\(name) yoo")
 				cell.textLabel?.text = name
-			case let .email(_, description):
-				cell.textLabel?.text = description
-			default:
 				return cell
+			case let .email(_, description):
+				guard let cell = table.dequeueReusableCell(withIdentifier: "defaultCell") else { fatalError() }
+				cell.textLabel?.text = description
+				return cell
+			default:
+				return UITableViewCell()
 			}
-			return cell
 		})
 		
 		dataSource.titleForHeaderInSection = { _, _ in
 			return ""
 		}
+		
+		viewModel.profileItems
+			.asObservable()
+			.subscribe(onNext: { lol in
+				print (lol)
+			})
+			.disposed(by: disposeBag)
 		
 		viewModel.profileItems
 			.asObservable()

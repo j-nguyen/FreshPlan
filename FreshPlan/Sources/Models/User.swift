@@ -10,12 +10,12 @@ import Foundation
 
 public struct User: Decodable {
 	public let id: Int
+	public let email: String
+	public let verified: Bool
+	public let displayName: String
+	public let updatedAt: Date
 	public let firstName: String
 	public let lastName: String
-	public let displayName: String
-	public let email: String
-	public let profileUrl: String
-	public let verified: Bool
+	public let profileURL: String
 	public let createdAt: Date
-	public let updatedAt: Date
 }

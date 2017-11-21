@@ -30,37 +30,31 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 		//: MARK - User Setup
 		let user = Token.getJWT()
 			.flatMap { self.requestUser(userId: $0) }
-			.map { try? JSONDecoder().decode(User.self, from: $0) }
-			.filterNil()
+			.map(User.self, using: JSONDecoder.Decode)
+			.share()
 		
 		let email = user.map { SectionItem.email(order: 0, description: $0.email) }
 		let displayName = user.map { SectionItem.displayName(order: 1, name: $0.displayName) }
 		
-		Observable.from([email, displayName])
+		Observable.from([displayName, email])
 			.flatMap { $0 }
 			.toArray()
-			.bind(to: items)
-			.disposed(by: disposeBag)
-		
-		user
-			.map { SectionModel.profile(order: 0, title: "\($0.firstName) \($0.lastName)", imageUrl: $0.profileUrl, items: self.items.value) }
+			.map { SectionModel.profile(order: 0, title: "My Profile", items: $0) }
 			.toArray()
 			.bind(to: profileItems)
 			.disposed(by: disposeBag)
-		
 	}
 	
-	private func requestUser(userId: Int) -> Observable<Data> {
+	private func requestUser(userId: Int) -> Observable<Response> {
 		return provider.rx.request(.user(userId))
 			.asObservable()
-			.map { $0.data }
 	}
 }
 
 //: MARK - Section Models
 extension ProfileViewModel {
 	public enum SectionModel {
-		case profile(order: Int, title: String, imageUrl: String, items: [SectionItem])
+		case profile(order: Int, title: String, items: [SectionItem])
 		case friends(order: Int, title: String, items: [SectionItem])
 		case friendRequests(order: Int, title: String, items: [SectionItem])
 	}
@@ -78,7 +72,7 @@ extension ProfileViewModel.SectionModel: SectionModelType {
 	
 	public var items: [ProfileViewModel.SectionItem] {
 		switch self {
-		case let .profile(_, _, _, items):
+		case let .profile(_, _, items):
 			return items.map { $0 }
 		case let .friendRequests(_, _, items):
 			return items.map { $0 }
@@ -89,8 +83,8 @@ extension ProfileViewModel.SectionModel: SectionModelType {
 	
 	public init(original: ProfileViewModel.SectionModel, items: [Item]) {
 		switch original {
-		case let .profile(order: order, title: title, imageUrl: imageUrl, items: _):
-			self = .profile(order: order, title: title, imageUrl: imageUrl, items: items)
+		case let .profile(order: order, title: title, items: _):
+			self = .profile(order: order, title: title, items: items)
 		case let .friends(order: order, title: title, items: _):
 			self = .friends(order: order, title: title, items: items)
 		case let .friendRequests(order: order, title: title, items: _):
@@ -104,28 +98,19 @@ extension ProfileViewModel.SectionModel: SectionModelType {
 			return order
 		case let .friends(order, _, _):
 			return order
-		case let .profile(order, _, _, _):
+		case let .profile(order, _, _):
 			return order
 		}
 	}
 	
 	public var title: String {
 		switch self {
-		case let .profile(_, title, _, _):
+		case let .profile(_, title, _):
 			return title
 		case let .friendRequests(_, title, _):
 			return title
 		case let .friends(_, title, _):
 			return title
-		}
-	}
-	
-	public var imageUrl: String {
-		switch self {
-		case let .profile(_, _, imageUrl, _):
-			return imageUrl
-		default:
-			return ""
 		}
 	}
 }
