@@ -90,7 +90,6 @@ public final class ProfileViewController: UIViewController {
 			switch dataSource[index] {
 			case let .displayName(_, name):
 				guard let cell = table.dequeueReusableCell(withIdentifier: "defaultCell") else { fatalError() }
-				print ("\(name) yoo")
 				cell.textLabel?.text = name
 				return cell
 			case let .email(_, description):
