@@ -58,8 +58,8 @@ extension FreshPlan: TargetType {
 			encoding: JSONEncoding.default)
 		case let .verify(email, code):
 			return .requestParameters(parameters: ["email": email, "code": code], encoding: JSONEncoding.default)
-		case let .user(userId):
-			return .requestParameters(parameters: ["userId": userId], encoding: URLEncoding.queryString)
+		case .user(_):
+			return .requestPlain
 		}
 	}
 	
@@ -70,8 +70,10 @@ extension FreshPlan: TargetType {
 	
 	public var headers: [String: String]? {
 		switch self {
-		case .login, .register, .verify, .user:
+		case .login, .register, .verify:
 			return ["Content-Type": "application/json"]
+		case .user:
+			return ["Content-Type": "application/json", "Authorization": UserDefaults.standard.string(forKey: "token")!]
 		}
 	}
 }

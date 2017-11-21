@@ -78,6 +78,33 @@ public final class ProfileViewController: UIViewController {
 	
 	private func prepareProfileTableView() {
 		profileTableView = UITableView()
+		profileTableView.register(UITableViewCell.self, forCellReuseIdentifier: "defaultCell")
 		
+		view.addSubview(profileTableView)
+		
+		profileTableView.snp.makeConstraints { $0.edges.equalTo(view) }
+		
+		// set up data sources
+		dataSource = RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>(configureCell: { (dataSource, table, index, _) in
+			let cell: UITableViewCell = UITableViewCell(style: .subtitle, reuseIdentifier: "defaultCell")
+			switch dataSource[index] {
+			case let .displayName(_, name):
+				cell.textLabel?.text = name
+			case let .email(_, description):
+				cell.textLabel?.text = description
+			default:
+				return cell
+			}
+			return cell
+		})
+		
+		dataSource.titleForHeaderInSection = { _, _ in
+			return ""
+		}
+		
+		viewModel.profileItems
+			.asObservable()
+			.bind(to: profileTableView.rx.items(dataSource: dataSource))
+			.disposed(by: disposeBag)
 	}
 }

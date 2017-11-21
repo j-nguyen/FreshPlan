@@ -10,6 +10,7 @@ import Foundation
 import JWTDecode
 import RxSwift
 import MaterialComponents
+import UIKit
 
 public struct Token: Decodable {
 	public let token: String
@@ -24,19 +25,17 @@ extension Token {
 			.map { token in
 				guard let jwt = try? decode(jwt: token) else { fatalError() }
 				
-				if !jwt.expired {
-					if let userId = jwt.body["userId"] as? Int {
-						return userId
-					}
+				if jwt.expired, let window = UIApplication.shared.keyWindow {
+					// set up so that the user doesn't get anything returned
+					UserDefaults.standard.removeObject(forKey: "token")
+					window.rootViewController = LoginAssembler.make()
+					let alertController = MDCAlertController(title: "Login Expired", message: "Your login credentials have expired. Please log back in.")
+					let action = MDCAlertAction(title:"OK") { (action) in print("OK") }
+					alertController.addAction(action)
+					return -1
 				}
-				// set up so that the user doesn't get anything returned
-				guard let window = UIApplication.shared.keyWindow else { fatalError() }
-				UserDefaults.standard.removeObject(forKey: "token")
-				window.rootViewController = LoginAssembler.make()
-				let alertController = MDCAlertController(title: "Login Expired", message: "Your login credentials have expired. Please log back in.")
-				let action = MDCAlertAction(title:"OK") { (action) in print("OK") }
-				alertController.addAction(action)
-				return -1
+				
+				return jwt.body["userId"] as! Int
 			}
 	}
 }
