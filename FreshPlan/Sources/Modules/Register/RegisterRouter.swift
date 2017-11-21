@@ -12,6 +12,7 @@ public class RegisterRouter {
 	public enum Routes: String {
 		case register
         case login
+        case verify
 	}
 	
 	fileprivate enum RouteError: Error {
@@ -34,7 +35,10 @@ extension RegisterRouter: RouterProtocol {
         case .login:
             window.rootViewController = LoginAssembler.make()
             break
-		}
-    
-	}
+        case .verify:
+            guard let params = parameters, let email = params["email"] as? String else { return }
+            context.present(VerifyAssembler.make(email: email), animated: true, completion: nil)
+            break
+        }
+    }
 }

@@ -17,15 +17,17 @@ public protocol RegisterViewModelProtocol {
     var email: Variable<String> { get }
     var password: Variable<String> { get }
     var signUpEnabled: Observable<Bool> { get }
+    var error: Variable<String> { get }
     
     var signUpTap: Observable<Void>! { get set }
     var signUpSuccess: Variable<Bool> { get }
-    var signUpUnverified: Variable<Bool> { get }
+    var signUpUnSuccessful: Variable<Bool> { get }
     func bindButtons()
     
 }
 
 public class RegisterViewModel: RegisterViewModelProtocol {
+    
     private let provider: MoyaProvider<FreshPlan>
     
     private let disposeBag = DisposeBag()
@@ -35,6 +37,7 @@ public class RegisterViewModel: RegisterViewModelProtocol {
     public var displayName: Variable<String> = Variable("")
     public var email: Variable<String> = Variable("")
     public var password: Variable<String> = Variable("")
+    public var error: Variable<String> = Variable("")
     
 
     public var signUpEnabled: Observable<Bool> {
@@ -47,13 +50,41 @@ public class RegisterViewModel: RegisterViewModelProtocol {
     
     public var signUpSuccess: Variable<Bool> = Variable(false)
     
-    public var signUpUnverified: Variable<Bool> = Variable(false)
+    public var signUpUnSuccessful: Variable<Bool> = Variable(false)
     
     public init(provider: MoyaProvider<FreshPlan>) {
         self.provider = provider
     }
     
     public func bindButtons() {
+        let tap = signUpTap.flatMap { self.registerRequest(firstName: self.firstName.value, lastName: self.lastName.value, displayName: self.displayName.value, email: self.email.value, password: self.password.value) }
+        
+        tap
+            .filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
+            .map { $0.data }
+            .map { try? JSONDecoder().decode(Token.self, from: $0) }
+            .filterNil()
+            .map {
+                UserDefaults.standard.set($0.token, forKey: "token")
+                return true
+            }
+            .bind(to: self.signUpSuccess)
+            .disposed(by: disposeBag)
+        
+        tap
+            .filter { $0.statusCode > 299 }
+            .map { $0.data }
+            .map { try? JSONDecoder().decode(ResponseError.self, from: $0) }
+            .filterNil()
+            .map { $0.reason }
+            .bind(to: error)
+            .disposed(by: disposeBag)
+        
+        tap
+            .filter { $0.statusCode == 409 }
+            .map { $0.statusCode == 409 }
+            .bind(to: self.signUpUnSuccessful)
+            .disposed(by: disposeBag)
         
     }
     
