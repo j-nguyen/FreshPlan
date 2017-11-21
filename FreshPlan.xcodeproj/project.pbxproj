@@ -18,6 +18,7 @@
 		405C5A9A1F8D94FA00AC8F9F /* HomeAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A991F8D94FA00AC8F9F /* HomeAssembler.swift */; };
 		405C5A9C1F8D950500AC8F9F /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A9B1F8D950500AC8F9F /* HomeViewModel.swift */; };
 		405C5A9E1F8D953500AC8F9F /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A9D1F8D953500AC8F9F /* HomeRouter.swift */; };
+		4079B14A1FC47407007E9407 /* Token+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B1491FC47407007E9407 /* Token+.swift */; };
 		408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082D1F8D267A006BCA8E /* RegisterViewController.swift */; };
 		408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082F1F8D2716006BCA8E /* RegisterRouter.swift */; };
 		408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D08311F8D271F006BCA8E /* RegisterViewModel.swift */; };
@@ -76,6 +77,7 @@
 		405C5A991F8D94FA00AC8F9F /* HomeAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAssembler.swift; sourceTree = "<group>"; };
 		405C5A9B1F8D950500AC8F9F /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		405C5A9D1F8D953500AC8F9F /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
+		4079B1491FC47407007E9407 /* Token+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Token+.swift"; sourceTree = "<group>"; };
 		408D082D1F8D267A006BCA8E /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		408D082F1F8D2716006BCA8E /* RegisterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouter.swift; sourceTree = "<group>"; };
 		408D08311F8D271F006BCA8E /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 			children = (
 				40497D1E1F8CF3A500A4E046 /* UIColor+.swift */,
 				40C429011FC3D08C004579A6 /* JSONDecoder+.swift */,
+				4079B1491FC47407007E9407 /* Token+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -594,6 +597,7 @@
 				40497D1F1F8CF3A500A4E046 /* UIColor+.swift in Sources */,
 				408D08341F8D274A006BCA8E /* RegisterAssembler.swift in Sources */,
 				40BE77901F9ED2310011C899 /* ResponseError.swift in Sources */,
+				4079B14A1FC47407007E9407 /* Token+.swift in Sources */,
 				405C5A9E1F8D953500AC8F9F /* HomeRouter.swift in Sources */,
 				40BD70101F910F53005B3B9D /* MeetupController.swift in Sources */,
 				409B2BFA1FBE65AF000A7F16 /* Friend.swift in Sources */,
