@@ -23,6 +23,7 @@
 		4079B14E1FC4763B007E9407 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B14D1FC4763B007E9407 /* UILabel+.swift */; };
 		4079B1511FC4785F007E9407 /* ProfileUserHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B1501FC4785F007E9407 /* ProfileUserHeaderCell.swift */; };
 		4079B1541FC47E86007E9407 /* CacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B1531FC47E86007E9407 /* CacheStore.swift */; };
+		4079B1561FC49367007E9407 /* ProfileUserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B1551FC49367007E9407 /* ProfileUserInfoCell.swift */; };
 		408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082D1F8D267A006BCA8E /* RegisterViewController.swift */; };
 		408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082F1F8D2716006BCA8E /* RegisterRouter.swift */; };
 		408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D08311F8D271F006BCA8E /* RegisterViewModel.swift */; };
@@ -86,6 +87,7 @@
 		4079B14D1FC4763B007E9407 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		4079B1501FC4785F007E9407 /* ProfileUserHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserHeaderCell.swift; sourceTree = "<group>"; };
 		4079B1531FC47E86007E9407 /* CacheStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheStore.swift; sourceTree = "<group>"; };
+		4079B1551FC49367007E9407 /* ProfileUserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserInfoCell.swift; sourceTree = "<group>"; };
 		408D082D1F8D267A006BCA8E /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		408D082F1F8D2716006BCA8E /* RegisterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouter.swift; sourceTree = "<group>"; };
 		408D08311F8D271F006BCA8E /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				4079B1501FC4785F007E9407 /* ProfileUserHeaderCell.swift */,
+				4079B1551FC49367007E9407 /* ProfileUserInfoCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -612,6 +615,7 @@
 				408D083B1F8D2865006BCA8E /* VerifyRouter.swift in Sources */,
 				4079B1511FC4785F007E9407 /* ProfileUserHeaderCell.swift in Sources */,
 				408D083D1F8D286D006BCA8E /* VerifyViewModel.swift in Sources */,
+				4079B1561FC49367007E9407 /* ProfileUserInfoCell.swift in Sources */,
 				40A311361F9EF503000FAFEB /* Token.swift in Sources */,
 				409B2BF51FBE6234000A7F16 /* ProfileAssembler.swift in Sources */,
 				400FC2161F897BA200B3098B /* FreshPlan.swift in Sources */,

@@ -34,8 +34,8 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 			.share()
 		
 		let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: "\($0.firstName) \($0.lastName)") }
-		let email = user.map { SectionItem.email(order: 1, description: $0.email) }
-		let displayName = user.map { SectionItem.displayName(order: 2, name: $0.displayName) }
+		let email = user.map { SectionItem.email(order: 1, description: "Email: \($0.email)") }
+		let displayName = user.map { SectionItem.displayName(order: 2, name: "Display Name: \($0.displayName)") }
 		
 		Observable.from([profile, displayName, email])
 			.flatMap { $0 }

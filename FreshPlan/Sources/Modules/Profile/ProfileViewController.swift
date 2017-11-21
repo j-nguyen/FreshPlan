@@ -81,9 +81,10 @@ public final class ProfileViewController: UIViewController {
 		profileTableView = UITableView()
 		profileTableView.estimatedRowHeight = 100
 		profileTableView.rowHeight = UITableViewAutomaticDimension
+		profileTableView.separatorStyle = .none
 		profileTableView.rx.setDelegate(self).disposed(by: disposeBag)
 		profileTableView.registerCell(ProfileUserHeaderCell.self)
-		profileTableView.registerCell(UITableViewCell.self)
+		profileTableView.registerCell(ProfileUserInfoCell.self)
 	
 		view.addSubview(profileTableView)
 		
@@ -98,11 +99,11 @@ public final class ProfileViewController: UIViewController {
 				cell.profileURL.on(.next(profileURL))
 				return cell
 			case let .displayName(_, name):
-				let cell = table.dequeueCell(ofType: UITableViewCell.self, for: index)
+				let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
 				cell.textLabel?.text = name
 				return cell
 			case let .email(_, description):
-				let cell = table.dequeueCell(ofType: UITableViewCell.self, for: index)
+				let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
 				cell.textLabel?.text = description
 				return cell
 			default:
