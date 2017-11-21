@@ -111,8 +111,8 @@ public final class ProfileViewController: UIViewController {
 			}
 		})
 		
-		dataSource.titleForHeaderInSection = { _, _ in
-			return ""
+		dataSource.titleForHeaderInSection = { dataSource, index in
+			return dataSource[index].title
 		}
 		
 		viewModel.profileItems
