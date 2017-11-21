@@ -79,6 +79,9 @@ public final class ProfileViewController: UIViewController {
 	
 	private func prepareProfileTableView() {
 		profileTableView = UITableView()
+		profileTableView.rowHeight = 80
+		profileTableView.estimatedRowHeight = UITableViewAutomaticDimension
+		profileTableView.rx.setDelegate(self).disposed(by: disposeBag)
 		profileTableView.registerCell(ProfileUserHeaderCell.self)
 	
 		view.addSubview(profileTableView)
@@ -88,14 +91,19 @@ public final class ProfileViewController: UIViewController {
 		// set up data sources
 		dataSource = RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>(configureCell: { (dataSource, table, index, _) in
 			switch dataSource[index] {
-			case let .displayName(_, name):
-				guard let cell = table.dequeueReusableCell(withIdentifier: "defaultCell") else { fatalError() }
-				cell.textLabel?.text = name
+			case let .profile(_, profileURL, fullName):
+				let cell = table.dequeueCell(ofType: ProfileUserHeaderCell.self, for: index)
+				cell.fullName.on(.next(fullName))
+				cell.profileURL.on(.next(profileURL))
 				return cell
-			case let .email(_, description):
-				guard let cell = table.dequeueReusableCell(withIdentifier: "defaultCell") else { fatalError() }
-				cell.textLabel?.text = description
-				return cell
+//			case let .displayName(_, name):
+//				guard let cell = table.dequeueReusableCell(withIdentifier: "defaultCell") else { fatalError() }
+//				cell.textLabel?.text = name
+//				return cell
+//			case let .email(_, description):
+//				guard let cell = table.dequeueReusableCell(withIdentifier: "defaultCell") else { fatalError() }
+//				cell.textLabel?.text = description
+//				return cell
 			default:
 				return UITableViewCell()
 			}
@@ -107,14 +115,36 @@ public final class ProfileViewController: UIViewController {
 		
 		viewModel.profileItems
 			.asObservable()
-			.subscribe(onNext: { lol in
-				print (lol)
-			})
-			.disposed(by: disposeBag)
-		
-		viewModel.profileItems
-			.asObservable()
 			.bind(to: profileTableView.rx.items(dataSource: dataSource))
 			.disposed(by: disposeBag)
+	}
+}
+
+// MARK: UIScrollViewDelegate
+extension ProfileViewController: UITableViewDelegate {
+	public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+			appBar.headerViewController.headerView.trackingScrollDidScroll()
+		}
+	}
+
+	public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+		if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+			appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
+		}
+	}
+
+	public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+		let headerView = appBar.headerViewController.headerView
+		if scrollView == headerView.trackingScrollView {
+			headerView.trackingScrollDidEndDraggingWillDecelerate(decelerate)
+		}
+	}
+
+	public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+		let headerView = appBar.headerViewController.headerView
+		if scrollView == headerView.trackingScrollView {
+			headerView.trackingScrollWillEndDragging(withVelocity: velocity, targetContentOffset: targetContentOffset)
+		}
 	}
 }

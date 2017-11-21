@@ -33,7 +33,7 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 			.map(User.self, using: JSONDecoder.Decode)
 			.share()
 		
-		let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, firstName: $0.firstName, lastName: $0.lastName) }
+		let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: "\($0.firstName) \($0.lastName)") }
 		let email = user.map { SectionItem.email(order: 1, description: $0.email) }
 		let displayName = user.map { SectionItem.displayName(order: 2, name: $0.displayName) }
 		
@@ -62,7 +62,7 @@ extension ProfileViewModel {
 	}
 	
 	public enum SectionItem {
-		case profile(order: Int, profileURL: String, firstName: String, lastName: String)
+		case profile(order: Int, profileURL: String, fullName: String)
 		case email(order: Int, description: String)
 		case displayName(order: Int, name: String)
 		case friend(order: Int, displayName: String)
@@ -129,7 +129,7 @@ extension ProfileViewModel.SectionModel: Equatable {
 extension ProfileViewModel.SectionItem {
 	public var order: Int {
 		switch self {
-		case let .profile(order, _, _, _):
+		case let .profile(order, _, _):
 			return order
 		case let .displayName(order, _):
 			return order

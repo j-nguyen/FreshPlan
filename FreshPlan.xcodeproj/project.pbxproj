@@ -22,6 +22,7 @@
 		4079B14C1FC475E9007E9407 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B14B1FC475E9007E9407 /* UITableView+.swift */; };
 		4079B14E1FC4763B007E9407 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B14D1FC4763B007E9407 /* UILabel+.swift */; };
 		4079B1511FC4785F007E9407 /* ProfileUserHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B1501FC4785F007E9407 /* ProfileUserHeaderCell.swift */; };
+		4079B1541FC47E86007E9407 /* CacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B1531FC47E86007E9407 /* CacheStore.swift */; };
 		408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082D1F8D267A006BCA8E /* RegisterViewController.swift */; };
 		408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082F1F8D2716006BCA8E /* RegisterRouter.swift */; };
 		408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D08311F8D271F006BCA8E /* RegisterViewModel.swift */; };
@@ -84,6 +85,7 @@
 		4079B14B1FC475E9007E9407 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
 		4079B14D1FC4763B007E9407 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		4079B1501FC4785F007E9407 /* ProfileUserHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserHeaderCell.swift; sourceTree = "<group>"; };
+		4079B1531FC47E86007E9407 /* CacheStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheStore.swift; sourceTree = "<group>"; };
 		408D082D1F8D267A006BCA8E /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		408D082F1F8D2716006BCA8E /* RegisterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouter.swift; sourceTree = "<group>"; };
 		408D08311F8D271F006BCA8E /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				40426D0E1F86B8EC00875179 /* Protocols */,
 				40426D111F86BBA500875179 /* Extensions */,
 				400FC2141F897B5600B3098B /* Networking */,
+				4079B1521FC47E71007E9407 /* Utility */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -247,6 +250,14 @@
 				4079B1501FC4785F007E9407 /* ProfileUserHeaderCell.swift */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		4079B1521FC47E71007E9407 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				4079B1531FC47E86007E9407 /* CacheStore.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 		408D082C1F8D266C006BCA8E /* Register */ = {
@@ -619,6 +630,7 @@
 				40BE77901F9ED2310011C899 /* ResponseError.swift in Sources */,
 				4079B14A1FC47407007E9407 /* Token+.swift in Sources */,
 				405C5A9E1F8D953500AC8F9F /* HomeRouter.swift in Sources */,
+				4079B1541FC47E86007E9407 /* CacheStore.swift in Sources */,
 				40BD70101F910F53005B3B9D /* MeetupController.swift in Sources */,
 				409B2BFA1FBE65AF000A7F16 /* Friend.swift in Sources */,
 				40C429021FC3D08C004579A6 /* JSONDecoder+.swift in Sources */,
