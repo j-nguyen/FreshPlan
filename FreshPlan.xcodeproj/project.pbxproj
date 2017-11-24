@@ -35,8 +35,6 @@
 		409A55351F86B0D200EB29A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409A55341F86B0D200EB29A4 /* AppDelegate.swift */; };
 		409A553C1F86B0D200EB29A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 409A553B1F86B0D200EB29A4 /* Assets.xcassets */; };
 		409A553F1F86B0D200EB29A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 409A553D1F86B0D200EB29A4 /* LaunchScreen.storyboard */; };
-		409A554A1F86B0D200EB29A4 /* FreshPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409A55491F86B0D200EB29A4 /* FreshPlanTests.swift */; };
-		409A55551F86B0D200EB29A4 /* FreshPlanUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409A55541F86B0D200EB29A4 /* FreshPlanUITests.swift */; };
 		409B2BEF1FBE6192000A7F16 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BEE1FBE6192000A7F16 /* ProfileViewController.swift */; };
 		409B2BF11FBE619B000A7F16 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BF01FBE619B000A7F16 /* ProfileViewModel.swift */; };
 		409B2BF31FBE61F5000A7F16 /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BF21FBE61F5000A7F16 /* ProfileRouter.swift */; };
@@ -53,23 +51,6 @@
 		40DB5D2B1FC88D58000E3019 /* APIResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DB5D2A1FC88D58000E3019 /* APIResult.swift */; };
 		7BED1FB6487CD40A991B8614 /* Pods_FreshPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		409A55461F86B0D200EB29A4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 409A55291F86B0D200EB29A4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 409A55301F86B0D200EB29A4;
-			remoteInfo = FreshPlan;
-		};
-		409A55511F86B0D200EB29A4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 409A55291F86B0D200EB29A4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 409A55301F86B0D200EB29A4;
-			remoteInfo = FreshPlan;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		400FC2151F897BA200B3098B /* FreshPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshPlan.swift; sourceTree = "<group>"; };
@@ -102,12 +83,6 @@
 		409A553B1F86B0D200EB29A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		409A553E1F86B0D200EB29A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		409A55401F86B0D200EB29A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		409A55451F86B0D200EB29A4 /* FreshPlanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreshPlanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		409A55491F86B0D200EB29A4 /* FreshPlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshPlanTests.swift; sourceTree = "<group>"; };
-		409A554B1F86B0D200EB29A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		409A55501F86B0D200EB29A4 /* FreshPlanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreshPlanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		409A55541F86B0D200EB29A4 /* FreshPlanUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshPlanUITests.swift; sourceTree = "<group>"; };
-		409A55561F86B0D200EB29A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		409B2BEE1FBE6192000A7F16 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		409B2BF01FBE619B000A7F16 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		409B2BF21FBE61F5000A7F16 /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
@@ -133,20 +108,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BED1FB6487CD40A991B8614 /* Pods_FreshPlan.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		409A55421F86B0D200EB29A4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		409A554D1F86B0D200EB29A4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,8 +253,6 @@
 			isa = PBXGroup;
 			children = (
 				409A55331F86B0D200EB29A4 /* FreshPlan */,
-				409A55481F86B0D200EB29A4 /* FreshPlanTests */,
-				409A55531F86B0D200EB29A4 /* FreshPlanUITests */,
 				409A55321F86B0D200EB29A4 /* Products */,
 				63B037B023A8BC3303DFC20E /* Pods */,
 				0F3AB510D7DD34FCCFA2E3F4 /* Frameworks */,
@@ -304,8 +263,6 @@
 			isa = PBXGroup;
 			children = (
 				409A55311F86B0D200EB29A4 /* FreshPlan.app */,
-				409A55451F86B0D200EB29A4 /* FreshPlanTests.xctest */,
-				409A55501F86B0D200EB29A4 /* FreshPlanUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -319,24 +276,6 @@
 				409B2BF61FBE63DF000A7F16 /* Resources */,
 			);
 			path = FreshPlan;
-			sourceTree = "<group>";
-		};
-		409A55481F86B0D200EB29A4 /* FreshPlanTests */ = {
-			isa = PBXGroup;
-			children = (
-				409A55491F86B0D200EB29A4 /* FreshPlanTests.swift */,
-				409A554B1F86B0D200EB29A4 /* Info.plist */,
-			);
-			path = FreshPlanTests;
-			sourceTree = "<group>";
-		};
-		409A55531F86B0D200EB29A4 /* FreshPlanUITests */ = {
-			isa = PBXGroup;
-			children = (
-				409A55541F86B0D200EB29A4 /* FreshPlanUITests.swift */,
-				409A55561F86B0D200EB29A4 /* Info.plist */,
-			);
-			path = FreshPlanUITests;
 			sourceTree = "<group>";
 		};
 		409B2BED1FBE6129000A7F16 /* Profile */ = {
@@ -403,42 +342,6 @@
 			productReference = 409A55311F86B0D200EB29A4 /* FreshPlan.app */;
 			productType = "com.apple.product-type.application";
 		};
-		409A55441F86B0D200EB29A4 /* FreshPlanTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 409A555C1F86B0D200EB29A4 /* Build configuration list for PBXNativeTarget "FreshPlanTests" */;
-			buildPhases = (
-				409A55411F86B0D200EB29A4 /* Sources */,
-				409A55421F86B0D200EB29A4 /* Frameworks */,
-				409A55431F86B0D200EB29A4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				409A55471F86B0D200EB29A4 /* PBXTargetDependency */,
-			);
-			name = FreshPlanTests;
-			productName = FreshPlanTests;
-			productReference = 409A55451F86B0D200EB29A4 /* FreshPlanTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		409A554F1F86B0D200EB29A4 /* FreshPlanUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 409A555F1F86B0D200EB29A4 /* Build configuration list for PBXNativeTarget "FreshPlanUITests" */;
-			buildPhases = (
-				409A554C1F86B0D200EB29A4 /* Sources */,
-				409A554D1F86B0D200EB29A4 /* Frameworks */,
-				409A554E1F86B0D200EB29A4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				409A55521F86B0D200EB29A4 /* PBXTargetDependency */,
-			);
-			name = FreshPlanUITests;
-			productName = FreshPlanUITests;
-			productReference = 409A55501F86B0D200EB29A4 /* FreshPlanUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -452,16 +355,11 @@
 					409A55301F86B0D200EB29A4 = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Manual;
-					};
-					409A55441F86B0D200EB29A4 = {
-						CreatedOnToolsVersion = 9.0;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 409A55301F86B0D200EB29A4;
-					};
-					409A554F1F86B0D200EB29A4 = {
-						CreatedOnToolsVersion = 9.0;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 409A55301F86B0D200EB29A4;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -479,8 +377,6 @@
 			projectRoot = "";
 			targets = (
 				409A55301F86B0D200EB29A4 /* FreshPlan */,
-				409A55441F86B0D200EB29A4 /* FreshPlanTests */,
-				409A554F1F86B0D200EB29A4 /* FreshPlanUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -492,20 +388,6 @@
 			files = (
 				409A553F1F86B0D200EB29A4 /* LaunchScreen.storyboard in Resources */,
 				409A553C1F86B0D200EB29A4 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		409A55431F86B0D200EB29A4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		409A554E1F86B0D200EB29A4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -645,36 +527,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		409A55411F86B0D200EB29A4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				409A554A1F86B0D200EB29A4 /* FreshPlanTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		409A554C1F86B0D200EB29A4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				409A55551F86B0D200EB29A4 /* FreshPlanUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		409A55471F86B0D200EB29A4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 409A55301F86B0D200EB29A4 /* FreshPlan */;
-			targetProxy = 409A55461F86B0D200EB29A4 /* PBXContainerItemProxy */;
-		};
-		409A55521F86B0D200EB29A4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 409A55301F86B0D200EB29A4 /* FreshPlan */;
-			targetProxy = 409A55511F86B0D200EB29A4 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		409A553D1F86B0D200EB29A4 /* LaunchScreen.storyboard */ = {
@@ -802,15 +655,15 @@
 			baseConfigurationReference = F2535B961F6CEAE83F9AC1E5 /* Pods-FreshPlan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Johnny Nguyen (79U3BE967N)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Johnny Nguyen (79U3BE967N)";
 				DEVELOPMENT_TEAM = 35PYRYEWH9;
 				INFOPLIST_FILE = "$(SRCROOT)/FreshPlan/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fractalpoint.freshplan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "41eb7c6c-b49d-49e4-83c4-d05d136274b4";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore net.fractalpoint.freshplan";
+				PROVISIONING_PROFILE = "f5b9d44d-8d4d-4a5e-870d-0dc963db2d9f";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development net.fractalpoint.freshplan";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -821,79 +674,17 @@
 			baseConfigurationReference = 961AF7C9502FB2E5362945B5 /* Pods-FreshPlan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Johnny Nguyen (35PYRYEWH9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Johnny Nguyen (35PYRYEWH9)";
 				DEVELOPMENT_TEAM = 35PYRYEWH9;
 				INFOPLIST_FILE = "$(SRCROOT)/FreshPlan/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fractalpoint.freshplan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "41eb7c6c-b49d-49e4-83c4-d05d136274b4";
+				PROVISIONING_PROFILE = "4f8c1705-55c4-4300-89a0-89a4fa1f72fc";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore net.fractalpoint.freshplan";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		409A555D1F86B0D200EB29A4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = FreshPlanTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ca.stclaircollege.FreshPlanTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FreshPlan.app/FreshPlan";
-			};
-			name = Debug;
-		};
-		409A555E1F86B0D200EB29A4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = FreshPlanTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ca.stclaircollege.FreshPlanTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FreshPlan.app/FreshPlan";
-			};
-			name = Release;
-		};
-		409A55601F86B0D200EB29A4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = FreshPlanUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ca.stclaircollege.FreshPlanUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = FreshPlan;
-			};
-			name = Debug;
-		};
-		409A55611F86B0D200EB29A4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = FreshPlanUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ca.stclaircollege.FreshPlanUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = FreshPlan;
 			};
 			name = Release;
 		};
@@ -914,24 +705,6 @@
 			buildConfigurations = (
 				409A555A1F86B0D200EB29A4 /* Debug */,
 				409A555B1F86B0D200EB29A4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		409A555C1F86B0D200EB29A4 /* Build configuration list for PBXNativeTarget "FreshPlanTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				409A555D1F86B0D200EB29A4 /* Debug */,
-				409A555E1F86B0D200EB29A4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		409A555F1F86B0D200EB29A4 /* Build configuration list for PBXNativeTarget "FreshPlanUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				409A55601F86B0D200EB29A4 /* Debug */,
-				409A55611F86B0D200EB29A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
