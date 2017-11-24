@@ -26,11 +26,10 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 	
 	public init(provider: MoyaProvider<FreshPlan>) {
 		self.provider = provider
-		
 		//: MARK - User Setup
 		let user = Token.getJWT()
 			.flatMap { self.requestUser(userId: $0) }
-			.map(User.self, using: JSONDecoder.Decode)
+      .map(User.self, using: JSONDecoder.Decode)
 			.share()
 		
 		let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: "\($0.firstName) \($0.lastName)") }
@@ -50,6 +49,7 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 	private func requestUser(userId: Int) -> Observable<Response> {
 		return provider.rx.request(.user(userId))
 			.asObservable()
+      .filterSuccessfulStatusAndRedirectCodes()
 	}
 }
 
