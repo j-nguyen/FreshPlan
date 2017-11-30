@@ -25,7 +25,7 @@ public final class ProfileViewController: UIViewController {
   
   //: MARK - TableView
   private var profileTableView: UITableView!
-  private var dataSource: RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>!
+  fileprivate var dataSource: RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>!
   
   public convenience init(viewModel: ProfileViewModel, router: ProfileRouter) {
     self.init(nibName: nil, bundle: nil)
@@ -113,10 +113,6 @@ public final class ProfileViewController: UIViewController {
       }
     })
     
-    dataSource.titleForHeaderInSection = { dataSource, index in
-      return index == 0 ? "" : dataSource.sectionModels[index].title
-    }
-    
     viewModel.profileItems
       .asObservable()
       .bind(to: profileTableView.rx.items(dataSource: dataSource))
@@ -124,8 +120,18 @@ public final class ProfileViewController: UIViewController {
   }
 }
 
-// MARK: UIScrollViewDelegate
+//: MARK - UIScrollViewDelegate
 extension ProfileViewController: UITableViewDelegate {
+  
+  public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    switch dataSource.sectionModels[section] {
+    case let .friends(_, title, _):
+      return nil
+    default:
+      return nil
+    }
+  }
+  
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView == appBar.headerViewController.headerView.trackingScrollView {
       appBar.headerViewController.headerView.trackingScrollDidScroll()

@@ -16,6 +16,8 @@ import UIKit
 /// tests if the jwt has been expired
 //: TODO - Fix soon 
 extension Token {
+  
+  // Observable check for each VC
 	public static func getJWT() -> Observable<Int> {
 		return Observable.just(decodeJWT)
 			.map { token in
@@ -31,6 +33,7 @@ extension Token {
       }
 	}
   
+  // Decodes the token
   public static var decodeJWT: JWT? {
     if let token = UserDefaults.standard.string(forKey: "token") {
       let jwt = try? decode(jwt: token)
@@ -39,6 +42,7 @@ extension Token {
     return nil
   }
   
+  // Removes the token
   private static func removeToken() {
     guard let window = UIApplication.shared.keyWindow else { fatalError() }
     UserDefaults.standard.removeObject(forKey: "token")
