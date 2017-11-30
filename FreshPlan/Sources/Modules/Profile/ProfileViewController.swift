@@ -131,6 +131,10 @@ extension ProfileViewController: UITableViewDelegate {
       let friendView = ProfileUserHeaderView()
       friendView.title.on(.next(title))
       return friendView
+    case let .friendRequests(_, title, _):
+      let friendView = ProfileUserHeaderView()
+      friendView.title.on(.next(title))
+      return friendView
     default:
       return nil
     }
@@ -138,8 +142,10 @@ extension ProfileViewController: UITableViewDelegate {
   
   public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     switch dataSource.sectionModels[section] {
-    case .friends, .friendRequests:
-      return 40
+    case let .friends(_, _, items):
+      return items.count > 0 ? 40 : 0
+    case let .friendRequests(_, _, items):
+      return items.count > 0 ? 40 : 0
     default:
       return 0
     }

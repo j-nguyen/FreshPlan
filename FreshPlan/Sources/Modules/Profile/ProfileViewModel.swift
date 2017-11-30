@@ -37,7 +37,10 @@ public class ProfileViewModel: ProfileViewModelProtocol {
     
     let friends = token
       .flatMap { self.requestFriends(userId: $0) }
-      .map([Friend].self, using: JSONDecoder.Decode)
+      .share()
+      
+    let friendsList = friends.map([Friend].self, using: JSONDecoder.Decode).filter { $0.contains(where: { $0.accepted }) }
+    let friendRequests = friends.map([Friend].self, using: JSONDecoder.Decode).filter { $0.contains(where: { !$0.accepted }) }
 		
 		let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: "\($0.firstName) \($0.lastName)") }
 		let email = user.map { SectionItem.email(order: 1, description: "Email: \($0.email)") }
@@ -50,13 +53,19 @@ public class ProfileViewModel: ProfileViewModelProtocol {
       .map { SectionModel.profile(order: 0, title: "My Profile", items: $0) }
     
     // friends
-    let friendsSection = friends
+    let friendsSection = friendsList
       .map { friends -> [SectionItem] in
         return friends.map { SectionItem.friend(displayName: $0.friend.displayName) }
       }
       .map { SectionModel.friends(order: 1, title: "My Friends", items: $0) }
+    
+    let friendRequestsSection = friendRequests
+      .map { friends -> [SectionItem] in
+        return friends.map { SectionItem.friend(displayName: $0.friend.displayName) }
+      }
+      .map { SectionModel.friendRequests(order: 2, title: "My Friend Requests", items: $0) }
 		
-		Observable.from([profileSection, friendsSection])
+		Observable.from([profileSection, friendsSection, friendRequestsSection])
 			.flatMap { $0 }
 			.toArray()
 			.map { $0.sorted(by: { $0.order < $1.order }) }
