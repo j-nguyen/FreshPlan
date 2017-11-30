@@ -142,10 +142,8 @@ extension ProfileViewController: UITableViewDelegate {
   
   public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     switch dataSource.sectionModels[section] {
-    case let .friends(_, _, items):
-      return items.count > 0 ? 40 : 0
-    case let .friendRequests(_, _, items):
-      return items.count > 0 ? 40 : 0
+    case .friends, .friendRequests:
+      return 40
     default:
       return 0
     }

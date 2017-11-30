@@ -34,13 +34,6 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 			.flatMap { self.requestUser(userId: $0) }
       .map(User.self, using: JSONDecoder.Decode)
 			.share()
-    
-    let friends = token
-      .flatMap { self.requestFriends(userId: $0) }
-      .share()
-      
-    let friendsList = friends.map([Friend].self, using: JSONDecoder.Decode).filter { $0.contains(where: { $0.accepted }) }
-    let friendRequests = friends.map([Friend].self, using: JSONDecoder.Decode).filter { $0.contains(where: { !$0.accepted }) }
 		
 		let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: "\($0.firstName) \($0.lastName)") }
 		let email = user.map { SectionItem.email(order: 1, description: "Email: \($0.email)") }
@@ -52,7 +45,14 @@ public class ProfileViewModel: ProfileViewModelProtocol {
       .map { $0.sorted(by: { $0.order < $1.order }) }
       .map { SectionModel.profile(order: 0, title: "My Profile", items: $0) }
     
-    // friends
+    //: MARK - Friends Setup
+    let friends = token
+      .flatMap { self.requestFriends(userId: $0) }
+      .share()
+    
+    let friendsList = friends.map([Friend].self, using: JSONDecoder.Decode).filter { $0.contains(where: { $0.accepted }) }.ifEmpty(default: [])
+    let friendRequests = friends.map([Friend].self, using: JSONDecoder.Decode).filter { $0.contains(where: { !$0.accepted }) }.ifEmpty(default: [])
+    
     let friendsSection = friendsList
       .map { friends -> [SectionItem] in
         return friends.map { SectionItem.friend(displayName: $0.friend.displayName) }
