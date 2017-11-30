@@ -28,6 +28,7 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 		self.provider = provider
 		//: MARK - User Setup
 		let user = Token.getJWT()
+      .filter { $0 != -1 }
 			.flatMap { self.requestUser(userId: $0) }
       .map(User.self, using: JSONDecoder.Decode)
 			.share()
@@ -46,10 +47,9 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 			.disposed(by: disposeBag)
 	}
 	
-	private func requestUser(userId: Int) -> Observable<Response> {
-		return provider.rx.request(.user(userId))
+  private func requestUser(userId: Int) -> Observable<Response> {
+    return provider.rx.request(.user(userId))
 			.asObservable()
-      .filterSuccessfulStatusAndRedirectCodes()
 	}
 }
 
