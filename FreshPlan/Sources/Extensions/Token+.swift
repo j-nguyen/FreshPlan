@@ -14,24 +14,21 @@ import UIKit
 
 //: MARK - Token Extension
 /// tests if the jwt has been expired
+//: TODO - Fix soon 
 extension Token {
 	public static func getJWT() -> Observable<Int> {
 		return Observable.just(decodeJWT)
-      .filterNil()
 			.map { token in
-        if token.expired {
-					// set up so that the user doesn't get anything returned
-          guard let window = UIApplication.shared.keyWindow else { fatalError() }
-					UserDefaults.standard.removeObject(forKey: "token")
-          let alertController = MDCAlertController(title: "Login Expired", message: "Your login credentials have expired. Please log back in.")
-          let action = MDCAlertAction(title: "OK")
-          alertController.addAction(action)
-          window.rootViewController? = LoginAssembler.make()
-          window.rootViewController?.present(alertController, animated: true)
-					return -1
-				}
-				return token.body["userId"] as! Int
-		}
+        if let token = token {
+          if token.expired {
+            removeToken()
+            return -1
+          }
+          return token.body["userId"] as! Int
+        }
+        removeToken()
+        return -1
+      }
 	}
   
   public static var decodeJWT: JWT? {
@@ -40,5 +37,15 @@ extension Token {
       return jwt
     }
     return nil
+  }
+  
+  private static func removeToken() {
+    guard let window = UIApplication.shared.keyWindow else { fatalError() }
+    UserDefaults.standard.removeObject(forKey: "token")
+    let alertController = MDCAlertController(title: "Login Expired", message: "Your login credentials have expired. Please log back in.")
+    let action = MDCAlertAction(title: "OK")
+    alertController.addAction(action)
+    window.rootViewController? = LoginAssembler.make()
+    window.rootViewController?.present(alertController, animated: true)
   }
 }
