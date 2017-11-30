@@ -108,8 +108,10 @@ public final class ProfileViewController: UIViewController {
         let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
         cell.textLabel?.text = description
         return cell
-      default:
-        return UITableViewCell()
+      case let .friend(displayName):
+        let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
+        cell.textLabel?.text = displayName
+        return cell
       }
     })
     
@@ -126,9 +128,20 @@ extension ProfileViewController: UITableViewDelegate {
   public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     switch dataSource.sectionModels[section] {
     case let .friends(_, title, _):
-      return nil
+      let friendView = ProfileUserHeaderView()
+      friendView.title.on(.next(title))
+      return friendView
     default:
       return nil
+    }
+  }
+  
+  public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    switch dataSource.sectionModels[section] {
+    case .friends, .friendRequests:
+      return 40
+    default:
+      return 0
     }
   }
   

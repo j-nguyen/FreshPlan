@@ -15,6 +15,7 @@ public enum FreshPlan {
 	case register(String, String, String, String)
 	case verify(String, Int)
 	case user(Int)
+  case friends(Int)
 }
 
 extension FreshPlan: TargetType {
@@ -31,6 +32,8 @@ extension FreshPlan: TargetType {
 			return "/auth/verify"
 		case let .user(userId):
 			return "/users/\(userId)"
+    case let .friends(userId):
+      return "/users/\(userId)/friends"
 		}
 	}
 	
@@ -39,7 +42,7 @@ extension FreshPlan: TargetType {
 		switch self {
 		case .login, .register, .verify:
 			return .post
-		case .user:
+		case .user, .friends:
 			return .get
 		}
 	}
@@ -58,7 +61,7 @@ extension FreshPlan: TargetType {
 			encoding: JSONEncoding.default)
 		case let .verify(email, code):
 			return .requestParameters(parameters: ["email": email, "code": code], encoding: JSONEncoding.default)
-		case .user(_):
+		case .user, .friends:
 			return .requestPlain
 		}
 	}
@@ -72,7 +75,7 @@ extension FreshPlan: TargetType {
 		switch self {
 		case .login, .register, .verify:
 			return ["Content-Type": "application/json"]
-		case .user:
+		case .user, .friends:
 			return ["Content-Type": "application/json", "Authorization": UserDefaults.standard.string(forKey: "token")!]
 		}
 	}

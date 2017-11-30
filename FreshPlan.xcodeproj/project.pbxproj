@@ -14,6 +14,7 @@
 		40426D151F86BC9C00875179 /* RouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D141F86BC9C00875179 /* RouterProtocol.swift */; };
 		40426D1A1F86C12600875179 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D191F86C12600875179 /* LoginRouter.swift */; };
 		40497D1F1F8CF3A500A4E046 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40497D1E1F8CF3A500A4E046 /* UIColor+.swift */; };
+		4055B0BA1FD079FE007C5CCC /* ProfileUserHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4055B0B91FD079FE007C5CCC /* ProfileUserHeaderView.swift */; };
 		405C5A981F8D94E700AC8F9F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A971F8D94E700AC8F9F /* HomeViewController.swift */; };
 		405C5A9A1F8D94FA00AC8F9F /* HomeAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A991F8D94FA00AC8F9F /* HomeAssembler.swift */; };
 		405C5A9C1F8D950500AC8F9F /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A9B1F8D950500AC8F9F /* HomeViewModel.swift */; };
@@ -60,6 +61,7 @@
 		40426D141F86BC9C00875179 /* RouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterProtocol.swift; sourceTree = "<group>"; };
 		40426D191F86C12600875179 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
 		40497D1E1F8CF3A500A4E046 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		4055B0B91FD079FE007C5CCC /* ProfileUserHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserHeaderView.swift; sourceTree = "<group>"; };
 		405C5A971F8D94E700AC8F9F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		405C5A991F8D94FA00AC8F9F /* HomeAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAssembler.swift; sourceTree = "<group>"; };
 		405C5A9B1F8D950500AC8F9F /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 			children = (
 				4079B1501FC4785F007E9407 /* ProfileUserHeaderCell.swift */,
 				4079B1551FC49367007E9407 /* ProfileUserInfoCell.swift */,
+				4055B0B91FD079FE007C5CCC /* ProfileUserHeaderView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 				4079B14E1FC4763B007E9407 /* UILabel+.swift in Sources */,
 				408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */,
 				409A55351F86B0D200EB29A4 /* AppDelegate.swift in Sources */,
+				4055B0BA1FD079FE007C5CCC /* ProfileUserHeaderView.swift in Sources */,
 				408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */,
 				40426D1A1F86C12600875179 /* LoginRouter.swift in Sources */,
 				40BD70161F911022005B3B9D /* MeetupAssembler.swift in Sources */,

@@ -26,23 +26,40 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 	
 	public init(provider: MoyaProvider<FreshPlan>) {
 		self.provider = provider
+    
+    let token = Token.getJWT().filter { $0 != -1 }.share()
+    
 		//: MARK - User Setup
-		let user = Token.getJWT()
-      .filter { $0 != -1 }
+		let user = token
 			.flatMap { self.requestUser(userId: $0) }
       .map(User.self, using: JSONDecoder.Decode)
 			.share()
+    
+    let friends = token
+      .flatMap { self.requestFriends(userId: $0) }
+      .map([Friend].self, using: JSONDecoder.Decode)
 		
 		let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: "\($0.firstName) \($0.lastName)") }
 		let email = user.map { SectionItem.email(order: 1, description: "Email: \($0.email)") }
 		let displayName = user.map { SectionItem.displayName(order: 2, name: "Display Name: \($0.displayName)") }
+    
+    let profileSection = Observable.from([profile, email, displayName])
+      .flatMap { $0 }
+      .toArray()
+      .map { $0.sorted(by: { $0.order < $1.order }) }
+      .map { SectionModel.profile(order: 0, title: "My Profile", items: $0) }
+    
+    // friends
+    let friendsSection = friends
+      .map { friends -> [SectionItem] in
+        return friends.map { SectionItem.friend(displayName: $0.friend.displayName) }
+      }
+      .map { SectionModel.friends(order: 1, title: "My Friends", items: $0) }
 		
-		Observable.from([profile, displayName, email])
+		Observable.from([profileSection, friendsSection])
 			.flatMap { $0 }
 			.toArray()
 			.map { $0.sorted(by: { $0.order < $1.order }) }
-			.map { SectionModel.profile(order: 0, title: "My Profile", items: $0) }
-			.toArray()
 			.bind(to: profileItems)
 			.disposed(by: disposeBag)
 	}
@@ -51,6 +68,11 @@ public class ProfileViewModel: ProfileViewModelProtocol {
     return provider.rx.request(.user(userId))
 			.asObservable()
 	}
+  
+  private func requestFriends(userId: Int) -> Observable<Response> {
+    return provider.rx.request(.friends(userId))
+      .asObservable()
+  }
 }
 
 //: MARK - Section Models
@@ -65,7 +87,7 @@ extension ProfileViewModel {
 		case profile(order: Int, profileURL: String, fullName: String)
 		case email(order: Int, description: String)
 		case displayName(order: Int, name: String)
-		case friend(order: Int, displayName: String)
+		case friend(displayName: String)
 	}
 }
 
@@ -135,8 +157,8 @@ extension ProfileViewModel.SectionItem {
 			return order
 		case let .email(order, _):
 			return order
-		case let .friend(order, _):
-			return order
+    default:
+      return 0
 		}
 	}
 }
