@@ -35,7 +35,6 @@ public final class ProfileUserHeaderCell: UITableViewCell {
 	
 	public override func prepareForReuse() {
 		super.prepareForReuse()
-		disposeBag = DisposeBag()
 	}
 	
 	private func prepareView() {
@@ -73,7 +72,7 @@ public final class ProfileUserHeaderCell: UITableViewCell {
 		profileImageView.snp.makeConstraints { make in
 			make.top.equalTo(contentView).inset(10)
 			make.bottom.equalTo(contentView).inset(10)
-			make.left.equalTo(contentView).offset(10)
+			make.left.equalTo(contentView).inset(10)
 			make.width.equalTo(50)
 			make.height.equalTo(50)
 		}

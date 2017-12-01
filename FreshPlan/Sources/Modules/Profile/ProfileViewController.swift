@@ -79,8 +79,8 @@ public final class ProfileViewController: UIViewController {
   
   private func prepareProfileTableView() {
     profileTableView = UITableView()
-    profileTableView.estimatedRowHeight = 44
     profileTableView.rowHeight = UITableViewAutomaticDimension
+    profileTableView.estimatedRowHeight = 44
     profileTableView.separatorStyle = .none
     profileTableView.rx.setDelegate(self).disposed(by: disposeBag)
     profileTableView.registerCell(ProfileUserHeaderCell.self)
