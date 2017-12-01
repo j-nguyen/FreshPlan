@@ -25,7 +25,7 @@ public final class ProfileViewController: UIViewController {
   
   //: MARK - TableView
   private var profileTableView: UITableView!
-  fileprivate var dataSource: RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>!
+  fileprivate var dataSource: RxTableViewSectionedAnimatedDataSource<ProfileViewModel.SectionModel>!
   
   public convenience init(viewModel: ProfileViewModel, router: ProfileRouter) {
     self.init(nibName: nil, bundle: nil)
@@ -79,7 +79,7 @@ public final class ProfileViewController: UIViewController {
   
   private func prepareProfileTableView() {
     profileTableView = UITableView()
-//    profileTableView.rowHeight = UITableViewAutomaticDimension
+    //    profileTableView.rowHeight = UITableViewAutomaticDimension
     profileTableView.estimatedRowHeight = 44
     profileTableView.separatorStyle = .singleLine
     profileTableView.separatorInset = .zero
@@ -94,27 +94,31 @@ public final class ProfileViewController: UIViewController {
     appBar.headerViewController.headerView.trackingScrollView = profileTableView
     
     // set up data sources
-    dataSource = RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>(configureCell: { (dataSource, table, index, _) in
-      switch dataSource[index] {
-      case let .profile(_, profileURL, fullName):
-        let cell = table.dequeueCell(ofType: ProfileUserHeaderCell.self, for: index)
-        cell.fullName.on(.next(fullName))
-        cell.profileURL.on(.next(profileURL))
-        return cell
-      case let .displayName(_, name):
-        let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
-        cell.textLabel?.text = name
-        return cell
-      case let .email(_, description):
-        let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
-        cell.textLabel?.text = description
-        return cell
-      case let .friend(displayName):
-        let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
-        cell.textLabel?.text = displayName
-        return cell
-      }
+    dataSource = RxTableViewSectionedAnimatedDataSource<ProfileViewModel.SectionModel>(
+      animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left),
+      configureCell: { (dataSource, table, index, _) in
+        switch dataSource[index] {
+        case let .profile(_, profileURL, fullName):
+          let cell = table.dequeueCell(ofType: ProfileUserHeaderCell.self, for: index)
+          cell.fullName.on(.next(fullName))
+          cell.profileURL.on(.next(profileURL))
+          return cell
+        case let .displayName(_, name):
+          let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
+          cell.textLabel?.text = name
+          return cell
+        case let .email(_, description):
+          let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
+          cell.textLabel?.text = description
+          return cell
+        case let .friend(displayName):
+          let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
+          cell.textLabel?.text = displayName
+          return cell
+        }
     })
+    
+    
     
     viewModel.profileItems
       .asObservable()
@@ -140,6 +144,8 @@ extension ProfileViewController: UITableViewDelegate {
       return nil
     }
   }
+  
+  
   
   public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     switch dataSource.sectionModels[section] {

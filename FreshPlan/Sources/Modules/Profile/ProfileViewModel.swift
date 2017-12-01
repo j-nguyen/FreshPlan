@@ -100,10 +100,14 @@ extension ProfileViewModel {
 	}
 }
 
-//: MARK - SectionModelType
-extension ProfileViewModel.SectionModel: SectionModelType {
-	public typealias Item = ProfileViewModel.SectionItem
-	
+//: MARK - AnimatableSectionModelType
+extension ProfileViewModel.SectionModel: AnimatableSectionModelType {
+  public typealias Identity = String
+  
+  public var identity: String {
+    return title
+  }
+  
 	public var items: [ProfileViewModel.SectionItem] {
 		switch self {
 		case let .profile(_, _, items):
@@ -177,4 +181,12 @@ extension ProfileViewModel.SectionItem: Equatable {
 	public static func ==(lhs: ProfileViewModel.SectionItem, rhs: ProfileViewModel.SectionItem) -> Bool {
 		return lhs.order == rhs.order
 	}
+}
+
+extension ProfileViewModel.SectionItem: IdentifiableType {
+  public typealias Identity = Int
+  
+  public var identity: Int {
+    return order
+  }
 }
