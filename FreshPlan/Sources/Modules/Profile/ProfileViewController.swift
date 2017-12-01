@@ -79,9 +79,10 @@ public final class ProfileViewController: UIViewController {
   
   private func prepareProfileTableView() {
     profileTableView = UITableView()
-    profileTableView.rowHeight = UITableViewAutomaticDimension
+//    profileTableView.rowHeight = UITableViewAutomaticDimension
     profileTableView.estimatedRowHeight = 44
-    profileTableView.separatorStyle = .none
+    profileTableView.separatorStyle = .singleLine
+    profileTableView.separatorInset = .zero
     profileTableView.rx.setDelegate(self).disposed(by: disposeBag)
     profileTableView.registerCell(ProfileUserHeaderCell.self)
     profileTableView.registerCell(ProfileUserInfoCell.self)
@@ -146,6 +147,15 @@ extension ProfileViewController: UITableViewDelegate {
       return 40
     default:
       return 0
+    }
+  }
+  
+  public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    switch dataSource[indexPath] {
+    case .profile:
+      return 70
+    default:
+      return UITableViewAutomaticDimension
     }
   }
   

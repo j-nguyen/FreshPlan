@@ -47,7 +47,8 @@ public final class ProfileUserHeaderCell: UITableViewCell {
 	private func prepareActivityIndicator() {
 		activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 		activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-		activityIndicator.startAnimating()
+		activityIndicator.clipsToBounds = true
+    activityIndicator.startAnimating()
 		
 		contentView.addSubview(activityIndicator)
 		
@@ -64,18 +65,18 @@ public final class ProfileUserHeaderCell: UITableViewCell {
 		profileImageView.isHidden = true
 		profileImageView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
 		profileImageView.contentMode = .scaleAspectFit
+    profileImageView.clipsToBounds = true
 		profileImageView.layer.cornerRadius = 25
 		profileImageView.layer.masksToBounds = true
 		
 		contentView.addSubview(profileImageView)
 		
 		profileImageView.snp.makeConstraints { make in
-			make.top.equalTo(contentView).inset(10)
-			make.bottom.equalTo(contentView).inset(10)
+      make.width.equalTo(50)
+      make.height.equalTo(50)
+      make.centerY.equalTo(contentView)
 			make.left.equalTo(contentView).inset(10)
-			make.width.equalTo(50)
-			make.height.equalTo(50)
-		}
+      }
 		
 		// set up bindings
 		profileURL

@@ -34,21 +34,6 @@ public final class ProfileUserInfoCell: UITableViewCell {
 		inkTouchController = MDCInkTouchController(view: self)
 		inkTouchController.delegate = self
 		inkTouchController.addInkView()
-    prepareLineView()
-  }
-  
-  private func prepareLineView() {
-    lineView = UIView()
-    lineView.backgroundColor = UIColor(red: 224.0 / 255.0, green: 224.0 / 255.0, blue: 224.0 / 255.0, alpha: 224.0 / 255.0)
-      
-    contentView.addSubview(lineView)
-    
-    lineView.snp.makeConstraints { make in
-      make.top.equalTo(contentView.snp.bottom)
-      make.height.equalTo(1)
-      make.width.equalTo(contentView)
-    }
-    
   }
 }
 
