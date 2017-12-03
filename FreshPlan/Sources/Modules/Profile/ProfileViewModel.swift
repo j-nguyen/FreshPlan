@@ -16,7 +16,7 @@ import UIKit
 public protocol ProfileViewModelProtocol {
 	var profileItems: Variable<[ProfileViewModel.SectionModel]> { get }
   var acceptFriend: PublishSubject<IndexPath> { get }
-  var acceptedFriendSuccess: Variable<IndexPath?> { get }
+  var acceptedFriendSuccess: Variable<String?> { get }
 }
 
 public class ProfileViewModel: ProfileViewModelProtocol {
@@ -24,7 +24,7 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 
 	public var profileItems: Variable<[ProfileViewModel.SectionModel]> = Variable([])
   public var acceptFriend: PublishSubject<IndexPath> = PublishSubject()
-  public var acceptedFriendSuccess: Variable<IndexPath?> = Variable(nil)
+  public var acceptedFriendSuccess: Variable<String?> = Variable(nil)
 	
 	private let disposeBag: DisposeBag = DisposeBag()
 	
@@ -90,7 +90,7 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 			.asObservable()
 	}
   
-  private func requestDeleteFriend(userId: Int, friendId: Int) -> Observable<Response> {
+  private func requestAcceptFriend(userId: Int, friendId: Int) -> Observable<Response> {
     return provider.rx.request(.acceptFriend(userId, friendId))
       .asObservable()
   }
@@ -106,17 +106,28 @@ public class ProfileViewModel: ProfileViewModelProtocol {
       .map { index -> Observable<(IndexPath, Response)> in
         let id = self.profileItems.value[index.section].items[index.row].identity
         if let jwt = Token.decodeJWT, let userId = jwt.body["userId"] as? Int {
-          let request = self.requestDeleteFriend(userId: userId, friendId: id)
+          let request = self.requestAcceptFriend(userId: userId, friendId: id)
           return request.map { (index, $0) }
         }
         return Observable.empty()
       }
       .flatMap { $0 }
       .filter { $1.statusCode >= 200 && $1.statusCode <= 299 }
-      .map { (index, response) in
-        let items = self.profileItems.value[index.section].delete(at: index.row)
-        self.profileItems.value[index.section] = items
-        return index
+      .map { (index, response) -> String? in
+        // because of the way this is handled, we'll have to use a constant, of 1 to get the friends
+        //: TODO - This needs to be fixed, but it works fine.
+        let item = self.profileItems.value[index.section].items[index.row]
+        let friendRequest = self.profileItems.value[index.section].delete(at: index.row)
+        let friends = self.profileItems.value[1].add(item: item)
+        self.profileItems.value[1] = friends
+        self.profileItems.value[index.section] = friendRequest
+        
+        switch item {
+        case .friend(_, let displayName):
+          return displayName
+        default:
+          return nil
+        }
       }
       .bind(to: acceptedFriendSuccess)
       .disposed(by: disposeBag)
@@ -199,6 +210,19 @@ extension ProfileViewModel.SectionModel: AnimatableSectionModelType {
       return ProfileViewModel.SectionModel.friendRequests(order: order, title: title, items: newItems)
     case let .friends(order, title, items):
       return ProfileViewModel.SectionModel.friends(order: order, title: title, items: items)
+    case let .profile(order, title, items):
+      return ProfileViewModel.SectionModel.profile(order: order, title: title, items: items)
+    }
+  }
+  
+  public func add(item: ProfileViewModel.SectionItem) -> ProfileViewModel.SectionModel {
+    switch self {
+    case let .friendRequests(order, title, items):
+      return ProfileViewModel.SectionModel.friendRequests(order: order, title: title, items: items)
+    case let .friends(order, title, items):
+      var newItems = items
+      newItems.append(item)
+      return ProfileViewModel.SectionModel.friends(order: order, title: title, items: newItems)
     case let .profile(order, title, items):
       return ProfileViewModel.SectionModel.profile(order: order, title: title, items: items)
     }

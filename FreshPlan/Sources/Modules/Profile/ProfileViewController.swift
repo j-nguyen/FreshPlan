@@ -135,17 +135,9 @@ public final class ProfileViewController: UIViewController {
     viewModel.acceptedFriendSuccess
       .asObservable()
       .filterNil()
-      .subscribe(onNext: { [weak self] index in
-        guard let this = self else { return }
-//        this.profileTableView.reloadData()
-//        print ("YAY!")
-//        let poo = this.dataSource.sectionModels[1].items.count - 1
-//        this.dataSource[index.section].remove(at: index.row)
-//        this.profileTableView.reloadData()
-//        // begin row animation
-//        this.profileTableView.beginUpdates()
-//        this.profileTableView.deleteRows(at: [index], with: .automatic)
-//        this.profileTableView.endUpdates()
+      .subscribe(onNext: { displayName in
+        let message = MDCSnackbarMessage(text: "Successfully added \(displayName) as a friend.")
+        MDCSnackbarManager.show(message)
       })
       .disposed(by: disposeBag)
   }
