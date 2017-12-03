@@ -55,12 +55,12 @@ public class ProfileViewModel: ProfileViewModelProtocol {
     
     let friendsList = friends
       .map([Friend].self, using: JSONDecoder.Decode)
-      .filter { $0.contains(where: { $0.accepted }) }
+      .map { $0.filter { $0.accepted } }
       .ifEmpty(default: [])
-    
+  
     let friendRequests = friends
       .map([Friend].self, using: JSONDecoder.Decode)
-      .filter { $0.contains(where: { !$0.accepted }) }
+      .map { $0.filter { !$0.accepted } }
       .ifEmpty(default: [])
     
     let friendsSection = friendsList
