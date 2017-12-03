@@ -17,6 +17,7 @@
 		4055B0BA1FD079FE007C5CCC /* ProfileUserHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4055B0B91FD079FE007C5CCC /* ProfileUserHeaderView.swift */; };
 		4056A4EC1FD4B70B006415A7 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4EB1FD4B70B006415A7 /* AddFriendViewController.swift */; };
 		4056A4EE1FD4B7FE006415A7 /* AddFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4ED1FD4B7FE006415A7 /* AddFriendViewModel.swift */; };
+		4056A4F01FD4B988006415A7 /* AddFriendViewAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4EF1FD4B988006415A7 /* AddFriendViewAssembler.swift */; };
 		405C5A981F8D94E700AC8F9F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A971F8D94E700AC8F9F /* HomeViewController.swift */; };
 		405C5A9A1F8D94FA00AC8F9F /* HomeAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A991F8D94FA00AC8F9F /* HomeAssembler.swift */; };
 		405C5A9C1F8D950500AC8F9F /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A9B1F8D950500AC8F9F /* HomeViewModel.swift */; };
@@ -66,6 +67,7 @@
 		4055B0B91FD079FE007C5CCC /* ProfileUserHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserHeaderView.swift; sourceTree = "<group>"; };
 		4056A4EB1FD4B70B006415A7 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
 		4056A4ED1FD4B7FE006415A7 /* AddFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewModel.swift; sourceTree = "<group>"; };
+		4056A4EF1FD4B988006415A7 /* AddFriendViewAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewAssembler.swift; sourceTree = "<group>"; };
 		405C5A971F8D94E700AC8F9F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		405C5A991F8D94FA00AC8F9F /* HomeAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAssembler.swift; sourceTree = "<group>"; };
 		405C5A9B1F8D950500AC8F9F /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 			children = (
 				4056A4EB1FD4B70B006415A7 /* AddFriendViewController.swift */,
 				4056A4ED1FD4B7FE006415A7 /* AddFriendViewModel.swift */,
+				4056A4EF1FD4B988006415A7 /* AddFriendViewAssembler.swift */,
 			);
 			path = AddFriend;
 			sourceTree = "<group>";
@@ -514,6 +517,7 @@
 				408D08391F8D285E006BCA8E /* VerifyAssembler.swift in Sources */,
 				40DB5D2B1FC88D58000E3019 /* APIResult.swift in Sources */,
 				408D08371F8D2818006BCA8E /* VerifyViewController.swift in Sources */,
+				4056A4F01FD4B988006415A7 /* AddFriendViewAssembler.swift in Sources */,
 				40426D091F86B85500875179 /* LoginViewController.swift in Sources */,
 				408D083B1F8D2865006BCA8E /* VerifyRouter.swift in Sources */,
 				4079B1511FC4785F007E9407 /* ProfileUserHeaderCell.swift in Sources */,

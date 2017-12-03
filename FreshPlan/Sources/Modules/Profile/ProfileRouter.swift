@@ -19,8 +19,7 @@ import UIKit
 
 public class ProfileRouter {
 	public enum Routes: String {
-		case invitation
-		case addInvitation
+		case addFriend
 	}
 	
 	fileprivate enum RouteError: Error {
@@ -38,10 +37,8 @@ extension ProfileRouter: RouterProtocol {
 		guard let window = UIApplication.shared.keyWindow else { return }
 		
 		switch route {
-		case .invitation:
-			break
-		case .addInvitation:
-			break
+		case .addFriend:
+			window.rootViewController?.present(context, animated: true, completion: nil)
 		}
 	}
 }

@@ -27,6 +27,9 @@ public final class ProfileViewController: UIViewController {
   private var profileTableView: UITableView!
   fileprivate var dataSource: RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>!
   
+  //: MARK - Add Navigation Button
+  private var addButton: UIBarButtonItem!
+  
   public convenience init(viewModel: ProfileViewModel, router: ProfileRouter) {
     self.init(nibName: nil, bundle: nil)
     self.viewModel = viewModel
@@ -61,7 +64,28 @@ public final class ProfileViewController: UIViewController {
   private func prepareView() {
     prepareProfileTableView()
     prepareNavigationBar()
+    prepareNavigationAdd()
     appBar.addSubviewsToParent()
+  }
+  
+  private func prepareNavigationAdd() {
+    addButton = UIBarButtonItem(
+      image: UIImage(named: "ic_add")?.withRenderingMode(.alwaysTemplate),
+      style: .plain,
+      target: nil,
+      action: nil
+    )
+    
+    // setup the rx event
+    addButton.rx.tap
+      .asObservable()
+      .subscribe(onNext: { [weak self] _ in
+        guard let this = self else { return }
+        try? this.router.route(from: AddFriendViewAssembler.make(), to: ProfileRouter.Routes.addFriend.rawValue)
+      })
+      .disposed(by: disposeBag)
+    
+    navigationItem.rightBarButtonItem = addButton
   }
   
   private func prepareNavigationBar() {
@@ -140,6 +164,10 @@ public final class ProfileViewController: UIViewController {
         MDCSnackbarManager.show(message)
       })
       .disposed(by: disposeBag)
+  }
+  
+  deinit {
+    appBar.navigationBar.unobserveNavigationItem()
   }
 }
 
