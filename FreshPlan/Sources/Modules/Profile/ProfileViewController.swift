@@ -25,7 +25,7 @@ public final class ProfileViewController: UIViewController {
   
   //: MARK - TableView
   private var profileTableView: UITableView!
-  fileprivate var dataSource: RxTableViewSectionedAnimatedDataSource<ProfileViewModel.SectionModel>!
+  fileprivate var dataSource: RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>!
   
   public convenience init(viewModel: ProfileViewModel, router: ProfileRouter) {
     self.init(nibName: nil, bundle: nil)
@@ -79,7 +79,6 @@ public final class ProfileViewController: UIViewController {
   
   private func prepareProfileTableView() {
     profileTableView = UITableView()
-    //    profileTableView.rowHeight = UITableViewAutomaticDimension
     profileTableView.estimatedRowHeight = 44
     profileTableView.separatorStyle = .singleLine
     profileTableView.separatorInset = .zero
@@ -94,8 +93,7 @@ public final class ProfileViewController: UIViewController {
     appBar.headerViewController.headerView.trackingScrollView = profileTableView
     
     // set up data sources
-    dataSource = RxTableViewSectionedAnimatedDataSource<ProfileViewModel.SectionModel>(
-      animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left),
+    dataSource = RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>(
       configureCell: { (dataSource, table, index, _) in
         switch dataSource[index] {
         case let .profile(_, profileURL, fullName):
@@ -111,18 +109,44 @@ public final class ProfileViewController: UIViewController {
           let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
           cell.textLabel?.text = description
           return cell
-        case let .friend(displayName):
+        case let .friend(_, displayName):
           let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
           cell.textLabel?.text = displayName
           return cell
         }
     })
     
+    dataSource.canEditRowAtIndexPath = { dataSource, index in
+      switch dataSource.sectionModels[index.section] {
+      case .friendRequests:
+        return true
+      default:
+        return false
+      }
+    }
     
+    dataSource.rowAnimation = .automatic
     
     viewModel.profileItems
       .asObservable()
       .bind(to: profileTableView.rx.items(dataSource: dataSource))
+      .disposed(by: disposeBag)
+    
+    viewModel.acceptedFriendSuccess
+      .asObservable()
+      .filterNil()
+      .subscribe(onNext: { [weak self] index in
+        guard let this = self else { return }
+//        this.profileTableView.reloadData()
+//        print ("YAY!")
+//        let poo = this.dataSource.sectionModels[1].items.count - 1
+//        this.dataSource[index.section].remove(at: index.row)
+//        this.profileTableView.reloadData()
+//        // begin row animation
+//        this.profileTableView.beginUpdates()
+//        this.profileTableView.deleteRows(at: [index], with: .automatic)
+//        this.profileTableView.endUpdates()
+      })
       .disposed(by: disposeBag)
   }
 }
@@ -145,7 +169,23 @@ extension ProfileViewController: UITableViewDelegate {
     }
   }
   
-  
+  public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    switch dataSource.sectionModels[indexPath.section] {
+    case .friendRequests:
+      let friendSwipeAccept = UITableViewRowAction(
+        style: .normal,
+        title: "Accept Friend Request",
+        handler: { [weak self] _, index in
+          guard let this = self else { return }
+          this.viewModel.acceptFriend.on(.next(index))
+        }
+      )
+      friendSwipeAccept.backgroundColor = MDCPalette.green.tint400
+      return [friendSwipeAccept]
+    default:
+      return nil
+    }
+  }
   
   public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     switch dataSource.sectionModels[section] {

@@ -11,16 +11,20 @@ import RxSwift
 import RxDataSources
 import Moya
 import JWTDecode
+import UIKit
 
 public protocol ProfileViewModelProtocol {
 	var profileItems: Variable<[ProfileViewModel.SectionModel]> { get }
+  var acceptFriend: PublishSubject<IndexPath> { get }
+  var acceptedFriendSuccess: Variable<IndexPath?> { get }
 }
 
 public class ProfileViewModel: ProfileViewModelProtocol {
 	private let provider: MoyaProvider<FreshPlan>!
-	
-	private var items: Variable<[SectionItem]> = Variable([])
+
 	public var profileItems: Variable<[ProfileViewModel.SectionModel]> = Variable([])
+  public var acceptFriend: PublishSubject<IndexPath> = PublishSubject()
+  public var acceptedFriendSuccess: Variable<IndexPath?> = Variable(nil)
 	
 	private let disposeBag: DisposeBag = DisposeBag()
 	
@@ -28,8 +32,7 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 		self.provider = provider
     
     let token = Token.getJWT().filter { $0 != -1 }.share()
-    
-		//: MARK - User Setup
+  
 		let user = token
 			.flatMap { self.requestUser(userId: $0) }
       .map(User.self, using: JSONDecoder.Decode)
@@ -50,18 +53,25 @@ public class ProfileViewModel: ProfileViewModelProtocol {
       .flatMap { self.requestFriends(userId: $0) }
       .share()
     
-    let friendsList = friends.map([Friend].self, using: JSONDecoder.Decode).filter { $0.contains(where: { $0.accepted }) }.ifEmpty(default: [])
-    let friendRequests = friends.map([Friend].self, using: JSONDecoder.Decode).filter { $0.contains(where: { !$0.accepted }) }.ifEmpty(default: [])
+    let friendsList = friends
+      .map([Friend].self, using: JSONDecoder.Decode)
+      .filter { $0.contains(where: { $0.accepted }) }
+      .ifEmpty(default: [])
+    
+    let friendRequests = friends
+      .map([Friend].self, using: JSONDecoder.Decode)
+      .filter { $0.contains(where: { !$0.accepted }) }
+      .ifEmpty(default: [])
     
     let friendsSection = friendsList
       .map { friends -> [SectionItem] in
-        return friends.map { SectionItem.friend(displayName: $0.friend.displayName) }
+        return friends.map { SectionItem.friend(id: $0.id, displayName: $0.displayName) }
       }
       .map { SectionModel.friends(order: 1, title: "My Friends", items: $0) }
     
     let friendRequestsSection = friendRequests
       .map { friends -> [SectionItem] in
-        return friends.map { SectionItem.friend(displayName: $0.friend.displayName) }
+        return friends.map { SectionItem.friend(id: $0.id, displayName: $0.displayName) }
       }
       .map { SectionModel.friendRequests(order: 2, title: "My Friend Requests", items: $0) }
 		
@@ -71,6 +81,8 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 			.map { $0.sorted(by: { $0.order < $1.order }) }
 			.bind(to: profileItems)
 			.disposed(by: disposeBag)
+    
+    setupFriendRequest()
 	}
 	
   private func requestUser(userId: Int) -> Observable<Response> {
@@ -78,9 +90,36 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 			.asObservable()
 	}
   
+  private func requestDeleteFriend(userId: Int, friendId: Int) -> Observable<Response> {
+    return provider.rx.request(.acceptFriend(userId, friendId))
+      .asObservable()
+  }
+  
   private func requestFriends(userId: Int) -> Observable<Response> {
     return provider.rx.request(.friends(userId))
       .asObservable()
+  }
+  
+  private func setupFriendRequest() {
+    acceptFriend
+      .asObservable()
+      .map { index -> Observable<(IndexPath, Response)> in
+        let id = self.profileItems.value[index.section].items[index.row].identity
+        if let jwt = Token.decodeJWT, let userId = jwt.body["userId"] as? Int {
+          let request = self.requestDeleteFriend(userId: userId, friendId: id)
+          return request.map { (index, $0) }
+        }
+        return Observable.empty()
+      }
+      .flatMap { $0 }
+      .filter { $1.statusCode >= 200 && $1.statusCode <= 299 }
+      .map { (index, response) in
+        let items = self.profileItems.value[index.section].delete(at: index.row)
+        self.profileItems.value[index.section] = items
+        return index
+      }
+      .bind(to: acceptedFriendSuccess)
+      .disposed(by: disposeBag)
   }
 }
 
@@ -96,7 +135,7 @@ extension ProfileViewModel {
 		case profile(order: Int, profileURL: String, fullName: String)
 		case email(order: Int, description: String)
 		case displayName(order: Int, name: String)
-		case friend(displayName: String)
+    case friend(id: Int, displayName: String)
 	}
 }
 
@@ -151,6 +190,19 @@ extension ProfileViewModel.SectionModel: AnimatableSectionModelType {
 			return title
 		}
 	}
+  
+  public func delete(at index: Int) -> ProfileViewModel.SectionModel {
+    switch self {
+    case let .friendRequests(order, title, items):
+      var newItems = items
+      newItems.remove(at: index)
+      return ProfileViewModel.SectionModel.friendRequests(order: order, title: title, items: newItems)
+    case let .friends(order, title, items):
+      return ProfileViewModel.SectionModel.friends(order: order, title: title, items: items)
+    case let .profile(order, title, items):
+      return ProfileViewModel.SectionModel.profile(order: order, title: title, items: items)
+    }
+  }
 }
 
 //: MARK - Equatable
@@ -187,6 +239,11 @@ extension ProfileViewModel.SectionItem: IdentifiableType {
   public typealias Identity = Int
   
   public var identity: Int {
-    return order
+    switch self {
+    case let .friend(id, _):
+      return id
+    default:
+      return 0
+    }
   }
 }
