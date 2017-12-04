@@ -11,7 +11,7 @@ import Moya
 import RxDataSources
 
 public protocol AddFriendViewModelProtocol {
-  
+//  var searchResults: 
 }
 
 public class AddFriendViewModel: AddFriendViewModelProtocol {

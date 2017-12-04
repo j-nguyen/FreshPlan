@@ -20,6 +20,7 @@ public final class AddFriendViewController: UIViewController {
   private var closeButton: UIBarButtonItem!
   
   //: MARK - TableView
+  private var searchBar: SearchBar!
   private var tableView: UITableView!
   
   //: MARK - DisposeBag
@@ -59,7 +60,15 @@ public final class AddFriendViewController: UIViewController {
     prepareTableView()
     prepareNavigationBar()
     prepareNavigationAdd()
+    prepareSearchBar()
     appBar.addSubviewsToParent()
+  }
+  
+  private func prepareSearchBar() {
+    searchBar = SearchBar()
+    searchBar.sizeToFit()
+    
+    navigationItem.titleView = searchBar
   }
   
   private func prepareTableView() {
@@ -100,10 +109,6 @@ public final class AddFriendViewController: UIViewController {
     appBar.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor: UIColor.white ]
     
     appBar.headerViewController.headerView.trackingScrollView = tableView
-    
-    Observable.just("Add Friend")
-      .bind(to: navigationItem.rx.title)
-      .disposed(by: disposeBag)
     
     appBar.navigationBar.observe(navigationItem)
   }
