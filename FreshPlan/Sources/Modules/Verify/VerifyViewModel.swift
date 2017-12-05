@@ -13,6 +13,7 @@ import Moya
 public protocol VerifyViewModelProtocol {
 	var verificationCode: Variable<Int?> { get }
 	var error: Variable<String> { get }
+  var resendSuccess: Variable<Bool> { get }
 	
 	func bindButton()
 	var submitTap: Observable<Void>! { get set }
@@ -27,12 +28,21 @@ public class VerifyViewModel: VerifyViewModelProtocol {
 	public var error: Variable<String> = Variable("")
 	public var verificationCode: Variable<Int?> = Variable(nil)
 	public var submitSuccess: Variable<Bool> = Variable(false)
+  public var resendSuccess: Variable<Bool> = Variable(false)
 	
 	public var submitTap: Observable<Void>!
 	
 	public init(provider: MoyaProvider<FreshPlan>, email: String) {
 		self.provider = provider
 		self.email = email
+    
+    Observable.just(self.email)
+      .filterEmpty()
+      .flatMap { self.resendVerification(email: $0) }
+      .filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
+      .map { $0.statusCode >= 200 && $0.statusCode <= 299 }
+      .bind(to: resendSuccess)
+      .disposed(by: disposeBag)
 	}
 	
 	public func bindButton() {
@@ -56,6 +66,12 @@ public class VerifyViewModel: VerifyViewModelProtocol {
 	}
 	
 	private func requestVerification(email: String, code: Int) -> Observable<Response> {
-		return self.provider.rx.request(.verify(email, code)).asObservable()
+		return self.provider.rx.request(.verify(email, code))
+      .asObservable()
 	}
+  
+  private func resendVerification(email: String) -> Observable<Response> {
+    return self.provider.rx.request(.resend(email))
+      .asObservable()
+  }
 }
