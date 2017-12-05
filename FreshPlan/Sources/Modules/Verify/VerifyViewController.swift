@@ -182,7 +182,7 @@ public final class VerifyViewController: UIViewController {
 				guard let this = self else { return }
         this.dismiss(animated: true) {
           try? this.router.route(from: this, to: VerifyRouter.Routes.login.rawValue)
-          let message = MDCSnackbarMessage(text: "Account Verified!")
+          let message = MDCSnackbarMessage(text: "Account Verified! You can now login.")
           MDCSnackbarManager.show(message)
         }
 			})
