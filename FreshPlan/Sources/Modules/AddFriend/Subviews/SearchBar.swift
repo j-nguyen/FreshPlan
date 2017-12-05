@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import MaterialComponents
 
 /**
  * Our custom made search bar
@@ -20,16 +21,30 @@ public final class SearchBar: UISearchBar {
   
   public override init(frame: CGRect) {
     super.init(frame: frame)
-  }
-  
-  public convenience init() {
-    self.init(frame: .zero)
     prepareView()
   }
   
   private func prepareView() {
+    prepareSearchBar()
+    prepareTextField()
+  }
+  
+  private func prepareSearchBar() {
     searchBarStyle = .minimal
     placeholder = "Search"
-    
+    showsBookmarkButton = false
+    tintColor = .white
+  }
+  
+  /**
+   * There's no standard way of editing the textfield inside the searchbar, but one workaround
+   * is to use the key-value compliant method.
+  **/
+  private func prepareTextField() {
+    let textField = self.value(forKey: "searchField") as? UITextField
+    textField?.font = MDCTypography.body2Font()
+    textField?.textColor = .white
+    textField?.borderStyle = .roundedRect
+
   }
 }

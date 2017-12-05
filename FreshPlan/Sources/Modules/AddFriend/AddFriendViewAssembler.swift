@@ -7,12 +7,17 @@
 //
 
 import Foundation
+import Moya
 import UIKit
 
 public final class AddFriendViewAssembler {
   public static func make() -> AddFriendViewController {
-    let viewModel = AddFriendViewModel()
+    let viewModel = AddFriendViewModel(provider: provider)
     
     return AddFriendViewController(viewModel: viewModel)
+  }
+  
+  private static var provider: MoyaProvider<FreshPlan> {
+    return MoyaProvider<FreshPlan>(plugins: [NetworkLoggerPlugin(verbose: true)])
   }
 }

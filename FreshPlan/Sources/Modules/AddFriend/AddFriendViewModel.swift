@@ -11,9 +11,15 @@ import Moya
 import RxDataSources
 
 public protocol AddFriendViewModelProtocol {
-//  var searchResults: 
+  var searchText: Variable<String> { get }
 }
 
 public class AddFriendViewModel: AddFriendViewModelProtocol {
+  private var provider: MoyaProvider<FreshPlan>
   
+  public var searchText: Variable<String> = Variable("")
+  
+  public init(provider: MoyaProvider<FreshPlan>) {
+    self.provider = provider
+  }
 }

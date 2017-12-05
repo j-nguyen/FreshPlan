@@ -66,7 +66,13 @@ public final class AddFriendViewController: UIViewController {
   
   private func prepareSearchBar() {
     searchBar = SearchBar()
-    searchBar.sizeToFit()
+  
+//    searchBar.sizeToFit()
+    
+    searchBar.rx.text
+      .orEmpty
+      .bind(to: viewModel.searchText)
+      .disposed(by: disposeBag)
     
     navigationItem.titleView = searchBar
   }
