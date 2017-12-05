@@ -51,7 +51,7 @@ public class LoginViewModel: LoginViewModelProtocol {
 			.flatMap { self.loginRequest(email: self.email.value, password: self.password.value) }
 			.share()
 		
-		tap
+    tap
 			.filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
 			.map(Token.self)
 			.map {
@@ -62,8 +62,8 @@ public class LoginViewModel: LoginViewModelProtocol {
 			.disposed(by: disposeBag)
 		
 		tap
-			.filter { $0.statusCode > 299 }
-			.map(ResponseError.self)
+			.filter { $0.statusCode > 299 && $0.statusCode != 403 }
+      .map(ResponseError.self)
 			.map { $0.reason }
 			.bind(to: error)
 			.disposed(by: disposeBag)

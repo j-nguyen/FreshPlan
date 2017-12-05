@@ -180,8 +180,20 @@ public final class VerifyViewController: UIViewController {
 			.filter { $0 }
 			.subscribe(onNext: { [weak self] _ in
 				guard let this = self else { return }
-				this.dismiss(animated: true, completion: nil)
+        this.dismiss(animated: true) {
+          let message = MDCSnackbarMessage(text: "Account Verified! You can now login.")
+          MDCSnackbarManager.show(message)
+        }
 			})
 			.disposed(by: disposeBag)
+    
+    viewModel.resendSuccess
+      .asObservable()
+      .filter { $0 }
+      .subscribe(onNext: { [weak self] _ in
+        let message = MDCSnackbarMessage(text: "Resent a verification email! Please check your email address to verify your account.")
+        MDCSnackbarManager.show(message)
+      })
+      .disposed(by: disposeBag)
 	}
 }
