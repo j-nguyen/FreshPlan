@@ -180,7 +180,7 @@ public final class VerifyViewController: UIViewController {
 			.filter { $0 }
 			.subscribe(onNext: { [weak self] _ in
 				guard let this = self else { return }
-				this.dismiss(animated: true, completion: nil)
+				this.dismiss(animated: true)
 			})
 			.disposed(by: disposeBag)
 	}
