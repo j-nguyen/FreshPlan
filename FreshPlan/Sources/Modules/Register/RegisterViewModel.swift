@@ -73,13 +73,6 @@ public class RegisterViewModel: RegisterViewModelProtocol {
             .map { $0.reason }
             .bind(to: error)
             .disposed(by: disposeBag)
-        
-//        tap
-//            .filter { $0.statusCode == 409 }
-//            .map { $0.statusCode == 409 }
-//            .bind(to: self.signUpUnSuccessful)
-//            .disposed(by: disposeBag)
-        
     }
     
     private func registerRequest(firstName: String, lastName: String, displayName: String, email: String, password: String) -> Observable<Response> {
