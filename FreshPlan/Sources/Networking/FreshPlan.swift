@@ -14,6 +14,7 @@ public enum FreshPlan {
 	case login(String, String)
 	case register(String, String, String, String, String)
 	case verify(String, Int)
+  case resend(String)
 }
 
 extension FreshPlan: TargetType {
@@ -28,13 +29,15 @@ extension FreshPlan: TargetType {
 			return "/auth/register"
 		case .verify:
 			return "/auth/verify"
+    case .resend:
+      return "/auth/resend"
 		}
 	}
 	
 	// type of method (POST/GET/PATCH/DELETE)
 	public var method: Moya.Method {
 		switch self {
-		case .login, .register, .verify:
+		case .login, .register, .verify, .resend:
 			return .post
 		}
 	}
@@ -52,19 +55,24 @@ extension FreshPlan: TargetType {
 				             "email": email,
 				             "password": password],
 			encoding: JSONEncoding.default)
+    case let .resend(email):
+      return .requestParameters(
+        parameters: ["email": email],
+        encoding: JSONEncoding.default
+      )
 		case let .verify(email, code):
 			return .requestParameters(parameters: ["email": email, "code": code], encoding: JSONEncoding.default)
 		}
 	}
 	
-	// used for data
+	// This is used for testing, but we haven't been using it
 	public var sampleData: Data {
 		return "Used for testing".data(using: String.Encoding.utf8)!
 	}
 	
 	public var headers: [String: String]? {
 		switch self {
-		case .login, .register, .verify:
+		case .login, .register, .verify, .resend:
 			return ["Content-Type": "application/json"]
 		}
 	}

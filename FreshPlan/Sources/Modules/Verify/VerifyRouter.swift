@@ -20,7 +20,7 @@ public class VerifyRouter {
 }
 
 extension VerifyRouter: RouterProtocol {
-	public func route(from context: UIViewController, to route: String, parameters: [String : Any]?) throws {
+	public func route(from context: UIViewController, to route: String, parameters: [String : Any]? = nil) throws {
 		guard let route = Routes(rawValue: route) else {
 			throw RouteError.invalidRoute("This is an invalid route!")
 		}

@@ -257,9 +257,11 @@ public final class RegisterViewController: UIViewController {
             .asObservable()
             .filter { $0 }
             .subscribe(onNext: { [weak self] _ in
-                guard let this = self else { return }
-                guard let text = this.emailField.text else { return }
-                try? this.router.route(from: this, to: RegisterRouter.Routes.verify.rawValue, parameters: ["email": text])
+              guard let this = self else { return }
+              guard let text = this.emailField.text else { return }
+              try? this.router.route(from: this, to: RegisterRouter.Routes.verify.rawValue, parameters: ["email": text])
+              let message = MDCSnackbarMessage(text: "Successfully signed up! Please check your email to verify your account.")
+              MDCSnackbarManager.show(message)
             })
             .disposed(by: disposeBag)
         

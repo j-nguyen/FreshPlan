@@ -11,8 +11,8 @@ import UIKit
 public class RegisterRouter {
 	public enum Routes: String {
 		case register
-        case login
-        case verify
+    case login
+    case verify
 	}
 	
 	fileprivate enum RouteError: Error {
