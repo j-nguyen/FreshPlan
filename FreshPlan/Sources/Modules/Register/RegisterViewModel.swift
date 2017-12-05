@@ -17,7 +17,7 @@ public protocol RegisterViewModelProtocol {
     var email: Variable<String> { get }
     var password: Variable<String> { get }
     var signUpEnabled: Observable<Bool> { get }
-    var error: Variable<String> { get }
+    var error: Variable<String?> { get }
     
     var signUpTap: Observable<Void>! { get set }
     var signUpSuccess: Variable<Bool> { get }
@@ -37,7 +37,7 @@ public class RegisterViewModel: RegisterViewModelProtocol {
     public var displayName: Variable<String> = Variable("")
     public var email: Variable<String> = Variable("")
     public var password: Variable<String> = Variable("")
-    public var error: Variable<String> = Variable("")
+    public var error: Variable<String?> = Variable(nil)
     
 
     public var signUpEnabled: Observable<Bool> {
@@ -57,34 +57,28 @@ public class RegisterViewModel: RegisterViewModelProtocol {
     }
     
     public func bindButtons() {
-        let tap = signUpTap.flatMap { self.registerRequest(firstName: self.firstName.value, lastName: self.lastName.value, displayName: self.displayName.value, email: self.email.value, password: self.password.value) }
+        let tap = signUpTap
+            .flatMap { self.registerRequest(firstName: self.firstName.value, lastName: self.lastName.value, displayName: self.displayName.value, email: self.email.value, password: self.password.value) }
+            .share()
         
         tap
             .filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
-            .map { $0.data }
-            .map { try? JSONDecoder().decode(Token.self, from: $0) }
-            .filterNil()
-            .map {
-                UserDefaults.standard.set($0.token, forKey: "token")
-                return true
-            }
+            .map { $0.statusCode >= 200 && $0.statusCode <= 299 }
             .bind(to: self.signUpSuccess)
             .disposed(by: disposeBag)
         
         tap
             .filter { $0.statusCode > 299 }
-            .map { $0.data }
-            .map { try? JSONDecoder().decode(ResponseError.self, from: $0) }
-            .filterNil()
+            .map(ResponseError.self)
             .map { $0.reason }
             .bind(to: error)
             .disposed(by: disposeBag)
         
-        tap
-            .filter { $0.statusCode == 409 }
-            .map { $0.statusCode == 409 }
-            .bind(to: self.signUpUnSuccessful)
-            .disposed(by: disposeBag)
+//        tap
+//            .filter { $0.statusCode == 409 }
+//            .map { $0.statusCode == 409 }
+//            .bind(to: self.signUpUnSuccessful)
+//            .disposed(by: disposeBag)
         
     }
     

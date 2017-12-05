@@ -11,6 +11,7 @@ import UIKit
 public class VerifyRouter {
 	public enum Routes: String {
 		case register
+        case login
 	}
 	
 	fileprivate enum RouteError: Error {
@@ -30,6 +31,9 @@ extension VerifyRouter: RouterProtocol {
 		case .register:
 			window.rootViewController = RegisterAssembler.make()
 			break
-		}
+        case .login:
+            window.rootViewController = LoginAssembler.make()
+            break
+        }
 	}
 }

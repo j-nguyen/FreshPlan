@@ -92,7 +92,7 @@ public final class RegisterViewController: UIViewController {
     fileprivate func prepareErrorBinding() {
         viewModel.error
             .asObservable()
-            .filterEmpty()
+            .filterNil()
             .subscribe(onNext: { reason in
                 let message = MDCSnackbarMessage()
                 message.text = reason
@@ -175,6 +175,7 @@ public final class RegisterViewController: UIViewController {
     fileprivate func prepareDisplayName() {
         displayNameField = MDCTextField()
         displayNameField.placeholder = "Display Name"
+        displayNameField.autocapitalizationType = .none
         displayNameField.returnKeyType = .next
         
         displayNameFieldController = MDCTextInputControllerDefault(textInput: displayNameField)
@@ -194,6 +195,7 @@ public final class RegisterViewController: UIViewController {
     fileprivate func prepareEmail() {
         emailField = MDCTextField()
         emailField.placeholder = "Email Address"
+        emailField.autocapitalizationType = .none
         emailField.keyboardType = .emailAddress
         emailField.returnKeyType = .next
         
@@ -261,14 +263,12 @@ public final class RegisterViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        viewModel.signUpUnSuccessful
+        viewModel.error
             .asObservable()
-            .filter { $0 }
-            .subscribe(onNext: { [weak self] _ in
-                guard let this = self else { return }
-                guard let text = this.emailField.text else { return }
-                
-                print("failed")
+            .filterNil()
+            .subscribe(onNext: { reason in
+                let message = MDCSnackbarMessage(text: reason)
+                MDCSnackbarManager.show(message)
             })
             .disposed(by: disposeBag)
     }
