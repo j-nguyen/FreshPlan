@@ -12,7 +12,7 @@ import Moya
 // our endpoints
 public enum FreshPlan {
 	case login(String, String)
-	case register(String, String, String, String)
+	case register(String, String, String, String, String)
 	case verify(String, Int)
 }
 
@@ -44,10 +44,11 @@ extension FreshPlan: TargetType {
 		switch self {
 		case let .login(email, password):
 			return .requestParameters(parameters: ["email": email, "password": password], encoding: JSONEncoding.default)
-		case let .register(firstName, lastName, email, password):
+		case let .register(firstName, lastName, displayName, email, password):
 			return .requestParameters(
 				parameters: ["firstName": firstName,
 				             "lastName": lastName,
+                             "displayName": displayName,
 				             "email": email,
 				             "password": password],
 			encoding: JSONEncoding.default)

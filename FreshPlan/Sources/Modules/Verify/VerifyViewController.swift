@@ -181,6 +181,9 @@ public final class VerifyViewController: UIViewController {
 			.subscribe(onNext: { [weak self] _ in
 				guard let this = self else { return }
 				this.dismiss(animated: true, completion: nil)
+                try? this.router.route(from: this, to: VerifyRouter.Routes.login.rawValue, parameters: nil)
+                let message = MDCSnackbarMessage.init(text: "Account Verified!")
+                MDCSnackbarManager.show(message)
 			})
 			.disposed(by: disposeBag)
 	}
