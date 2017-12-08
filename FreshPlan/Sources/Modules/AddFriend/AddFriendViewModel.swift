@@ -21,5 +21,11 @@ public class AddFriendViewModel: AddFriendViewModelProtocol {
   
   public init(provider: MoyaProvider<FreshPlan>) {
     self.provider = provider
+    
+    
+  }
+  
+  private func requestFriends(query: String) -> Observable<[Friend]> {
+    return provider.rx.request(.)
   }
 }
