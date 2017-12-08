@@ -65,23 +65,23 @@ public final class AddFriendViewController: UIViewController {
   }
   
   private func prepareSearchBar() {
+    //: TODO - Fix searchbar sizing on navigation bar
     searchBar = SearchBar()
-  
-//    searchBar.sizeToFit()
+    searchBar.sizeToFit()
     
+    // we'll make a check for ios 11    
     searchBar.rx.text
       .orEmpty
       .bind(to: viewModel.searchText)
       .disposed(by: disposeBag)
     
-    navigationItem.titleView = searchBar
+    appBar.navigationBar.titleView = searchBar
   }
   
   private func prepareTableView() {
     tableView = UITableView()
     tableView.estimatedRowHeight = 44
     tableView.rowHeight = UITableViewAutomaticDimension
-    tableView.rx.setDelegate(self).disposed(by: disposeBag)
     
     view.addSubview(tableView)
     
@@ -114,8 +114,6 @@ public final class AddFriendViewController: UIViewController {
     appBar.headerViewController.headerView.maximumHeight = 76.0
     appBar.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor: UIColor.white ]
     
-    appBar.headerViewController.headerView.trackingScrollView = tableView
-    
     appBar.navigationBar.observe(navigationItem)
   }
   
@@ -123,19 +121,3 @@ public final class AddFriendViewController: UIViewController {
     appBar.navigationBar.unobserveNavigationItem()
   }
 }
-
-//: MARK - Extension UITableViewDelegate
-extension AddFriendViewController: UITableViewDelegate {
-  public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidScroll()
-    }
-  }
-  
-  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
-    }
-  }
-}
-

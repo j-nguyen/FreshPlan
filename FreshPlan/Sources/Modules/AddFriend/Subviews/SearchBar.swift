@@ -44,7 +44,6 @@ public final class SearchBar: UISearchBar {
     let textField = self.value(forKey: "searchField") as? UITextField
     textField?.font = MDCTypography.body2Font()
     textField?.textColor = .white
-    textField?.borderStyle = .roundedRect
 
   }
 }
