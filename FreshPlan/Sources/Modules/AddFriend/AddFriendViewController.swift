@@ -14,6 +14,7 @@ import MaterialComponents
 public final class AddFriendViewController: UIViewController {
   //: MARK - ViewModel
   private var viewModel: AddFriendViewModelProtocol!
+  private var router: AddFriendRouter!
   
   //: MARK - AppBar
   fileprivate var appBar: MDCAppBar = MDCAppBar()
@@ -31,9 +32,10 @@ public final class AddFriendViewController: UIViewController {
   //: MARK - DisposeBag
   private var disposeBag: DisposeBag = DisposeBag()
   
-  public convenience init(viewModel: AddFriendViewModel) {
+  public convenience init(viewModel: AddFriendViewModel, router: AddFriendRouter) {
     self.init(nibName: nil, bundle: nil)
     self.viewModel = viewModel
+    self.router = router
     
     addChildViewController(appBar.headerViewController)
   }
@@ -115,6 +117,7 @@ public final class AddFriendViewController: UIViewController {
     tableView = UITableView()
     tableView.estimatedRowHeight = 44
     tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.rx.setDelegate(self).disposed(by: disposeBag)
     tableView.registerCell(FriendCell.self)
     
     view.addSubview(tableView)
@@ -128,6 +131,18 @@ public final class AddFriendViewController: UIViewController {
         cell.textLabel?.text = friend.displayName
         cell.detailTextLabel?.text = friend.email
       }
+      .disposed(by: disposeBag)
+    
+    tableView.rx.itemSelected
+      .asObservable()
+      .map { [weak self] index in self?.viewModel.friends.value[index.row] }
+      .filterNil()
+      .subscribe(onNext: { [weak self] friend in
+        // create a strong reference and route
+        if let this = self {
+          this.router.route
+        }
+      })
       .disposed(by: disposeBag)
   }
   
@@ -164,9 +179,6 @@ public final class AddFriendViewController: UIViewController {
     // table stuff
     appBar.headerViewController.headerView.trackingScrollView = tableView
     
-    // set the delegate to the scroll app bar. We aren't doing any adjustments so this is fine
-    tableView.delegate = appBar.headerViewController
-    
     // set layout margins to fix
     tableView.layoutMargins = UIEdgeInsets.zero
     tableView.separatorInset = UIEdgeInsets.zero
@@ -176,5 +188,20 @@ public final class AddFriendViewController: UIViewController {
   
   deinit {
     appBar.navigationBar.unobserveNavigationItem()
+  }
+}
+
+//: MARK - TableViewDelegate
+extension AddFriendViewController: UITableViewDelegate {
+  public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollDidScroll()
+    }
+  }
+  
+  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
+    }
   }
 }

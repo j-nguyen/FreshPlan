@@ -13,8 +13,9 @@ import UIKit
 public final class AddFriendViewAssembler {
   public static func make() -> AddFriendViewController {
     let viewModel = AddFriendViewModel(provider: provider)
+    let router = AddFriendRouter()
     
-    return AddFriendViewController(viewModel: viewModel)
+    return AddFriendViewController(viewModel: viewModel, router: router)
   }
   
   private static var provider: MoyaProvider<FreshPlan> {
