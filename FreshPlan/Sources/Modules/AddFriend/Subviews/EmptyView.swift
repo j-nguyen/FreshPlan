@@ -74,7 +74,7 @@ public final class EmptyView: UIView {
     searchTitleLabel.font = MDCTypography.titleFont()
     searchTitleLabel.text = "No Results"
     
-    stackView.addArrangedSubview(searchDetailLabel)
+    stackView.addArrangedSubview(searchTitleLabel)
     
     searchTitleLabel.snp.makeConstraints { make in
       make.width.equalTo(100)
