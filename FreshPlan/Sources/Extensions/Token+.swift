@@ -12,7 +12,7 @@ import JWTDecode
 import MaterialComponents
 import UIKit
 
-//: MARK - Token Extension
+// MARK:  Token Extension
 /// tests if the jwt has been expired
 //: TODO - Fix soon 
 extension Token {

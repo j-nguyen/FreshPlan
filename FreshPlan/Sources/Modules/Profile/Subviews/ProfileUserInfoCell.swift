@@ -37,7 +37,7 @@ public final class ProfileUserInfoCell: UITableViewCell {
   }
 }
 
-//: MARK - MDCInkTouchControllerDelegate
+// MARK:  MDCInkTouchControllerDelegate
 extension ProfileUserInfoCell: MDCInkTouchControllerDelegate {
 	public func inkTouchController(_ inkTouchController: MDCInkTouchController, shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
 		return true

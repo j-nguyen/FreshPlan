@@ -12,24 +12,24 @@ import SnapKit
 import MaterialComponents
 
 public final class AddFriendViewController: UIViewController {
-  //: MARK - ViewModel
+  // MARK:  ViewModel
   private var viewModel: AddFriendViewModelProtocol!
   private var router: AddFriendRouter!
   
-  //: MARK - AppBar
+  // MARK:  AppBar
   fileprivate var appBar: MDCAppBar = MDCAppBar()
   private var closeButton: UIBarButtonItem!
   
-  //: MARK - TableView
+  // MARK:  TableView
   private var containerView: UIView!
   private var searchBar: SearchBar!
   private var tableView: UITableView!
   private var emptyView: EmptyView!
   
-  //: MARK - Default TableViewCell
+  // MARK:  Default TableViewCell
   private var defaultCell: UITableViewCell = UITableViewCell()
   
-  //: MARK - DisposeBag
+  // MARK:  DisposeBag
   private var disposeBag: DisposeBag = DisposeBag()
   
   public convenience init(viewModel: AddFriendViewModel, router: AddFriendRouter) {
@@ -195,7 +195,7 @@ public final class AddFriendViewController: UIViewController {
   }
 }
 
-//: MARK - TableViewDelegate
+// MARK:  TableViewDelegate
 extension AddFriendViewController: UITableViewDelegate {
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView == appBar.headerViewController.headerView.trackingScrollView {

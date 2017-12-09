@@ -18,11 +18,11 @@ public protocol AddFriendViewModelProtocol {
 public class AddFriendViewModel: AddFriendViewModelProtocol {
   private var provider: MoyaProvider<FreshPlan>
   
-  //: MARK - RxSwift Variables
+  // MARK:  RxSwift Variables
   public var searchText: Variable<String> = Variable("")
   public var friends: Variable<[User]> = Variable([])
   
-  //: MARK - DisposeBag
+  // MARK:  DisposeBag
   private let disposeBag: DisposeBag = DisposeBag()
   
   public init(provider: MoyaProvider<FreshPlan>) {

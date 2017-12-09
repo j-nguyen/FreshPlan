@@ -11,7 +11,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-//: MARK - Reactive
+// MARK:  Reactive
 extension Reactive where Base: UILabel {
 	public var textColor: Binder<UIColor> {
 		return Binder(self.base) { label, color in

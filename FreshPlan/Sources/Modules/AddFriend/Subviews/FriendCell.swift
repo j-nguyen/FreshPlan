@@ -10,7 +10,7 @@ import UIKit
 import MaterialComponents
 
 public class FriendCell: UITableViewCell {
-  //: MARK - Views
+  // MARK:  Views
   private var inkViewController: MDCInkTouchController!
   
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -34,7 +34,7 @@ public class FriendCell: UITableViewCell {
   }
 }
 
-//: MARK - InkDelegate
+// MARK:  InkDelegate
 extension FriendCell: MDCInkTouchControllerDelegate {
   public func inkTouchController(_ inkTouchController: MDCInkTouchController, shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
     return true

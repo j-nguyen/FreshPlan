@@ -29,7 +29,7 @@ public final class HomeViewController: UITabBarController {
 	public override func viewDidLoad() {
 		super.viewDidLoad()
     
-    //: MARK - View Controllers
+    // MARK:  View Controllers
     let meetupController = MeetupAssembler.make()
     let profileController = ProfileAssembler.make()
     

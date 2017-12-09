@@ -13,13 +13,13 @@ import MaterialComponents
 
 public class ProfileUserHeaderView: UIView {
   
-  //: MARK - PublishSubject
+  // MARK:  PublishSubject
   public var title: PublishSubject<String> = PublishSubject()
   
-  //: MARK - Label
+  // MARK:  Label
   public var titleLabel: UILabel!
   
-  //: MARK - DisposeBag
+  // MARK:  DisposeBag
   private var disposeBag: DisposeBag = DisposeBag()
   
   public convenience init() {

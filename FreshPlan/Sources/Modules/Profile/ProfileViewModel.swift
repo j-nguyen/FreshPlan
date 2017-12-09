@@ -48,7 +48,7 @@ public class ProfileViewModel: ProfileViewModelProtocol {
       .map { $0.sorted(by: { $0.order < $1.order }) }
       .map { SectionModel.profile(order: 0, title: "My Profile", items: $0) }
     
-    //: MARK - Friends Setup
+    // MARK:  Friends Setup
     let friends = token
       .flatMap { self.requestFriends(userId: $0) }
       .share()
@@ -134,7 +134,7 @@ public class ProfileViewModel: ProfileViewModelProtocol {
   }
 }
 
-//: MARK - Section Models
+// MARK:  Section Models
 extension ProfileViewModel {
 	public enum SectionModel {
 		case profile(order: Int, title: String, items: [SectionItem])
@@ -150,7 +150,7 @@ extension ProfileViewModel {
 	}
 }
 
-//: MARK - AnimatableSectionModelType
+// MARK:  AnimatableSectionModelType
 extension ProfileViewModel.SectionModel: AnimatableSectionModelType {
   public typealias Identity = String
   
@@ -229,14 +229,14 @@ extension ProfileViewModel.SectionModel: AnimatableSectionModelType {
   }
 }
 
-//: MARK - Equatable
+// MARK:  Equatable
 extension ProfileViewModel.SectionModel: Equatable {
 	public static func ==(lhs: ProfileViewModel.SectionModel, rhs: ProfileViewModel.SectionModel) -> Bool {
 		return lhs.order == rhs.order
 	}
 }
 
-//: MARK - SectionItem
+// MARK:  SectionItem
 extension ProfileViewModel.SectionItem {
 	public var order: Int {
 		switch self {
@@ -252,7 +252,7 @@ extension ProfileViewModel.SectionItem {
 	}
 }
 
-//: MARK - Equatable
+// MARK:  Equatable
 extension ProfileViewModel.SectionItem: Equatable {
 	public static func ==(lhs: ProfileViewModel.SectionItem, rhs: ProfileViewModel.SectionItem) -> Bool {
 		return lhs.order == rhs.order

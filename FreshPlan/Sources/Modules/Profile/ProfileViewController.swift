@@ -13,21 +13,21 @@ import RxDataSources
 import MaterialComponents
 
 public final class ProfileViewController: UIViewController {
-  //: MARK - Profile View Model and Router
+  // MARK:  Profile View Model and Router
   private var viewModel: ProfileViewModelProtocol!
   private var router: ProfileRouter!
   
-  //: MARK - AppBar
+  // MARK:  AppBar
   fileprivate let appBar: MDCAppBar = MDCAppBar()
   
-  //: MARK - DisposeBag
+  // MARK:  DisposeBag
   private let disposeBag: DisposeBag = DisposeBag()
   
-  //: MARK - TableView
+  // MARK:  TableView
   private var profileTableView: UITableView!
   fileprivate var dataSource: RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>!
   
-  //: MARK - Add Navigation Button
+  // MARK:  Add Navigation Button
   private var addButton: UIBarButtonItem!
   
   public convenience init(viewModel: ProfileViewModel, router: ProfileRouter) {
@@ -174,7 +174,7 @@ public final class ProfileViewController: UIViewController {
   }
 }
 
-//: MARK - UIScrollViewDelegate
+// MARK:  UIScrollViewDelegate
 extension ProfileViewController: UITableViewDelegate {
   
   public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

@@ -12,14 +12,14 @@ import MaterialComponents
 import SnapKit
 
 public final class ProfileUserHeaderCell: UITableViewCell {
-	//: MARK - Publish Subjects
+	// MARK:  Publish Subjects
 	public var fullName: PublishSubject<String> = PublishSubject()
 	public var profileURL: PublishSubject<String> = PublishSubject()
 	
-	//: MARK - DisposeBag
+	// MARK:  DisposeBag
 	private var disposeBag: DisposeBag = DisposeBag()
 	
-	//: MARK - Views
+	// MARK:  Views
 	private var activityIndicator: UIActivityIndicatorView!
 	private var profileImageView: UIImageView!
 	private var fullNameLabel: UILabel!
