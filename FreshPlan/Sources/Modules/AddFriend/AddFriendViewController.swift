@@ -151,6 +151,13 @@ public final class AddFriendViewController: UIViewController {
     
     appBar.headerViewController.headerView.trackingScrollView = tableView
     
+    // set the delegate to the scroll app bar. We aren't doing any adjustments so this is fine
+    tableView.delegate = appBar.headerViewController
+    
+    // set layout margins to fix
+    tableView.layoutMargins = UIEdgeInsets.zero
+    tableView.separatorInset = UIEdgeInsets.zero
+    
     appBar.navigationBar.observe(navigationItem)
   }
   

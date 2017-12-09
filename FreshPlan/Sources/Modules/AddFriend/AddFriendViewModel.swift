@@ -12,7 +12,7 @@ import RxDataSources
 
 public protocol AddFriendViewModelProtocol {
   var searchText: Variable<String> { get }
-  var friends: Variable<[Friend]> { get }
+  var friends: Variable<[User]> { get }
 }
 
 public class AddFriendViewModel: AddFriendViewModelProtocol {
@@ -20,7 +20,7 @@ public class AddFriendViewModel: AddFriendViewModelProtocol {
   
   //: MARK - RxSwift Variables
   public var searchText: Variable<String> = Variable("")
-  public var friends: Variable<[Friend]> = Variable([])
+  public var friends: Variable<[User]> = Variable([])
   
   //: MARK - DisposeBag
   private let disposeBag: DisposeBag = DisposeBag()
@@ -30,23 +30,22 @@ public class AddFriendViewModel: AddFriendViewModelProtocol {
     
     searchText
       .asObservable()
-      .throttle(0.3, scheduler: MainScheduler.instance)
+      .throttle(0.4, scheduler: MainScheduler.instance)
       .distinctUntilChanged()
-      .flatMapLatest { query -> Observable<[Friend]> in
+      .flatMapLatest { query -> Observable<[User]> in
         if query.isEmpty {
           return Observable.just([])
         }
-        return self.requestFriends(query: query).catchErrorJustReturn([])
+        return self.requestFriends(query: query)
+          .catchErrorJustReturn([])
       }
-      .ifEmpty(default: [])
       .bind(to: friends)
       .disposed(by: disposeBag)
   }
   
-  private func requestFriends(query: String) -> Observable<[Friend]> {
+  private func requestFriends(query: String) -> Observable<[User]> {
     return provider.rx.request(.friendSearch(query))
       .asObservable()
-      .filterSuccessfulStatusCodes()
-      .map([Friend].self)
+      .map([User].self, using: JSONDecoder.Decode)
   }
 }

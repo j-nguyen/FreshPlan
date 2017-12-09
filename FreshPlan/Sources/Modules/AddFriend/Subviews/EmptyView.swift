@@ -27,7 +27,7 @@ public class EmptyView: UIView {
   private var titleHorizontalStackView: UIStackView!
   
   public convenience init() {
-    self.init(frame: UIScreen.main.bounds)
+    self.init(frame: CGRect.zero)
     prepareView()
   }
   
