@@ -11,15 +11,15 @@ import Moya
 import RxSwift
 
 public protocol FriendViewModelProtocol {
-  var friend: Variable<Friend>! { get }
+  var friend: Variable<User>! { get }
 }
 
 public class FriendViewModel: FriendViewModelProtocol {
   private var provider: MoyaProvider<FreshPlan>!
   
-  public var friend: Variable<Friend>!
+  public var friend: Variable<User>!
   
-  public init(_ provider: MoyaProvider<FreshPlan>, friend: Friend) {
+  public init(_ provider: MoyaProvider<FreshPlan>, friend: User) {
     self.provider = provider
     self.friend = Variable(friend)
   }

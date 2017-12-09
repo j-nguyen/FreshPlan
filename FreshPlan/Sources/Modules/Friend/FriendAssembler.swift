@@ -11,7 +11,7 @@ import UIKit
 import Moya
 
 public final class FriendAssembler {
-  public static func make(friend: Friend) -> FriendViewController {
+  public static func make(friend: User) -> FriendViewController {
     let viewModel = FriendViewModel(provider, friend: friend)
     
     return FriendViewController(viewModel: viewModel)
