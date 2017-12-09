@@ -31,7 +31,7 @@ public final class SearchBar: UISearchBar {
   
   private func prepareSearchBar() {
     searchBarStyle = .minimal
-    placeholder = "Search"
+    placeholder = "Search For Friends"
     showsBookmarkButton = false
     tintColor = .white
   }

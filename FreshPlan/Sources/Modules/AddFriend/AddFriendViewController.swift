@@ -20,6 +20,7 @@ public final class AddFriendViewController: UIViewController {
   private var closeButton: UIBarButtonItem!
   
   //: MARK - TableView
+  private var containerView: UIView!
   private var searchBar: SearchBar!
   private var tableView: UITableView!
   private var emptyView: EmptyView!
@@ -92,7 +93,6 @@ public final class AddFriendViewController: UIViewController {
   private func prepareSearchBar() {
     //: TODO - Fix searchbar sizing on navigation bar
     searchBar = SearchBar()
-    searchBar.sizeToFit()
     
     // we'll make a check for ios 11    
     searchBar.rx.text
@@ -100,14 +100,22 @@ public final class AddFriendViewController: UIViewController {
       .bind(to: viewModel.searchText)
       .disposed(by: disposeBag)
     
-    appBar.navigationBar.titleView = searchBar
+    searchBar.rx.searchButtonClicked
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.searchBar.resignFirstResponder()
+      })
+      .disposed(by: disposeBag)
+    
+    appBar.headerStackView.bottomBar = searchBar
   }
   
   private func prepareTableView() {
     tableView = UITableView()
     tableView.estimatedRowHeight = 44
     tableView.rowHeight = UITableViewAutomaticDimension
-    tableView.register(UITableViewCell.self, forCellReuseIdentifier: "defaultCell")
+    tableView.registerCell(FriendCell.self)
     
     view.addSubview(tableView)
     
@@ -116,7 +124,7 @@ public final class AddFriendViewController: UIViewController {
     // we want to check for the tableviews.
     viewModel.friends
       .asObservable()
-      .bind(to: tableView.rx.items(cellIdentifier: "defaultCell")) { (index, friend, cell) in
+      .bind(to: tableView.rx.items(cellIdentifier: String(describing: FriendCell.self))) { (index, friend, cell) in
         cell.textLabel?.text = friend.displayName
         cell.detailTextLabel?.text = friend.email
       }
@@ -146,9 +154,14 @@ public final class AddFriendViewController: UIViewController {
   private func prepareNavigationBar() {
     appBar.headerViewController.headerView.backgroundColor = MDCPalette.blue.tint700
     appBar.navigationBar.tintColor = UIColor.white
-    appBar.headerViewController.headerView.maximumHeight = 76.0
+    appBar.headerViewController.headerView.maximumHeight = 120
     appBar.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor: UIColor.white ]
     
+    Observable.just("Friends Search")
+      .bind(to: navigationItem.rx.title)
+      .disposed(by: disposeBag)
+    
+    // table stuff
     appBar.headerViewController.headerView.trackingScrollView = tableView
     
     // set the delegate to the scroll app bar. We aren't doing any adjustments so this is fine
