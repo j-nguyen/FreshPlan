@@ -26,6 +26,7 @@
 		405C5A9E1F8D953500AC8F9F /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A9D1F8D953500AC8F9F /* HomeRouter.swift */; };
 		4071F8F71FDB00F3001B77A1 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4071F8F61FDB00F3001B77A1 /* FriendViewController.swift */; };
 		4071F8F91FDB0143001B77A1 /* FriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4071F8F81FDB0143001B77A1 /* FriendViewModel.swift */; };
+		4071F94D1FDCAF430061C34E /* FriendProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4071F94C1FDCAF430061C34E /* FriendProfileCell.swift */; };
 		4079B14A1FC47407007E9407 /* Token+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B1491FC47407007E9407 /* Token+.swift */; };
 		4079B14C1FC475E9007E9407 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B14B1FC475E9007E9407 /* UITableView+.swift */; };
 		4079B14E1FC4763B007E9407 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B14D1FC4763B007E9407 /* UILabel+.swift */; };
@@ -83,6 +84,7 @@
 		405C5A9D1F8D953500AC8F9F /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		4071F8F61FDB00F3001B77A1 /* FriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
 		4071F8F81FDB0143001B77A1 /* FriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewModel.swift; sourceTree = "<group>"; };
+		4071F94C1FDCAF430061C34E /* FriendProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileCell.swift; sourceTree = "<group>"; };
 		4079B1491FC47407007E9407 /* Token+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Token+.swift"; sourceTree = "<group>"; };
 		4079B14B1FC475E9007E9407 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
 		4079B14D1FC4763B007E9407 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -261,8 +263,17 @@
 				4071F8F61FDB00F3001B77A1 /* FriendViewController.swift */,
 				4071F8F81FDB0143001B77A1 /* FriendViewModel.swift */,
 				40BF71401FDC750400495B81 /* FriendAssembler.swift */,
+				4071F94B1FDCA8B10061C34E /* Subviews */,
 			);
 			path = Friend;
+			sourceTree = "<group>";
+		};
+		4071F94B1FDCA8B10061C34E /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				4071F94C1FDCAF430061C34E /* FriendProfileCell.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		4079B14F1FC4782C007E9407 /* Subviews */ = {
@@ -551,6 +562,7 @@
 				40BF713D1FDC623200495B81 /* FriendCell.swift in Sources */,
 				40426D151F86BC9C00875179 /* RouterProtocol.swift in Sources */,
 				40BD70141F910FFA005B3B9D /* MeetupRouter.swift in Sources */,
+				4071F94D1FDCAF430061C34E /* FriendProfileCell.swift in Sources */,
 				40BF713F1FDC73DC00495B81 /* AddFriendRouter.swift in Sources */,
 				409B2BF11FBE619B000A7F16 /* ProfileViewModel.swift in Sources */,
 				409B2BEF1FBE6192000A7F16 /* ProfileViewController.swift in Sources */,
