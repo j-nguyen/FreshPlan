@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// setup window to make sure
 		// check to make sure if token exists or not
     window.makeKeyAndVisible()
-    window.backgroundColor = UIColor.white
+    window.backgroundColor = .white
 		if let _ = UserDefaults.standard.string(forKey: "token"), let jwt = Token.decodeJWT {
       if jwt.expired {
         let alertController = MDCAlertController(title: "Login Expired", message: "Your login credentials have expired. Please log back in.")
