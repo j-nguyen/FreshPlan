@@ -61,8 +61,8 @@ public final class AddFriendViewController: UIViewController {
   }
  
   private func prepareView() {
-    prepareEmptyView()
     prepareTableView()
+    prepareEmptyView()
     prepareNavigationBar()
     prepareNavigationAdd()
     prepareSearchBar()
@@ -75,6 +75,18 @@ public final class AddFriendViewController: UIViewController {
     view.addSubview(emptyView)
     
     emptyView.snp.makeConstraints { $0.edges.equalTo(view) }
+    
+    viewModel.friends
+      .asObservable()
+      .map { !$0.isEmpty }
+      .bind(to: emptyView.rx.isHidden)
+      .disposed(by: disposeBag)
+    
+    viewModel.friends
+      .asObservable()
+      .map { !$0.isNotEmpty }
+      .bind(to: tableView.rx.isHidden)
+      .disposed(by: disposeBag)
   }
   
   private func prepareSearchBar() {
@@ -108,20 +120,6 @@ public final class AddFriendViewController: UIViewController {
         cell.textLabel?.text = friend.displayName
         cell.detailTextLabel?.text = friend.email
       }
-      .disposed(by: disposeBag)
-    
-    viewModel.friends
-      .asObservable()
-      .filter { $0.isEmpty }
-      .map { !$0.isEmpty }
-      .bind(to: emptyView.rx.isHidden)
-      .disposed(by: disposeBag)
-    
-    viewModel.friends
-      .asObservable()
-      .filter { $0.isNotEmpty }
-      .map { !$0.isNotEmpty }
-      .bind(to: tableView.rx.isHidden)
       .disposed(by: disposeBag)
   }
   

@@ -14,12 +14,22 @@ import MaterialComponents
  * This set-ups an empty view for the tableview, when nothing is there for it to show
  *
 **/
-public final class EmptyView: UIView {
-  //: MARK - Views
-  private var stackView: UIStackView!
-  private var searchBarImage: UIImageView!
-  private var searchTitleLabel: UILabel!
-  private var searchDetailLabel: UILabel!
+
+public class EmptyView: UIView {
+  
+  // MARK: - Text
+  private var emptyLabel: UILabel!
+  private var descriptionLabel: UILabel!
+  private var emptyImage: UIImageView!
+  
+  // MARK: - StackViews to center
+  private var titleVerticalStackView: UIStackView!
+  private var titleHorizontalStackView: UIStackView!
+  
+  public convenience init() {
+    self.init(frame: UIScreen.main.bounds)
+    prepareView()
+  }
   
   public override init(frame: CGRect) {
     super.init(frame: frame)
@@ -29,67 +39,69 @@ public final class EmptyView: UIView {
     super.init(coder: aDecoder)
   }
   
-  public convenience init() {
-    self.init(frame: CGRect.zero)
-    prepareView()
-  }
-  
   private func prepareView() {
-    prepareStackView()
-    prepareSearchBarImage()
-    prepareSearchTitleLabel()
-    prepareSearchDetailLabel()
+    prepareTitleVerticalStackView()
+    prepareTitleHorizontalStackView()
+    prepareEmptyImage()
+    prepareEmptyLabel()
+    prepareDescriptionLabel()
   }
   
-  private func prepareStackView() {
-    stackView = UIStackView()
-    stackView.alignment = .center
-    stackView.axis = .vertical
-    stackView.spacing = 10
-    stackView.distribution = .fill
+  private func prepareTitleVerticalStackView() {
+    titleVerticalStackView = UIStackView()
+    titleVerticalStackView.axis = .vertical
+    titleVerticalStackView.alignment = .center
+    titleVerticalStackView.distribution = .fill
+    titleVerticalStackView.spacing = 10
     
-    addSubview(stackView)
+    addSubview(titleVerticalStackView)
     
-    stackView.snp.makeConstraints { make in
-      make.edges.equalTo(stackView)
+    titleVerticalStackView.snp.makeConstraints { make in
+      make.center.equalTo(self)
     }
   }
   
-  private func prepareSearchBarImage() {
-    searchBarImage = UIImageView()
-    searchBarImage.contentMode = .scaleAspectFit
-    searchBarImage.image = UIImage(named: "ic_search")?.withRenderingMode(.alwaysTemplate)
-    searchBarImage.tintColor = .black
+  private func prepareTitleHorizontalStackView() {
+    titleHorizontalStackView = UIStackView()
+    titleHorizontalStackView.axis = .horizontal
+    titleHorizontalStackView.spacing = 10
     
-    stackView.addArrangedSubview(searchBarImage)
+    titleVerticalStackView.addArrangedSubview(titleHorizontalStackView)
+  }
+  
+  private func prepareEmptyImage() {
+    let image = UIImage(named: "ic_search")?.withRenderingMode(.alwaysTemplate)
+    emptyImage = UIImageView(image: image)
+    emptyImage.tintColor = .black
     
-    searchBarImage.snp.makeConstraints { make in
-      make.width.equalTo(75)
-      make.height.equalTo(75)
+    titleHorizontalStackView.addArrangedSubview(emptyImage)
+    
+    emptyImage.snp.makeConstraints { make in
+      make.width.equalTo(30)
+      make.height.equalTo(30)
     }
   }
   
-  private func prepareSearchTitleLabel() {
-    searchTitleLabel = UILabel()
-    searchTitleLabel.font = MDCTypography.titleFont()
-    searchTitleLabel.text = "No Results"
+  private func prepareEmptyLabel() {
+    emptyLabel = UILabel()
+    emptyLabel.font = MDCTypography.titleFont()
+    emptyLabel.text = "No Friends Found!"
     
-    stackView.addArrangedSubview(searchTitleLabel)
-    
-    searchTitleLabel.snp.makeConstraints { make in
-      make.width.equalTo(100)
-    }
+    titleHorizontalStackView.addArrangedSubview(emptyLabel)
   }
   
-  private func prepareSearchDetailLabel() {
-    searchDetailLabel = UILabel()
-    searchDetailLabel.font = MDCTypography.body1Font()
-    searchDetailLabel.text = "Search for a friend, by entering their display names."
+  private func prepareDescriptionLabel() {
+    descriptionLabel = UILabel()
+    descriptionLabel.font = MDCTypography.body1Font()
+    descriptionLabel.numberOfLines = 2
+    descriptionLabel.text = "Either you did not enter a search or no results found!"
+    descriptionLabel.textAlignment = .center
     
-    stackView.addArrangedSubview(searchDetailLabel)
+    titleVerticalStackView.addArrangedSubview(descriptionLabel)
     
-    searchDetailLabel.snp.makeConstraints { make in
-      make.width.equalTo(100)
+    descriptionLabel.snp.makeConstraints { make in
+      make.width.equalTo(250)
     }
   }
 }
+
