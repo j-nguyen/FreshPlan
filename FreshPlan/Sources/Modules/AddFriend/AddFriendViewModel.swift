@@ -32,8 +32,13 @@ public class AddFriendViewModel: AddFriendViewModelProtocol {
       .asObservable()
       .throttle(0.3, scheduler: MainScheduler.instance)
       .distinctUntilChanged()
-      .flatMapLatest { self.requestFriends(query: $0) }
-      .catchErrorJustReturn([])
+      .flatMapLatest { query -> Observable<[Friend]> in
+        if query.isEmpty {
+          return Observable.just([])
+        }
+        return self.requestFriends(query: query).catchErrorJustReturn([])
+      }
+      .ifEmpty(default: [])
       .bind(to: friends)
       .disposed(by: disposeBag)
   }

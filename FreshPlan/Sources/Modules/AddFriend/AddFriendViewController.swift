@@ -78,13 +78,13 @@ public final class AddFriendViewController: UIViewController {
     
     viewModel.friends
       .asObservable()
-      .map { !$0.isEmpty }
+      .map { $0.count > 0 }
       .bind(to: emptyView.rx.isHidden)
       .disposed(by: disposeBag)
     
     viewModel.friends
       .asObservable()
-      .map { !$0.isNotEmpty }
+      .map { $0.count == 0 }
       .bind(to: tableView.rx.isHidden)
       .disposed(by: disposeBag)
   }

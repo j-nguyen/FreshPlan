@@ -40,6 +40,7 @@ public class EmptyView: UIView {
   }
   
   private func prepareView() {
+    backgroundColor = .white
     prepareTitleVerticalStackView()
     prepareTitleHorizontalStackView()
     prepareEmptyImage()
