@@ -140,7 +140,11 @@ public final class AddFriendViewController: UIViewController {
       .subscribe(onNext: { [weak self] friend in
         // create a strong reference and route
         if let this = self {
-          this.router.route
+          try? this.router.route(
+            from: this,
+            to: AddFriendRouter.Routes.friend.rawValue,
+            parameters: ["friend": friend]
+          )
         }
       })
       .disposed(by: disposeBag)

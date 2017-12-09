@@ -10,12 +10,13 @@ import Foundation
 import Moya
 import UIKit
 
-public final class AddFriendViewAssembler {
-  public static func make() -> AddFriendViewController {
+public final class AddFriendAssembler {
+  public static func make() -> UINavigationController {
     let viewModel = AddFriendViewModel(provider: provider)
     let router = AddFriendRouter()
+    let viewController = AddFriendViewController(viewModel: viewModel, router: router)
     
-    return AddFriendViewController(viewModel: viewModel, router: router)
+    return UINavigationController(rootViewController: viewController)
   }
   
   private static var provider: MoyaProvider<FreshPlan> {

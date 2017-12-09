@@ -81,7 +81,10 @@ public final class ProfileViewController: UIViewController {
       .asObservable()
       .subscribe(onNext: { [weak self] _ in
         guard let this = self else { return }
-        try? this.router.route(from: AddFriendViewAssembler.make(), to: ProfileRouter.Routes.addFriend.rawValue)
+        try? this.router.route(
+          from: this,
+          to: ProfileRouter.Routes.addFriend.rawValue
+        )
       })
       .disposed(by: disposeBag)
     

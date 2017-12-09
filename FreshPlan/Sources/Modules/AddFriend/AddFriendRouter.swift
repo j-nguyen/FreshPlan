@@ -25,13 +25,12 @@ extension AddFriendRouter: RouterProtocol {
     guard let route = Routes(rawValue: route) else {
       throw RouteError.invalidRoute("This is an invalid route!")
     }
-    
-    guard let window = UIApplication.shared.keyWindow else { return }
-    
+  
     switch route {
     case .friend:
-      break
-//      window.rootViewController?.navigationController?.pushViewController(<#T##viewController: UIViewController##UIViewController#>, animated: true)
+      if let parameters = parameters, let friend = parameters["friend"] as? Friend {
+        context.navigationController?.pushViewController(FriendAssembler.make(friend: friend), animated: true)
+      }
     }
   }
 }

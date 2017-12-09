@@ -17,7 +17,7 @@
 		4055B0BA1FD079FE007C5CCC /* ProfileUserHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4055B0B91FD079FE007C5CCC /* ProfileUserHeaderView.swift */; };
 		4056A4EC1FD4B70B006415A7 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4EB1FD4B70B006415A7 /* AddFriendViewController.swift */; };
 		4056A4EE1FD4B7FE006415A7 /* AddFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4ED1FD4B7FE006415A7 /* AddFriendViewModel.swift */; };
-		4056A4F01FD4B988006415A7 /* AddFriendViewAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4EF1FD4B988006415A7 /* AddFriendViewAssembler.swift */; };
+		4056A4F01FD4B988006415A7 /* AddFriendAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4EF1FD4B988006415A7 /* AddFriendAssembler.swift */; };
 		4056A4F31FD4BDB4006415A7 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4F21FD4BDB4006415A7 /* EmptyView.swift */; };
 		4056A4F51FD4C2DD006415A7 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4F41FD4C2DD006415A7 /* SearchBar.swift */; };
 		405C5A981F8D94E700AC8F9F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A971F8D94E700AC8F9F /* HomeViewController.swift */; };
@@ -57,6 +57,7 @@
 		40BE77901F9ED2310011C899 /* ResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BE778F1F9ED2310011C899 /* ResponseError.swift */; };
 		40BF713D1FDC623200495B81 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BF713C1FDC623200495B81 /* FriendCell.swift */; };
 		40BF713F1FDC73DC00495B81 /* AddFriendRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BF713E1FDC73DC00495B81 /* AddFriendRouter.swift */; };
+		40BF71411FDC750400495B81 /* FriendAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BF71401FDC750400495B81 /* FriendAssembler.swift */; };
 		40C429021FC3D08C004579A6 /* JSONDecoder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C429011FC3D08C004579A6 /* JSONDecoder+.swift */; };
 		40DB5D2B1FC88D58000E3019 /* APIResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DB5D2A1FC88D58000E3019 /* APIResult.swift */; };
 		7BED1FB6487CD40A991B8614 /* Pods_FreshPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */; };
@@ -73,7 +74,7 @@
 		4055B0B91FD079FE007C5CCC /* ProfileUserHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserHeaderView.swift; sourceTree = "<group>"; };
 		4056A4EB1FD4B70B006415A7 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
 		4056A4ED1FD4B7FE006415A7 /* AddFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewModel.swift; sourceTree = "<group>"; };
-		4056A4EF1FD4B988006415A7 /* AddFriendViewAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewAssembler.swift; sourceTree = "<group>"; };
+		4056A4EF1FD4B988006415A7 /* AddFriendAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendAssembler.swift; sourceTree = "<group>"; };
 		4056A4F21FD4BDB4006415A7 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		4056A4F41FD4C2DD006415A7 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		405C5A971F8D94E700AC8F9F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +116,7 @@
 		40BE778F1F9ED2310011C899 /* ResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseError.swift; sourceTree = "<group>"; };
 		40BF713C1FDC623200495B81 /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
 		40BF713E1FDC73DC00495B81 /* AddFriendRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendRouter.swift; sourceTree = "<group>"; };
+		40BF71401FDC750400495B81 /* FriendAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendAssembler.swift; sourceTree = "<group>"; };
 		40C429011FC3D08C004579A6 /* JSONDecoder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+.swift"; sourceTree = "<group>"; };
 		40DB5D2A1FC88D58000E3019 /* APIResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResult.swift; sourceTree = "<group>"; };
 		66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreshPlan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -226,7 +228,7 @@
 				4056A4EB1FD4B70B006415A7 /* AddFriendViewController.swift */,
 				4056A4ED1FD4B7FE006415A7 /* AddFriendViewModel.swift */,
 				40BF713E1FDC73DC00495B81 /* AddFriendRouter.swift */,
-				4056A4EF1FD4B988006415A7 /* AddFriendViewAssembler.swift */,
+				4056A4EF1FD4B988006415A7 /* AddFriendAssembler.swift */,
 				4056A4F11FD4BDA6006415A7 /* Subviews */,
 			);
 			path = AddFriend;
@@ -258,6 +260,7 @@
 			children = (
 				4071F8F61FDB00F3001B77A1 /* FriendViewController.swift */,
 				4071F8F81FDB0143001B77A1 /* FriendViewModel.swift */,
+				40BF71401FDC750400495B81 /* FriendAssembler.swift */,
 			);
 			path = Friend;
 			sourceTree = "<group>";
@@ -554,7 +557,7 @@
 				408D08391F8D285E006BCA8E /* VerifyAssembler.swift in Sources */,
 				40DB5D2B1FC88D58000E3019 /* APIResult.swift in Sources */,
 				408D08371F8D2818006BCA8E /* VerifyViewController.swift in Sources */,
-				4056A4F01FD4B988006415A7 /* AddFriendViewAssembler.swift in Sources */,
+				4056A4F01FD4B988006415A7 /* AddFriendAssembler.swift in Sources */,
 				40426D091F86B85500875179 /* LoginViewController.swift in Sources */,
 				408D083B1F8D2865006BCA8E /* VerifyRouter.swift in Sources */,
 				4079B1511FC4785F007E9407 /* ProfileUserHeaderCell.swift in Sources */,
@@ -562,6 +565,7 @@
 				408D083D1F8D286D006BCA8E /* VerifyViewModel.swift in Sources */,
 				4071F8F91FDB0143001B77A1 /* FriendViewModel.swift in Sources */,
 				4079B1561FC49367007E9407 /* ProfileUserInfoCell.swift in Sources */,
+				40BF71411FDC750400495B81 /* FriendAssembler.swift in Sources */,
 				40A311361F9EF503000FAFEB /* Token.swift in Sources */,
 				409B2BF51FBE6234000A7F16 /* ProfileAssembler.swift in Sources */,
 				400FC2161F897BA200B3098B /* FreshPlan.swift in Sources */,

@@ -33,12 +33,10 @@ extension ProfileRouter: RouterProtocol {
 		guard let route = Routes(rawValue: route) else {
 			throw RouteError.invalidRoute("This is an invalid route!")
 		}
-		
-		guard let window = UIApplication.shared.keyWindow else { return }
-		
+  
 		switch route {
 		case .addFriend:
-			window.rootViewController?.present(context, animated: true, completion: nil)
+			context.present(AddFriendAssembler.make(), animated: true, completion: nil)
 		}
 	}
 }
