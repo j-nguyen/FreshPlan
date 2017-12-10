@@ -11,7 +11,7 @@ import Foundation
 extension JSONDecoder {
 	public static var Decode: JSONDecoder {
 		let decoder = JSONDecoder()
-		decoder.dateDecodingStrategy = .custom({ (decoder) -> Date in
+		decoder.dateDecodingStrategy = .custom( { decoder -> Date in
 			let container = try decoder.singleValueContainer()
 			let dateStr = try container.decode(String.self)
 			

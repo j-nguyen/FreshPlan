@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 public final class MeetupAssembler {
-	public static func make() -> UIViewController {
+	public static func make() -> MeetupController {
 		let viewModel = MeetupViewModel()
 		let router = MeetupRouter()
 		

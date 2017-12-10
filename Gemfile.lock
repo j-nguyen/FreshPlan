@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    CFPropertyList (2.3.5)
+    CFPropertyList (2.3.6)
     activesupport (4.2.10)
       i18n (~> 0.7)
       minitest (~> 5.1)
@@ -64,7 +64,7 @@ GEM
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
     fastimage (2.1.0)
-    fastlane (2.68.0)
+    fastlane (2.68.2)
       CFPropertyList (>= 2.3, < 3.0.0)
       addressable (>= 2.3, < 3.0.0)
       babosa (>= 1.0.2, < 2.0.0)
@@ -141,7 +141,7 @@ GEM
     nap (1.1.0)
     netrc (0.11.0)
     os (0.9.6)
-    plist (3.3.0)
+    plist (3.4.0)
     public_suffix (2.0.5)
     representable (3.0.4)
       declarative (< 0.1.0)

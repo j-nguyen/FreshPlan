@@ -13,7 +13,7 @@ import RxDataSources
 
 public protocol FriendViewModelProtocol {
   var name: Variable<String> { get }
-  var tapSend: Observable<()>! { get set }
+  var tapSend: Observable<Void>! { get set }
   var disabledSend: Variable<Bool> { get }
   var sendFriend: Variable<Bool> { get }
   var friendDetail: Variable<[FriendViewModel.Section]> { get }
@@ -34,7 +34,7 @@ public class FriendViewModel: FriendViewModelProtocol {
   public var sendFriend: Variable<Bool> = Variable(false)
   
   //MARK: Observables
-  public var tapSend: Observable<()>!
+  public var tapSend: Observable<Void>!
   
   //MARK: Other Variables
   private var friend: User
@@ -77,10 +77,7 @@ public class FriendViewModel: FriendViewModelProtocol {
     let token = Token.getJWT().filter { $0 != -1 }.share()
     
     token
-      .flatMap { [weak self] id -> Observable<[Friend]> in
-        guard let this = self else { fatalError() }
-        return this.requestFriends(userId: id)
-      }
+      .flatMap { self.requestFriends(userId: $0) }
       .map { friends -> Bool in
         if let _ = friends.first(where: { $0.id == friend.id }) {
           return true
@@ -96,9 +93,7 @@ public class FriendViewModel: FriendViewModelProtocol {
     
     tapSend
       .flatMap { _ -> Observable<Int> in return token }
-      .flatMap { id -> Observable<Response> in
-        return self.sendFriendRequest(userId: id, friendId: self.friend.id)
-      }
+      .flatMap { self.sendFriendRequest(userId: $0, friendId: self.friend.id) }
       .filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
       .map { $0.statusCode >= 200 && $0.statusCode <= 299 }
       .bind(to: self.sendFriend)

@@ -28,9 +28,10 @@ extension AddFriendRouter: RouterProtocol {
   
     switch route {
     case .friend:
-      if let parameters = parameters, let friend = parameters["friend"] as? User {
-        context.navigationController?.pushViewController(FriendAssembler.make(friend: friend), animated: true)
+      guard let params = parameters, let friend = params["friend"] as? User else {
+        return
       }
+      context.navigationController?.pushViewController(FriendAssembler.make(friend: friend), animated: true)
     }
   }
 }

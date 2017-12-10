@@ -38,7 +38,7 @@ extension FreshPlan: TargetType {
 			return "/users/\(userId)"
     case .friends(let userId):
       return "/users/\(userId)/friends"
-    case .sendFriendRequest(let userId, _):
+    case let .sendFriendRequest(userId, _):
       return "/users/\(userId)/friends"
     case .friendSearch:
       return "/users/"

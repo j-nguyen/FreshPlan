@@ -11,7 +11,7 @@ import Moya
 import UIKit
 
 public final class AddFriendAssembler {
-  public static func make() -> UINavigationController {
+  public static func make() -> UIViewController {
     let viewModel = AddFriendViewModel(provider: provider)
     let router = AddFriendRouter()
     let viewController = AddFriendViewController(viewModel: viewModel, router: router)
