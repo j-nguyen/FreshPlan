@@ -46,7 +46,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
   
   private func prepareFabric() {
-    #if DEBUG
+    #if (arch(i386) || arch(x86_64)) && os(iOS)
+      print ("Skipping Crashalytics")
+    #else
+      print ("~~~~*** Starting Fabrics Crashalytics ***~~~~~")
       Fabric.with([Crashlytics.self])
     #endif
   }

@@ -784,7 +784,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = net.fractalpoint.freshplan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4f8c1705-55c4-4300-89a0-89a4fa1f72fc";
+				PROVISIONING_PROFILE = "5282444f-e9b5-4b9f-bc0a-f89996be4d98";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore net.fractalpoint.freshplan";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 4.0;
