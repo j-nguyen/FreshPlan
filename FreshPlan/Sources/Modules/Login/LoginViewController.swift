@@ -192,7 +192,7 @@ public class LoginViewController: UIViewController {
 		let mutableString = NSMutableAttributedString(attributedString: NSAttributedString(string: registerText))
 		
 		mutableString.addAttribute(
-			NSForegroundColorAttributeName,
+			NSAttributedStringKey.foregroundColor,
 			value: MDCPalette.lightBlue.accent700!,
 			range: NSRange(location: 22, length: 14)
 		)

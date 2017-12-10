@@ -12,7 +12,7 @@ public final class HomeViewController: UITabBarController {
 	public var viewModel: HomeViewModelProtocol!
 	public var router: HomeRouter!
 	
-	public convenience init(router: HomeRouter, viewModel: HomeViewModel) {
+	public convenience init(viewModel: HomeViewModel, router: HomeRouter) {
 		self.init(nibName: nil, bundle: nil)
 		self.viewModel = viewModel
 		self.router = router
@@ -28,19 +28,29 @@ public final class HomeViewController: UITabBarController {
 	
 	public override func viewDidLoad() {
 		super.viewDidLoad()
+    
+    // MARK:  View Controllers
+    let meetupController = MeetupAssembler.make()
+    let profileController = ProfileAssembler.make()
+    
+    meetupController.tabBarItem = UITabBarItem(
+      title: "Home",
+      image: UIImage(named: "ic_home")?.withRenderingMode(.alwaysTemplate),
+      tag: 0
+    )
+    
+    profileController.tabBarItem = UITabBarItem(
+      title: "Profile",
+      image: UIImage(named: "ic_account_circle")?.withRenderingMode(.alwaysTemplate),
+      tag: 1
+    )
+    
+    let viewControllers = [meetupController, profileController].flatMap { UINavigationController(rootViewController: $0) }
+    
+    setViewControllers(viewControllers, animated: false)
 	}
 	
 	public override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		// set up the tabs
-		let meetupController = MeetupAssembler.make()
-		
-		meetupController.tabBarItem = UITabBarItem(
-			title: "Home",
-			image: UIImage(named: "ic_home")?.withRenderingMode(.alwaysTemplate),
-			tag: 0
-		)
-		
-		setViewControllers([meetupController], animated: animated)
 	}
 }

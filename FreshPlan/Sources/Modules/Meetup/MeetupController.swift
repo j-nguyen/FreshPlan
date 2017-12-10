@@ -12,7 +12,7 @@ public final class MeetupController: UIViewController {
 	private var viewModel: MeetupViewModelProtocol!
 	private var router: MeetupRouter!
 	
-	public convenience init(router: MeetupRouter, viewModel: MeetupViewModel) {
+	public convenience init(viewModel: MeetupViewModel, router: MeetupRouter) {
 		self.init(nibName: nil, bundle: nil)
 		self.viewModel = viewModel
 		self.router = router

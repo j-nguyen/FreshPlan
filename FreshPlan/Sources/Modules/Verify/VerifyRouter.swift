@@ -11,6 +11,7 @@ import UIKit
 public class VerifyRouter {
 	public enum Routes: String {
 		case register
+        case login
 	}
 	
 	fileprivate enum RouteError: Error {
@@ -19,7 +20,7 @@ public class VerifyRouter {
 }
 
 extension VerifyRouter: RouterProtocol {
-	public func route(from context: UIViewController, to route: String, parameters: [String : Any]?) throws {
+	public func route(from context: UIViewController, to route: String, parameters: [String : Any]? = nil) throws {
 		guard let route = Routes(rawValue: route) else {
 			throw RouteError.invalidRoute("This is an invalid route!")
 		}
@@ -30,6 +31,9 @@ extension VerifyRouter: RouterProtocol {
 		case .register:
 			window.rootViewController = RegisterAssembler.make()
 			break
-		}
+        case .login:
+            window.rootViewController = LoginAssembler.make()
+            break
+        }
 	}
 }

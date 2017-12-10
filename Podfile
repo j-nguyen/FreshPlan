@@ -11,12 +11,13 @@ target 'FreshPlan' do
   pod 'RxGesture'
   pod 'Moya/RxSwift'
   pod 'RxOptional'
-  pod 'MaterialComponents'
+  pod 'MaterialComponents', '~> 40.1.0'
 end
 
 post_install do |installer|
-  installer.pods_project.build_configurations.each do |config|
-    # Configure Pod targets
-    config.build_settings['SWIFT_VERSION'] = '4.0'
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |configuration|
+      configuration.build_settings['SWIFT_VERSION'] = "4.0"
+    end
   end
 end

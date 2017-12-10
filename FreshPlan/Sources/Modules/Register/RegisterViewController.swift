@@ -38,6 +38,9 @@ public final class RegisterViewController: UIViewController {
     
     // MARK - Buttons
     private var signUpButton: MDCButton!
+    
+    // MARK - Dispoable bag
+    private let disposeBag = DisposeBag()
 	
     public convenience init(viewModel: RegisterViewModel, router: RegisterRouter) {
         self.init(nibName: nil, bundle: nil)
@@ -86,13 +89,25 @@ public final class RegisterViewController: UIViewController {
         }
     }
     
+    fileprivate func prepareErrorBinding() {
+        viewModel.error
+            .asObservable()
+            .filterNil()
+            .subscribe(onNext: { reason in
+                let message = MDCSnackbarMessage()
+                message.text = reason
+                MDCSnackbarManager.show(message)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     fileprivate func prepareLoginInLabel() {
         loginInLabel = UILabel()
         let registerText = "Already have an account? Login In here!"
         let mutableString = NSMutableAttributedString(attributedString: NSAttributedString(string: registerText))
         
         mutableString.addAttribute(
-            NSForegroundColorAttributeName,
+            NSAttributedStringKey.foregroundColor,
             value: MDCPalette.lightBlue.accent700!,
             range: NSRange(location: 24, length: 15)
         )
@@ -104,9 +119,19 @@ public final class RegisterViewController: UIViewController {
         view.addSubview(loginInLabel)
         
         loginInLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(view).offset(-10)
+            make.bottom.equalTo(view).inset(20)
             make.centerX.equalTo(view)
         }
+
+        
+        loginInLabel.rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let this = self else { return }
+                try? this.router.route(from: this, to: RegisterRouter.Routes.login.rawValue, parameters: nil)
+            })
+            .disposed(by: disposeBag)
     }
     
     fileprivate func prepareFirstName() {
@@ -121,6 +146,11 @@ public final class RegisterViewController: UIViewController {
         firstNameField.snp.makeConstraints { make in
             make.width.equalTo(view).inset(20)
         }
+        
+        firstNameField.rx.text
+            .orEmpty
+            .bind(to: viewModel.firstName)
+            .disposed(by: disposeBag)
     }
     
     fileprivate func prepareLastName() {
@@ -135,11 +165,17 @@ public final class RegisterViewController: UIViewController {
         lastNameField.snp.makeConstraints { make in
             make.width.equalTo(view).inset(20)
         }
+        
+        lastNameField.rx.text
+            .orEmpty
+            .bind(to: viewModel.lastName)
+            .disposed(by: disposeBag)
     }
     
     fileprivate func prepareDisplayName() {
         displayNameField = MDCTextField()
         displayNameField.placeholder = "Display Name"
+        displayNameField.autocapitalizationType = .none
         displayNameField.returnKeyType = .next
         
         displayNameFieldController = MDCTextInputControllerDefault(textInput: displayNameField)
@@ -149,11 +185,17 @@ public final class RegisterViewController: UIViewController {
         displayNameField.snp.makeConstraints { make in
             make.width.equalTo(view).inset(20)
         }
+        
+        displayNameField.rx.text
+            .orEmpty
+            .bind(to: viewModel.displayName)
+            .disposed(by: disposeBag)
     }
     
     fileprivate func prepareEmail() {
         emailField = MDCTextField()
-        emailField.placeholder = "Email"
+        emailField.placeholder = "Email Address"
+        emailField.autocapitalizationType = .none
         emailField.keyboardType = .emailAddress
         emailField.returnKeyType = .next
         
@@ -164,6 +206,11 @@ public final class RegisterViewController: UIViewController {
         emailField.snp.makeConstraints { make in
             make.width.equalTo(view).inset(20)
         }
+        
+        emailField.rx.text
+            .orEmpty
+            .bind(to: viewModel.email)
+            .disposed(by: disposeBag)
     }
     
     fileprivate func preparePassword() {
@@ -180,6 +227,11 @@ public final class RegisterViewController: UIViewController {
             make.width.equalTo(view).inset(20)
         }
         
+        passwordField.rx.text
+            .orEmpty
+            .bind(to: viewModel.password)
+            .disposed(by: disposeBag)
+        
     }
     
     fileprivate func prepareSignUpButton() {
@@ -191,6 +243,35 @@ public final class RegisterViewController: UIViewController {
         
         signUpButton.snp.makeConstraints { make in
             make.width.equalTo(view).inset(20)
+            make.height.equalTo(50)
         }
+        
+        viewModel.signUpEnabled
+            .bind(to: signUpButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        viewModel.signUpTap = signUpButton.rx.tap.asObservable()
+        viewModel.bindButtons()
+        
+        viewModel.signUpSuccess
+            .asObservable()
+            .filter { $0 }
+            .subscribe(onNext: { [weak self] _ in
+              guard let this = self else { return }
+              guard let text = this.emailField.text else { return }
+              try? this.router.route(from: this, to: RegisterRouter.Routes.verify.rawValue, parameters: ["email": text])
+              let message = MDCSnackbarMessage(text: "Successfully signed up! Please check your email to verify your account.")
+              MDCSnackbarManager.show(message)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.error
+            .asObservable()
+            .filterNil()
+            .subscribe(onNext: { reason in
+                let message = MDCSnackbarMessage(text: reason)
+                MDCSnackbarManager.show(message)
+            })
+            .disposed(by: disposeBag)
     }
 }

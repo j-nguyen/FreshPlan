@@ -11,8 +11,9 @@ import RxOptional
 import Moya
 
 public protocol VerifyViewModelProtocol {
-	var verificationCode: Variable<Int> { get }
+	var verificationCode: Variable<Int?> { get }
 	var error: Variable<String> { get }
+  var resendSuccess: Variable<Bool> { get }
 	
 	func bindButton()
 	var submitTap: Observable<Void>! { get set }
@@ -25,19 +26,30 @@ public class VerifyViewModel: VerifyViewModelProtocol {
 	private let disposeBag = DisposeBag()
 	
 	public var error: Variable<String> = Variable("")
-	public var verificationCode: Variable<Int> = Variable(-1)
+	public var verificationCode: Variable<Int?> = Variable(nil)
 	public var submitSuccess: Variable<Bool> = Variable(false)
+  public var resendSuccess: Variable<Bool> = Variable(false)
 	
 	public var submitTap: Observable<Void>!
 	
 	public init(provider: MoyaProvider<FreshPlan>, email: String) {
 		self.provider = provider
 		self.email = email
+    
+    Observable.just(self.email)
+      .filterEmpty()
+      .flatMap { self.resendVerification(email: $0) }
+      .filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
+      .map { $0.statusCode >= 200 && $0.statusCode <= 299 }
+      .bind(to: resendSuccess)
+      .disposed(by: disposeBag)
 	}
 	
 	public func bindButton() {
 		
-		let response = submitTap.flatMap { self.requestVerification(email: self.email, code: self.verificationCode.value) }
+		let response = submitTap
+      .flatMap { self.requestVerification(email: self.email, code: self.verificationCode.value!) }
+      .share()
 
 		response
 			.filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
@@ -47,13 +59,19 @@ public class VerifyViewModel: VerifyViewModelProtocol {
 		
 		response
 			.filter { $0.statusCode >= 300 }
-			.map { try JSONDecoder().decode(ResponseError.self, from: $0.data) }
+      .map(ResponseError.self)
 			.map { $0.reason }
 			.bind(to: error)
 			.disposed(by: disposeBag)
 	}
 	
 	private func requestVerification(email: String, code: Int) -> Observable<Response> {
-		return self.provider.rx.request(.verify(email, code)).asObservable()
+		return self.provider.rx.request(.verify(email, code))
+      .asObservable()
 	}
+  
+  private func resendVerification(email: String) -> Observable<Response> {
+    return self.provider.rx.request(.resend(email))
+      .asObservable()
+  }
 }

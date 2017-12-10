@@ -49,12 +49,11 @@ public class LoginViewModel: LoginViewModelProtocol {
 		// filter out for unverified so we can move the user to verified controller
 		let tap = loginTap
 			.flatMap { self.loginRequest(email: self.email.value, password: self.password.value) }
+			.share()
 		
-		tap
+    tap
 			.filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
-			.map { $0.data }
-			.map { try? JSONDecoder().decode(Token.self, from: $0) }
-			.filterNil()
+			.map(Token.self)
 			.map {
 				UserDefaults.standard.set($0.token, forKey: "token")
 				return true
@@ -63,10 +62,8 @@ public class LoginViewModel: LoginViewModelProtocol {
 			.disposed(by: disposeBag)
 		
 		tap
-			.filter { $0.statusCode > 299 }
-			.map { $0.data }
-			.map { try? JSONDecoder().decode(ResponseError.self, from: $0) }
-			.filterNil()
+			.filter { $0.statusCode > 299 && $0.statusCode != 403 }
+      .map(ResponseError.self)
 			.map { $0.reason }
 			.bind(to: error)
 			.disposed(by: disposeBag)
