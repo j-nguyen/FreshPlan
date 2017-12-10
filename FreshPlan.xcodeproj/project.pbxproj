@@ -44,6 +44,10 @@
 		40BD70161F911022005B3B9D /* MeetupAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD70151F911022005B3B9D /* MeetupAssembler.swift */; };
 		40BE77901F9ED2310011C899 /* ResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BE778F1F9ED2310011C899 /* ResponseError.swift */; };
 		7BED1FB6487CD40A991B8614 /* Pods_FreshPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */; };
+		E14D1FEA1FDDCC0400E1BB0D /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D1FE91FDDCC0400E1BB0D /* InviteViewController.swift */; };
+		E14D1FEC1FDDCC3A00E1BB0D /* InviteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D1FEB1FDDCC3A00E1BB0D /* InviteViewModel.swift */; };
+		E14D1FEE1FDDCC5100E1BB0D /* InviteRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D1FED1FDDCC5100E1BB0D /* InviteRouter.swift */; };
+		E14D1FF01FDDCC6500E1BB0D /* InviteAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D1FEF1FDDCC6500E1BB0D /* InviteAssembler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +112,10 @@
 		40BE778F1F9ED2310011C899 /* ResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseError.swift; sourceTree = "<group>"; };
 		66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreshPlan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		961AF7C9502FB2E5362945B5 /* Pods-FreshPlan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.release.xcconfig"; sourceTree = "<group>"; };
+		E14D1FE91FDDCC0400E1BB0D /* InviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
+		E14D1FEB1FDDCC3A00E1BB0D /* InviteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteViewModel.swift; sourceTree = "<group>"; };
+		E14D1FED1FDDCC5100E1BB0D /* InviteRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteRouter.swift; sourceTree = "<group>"; };
+		E14D1FEF1FDDCC6500E1BB0D /* InviteAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteAssembler.swift; sourceTree = "<group>"; };
 		F2535B961F6CEAE83F9AC1E5 /* Pods-FreshPlan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -168,6 +176,7 @@
 		40426D051F86B7EE00875179 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				E14D1FE81FDDCBCF00E1BB0D /* Invite */,
 				409B2BED1FBE6129000A7F16 /* Profile */,
 				40BD700E1F910F41005B3B9D /* Meetup */,
 				405C5A961F8D94CA00AC8F9F /* Home */,
@@ -338,6 +347,17 @@
 				961AF7C9502FB2E5362945B5 /* Pods-FreshPlan.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		E14D1FE81FDDCBCF00E1BB0D /* Invite */ = {
+			isa = PBXGroup;
+			children = (
+				E14D1FE91FDDCC0400E1BB0D /* InviteViewController.swift */,
+				E14D1FEB1FDDCC3A00E1BB0D /* InviteViewModel.swift */,
+				E14D1FED1FDDCC5100E1BB0D /* InviteRouter.swift */,
+				E14D1FEF1FDDCC6500E1BB0D /* InviteAssembler.swift */,
+			);
+			path = Invite;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -565,6 +585,7 @@
 				405C5A9A1F8D94FA00AC8F9F /* HomeAssembler.swift in Sources */,
 				408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */,
 				40BD70121F910FD6005B3B9D /* MeetupViewModel.swift in Sources */,
+				E14D1FEA1FDDCC0400E1BB0D /* InviteViewController.swift in Sources */,
 				405C5A981F8D94E700AC8F9F /* HomeViewController.swift in Sources */,
 				409B2BF81FBE64F9000A7F16 /* User.swift in Sources */,
 				40426D151F86BC9C00875179 /* RouterProtocol.swift in Sources */,
@@ -577,6 +598,8 @@
 				408D083B1F8D2865006BCA8E /* VerifyRouter.swift in Sources */,
 				408D083D1F8D286D006BCA8E /* VerifyViewModel.swift in Sources */,
 				40A311361F9EF503000FAFEB /* Token.swift in Sources */,
+				E14D1FEE1FDDCC5100E1BB0D /* InviteRouter.swift in Sources */,
+				E14D1FF01FDDCC6500E1BB0D /* InviteAssembler.swift in Sources */,
 				409B2BF51FBE6234000A7F16 /* ProfileAssembler.swift in Sources */,
 				400FC2161F897BA200B3098B /* FreshPlan.swift in Sources */,
 				408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */,
@@ -592,6 +615,7 @@
 				408D08341F8D274A006BCA8E /* RegisterAssembler.swift in Sources */,
 				40BE77901F9ED2310011C899 /* ResponseError.swift in Sources */,
 				405C5A9E1F8D953500AC8F9F /* HomeRouter.swift in Sources */,
+				E14D1FEC1FDDCC3A00E1BB0D /* InviteViewModel.swift in Sources */,
 				40BD70101F910F53005B3B9D /* MeetupController.swift in Sources */,
 				409B2BFA1FBE65AF000A7F16 /* Friend.swift in Sources */,
 			);

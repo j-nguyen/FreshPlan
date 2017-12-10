@@ -35,6 +35,7 @@ public final class HomeViewController: UITabBarController {
 		//: MARK - View Controllers
 		let meetupController = MeetupAssembler.make()
 		let profileController = ProfileAssembler.make()
+        let inviteController = InviteAssembler.make()
 		
 		meetupController.tabBarItem = UITabBarItem(
 			title: "Home",
@@ -47,8 +48,14 @@ public final class HomeViewController: UITabBarController {
 			image: UIImage(named: "ic_account_circle")?.withRenderingMode(.alwaysTemplate),
 			tag: 1
 		)
+        
+        inviteController.tabBarItem = UITabBarItem(
+            title: "Invitions",
+            image: UIImage(named: "ic_markunread_mailbox")?.withRenderingMode(.alwaysTemplate),
+            tag: 2
+        )
 		
-		let viewControllers = [meetupController, profileController].flatMap { UINavigationController(rootViewController: $0) }
+		let viewControllers = [meetupController, inviteController, profileController].flatMap { UINavigationController(rootViewController: $0) }
 		
 		setViewControllers(viewControllers, animated: animated)
 	}
