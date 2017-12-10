@@ -35,14 +35,14 @@ public class FriendViewModel: FriendViewModelProtocol {
       .disposed(by: disposeBag)
     
     let profile = friendVar.map { SectionItem.profileTitle(order: 0, profileURL: $0.profileURL, fullName: "\($0.firstName) \($0.lastName)") }
-    let displayName = friendVar.map { SectionItem.info(order: 1, title: $0.displayName) }
-    let email = friendVar.map { SectionItem.info(order: 2, title: $0.email) }
+    let displayName = friendVar.map { SectionItem.info(order: 1, type: "Display Name:", title: $0.displayName) }
+    let email = friendVar.map { SectionItem.info(order: 2, type: "Email:", title: $0.email) }
     let createdAt = friendVar
       .map { friend -> SectionItem in
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd hh:mm:ss"
         let date = df.string(from: friend.createdAt)
-        return SectionItem.info(order: 3, title: "Last Joined: \(date)")
+        return SectionItem.info(order: 3, type: "Last Joined:", title: date)
       }
     
     Observable.from([profile, displayName, email, createdAt])
@@ -59,7 +59,7 @@ public class FriendViewModel: FriendViewModelProtocol {
 extension FriendViewModel {
   public enum SectionItem {
     case profileTitle(order: Int, profileURL: String, fullName: String)
-    case info(order: Int, title: String)
+    case info(order: Int, type: String, title: String)
   }
   
   public struct Section {
@@ -80,7 +80,7 @@ extension FriendViewModel.Section: SectionModelType {
 extension FriendViewModel.SectionItem: Equatable {
   public var order: Int {
     switch self {
-    case let .info(order, _):
+    case let .info(order, _, _):
       return order
     case let .profileTitle(order, _, _):
       return order

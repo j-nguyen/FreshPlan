@@ -21,7 +21,7 @@ public class FriendViewController: UIViewController {
   
   // MARK: TableView
   private var tableView: UITableView!
-  private var dataSource: RxTableViewSectionedReloadDataSource<FriendViewModel.Section>!
+  fileprivate var dataSource: RxTableViewSectionedReloadDataSource<FriendViewModel.Section>!
   
   // MARK: DisposeBag
   private let disposeBag: DisposeBag = DisposeBag()
@@ -66,9 +66,11 @@ public class FriendViewController: UIViewController {
   
   private func prepareTableView() {
     tableView = UITableView()
-    tableView.estimatedRowHeight = UITableViewAutomaticDimension
-    tableView.rowHeight = 44.0
+    tableView.separatorStyle = .none
+    tableView.estimatedRowHeight = 44
+    tableView.rx.setDelegate(self).disposed(by: disposeBag)
     tableView.registerCell(FriendProfileCell.self)
+    tableView.registerCell(FriendInfoCell.self)
     
     view.addSubview(tableView)
     
@@ -79,9 +81,11 @@ public class FriendViewController: UIViewController {
     dataSource = RxTableViewSectionedReloadDataSource<FriendViewModel.Section>(
       configureCell: { (dataSource, tableView, index, section) in
         switch dataSource[index] {
-        case let .info(_, title):
-          
-          
+        case let .info(_, type, title):
+          let cell = tableView.dequeueCell(ofType: FriendInfoCell.self, for: index)
+          cell.type.on(.next(type))
+          cell.title.on(.next(title))
+          return cell
         case let .profileTitle(_, profileURL, fullName):
           let cell = tableView.dequeueCell(ofType: FriendProfileCell.self, for: index)
           cell.profileUrl.on(.next(profileURL))
@@ -91,90 +95,15 @@ public class FriendViewController: UIViewController {
       }
     )
     
+    dataSource.titleForHeaderInSection = { (dataSource, index) in
+      return ""
+    }
+    
+    viewModel.friendDetail
+      .asObservable()
+      .bind(to: tableView.rx.items(dataSource: dataSource))
+      .disposed(by: disposeBag)
   }
-  
-//  private func prepareTitleLabel() {
-//    titleLabel = UILabel()
-//    titleLabel.textColor = .black
-//    titleLabel.font = MDCTypography.body1Font()
-//
-//    titleStackView.addArrangedSubview(titleLabel)
-//
-//    viewModel.friend
-//      .asObservable()
-//      .map { "\($0.firstName) \($0.lastName)" }
-//      .bind(to: titleLabel.rx.text)
-//      .disposed(by: disposeBag)
-//  }
-//
-//  private func prepareTitleImageLabel() {
-//    titleImageView = UIImageView()
-//    titleImageView.contentMode = .scaleAspectFit
-//    titleImageView.layer.cornerRadius = 25
-//
-//    titleStackView.addArrangedSubview(titleImageView)
-//
-//    titleImageView.snp.makeConstraints { make in
-//      make.width.equalTo(50)
-//      make.height.equalTo(50)
-//    }
-//
-//    viewModel.friend
-//      .asObservable()
-//      .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-//      .map { $0.profileURL }
-//      .map { urlString -> UIImage? in
-//        let cache = CacheStore()
-//        if let image = cache.getImage(key: urlString as NSString) {
-//          return image
-//        } else {
-//          let url = URL(string: urlString)!
-//          let data = try? Data(contentsOf: url)
-//          return UIImage(data: data!)
-//        }
-//      }
-//      .filterNil()
-//      .observeOn(MainScheduler.instance)
-//      .bind(to: titleImageView.rx.image)
-//      .disposed(by: disposeBag)
-//  }
-//
-//  private func prepareTitleStackView() {
-//    titleStackView = UIStackView()
-//    titleStackView.axis = .horizontal
-//    titleStackView.spacing = 10
-//    titleStackView.alignment = .center
-//
-//    stackView.addArrangedSubview(titleStackView)
-//  }
-//
-//  private func prepareStackView() {
-//    stackView = UIStackView()
-//    stackView.axis = .vertical
-//    stackView.distribution = .fill
-//    stackView.alignment = .fill
-//    stackView.spacing = 10
-//
-//    scrollView.addSubview(stackView)
-//
-//    stackView.snp.makeConstraints { $0.edges.equalTo(scrollView) }
-//  }
-//
-//  private func prepareScrollView() {
-//    scrollView = UIScrollView()
-//    scrollView.bounces = true
-//    scrollView.alwaysBounceHorizontal = false
-//    scrollView.showsHorizontalScrollIndicator = false
-//    scrollView.showsVerticalScrollIndicator = true
-//    scrollView.isDirectionalLockEnabled = true
-//
-//    view.addSubview(scrollView)
-//
-//    scrollView.snp.makeConstraints { make in
-//      make.edges.equalTo(view)
-//      make.top.equalTo(view).offset(76)
-//    }
-//  }
   
   private func prepareNavigationBar() {
     appBar.headerViewController.headerView.backgroundColor = MDCPalette.blue.tint700
@@ -182,7 +111,7 @@ public class FriendViewController: UIViewController {
     appBar.headerViewController.headerView.maximumHeight = 76.0
     appBar.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor: UIColor.white ]
     
-    tableView.delegate = appBar.headerViewController
+    appBar.headerViewController.headerView.trackingScrollView = tableView
     
     viewModel.name
       .asObservable()
@@ -213,5 +142,29 @@ public class FriendViewController: UIViewController {
   
   deinit {
     appBar.navigationBar.unobserveNavigationItem()
+  }
+}
+
+//MARK: TableViewDelegate
+extension FriendViewController: UITableViewDelegate {
+  public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    switch dataSource[indexPath] {
+    case .profileTitle:
+      return 120
+    default:
+      return UITableViewAutomaticDimension
+    }
+  }
+  
+  public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollDidScroll()
+    }
+  }
+  
+  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
+    }
   }
 }
