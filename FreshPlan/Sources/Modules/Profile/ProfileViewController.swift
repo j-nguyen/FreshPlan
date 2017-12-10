@@ -27,8 +27,9 @@ public final class ProfileViewController: UIViewController {
   private var profileTableView: UITableView!
   fileprivate var dataSource: RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>!
   
-  // MARK:  Add Navigation Button
-  private var addButton: UIBarButtonItem!
+  // MARK: Nav Buttons
+  private var searchButton: UIBarButtonItem!
+  private var logoutButton: UIBarButtonItem!
   
   public convenience init(viewModel: ProfileViewModel, router: ProfileRouter) {
     self.init(nibName: nil, bundle: nil)
@@ -64,22 +65,38 @@ public final class ProfileViewController: UIViewController {
   private func prepareView() {
     prepareProfileTableView()
     prepareNavigationBar()
-    prepareNavigationAdd()
+    prepareNavigationSearchButton()
+    prepareNavigationLogoutButton()
     appBar.addSubviewsToParent()
   }
   
-  private func prepareNavigationAdd() {
-    addButton = UIBarButtonItem(
-      image: UIImage(named: "ic_add")?.withRenderingMode(.alwaysTemplate),
+  private func prepareNavigationLogoutButton() {
+    // for now we'll just remove the token, but it's highly recommended I think to use a route
+    // TODO: use the route to logout for better access
+    logoutButton = UIBarButtonItem(title: "Log out", style: .plain, target: nil, action: nil)
+    
+    logoutButton.rx.tap
+      .asObservable()
+      .subscribe(onNext: {
+        Token.removeToken()
+      })
+    .disposed(by: disposeBag)
+    
+    navigationItem.rightBarButtonItem = logoutButton
+  }
+  
+  private func prepareNavigationSearchButton() {
+    searchButton = UIBarButtonItem(
+      image: UIImage(named: "ic_search")?.withRenderingMode(.alwaysTemplate),
       style: .plain,
       target: nil,
       action: nil
     )
     
     // setup the rx event
-    addButton.rx.tap
+    searchButton.rx.tap
       .asObservable()
-      .subscribe(onNext: { [weak self] _ in
+      .subscribe(onNext: { [weak self] in
         guard let this = self else { return }
         try? this.router.route(
           from: this,
@@ -88,7 +105,7 @@ public final class ProfileViewController: UIViewController {
       })
       .disposed(by: disposeBag)
     
-    navigationItem.rightBarButtonItem = addButton
+    navigationItem.leftBarButtonItem = searchButton
   }
   
   private func prepareNavigationBar() {
@@ -96,6 +113,8 @@ public final class ProfileViewController: UIViewController {
     appBar.navigationBar.tintColor = UIColor.white
     appBar.headerViewController.headerView.maximumHeight = 76.0
     appBar.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor: UIColor.white ]
+    
+    appBar.headerViewController.headerView.trackingScrollView = profileTableView
     
     Observable.just("Profile")
       .bind(to: navigationItem.rx.title)
@@ -116,8 +135,6 @@ public final class ProfileViewController: UIViewController {
     view.addSubview(profileTableView)
     
     profileTableView.snp.makeConstraints { $0.edges.equalTo(view) }
-    
-    appBar.headerViewController.headerView.trackingScrollView = profileTableView
     
     // set up data sources
     dataSource = RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>(

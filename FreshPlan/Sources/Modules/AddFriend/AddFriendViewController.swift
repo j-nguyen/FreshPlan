@@ -26,9 +26,6 @@ public final class AddFriendViewController: UIViewController {
   private var tableView: UITableView!
   private var emptyView: EmptyView!
   
-  // MARK:  Default TableViewCell
-  private var defaultCell: UITableViewCell = UITableViewCell()
-  
   // MARK:  DisposeBag
   private var disposeBag: DisposeBag = DisposeBag()
   
