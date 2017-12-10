@@ -18,16 +18,16 @@ public final class VerifyViewController: UIViewController {
 	
 	fileprivate let appBar = MDCAppBar()
 	
-	//: MARK - StackView
+	// MARK:  StackView
 	private var stackView: UIStackView!
 	
-	//: MARK - Text Fields
+	// MARK:  Text Fields
 	private var verifyTextField: UITextField!
 	
-	//: MARK - Button
+	// MARK:  Button
 	private var submitButton: MDCButton!
 	
-	//: MARK - Left Button Item
+	// MARK:  Left Button Item
 	private var closeButton: UIBarButtonItem!
 	
 	public convenience init(viewModel: VerifyViewModel, router: VerifyRouter) {
@@ -190,7 +190,7 @@ public final class VerifyViewController: UIViewController {
     viewModel.resendSuccess
       .asObservable()
       .filter { $0 }
-      .subscribe(onNext: { [weak self] _ in
+      .subscribe(onNext: { _ in
         let message = MDCSnackbarMessage(text: "Resent a verification email! Please check your email address to verify your account.")
         MDCSnackbarManager.show(message)
       })

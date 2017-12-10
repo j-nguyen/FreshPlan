@@ -14,7 +14,12 @@ public enum FreshPlan {
 	case login(String, String)
 	case register(String, String, String, String, String)
 	case verify(String, Int)
+	case user(Int)
+  case friends(Int)
+  case friendSearch(String)
+  case acceptFriend(Int, Int)
   case resend(String)
+  case sendFriendRequest(Int, Int)
 }
 
 extension FreshPlan: TargetType {
@@ -29,6 +34,16 @@ extension FreshPlan: TargetType {
 			return "/auth/register"
 		case .verify:
 			return "/auth/verify"
+		case let .user(userId):
+			return "/users/\(userId)"
+    case .friends(let userId):
+      return "/users/\(userId)/friends"
+    case let .sendFriendRequest(userId, _):
+      return "/users/\(userId)/friends"
+    case .friendSearch:
+      return "/users/"
+    case let .acceptFriend(userId, friendId):
+      return "/users/\(userId)/friends/\(friendId)"
     case .resend:
       return "/auth/resend"
 		}
@@ -37,8 +52,12 @@ extension FreshPlan: TargetType {
 	// type of method (POST/GET/PATCH/DELETE)
 	public var method: Moya.Method {
 		switch self {
-		case .login, .register, .verify, .resend:
+		case .login, .register, .verify, .resend, .sendFriendRequest:
 			return .post
+		case .user, .friends, .friendSearch:
+			return .get
+    case .acceptFriend:
+      return .patch
 		}
 	}
 
@@ -62,6 +81,20 @@ extension FreshPlan: TargetType {
       )
 		case let .verify(email, code):
 			return .requestParameters(parameters: ["email": email, "code": code], encoding: JSONEncoding.default)
+    case let .friendSearch(query):
+      return .requestParameters(parameters: ["search": query], encoding: URLEncoding.default)
+    case .user, .friends:
+			return .requestPlain
+    case .acceptFriend:
+      return .requestParameters(
+        parameters: ["accepted": true],
+        encoding: JSONEncoding.default
+      )
+    case let .sendFriendRequest(_, friendId):
+      return .requestParameters(
+        parameters: ["friendId": friendId],
+        encoding: JSONEncoding.default
+      )
 		}
 	}
 	
@@ -74,6 +107,8 @@ extension FreshPlan: TargetType {
 		switch self {
 		case .login, .register, .verify, .resend:
 			return ["Content-Type": "application/json"]
+		case .user, .friends, .acceptFriend, .friendSearch, .sendFriendRequest:
+			return ["Content-Type": "application/json", "Authorization": UserDefaults.standard.string(forKey: "token")!]
 		}
 	}
 }

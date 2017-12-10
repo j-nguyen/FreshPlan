@@ -28,10 +28,31 @@ public final class HomeViewController: UITabBarController {
 	
 	public override func viewDidLoad() {
 		super.viewDidLoad()
+    
+    // MARK:  View Controllers
+    let meetupController = MeetupAssembler.make()
+    let profileController = ProfileAssembler.make()
+    
+    meetupController.tabBarItem = UITabBarItem(
+      title: "Home",
+      image: UIImage(named: "ic_home")?.withRenderingMode(.alwaysTemplate),
+      tag: 0
+    )
+    
+    profileController.tabBarItem = UITabBarItem(
+      title: "Profile",
+      image: UIImage(named: "ic_account_circle")?.withRenderingMode(.alwaysTemplate),
+      tag: 1
+    )
+    
+    let viewControllers = [meetupController, profileController].flatMap { UINavigationController(rootViewController: $0) }
+    
+    setViewControllers(viewControllers, animated: false)
 	}
 	
 	public override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+<<<<<<< HEAD
 		//: MARK - View Controllers
 		let meetupController = MeetupAssembler.make()
 		let profileController = ProfileAssembler.make()
@@ -58,5 +79,7 @@ public final class HomeViewController: UITabBarController {
 		let viewControllers = [meetupController, inviteController, profileController].flatMap { UINavigationController(rootViewController: $0) }
 		
 		setViewControllers(viewControllers, animated: animated)
+=======
+>>>>>>> d636692e08953efcff50fc4aaf9577ef0f9a20c8
 	}
 }

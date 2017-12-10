@@ -49,11 +49,11 @@ public class LoginViewModel: LoginViewModelProtocol {
 		// filter out for unverified so we can move the user to verified controller
 		let tap = loginTap
 			.flatMap { self.loginRequest(email: self.email.value, password: self.password.value) }
-      .share()
+			.share()
 		
     tap
 			.filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
-      .map(Token.self)
+			.map(Token.self)
 			.map {
 				UserDefaults.standard.set($0.token, forKey: "token")
 				return true

@@ -7,17 +7,7 @@
 //
 
 import Foundation
-import JWTDecode
 
 public struct Token: Decodable {
 	public let token: String
-}
-
-//: MARK - Token Extension
-/// tests if the jwt has been expired
-extension Token {
-	public func isValid() -> Bool {
-		let jwt = try? decode(jwt: token)
-		return jwt?.expired ?? false
-	}
 }

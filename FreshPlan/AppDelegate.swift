@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import MaterialComponents
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,18 +20,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// set up the window size
 		window = UIWindow(frame: UIScreen.main.bounds)
 		guard let window = self.window else { fatalError("no window") }
+    // prepare fabric
+    prepareFabric()
 		// setup window to make sure
 		// check to make sure if token exists or not
-		if let _ = UserDefaults.standard.string(forKey: "token") {
-			window.rootViewController = HomeAssembler.make()
+    window.makeKeyAndVisible()
+    window.backgroundColor = .white
+		if let _ = UserDefaults.standard.string(forKey: "token"), let jwt = Token.decodeJWT {
+      if jwt.expired {
+        let alertController = MDCAlertController(title: "Login Expired", message: "Your login credentials have expired. Please log back in.")
+        let action = MDCAlertAction(title: "OK", handler: { _ in
+          UserDefaults.standard.removeObject(forKey: "token")
+        })
+        alertController.addAction(action)
+        window.rootViewController = LoginAssembler.make()
+        window.rootViewController?.present(alertController, animated: true)
+      } else {
+        window.rootViewController = HomeAssembler.make()
+      }
 		} else {
 			window.rootViewController = LoginAssembler.make()
 		}
-		window.makeKeyAndVisible()
-		window.backgroundColor = UIColor.white
 		
 		return true
 	}
+  
+  private func prepareFabric() {
+    #if (arch(i386) || arch(x86_64)) && os(iOS)
+      print ("Skipping Crashalytics")
+    #else
+      print ("~~~~*** Starting Fabrics Crashalytics ***~~~~~")
+      Fabric.with([Crashlytics.self])
+    #endif
+  }
 
 	func applicationWillResignActive(_ application: UIApplication) {
 		// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
