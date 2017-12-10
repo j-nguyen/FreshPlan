@@ -19,8 +19,8 @@ import UIKit
 
 public class ProfileRouter {
 	public enum Routes: String {
-		case invitation
-		case addInvitation
+		case addFriend
+    case logout
 	}
 	
 	fileprivate enum RouteError: Error {
@@ -34,14 +34,14 @@ extension ProfileRouter: RouterProtocol {
 		guard let route = Routes(rawValue: route) else {
 			throw RouteError.invalidRoute("This is an invalid route!")
 		}
-		
-		guard let window = UIApplication.shared.keyWindow else { return }
-		
+  
 		switch route {
-		case .invitation:
-			break
-		case .addInvitation:
-			break
+		case .addFriend:
+			context.present(AddFriendAssembler.make(), animated: true, completion: nil)
+    case .logout:
+      guard let window = UIApplication.shared.keyWindow else { return }
+      UserDefaults.standard.removeObject(forKey: "token")
+      window.rootViewController? = LoginAssembler.make()
 		}
 	}
 }

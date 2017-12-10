@@ -14,10 +14,26 @@
 		40426D151F86BC9C00875179 /* RouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D141F86BC9C00875179 /* RouterProtocol.swift */; };
 		40426D1A1F86C12600875179 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D191F86C12600875179 /* LoginRouter.swift */; };
 		40497D1F1F8CF3A500A4E046 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40497D1E1F8CF3A500A4E046 /* UIColor+.swift */; };
+		4055B0BA1FD079FE007C5CCC /* ProfileUserHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4055B0B91FD079FE007C5CCC /* ProfileUserHeaderView.swift */; };
+		4056A4EC1FD4B70B006415A7 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4EB1FD4B70B006415A7 /* AddFriendViewController.swift */; };
+		4056A4EE1FD4B7FE006415A7 /* AddFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4ED1FD4B7FE006415A7 /* AddFriendViewModel.swift */; };
+		4056A4F01FD4B988006415A7 /* AddFriendAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4EF1FD4B988006415A7 /* AddFriendAssembler.swift */; };
+		4056A4F31FD4BDB4006415A7 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4F21FD4BDB4006415A7 /* EmptyView.swift */; };
+		4056A4F51FD4C2DD006415A7 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4F41FD4C2DD006415A7 /* SearchBar.swift */; };
 		405C5A981F8D94E700AC8F9F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A971F8D94E700AC8F9F /* HomeViewController.swift */; };
 		405C5A9A1F8D94FA00AC8F9F /* HomeAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A991F8D94FA00AC8F9F /* HomeAssembler.swift */; };
 		405C5A9C1F8D950500AC8F9F /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A9B1F8D950500AC8F9F /* HomeViewModel.swift */; };
 		405C5A9E1F8D953500AC8F9F /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A9D1F8D953500AC8F9F /* HomeRouter.swift */; };
+		4071F8F71FDB00F3001B77A1 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4071F8F61FDB00F3001B77A1 /* FriendViewController.swift */; };
+		4071F8F91FDB0143001B77A1 /* FriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4071F8F81FDB0143001B77A1 /* FriendViewModel.swift */; };
+		4071F94D1FDCAF430061C34E /* FriendProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4071F94C1FDCAF430061C34E /* FriendProfileCell.swift */; };
+		4071F94F1FDCB14D0061C34E /* FriendInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4071F94E1FDCB14D0061C34E /* FriendInfoCell.swift */; };
+		4079B14A1FC47407007E9407 /* Token+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B1491FC47407007E9407 /* Token+.swift */; };
+		4079B14C1FC475E9007E9407 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B14B1FC475E9007E9407 /* UITableView+.swift */; };
+		4079B14E1FC4763B007E9407 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B14D1FC4763B007E9407 /* UILabel+.swift */; };
+		4079B1511FC4785F007E9407 /* ProfileUserHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B1501FC4785F007E9407 /* ProfileUserHeaderCell.swift */; };
+		4079B1541FC47E86007E9407 /* CacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B1531FC47E86007E9407 /* CacheStore.swift */; };
+		4079B1561FC49367007E9407 /* ProfileUserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B1551FC49367007E9407 /* ProfileUserInfoCell.swift */; };
 		408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082D1F8D267A006BCA8E /* RegisterViewController.swift */; };
 		408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082F1F8D2716006BCA8E /* RegisterRouter.swift */; };
 		408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D08311F8D271F006BCA8E /* RegisterViewModel.swift */; };
@@ -29,8 +45,6 @@
 		409A55351F86B0D200EB29A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409A55341F86B0D200EB29A4 /* AppDelegate.swift */; };
 		409A553C1F86B0D200EB29A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 409A553B1F86B0D200EB29A4 /* Assets.xcassets */; };
 		409A553F1F86B0D200EB29A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 409A553D1F86B0D200EB29A4 /* LaunchScreen.storyboard */; };
-		409A554A1F86B0D200EB29A4 /* FreshPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409A55491F86B0D200EB29A4 /* FreshPlanTests.swift */; };
-		409A55551F86B0D200EB29A4 /* FreshPlanUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409A55541F86B0D200EB29A4 /* FreshPlanUITests.swift */; };
 		409B2BEF1FBE6192000A7F16 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BEE1FBE6192000A7F16 /* ProfileViewController.swift */; };
 		409B2BF11FBE619B000A7F16 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BF01FBE619B000A7F16 /* ProfileViewModel.swift */; };
 		409B2BF31FBE61F5000A7F16 /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BF21FBE61F5000A7F16 /* ProfileRouter.swift */; };
@@ -43,25 +57,13 @@
 		40BD70141F910FFA005B3B9D /* MeetupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD70131F910FFA005B3B9D /* MeetupRouter.swift */; };
 		40BD70161F911022005B3B9D /* MeetupAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD70151F911022005B3B9D /* MeetupAssembler.swift */; };
 		40BE77901F9ED2310011C899 /* ResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BE778F1F9ED2310011C899 /* ResponseError.swift */; };
+		40BF713D1FDC623200495B81 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BF713C1FDC623200495B81 /* FriendCell.swift */; };
+		40BF713F1FDC73DC00495B81 /* AddFriendRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BF713E1FDC73DC00495B81 /* AddFriendRouter.swift */; };
+		40BF71411FDC750400495B81 /* FriendAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BF71401FDC750400495B81 /* FriendAssembler.swift */; };
+		40C429021FC3D08C004579A6 /* JSONDecoder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C429011FC3D08C004579A6 /* JSONDecoder+.swift */; };
+		40DB5D2B1FC88D58000E3019 /* APIResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DB5D2A1FC88D58000E3019 /* APIResult.swift */; };
 		7BED1FB6487CD40A991B8614 /* Pods_FreshPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		409A55461F86B0D200EB29A4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 409A55291F86B0D200EB29A4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 409A55301F86B0D200EB29A4;
-			remoteInfo = FreshPlan;
-		};
-		409A55511F86B0D200EB29A4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 409A55291F86B0D200EB29A4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 409A55301F86B0D200EB29A4;
-			remoteInfo = FreshPlan;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		400FC2151F897BA200B3098B /* FreshPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshPlan.swift; sourceTree = "<group>"; };
@@ -71,10 +73,26 @@
 		40426D141F86BC9C00875179 /* RouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterProtocol.swift; sourceTree = "<group>"; };
 		40426D191F86C12600875179 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
 		40497D1E1F8CF3A500A4E046 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		4055B0B91FD079FE007C5CCC /* ProfileUserHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserHeaderView.swift; sourceTree = "<group>"; };
+		4056A4EB1FD4B70B006415A7 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
+		4056A4ED1FD4B7FE006415A7 /* AddFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewModel.swift; sourceTree = "<group>"; };
+		4056A4EF1FD4B988006415A7 /* AddFriendAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendAssembler.swift; sourceTree = "<group>"; };
+		4056A4F21FD4BDB4006415A7 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		4056A4F41FD4C2DD006415A7 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		405C5A971F8D94E700AC8F9F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		405C5A991F8D94FA00AC8F9F /* HomeAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAssembler.swift; sourceTree = "<group>"; };
 		405C5A9B1F8D950500AC8F9F /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		405C5A9D1F8D953500AC8F9F /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
+		4071F8F61FDB00F3001B77A1 /* FriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
+		4071F8F81FDB0143001B77A1 /* FriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewModel.swift; sourceTree = "<group>"; };
+		4071F94C1FDCAF430061C34E /* FriendProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileCell.swift; sourceTree = "<group>"; };
+		4071F94E1FDCB14D0061C34E /* FriendInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendInfoCell.swift; sourceTree = "<group>"; };
+		4079B1491FC47407007E9407 /* Token+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Token+.swift"; sourceTree = "<group>"; };
+		4079B14B1FC475E9007E9407 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
+		4079B14D1FC4763B007E9407 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		4079B1501FC4785F007E9407 /* ProfileUserHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserHeaderCell.swift; sourceTree = "<group>"; };
+		4079B1531FC47E86007E9407 /* CacheStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheStore.swift; sourceTree = "<group>"; };
+		4079B1551FC49367007E9407 /* ProfileUserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserInfoCell.swift; sourceTree = "<group>"; };
 		408D082D1F8D267A006BCA8E /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		408D082F1F8D2716006BCA8E /* RegisterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouter.swift; sourceTree = "<group>"; };
 		408D08311F8D271F006BCA8E /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -88,12 +106,6 @@
 		409A553B1F86B0D200EB29A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		409A553E1F86B0D200EB29A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		409A55401F86B0D200EB29A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		409A55451F86B0D200EB29A4 /* FreshPlanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreshPlanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		409A55491F86B0D200EB29A4 /* FreshPlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshPlanTests.swift; sourceTree = "<group>"; };
-		409A554B1F86B0D200EB29A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		409A55501F86B0D200EB29A4 /* FreshPlanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreshPlanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		409A55541F86B0D200EB29A4 /* FreshPlanUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshPlanUITests.swift; sourceTree = "<group>"; };
-		409A55561F86B0D200EB29A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		409B2BEE1FBE6192000A7F16 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		409B2BF01FBE619B000A7F16 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		409B2BF21FBE61F5000A7F16 /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
@@ -106,6 +118,11 @@
 		40BD70131F910FFA005B3B9D /* MeetupRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupRouter.swift; sourceTree = "<group>"; };
 		40BD70151F911022005B3B9D /* MeetupAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupAssembler.swift; sourceTree = "<group>"; };
 		40BE778F1F9ED2310011C899 /* ResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseError.swift; sourceTree = "<group>"; };
+		40BF713C1FDC623200495B81 /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
+		40BF713E1FDC73DC00495B81 /* AddFriendRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendRouter.swift; sourceTree = "<group>"; };
+		40BF71401FDC750400495B81 /* FriendAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendAssembler.swift; sourceTree = "<group>"; };
+		40C429011FC3D08C004579A6 /* JSONDecoder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+.swift"; sourceTree = "<group>"; };
+		40DB5D2A1FC88D58000E3019 /* APIResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResult.swift; sourceTree = "<group>"; };
 		66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreshPlan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		961AF7C9502FB2E5362945B5 /* Pods-FreshPlan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.release.xcconfig"; sourceTree = "<group>"; };
 		F2535B961F6CEAE83F9AC1E5 /* Pods-FreshPlan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.debug.xcconfig"; sourceTree = "<group>"; };
@@ -117,20 +134,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BED1FB6487CD40A991B8614 /* Pods_FreshPlan.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		409A55421F86B0D200EB29A4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		409A554D1F86B0D200EB29A4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +164,7 @@
 				40426D0E1F86B8EC00875179 /* Protocols */,
 				40426D111F86BBA500875179 /* Extensions */,
 				400FC2141F897B5600B3098B /* Networking */,
+				4079B1521FC47E71007E9407 /* Utility */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -168,6 +172,8 @@
 		40426D051F86B7EE00875179 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				4071F8F51FDB00E4001B77A1 /* Friend */,
+				4056A4EA1FD4B6FE006415A7 /* AddFriend */,
 				409B2BED1FBE6129000A7F16 /* Profile */,
 				40BD700E1F910F41005B3B9D /* Meetup */,
 				405C5A961F8D94CA00AC8F9F /* Home */,
@@ -212,8 +218,34 @@
 			isa = PBXGroup;
 			children = (
 				40497D1E1F8CF3A500A4E046 /* UIColor+.swift */,
+				40C429011FC3D08C004579A6 /* JSONDecoder+.swift */,
+				4079B1491FC47407007E9407 /* Token+.swift */,
+				4079B14B1FC475E9007E9407 /* UITableView+.swift */,
+				4079B14D1FC4763B007E9407 /* UILabel+.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4056A4EA1FD4B6FE006415A7 /* AddFriend */ = {
+			isa = PBXGroup;
+			children = (
+				4056A4EB1FD4B70B006415A7 /* AddFriendViewController.swift */,
+				4056A4ED1FD4B7FE006415A7 /* AddFriendViewModel.swift */,
+				40BF713E1FDC73DC00495B81 /* AddFriendRouter.swift */,
+				4056A4EF1FD4B988006415A7 /* AddFriendAssembler.swift */,
+				4056A4F11FD4BDA6006415A7 /* Subviews */,
+			);
+			path = AddFriend;
+			sourceTree = "<group>";
+		};
+		4056A4F11FD4BDA6006415A7 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				4056A4F21FD4BDB4006415A7 /* EmptyView.swift */,
+				4056A4F41FD4C2DD006415A7 /* SearchBar.swift */,
+				40BF713C1FDC623200495B81 /* FriendCell.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		405C5A961F8D94CA00AC8F9F /* Home */ = {
@@ -225,6 +257,45 @@
 				405C5A9D1F8D953500AC8F9F /* HomeRouter.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		4071F8F51FDB00E4001B77A1 /* Friend */ = {
+			isa = PBXGroup;
+			children = (
+				4071F8F61FDB00F3001B77A1 /* FriendViewController.swift */,
+				4071F8F81FDB0143001B77A1 /* FriendViewModel.swift */,
+				40BF71401FDC750400495B81 /* FriendAssembler.swift */,
+				4071F94B1FDCA8B10061C34E /* Subviews */,
+			);
+			path = Friend;
+			sourceTree = "<group>";
+		};
+		4071F94B1FDCA8B10061C34E /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				4071F94C1FDCAF430061C34E /* FriendProfileCell.swift */,
+				4071F94E1FDCB14D0061C34E /* FriendInfoCell.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		4079B14F1FC4782C007E9407 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				4079B1501FC4785F007E9407 /* ProfileUserHeaderCell.swift */,
+				4079B1551FC49367007E9407 /* ProfileUserInfoCell.swift */,
+				4055B0B91FD079FE007C5CCC /* ProfileUserHeaderView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		4079B1521FC47E71007E9407 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				4079B1531FC47E86007E9407 /* CacheStore.swift */,
+				40DB5D2A1FC88D58000E3019 /* APIResult.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 		408D082C1F8D266C006BCA8E /* Register */ = {
@@ -253,8 +324,6 @@
 			isa = PBXGroup;
 			children = (
 				409A55331F86B0D200EB29A4 /* FreshPlan */,
-				409A55481F86B0D200EB29A4 /* FreshPlanTests */,
-				409A55531F86B0D200EB29A4 /* FreshPlanUITests */,
 				409A55321F86B0D200EB29A4 /* Products */,
 				63B037B023A8BC3303DFC20E /* Pods */,
 				0F3AB510D7DD34FCCFA2E3F4 /* Frameworks */,
@@ -265,8 +334,6 @@
 			isa = PBXGroup;
 			children = (
 				409A55311F86B0D200EB29A4 /* FreshPlan.app */,
-				409A55451F86B0D200EB29A4 /* FreshPlanTests.xctest */,
-				409A55501F86B0D200EB29A4 /* FreshPlanUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -282,24 +349,6 @@
 			path = FreshPlan;
 			sourceTree = "<group>";
 		};
-		409A55481F86B0D200EB29A4 /* FreshPlanTests */ = {
-			isa = PBXGroup;
-			children = (
-				409A55491F86B0D200EB29A4 /* FreshPlanTests.swift */,
-				409A554B1F86B0D200EB29A4 /* Info.plist */,
-			);
-			path = FreshPlanTests;
-			sourceTree = "<group>";
-		};
-		409A55531F86B0D200EB29A4 /* FreshPlanUITests */ = {
-			isa = PBXGroup;
-			children = (
-				409A55541F86B0D200EB29A4 /* FreshPlanUITests.swift */,
-				409A55561F86B0D200EB29A4 /* Info.plist */,
-			);
-			path = FreshPlanUITests;
-			sourceTree = "<group>";
-		};
 		409B2BED1FBE6129000A7F16 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -307,6 +356,7 @@
 				409B2BF01FBE619B000A7F16 /* ProfileViewModel.swift */,
 				409B2BF21FBE61F5000A7F16 /* ProfileRouter.swift */,
 				409B2BF41FBE6234000A7F16 /* ProfileAssembler.swift */,
+				4079B14F1FC4782C007E9407 /* Subviews */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -363,42 +413,6 @@
 			productReference = 409A55311F86B0D200EB29A4 /* FreshPlan.app */;
 			productType = "com.apple.product-type.application";
 		};
-		409A55441F86B0D200EB29A4 /* FreshPlanTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 409A555C1F86B0D200EB29A4 /* Build configuration list for PBXNativeTarget "FreshPlanTests" */;
-			buildPhases = (
-				409A55411F86B0D200EB29A4 /* Sources */,
-				409A55421F86B0D200EB29A4 /* Frameworks */,
-				409A55431F86B0D200EB29A4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				409A55471F86B0D200EB29A4 /* PBXTargetDependency */,
-			);
-			name = FreshPlanTests;
-			productName = FreshPlanTests;
-			productReference = 409A55451F86B0D200EB29A4 /* FreshPlanTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		409A554F1F86B0D200EB29A4 /* FreshPlanUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 409A555F1F86B0D200EB29A4 /* Build configuration list for PBXNativeTarget "FreshPlanUITests" */;
-			buildPhases = (
-				409A554C1F86B0D200EB29A4 /* Sources */,
-				409A554D1F86B0D200EB29A4 /* Frameworks */,
-				409A554E1F86B0D200EB29A4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				409A55521F86B0D200EB29A4 /* PBXTargetDependency */,
-			);
-			name = FreshPlanUITests;
-			productName = FreshPlanUITests;
-			productReference = 409A55501F86B0D200EB29A4 /* FreshPlanUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -412,16 +426,11 @@
 					409A55301F86B0D200EB29A4 = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Manual;
-					};
-					409A55441F86B0D200EB29A4 = {
-						CreatedOnToolsVersion = 9.0;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 409A55301F86B0D200EB29A4;
-					};
-					409A554F1F86B0D200EB29A4 = {
-						CreatedOnToolsVersion = 9.0;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 409A55301F86B0D200EB29A4;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -439,8 +448,6 @@
 			projectRoot = "";
 			targets = (
 				409A55301F86B0D200EB29A4 /* FreshPlan */,
-				409A55441F86B0D200EB29A4 /* FreshPlanTests */,
-				409A554F1F86B0D200EB29A4 /* FreshPlanUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -452,20 +459,6 @@
 			files = (
 				409A553F1F86B0D200EB29A4 /* LaunchScreen.storyboard in Resources */,
 				409A553C1F86B0D200EB29A4 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		409A55431F86B0D200EB29A4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		409A554E1F86B0D200EB29A4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,24 +556,40 @@
 			buildActionMask = 2147483647;
 			files = (
 				405C5A9A1F8D94FA00AC8F9F /* HomeAssembler.swift in Sources */,
+				4056A4F31FD4BDB4006415A7 /* EmptyView.swift in Sources */,
 				408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */,
 				40BD70121F910FD6005B3B9D /* MeetupViewModel.swift in Sources */,
+				4079B14C1FC475E9007E9407 /* UITableView+.swift in Sources */,
 				405C5A981F8D94E700AC8F9F /* HomeViewController.swift in Sources */,
 				409B2BF81FBE64F9000A7F16 /* User.swift in Sources */,
+				40BF713D1FDC623200495B81 /* FriendCell.swift in Sources */,
 				40426D151F86BC9C00875179 /* RouterProtocol.swift in Sources */,
 				40BD70141F910FFA005B3B9D /* MeetupRouter.swift in Sources */,
+				4071F94D1FDCAF430061C34E /* FriendProfileCell.swift in Sources */,
+				40BF713F1FDC73DC00495B81 /* AddFriendRouter.swift in Sources */,
 				409B2BF11FBE619B000A7F16 /* ProfileViewModel.swift in Sources */,
 				409B2BEF1FBE6192000A7F16 /* ProfileViewController.swift in Sources */,
 				408D08391F8D285E006BCA8E /* VerifyAssembler.swift in Sources */,
+				4071F94F1FDCB14D0061C34E /* FriendInfoCell.swift in Sources */,
+				40DB5D2B1FC88D58000E3019 /* APIResult.swift in Sources */,
 				408D08371F8D2818006BCA8E /* VerifyViewController.swift in Sources */,
+				4056A4F01FD4B988006415A7 /* AddFriendAssembler.swift in Sources */,
 				40426D091F86B85500875179 /* LoginViewController.swift in Sources */,
 				408D083B1F8D2865006BCA8E /* VerifyRouter.swift in Sources */,
+				4079B1511FC4785F007E9407 /* ProfileUserHeaderCell.swift in Sources */,
+				4056A4EE1FD4B7FE006415A7 /* AddFriendViewModel.swift in Sources */,
 				408D083D1F8D286D006BCA8E /* VerifyViewModel.swift in Sources */,
+				4071F8F91FDB0143001B77A1 /* FriendViewModel.swift in Sources */,
+				4079B1561FC49367007E9407 /* ProfileUserInfoCell.swift in Sources */,
+				40BF71411FDC750400495B81 /* FriendAssembler.swift in Sources */,
 				40A311361F9EF503000FAFEB /* Token.swift in Sources */,
 				409B2BF51FBE6234000A7F16 /* ProfileAssembler.swift in Sources */,
 				400FC2161F897BA200B3098B /* FreshPlan.swift in Sources */,
+				4079B14E1FC4763B007E9407 /* UILabel+.swift in Sources */,
+				4071F8F71FDB00F3001B77A1 /* FriendViewController.swift in Sources */,
 				408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */,
 				409A55351F86B0D200EB29A4 /* AppDelegate.swift in Sources */,
+				4055B0BA1FD079FE007C5CCC /* ProfileUserHeaderView.swift in Sources */,
 				408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */,
 				40426D1A1F86C12600875179 /* LoginRouter.swift in Sources */,
 				40BD70161F911022005B3B9D /* MeetupAssembler.swift in Sources */,
@@ -591,42 +600,18 @@
 				40497D1F1F8CF3A500A4E046 /* UIColor+.swift in Sources */,
 				408D08341F8D274A006BCA8E /* RegisterAssembler.swift in Sources */,
 				40BE77901F9ED2310011C899 /* ResponseError.swift in Sources */,
+				4079B14A1FC47407007E9407 /* Token+.swift in Sources */,
+				4056A4F51FD4C2DD006415A7 /* SearchBar.swift in Sources */,
+				4056A4EC1FD4B70B006415A7 /* AddFriendViewController.swift in Sources */,
 				405C5A9E1F8D953500AC8F9F /* HomeRouter.swift in Sources */,
+				4079B1541FC47E86007E9407 /* CacheStore.swift in Sources */,
 				40BD70101F910F53005B3B9D /* MeetupController.swift in Sources */,
 				409B2BFA1FBE65AF000A7F16 /* Friend.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		409A55411F86B0D200EB29A4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				409A554A1F86B0D200EB29A4 /* FreshPlanTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		409A554C1F86B0D200EB29A4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				409A55551F86B0D200EB29A4 /* FreshPlanUITests.swift in Sources */,
+				40C429021FC3D08C004579A6 /* JSONDecoder+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		409A55471F86B0D200EB29A4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 409A55301F86B0D200EB29A4 /* FreshPlan */;
-			targetProxy = 409A55461F86B0D200EB29A4 /* PBXContainerItemProxy */;
-		};
-		409A55521F86B0D200EB29A4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 409A55301F86B0D200EB29A4 /* FreshPlan */;
-			targetProxy = 409A55511F86B0D200EB29A4 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		409A553D1F86B0D200EB29A4 /* LaunchScreen.storyboard */ = {
@@ -754,6 +739,7 @@
 			baseConfigurationReference = F2535B961F6CEAE83F9AC1E5 /* Pods-FreshPlan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 35PYRYEWH9;
@@ -761,7 +747,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fractalpoint.freshplan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1a6ea855-9345-4536-a50a-87d9698e6fbf";
+				PROVISIONING_PROFILE = "f5b9d44d-8d4d-4a5e-870d-0dc963db2d9f";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development net.fractalpoint.freshplan";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -773,6 +759,7 @@
 			baseConfigurationReference = 961AF7C9502FB2E5362945B5 /* Pods-FreshPlan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 35PYRYEWH9;
@@ -780,72 +767,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fractalpoint.freshplan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "41eb7c6c-b49d-49e4-83c4-d05d136274b4";
+				PROVISIONING_PROFILE = "4f8c1705-55c4-4300-89a0-89a4fa1f72fc";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore net.fractalpoint.freshplan";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		409A555D1F86B0D200EB29A4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = FreshPlanTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ca.stclaircollege.FreshPlanTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FreshPlan.app/FreshPlan";
-			};
-			name = Debug;
-		};
-		409A555E1F86B0D200EB29A4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = FreshPlanTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ca.stclaircollege.FreshPlanTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FreshPlan.app/FreshPlan";
-			};
-			name = Release;
-		};
-		409A55601F86B0D200EB29A4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = FreshPlanUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ca.stclaircollege.FreshPlanUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = FreshPlan;
-			};
-			name = Debug;
-		};
-		409A55611F86B0D200EB29A4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = FreshPlanUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ca.stclaircollege.FreshPlanUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = FreshPlan;
 			};
 			name = Release;
 		};
@@ -866,24 +791,6 @@
 			buildConfigurations = (
 				409A555A1F86B0D200EB29A4 /* Debug */,
 				409A555B1F86B0D200EB29A4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		409A555C1F86B0D200EB29A4 /* Build configuration list for PBXNativeTarget "FreshPlanTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				409A555D1F86B0D200EB29A4 /* Debug */,
-				409A555E1F86B0D200EB29A4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		409A555F1F86B0D200EB29A4 /* Build configuration list for PBXNativeTarget "FreshPlanUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				409A55601F86B0D200EB29A4 /* Debug */,
-				409A55611F86B0D200EB29A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

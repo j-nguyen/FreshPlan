@@ -11,7 +11,7 @@ target 'FreshPlan' do
   pod 'RxGesture'
   pod 'Moya/RxSwift'
   pod 'RxOptional'
-  pod 'MaterialComponents'
+  pod 'MaterialComponents', '~> 40.1.0'
 end
 
 post_install do |installer|
