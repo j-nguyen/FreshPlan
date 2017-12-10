@@ -12,6 +12,8 @@ target 'FreshPlan' do
   pod 'Moya/RxSwift'
   pod 'RxOptional'
   pod 'MaterialComponents', '~> 42.0.0'
+  pod 'Fabric'
+  pod 'Crashlytics'
 end
 
 post_install do |installer|

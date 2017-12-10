@@ -1,6 +1,9 @@
 PODS:
   - Alamofire (4.6.0)
+  - Crashlytics (3.9.3):
+    - Fabric (~> 1.7.2)
   - Differentiator (3.0.2)
+  - Fabric (1.7.2)
   - JWTDecode (2.1.1)
   - MaterialComponents (42.0.0):
     - MaterialComponents/ActivityIndicator (= 42.0.0)
@@ -371,6 +374,8 @@ PODS:
   - SnapKit (4.0.0)
 
 DEPENDENCIES:
+  - Crashlytics
+  - Fabric
   - JWTDecode
   - MaterialComponents (~> 42.0.0)
   - Moya/RxSwift
@@ -383,7 +388,9 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
+  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Differentiator: a87be69eba49ec4ab460c7671143ee3a9eececfd
+  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   JWTDecode: 83e8b381aafe27158d9f692cbdca2b12d61d460c
   MaterialComponents: cb196890171008087c38fe21a1528e745c9807c2
   MDFInternationalization: e355b0cebecf53d60233bd267084e49366c82513
@@ -400,6 +407,6 @@ SPEC CHECKSUMS:
   RxSwift: fd680d75283beb5e2559486f3c0ff852f0d35334
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: d05ba957510595c0aa82a09011e10abdb59c0be4
+PODFILE CHECKSUM: 71c395687166258c4970b498e6179ed63b53f55f
 
 COCOAPODS: 1.3.1
