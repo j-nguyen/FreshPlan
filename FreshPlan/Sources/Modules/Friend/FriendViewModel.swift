@@ -76,9 +76,7 @@ public class FriendViewModel: FriendViewModelProtocol {
   private func setupFriendRequest(_ friend: User) {
     let token = Token.getJWT().filter { $0 != -1 }.share()
     
-    disabledSend
-      .asObservable()
-      .flatMap { _ -> Observable<Int> in return token }
+    token
       .flatMap { [weak self] id -> Observable<[Friend]> in
         guard let this = self else { fatalError() }
         return this.requestFriends(userId: id)
