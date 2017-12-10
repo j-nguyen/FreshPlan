@@ -18,6 +18,7 @@ public class FriendViewController: UIViewController {
   // MARK: AppBar
   private let appBar: MDCAppBar = MDCAppBar()
   private var backButton: UIBarButtonItem!
+  private var sendButton: UIBarButtonItem!
   
   // MARK: TableView
   private var tableView: UITableView!
@@ -61,6 +62,7 @@ public class FriendViewController: UIViewController {
     prepareTableView()
     prepareNavigationBar()
     prepareNavigationBackButton()
+    prepareNavigationSendButton()
     appBar.addSubviewsToParent()
   }
   
@@ -138,6 +140,37 @@ public class FriendViewController: UIViewController {
       .disposed(by: disposeBag)
     
     navigationItem.leftBarButtonItem = backButton
+  }
+  
+  private func prepareNavigationSendButton() {
+    sendButton = UIBarButtonItem(
+      image: UIImage(named: "ic_send")?.withRenderingMode(.alwaysTemplate),
+      style: .plain,
+      target: nil,
+      action: nil
+    )
+    
+    viewModel.tapSend = sendButton.rx.tap.asObservable()
+    
+    viewModel.disabledSend
+      .asObservable()
+      .bind(to: sendButton.rx.isEnabled)
+      .disposed(by: disposeBag)
+    
+    viewModel.sendFriend
+      .asObservable()
+      .filter { $0 }
+      .subscribe(onNext: { [weak self] _ in
+        self?.navigationController?.dismiss(animated: true, completion: {
+          let message = MDCSnackbarMessage(text: "Successfully sent friend request!")
+          MDCSnackbarManager.show(message)
+        })
+      })
+      .disposed(by: disposeBag)
+  
+    navigationItem.rightBarButtonItem = sendButton
+    
+    viewModel.bindButtons()
   }
   
   deinit {

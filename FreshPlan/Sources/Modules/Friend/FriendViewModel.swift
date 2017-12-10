@@ -13,19 +13,35 @@ import RxDataSources
 
 public protocol FriendViewModelProtocol {
   var name: Variable<String> { get }
+  var tapSend: Observable<()>! { get set }
+  var disabledSend: Variable<Bool> { get }
+  var sendFriend: Variable<Bool> { get }
   var friendDetail: Variable<[FriendViewModel.Section]> { get }
+  
+  func bindButtons()
 }
 
 public class FriendViewModel: FriendViewModelProtocol {
   private var provider: MoyaProvider<FreshPlan>!
   
+  //MARK: Disposeable
   private let disposeBag: DisposeBag = DisposeBag()
   
+  //MARK: Variables
   public var name: Variable<String> = Variable("")
   public var friendDetail: Variable<[FriendViewModel.Section]> = Variable([])
+  public var disabledSend: Variable<Bool> = Variable(false)
+  public var sendFriend: Variable<Bool> = Variable(false)
+  
+  //MARK: Observables
+  public var tapSend: Observable<()>!
+  
+  //MARK: Other Variables
+  private var friend: User
   
   public init(_ provider: MoyaProvider<FreshPlan>, friend: User) {
     self.provider = provider
+    self.friend = friend
     
     let friendVar = Observable.just(friend).share()
     
@@ -53,6 +69,55 @@ public class FriendViewModel: FriendViewModelProtocol {
       .toArray()
       .bind(to: friendDetail)
       .disposed(by: disposeBag)
+    
+    setupFriendRequest(friend)
+  }
+  
+  private func setupFriendRequest(_ friend: User) {
+    let token = Token.getJWT().filter { $0 != -1 }.share()
+    
+    disabledSend
+      .asObservable()
+      .flatMap { _ -> Observable<Int> in return token }
+      .flatMap { [weak self] id -> Observable<[Friend]> in
+        guard let this = self else { fatalError() }
+        return this.requestFriends(userId: id)
+      }
+      .map { friends -> Bool in
+        if let _ = friends.first(where: { $0.id == friend.id }) {
+          return true
+        }
+        return false
+      }
+      .bind(to: disabledSend)
+      .disposed(by: disposeBag)
+  }
+  
+  public func bindButtons() {
+    let token = Token.getJWT().filter { $0 != -1 }.share()
+    
+    tapSend
+      .flatMap { _ -> Observable<Int> in return token }
+      .flatMap { id -> Observable<Response> in
+        return self.sendFriendRequest(userId: id, friendId: self.friend.id)
+      }
+      .filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
+      .map { $0.statusCode >= 200 && $0.statusCode <= 299 }
+      .bind(to: self.sendFriend)
+      .disposed(by: disposeBag)
+  }
+  
+  private func requestFriends(userId: Int) -> Observable<[Friend]> {
+    return provider.rx.request(.friends(userId))
+      .asObservable()
+      .map([Friend].self, using: JSONDecoder.Decode)
+      .catchErrorJustReturn([])
+  }
+  
+  private func sendFriendRequest(userId: Int, friendId: Int) -> Observable<Response> {
+    return provider.rx.request(.sendFriendRequest(userId, friendId))
+      .asObservable()
+      
   }
 }
 

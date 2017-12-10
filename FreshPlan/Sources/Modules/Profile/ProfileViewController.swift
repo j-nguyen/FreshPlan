@@ -13,17 +13,17 @@ import RxDataSources
 import MaterialComponents
 
 public final class ProfileViewController: UIViewController {
-  // MARK:  Profile View Model and Router
+  // MARK: Profile View Model and Router
   private var viewModel: ProfileViewModelProtocol!
   private var router: ProfileRouter!
   
-  // MARK:  AppBar
+  // MARK: AppBar
   fileprivate let appBar: MDCAppBar = MDCAppBar()
   
-  // MARK:  DisposeBag
+  // MARK: DisposeBag
   private let disposeBag: DisposeBag = DisposeBag()
   
-  // MARK:  TableView
+  // MARK: TableView
   private var profileTableView: UITableView!
   fileprivate var dataSource: RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>!
   
@@ -77,8 +77,9 @@ public final class ProfileViewController: UIViewController {
     
     logoutButton.rx.tap
       .asObservable()
-      .subscribe(onNext: {
-        Token.removeToken()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        try? this.router.route(from: this, to: ProfileRouter.Routes.logout.rawValue)
       })
     .disposed(by: disposeBag)
     

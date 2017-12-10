@@ -48,7 +48,7 @@ public class ProfileViewModel: ProfileViewModelProtocol {
       .map { $0.sorted(by: { $0.order < $1.order }) }
       .map { SectionModel.profile(order: 0, title: "My Profile", items: $0) }
     
-    // MARK:  Friends Setup
+    // MARK: Friends Setup
     let friends = token
       .flatMap { self.requestFriends(userId: $0) }
       .share()

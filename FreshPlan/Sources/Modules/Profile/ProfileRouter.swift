@@ -20,6 +20,7 @@ import UIKit
 public class ProfileRouter {
 	public enum Routes: String {
 		case addFriend
+    case logout
 	}
 	
 	fileprivate enum RouteError: Error {
@@ -37,6 +38,10 @@ extension ProfileRouter: RouterProtocol {
 		switch route {
 		case .addFriend:
 			context.present(AddFriendAssembler.make(), animated: true, completion: nil)
+    case .logout:
+      guard let window = UIApplication.shared.keyWindow else { return }
+      UserDefaults.standard.removeObject(forKey: "token")
+      window.rootViewController? = LoginAssembler.make()
 		}
 	}
 }

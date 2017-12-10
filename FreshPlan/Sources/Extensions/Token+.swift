@@ -43,7 +43,7 @@ extension Token {
   }
   
   // Removes the token
-  public static func removeToken() {
+  private static func removeToken() {
     guard let window = UIApplication.shared.keyWindow else { fatalError() }
     UserDefaults.standard.removeObject(forKey: "token")
     let alertController = MDCAlertController(title: "Login Expired", message: "Your login credentials have expired. Please log back in.")
