@@ -400,6 +400,7 @@
 				409A552F1F86B0D200EB29A4 /* Resources */,
 				A8A041D2EFD4CDED71963FEE /* [CP] Embed Pods Frameworks */,
 				156DDCC05B4822F68A119370 /* [CP] Copy Pods Resources */,
+				40AD78C91FDDDAD30056EEEB /* Fabric */,
 			);
 			buildRules = (
 			);
@@ -476,6 +477,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		40AD78C91FDDDAD30056EEEB /* Fabric */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Fabric;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" d220679d33f35aa69a60746c90a8cb2cce0109e7 58abe0509fc5f9d2a482aa72416bc3bf98563f324ff08c7012b79931dae22e71";
 		};
 		A8A041D2EFD4CDED71963FEE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
