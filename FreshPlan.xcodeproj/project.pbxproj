@@ -178,12 +178,9 @@
 		40426D051F86B7EE00875179 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				E14D1FE81FDDCBCF00E1BB0D /* Invite */,
-=======
 				4071F8F51FDB00E4001B77A1 /* Friend */,
 				4056A4EA1FD4B6FE006415A7 /* AddFriend */,
->>>>>>> d636692e08953efcff50fc4aaf9577ef0f9a20c8
 				409B2BED1FBE6129000A7F16 /* Profile */,
 				40BD700E1F910F41005B3B9D /* Meetup */,
 				405C5A961F8D94CA00AC8F9F /* Home */,
@@ -594,11 +591,8 @@
 				4056A4F31FD4BDB4006415A7 /* EmptyView.swift in Sources */,
 				408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */,
 				40BD70121F910FD6005B3B9D /* MeetupViewModel.swift in Sources */,
-<<<<<<< HEAD
 				E14D1FEA1FDDCC0400E1BB0D /* InviteViewController.swift in Sources */,
-=======
 				4079B14C1FC475E9007E9407 /* UITableView+.swift in Sources */,
->>>>>>> d636692e08953efcff50fc4aaf9577ef0f9a20c8
 				405C5A981F8D94E700AC8F9F /* HomeViewController.swift in Sources */,
 				409B2BF81FBE64F9000A7F16 /* User.swift in Sources */,
 				40BF713D1FDC623200495B81 /* FriendCell.swift in Sources */,
@@ -644,11 +638,8 @@
 				4056A4F51FD4C2DD006415A7 /* SearchBar.swift in Sources */,
 				4056A4EC1FD4B70B006415A7 /* AddFriendViewController.swift in Sources */,
 				405C5A9E1F8D953500AC8F9F /* HomeRouter.swift in Sources */,
-<<<<<<< HEAD
 				E14D1FEC1FDDCC3A00E1BB0D /* InviteViewModel.swift in Sources */,
-=======
 				4079B1541FC47E86007E9407 /* CacheStore.swift in Sources */,
->>>>>>> d636692e08953efcff50fc4aaf9577ef0f9a20c8
 				40BD70101F910F53005B3B9D /* MeetupController.swift in Sources */,
 				409B2BFA1FBE65AF000A7F16 /* Friend.swift in Sources */,
 				40C429021FC3D08C004579A6 /* JSONDecoder+.swift in Sources */,

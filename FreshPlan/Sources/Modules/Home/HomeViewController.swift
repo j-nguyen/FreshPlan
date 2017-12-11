@@ -52,7 +52,6 @@ public final class HomeViewController: UITabBarController {
 	
 	public override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-<<<<<<< HEAD
 		//: MARK - View Controllers
 		let meetupController = MeetupAssembler.make()
 		let profileController = ProfileAssembler.make()
@@ -79,7 +78,5 @@ public final class HomeViewController: UITabBarController {
 		let viewControllers = [meetupController, inviteController, profileController].flatMap { UINavigationController(rootViewController: $0) }
 		
 		setViewControllers(viewControllers, animated: animated)
-=======
->>>>>>> d636692e08953efcff50fc4aaf9577ef0f9a20c8
 	}
 }
