@@ -190,7 +190,7 @@ public final class VerifyViewController: UIViewController {
     viewModel.resendSuccess
       .asObservable()
       .filter { $0 }
-      .subscribe(onNext: { [weak self] _ in
+      .subscribe(onNext: { _ in
         let message = MDCSnackbarMessage(text: "Resent a verification email! Please check your email address to verify your account.")
         MDCSnackbarManager.show(message)
       })

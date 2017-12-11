@@ -7,13 +7,7 @@
 //
 
 import UIKit
-import RxSwift
 import MaterialComponents
-
-/**
- * This set-ups an empty view for the tableview, when nothing is there for it to show
- *
-**/
 
 public class EmptyView: UIView {
   

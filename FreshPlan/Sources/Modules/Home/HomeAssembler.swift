@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Moya
 
 public final class HomeAssembler {
 	public static func make() -> UIViewController {

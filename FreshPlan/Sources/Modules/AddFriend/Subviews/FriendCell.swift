@@ -21,6 +21,10 @@ public class FriendCell: UITableViewCell {
   public required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
   }
+  
+  public override func prepareForReuse() {
+    super.prepareForReuse()
+  }
 
   private func prepareView() {
     selectionStyle = .none

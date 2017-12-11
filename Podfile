@@ -3,15 +3,17 @@ inhibit_all_warnings!
 use_frameworks!
 
 target 'FreshPlan' do
-  pod 'SnapKit'
-  pod 'RxSwift'
-  pod 'RxCocoa'
-  pod 'JWTDecode'
+  pod 'SnapKit', '~> 4.0.0'
+  pod 'RxSwift', '~> 4.0.0'
+  pod 'RxCocoa', '~> 4.0.0'
+  pod 'JWTDecode', '~> 2.1.1' 
   pod 'RxDataSources'
   pod 'RxGesture'
   pod 'Moya/RxSwift'
   pod 'RxOptional'
-  pod 'MaterialComponents', '~> 40.1.0'
+  pod 'MaterialComponents', '~> 42.0.0'
+  pod 'Fabric'
+  pod 'Crashlytics'
 end
 
 post_install do |installer|

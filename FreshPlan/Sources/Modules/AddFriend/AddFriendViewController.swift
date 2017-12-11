@@ -158,7 +158,7 @@ public final class AddFriendViewController: UIViewController {
     // setup the rx event
     closeButton.rx.tap
       .asObservable()
-      .subscribe(onNext: { [weak self] _ in
+      .subscribe(onNext: { [weak self] in
         guard let this = self else { return }
         this.dismiss(animated: true, completion: nil)
       })

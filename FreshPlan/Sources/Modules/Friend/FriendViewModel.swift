@@ -13,7 +13,7 @@ import RxDataSources
 
 public protocol FriendViewModelProtocol {
   var name: Variable<String> { get }
-  var tapSend: Observable<()>! { get set }
+  var tapSend: Observable<Void>! { get set }
   var disabledSend: Variable<Bool> { get }
   var sendFriend: Variable<Bool> { get }
   var friendDetail: Variable<[FriendViewModel.Section]> { get }
@@ -34,7 +34,7 @@ public class FriendViewModel: FriendViewModelProtocol {
   public var sendFriend: Variable<Bool> = Variable(false)
   
   //MARK: Observables
-  public var tapSend: Observable<()>!
+  public var tapSend: Observable<Void>!
   
   //MARK: Other Variables
   private var friend: User
@@ -50,8 +50,7 @@ public class FriendViewModel: FriendViewModelProtocol {
       .bind(to: name)
       .disposed(by: disposeBag)
     
-    let profile = friendVar.map { SectionItem.profileTitle(order: 0, profileURL: $0.profileURL, fullName: "\($0.firstName) \($0.lastName)") }
-    let displayName = friendVar.map { SectionItem.info(order: 1, type: "Display Name:", title: $0.displayName) }
+    let profile = friendVar.map { SectionItem.profileTitle(order: 0, profileURL: $0.profileURL, fullName: $0.displayName) }
     let email = friendVar.map { SectionItem.info(order: 2, type: "Email:", title: $0.email) }
     let createdAt = friendVar
       .map { friend -> SectionItem in
@@ -61,7 +60,7 @@ public class FriendViewModel: FriendViewModelProtocol {
         return SectionItem.info(order: 3, type: "Last Joined:", title: date)
       }
     
-    Observable.from([profile, displayName, email, createdAt])
+    Observable.from([profile, email, createdAt])
       .flatMap { $0 }
       .toArray()
       .map { $0.sorted(by: { $0.order < $1.order }) }
@@ -76,17 +75,26 @@ public class FriendViewModel: FriendViewModelProtocol {
   private func setupFriendRequest(_ friend: User) {
     let token = Token.getJWT().filter { $0 != -1 }.share()
     
-    token
-      .flatMap { [weak self] id -> Observable<[Friend]> in
-        guard let this = self else { fatalError() }
-        return this.requestFriends(userId: id)
-      }
+    let friendRequests = token
+      .flatMap { self.requestFriendRequests(userId: $0) }
       .map { friends -> Bool in
         if let _ = friends.first(where: { $0.id == friend.id }) {
-          return true
+          return false
         }
-        return false
+        return true
       }
+    
+    let friends = token
+      .flatMap { self.requestFriends(userId: $0) }
+      .map { friends -> Bool in
+        if let _ = friends.first(where: { $0.id == friend.id }) {
+          return false
+        }
+        return true
+      }
+    
+    Observable.zip(token, friendRequests, friends)
+      .map { $0.0 != friend.id && $0.1 && $0.2 }
       .bind(to: disabledSend)
       .disposed(by: disposeBag)
   }
@@ -96,17 +104,22 @@ public class FriendViewModel: FriendViewModelProtocol {
     
     tapSend
       .flatMap { _ -> Observable<Int> in return token }
-      .flatMap { id -> Observable<Response> in
-        return self.sendFriendRequest(userId: id, friendId: self.friend.id)
-      }
+      .flatMap { self.sendFriendRequest(userId: $0, friendId: self.friend.id) }
       .filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
       .map { $0.statusCode >= 200 && $0.statusCode <= 299 }
       .bind(to: self.sendFriend)
       .disposed(by: disposeBag)
   }
   
-  private func requestFriends(userId: Int) -> Observable<[Friend]> {
+  private func requestFriends(userId: Int) -> Observable<[User]> {
     return provider.rx.request(.friends(userId))
+      .asObservable()
+      .map([User].self, using: JSONDecoder.Decode)
+      .catchErrorJustReturn([])
+  }
+  
+  private func requestFriendRequests(userId: Int) -> Observable<[Friend]> {
+    return provider.rx.request(.friendRequests(userId))
       .asObservable()
       .map([Friend].self, using: JSONDecoder.Decode)
       .catchErrorJustReturn([])
