@@ -60,15 +60,13 @@ public final class RegisterViewController: UIViewController {
     prepareView()
   }
   
-  //
   fileprivate func prepareView() {
     prepareStackView()
-    prepareLoginInLabel()
     prepareDisplayName()
     prepareEmail()
     preparePassword()
     prepareSignUpButton()
-    
+    prepareLoginInLabel()
   }
   
   fileprivate func prepareStackView() {
@@ -76,12 +74,15 @@ public final class RegisterViewController: UIViewController {
     stackView.axis = .vertical
     stackView.alignment = .center
     stackView.distribution = .fill
-    stackView.spacing = 10
+    stackView.spacing = 5
     
     view.addSubview(stackView)
     
     stackView.snp.makeConstraints { make in
-      make.center.equalTo(view)
+      make.top.equalTo(view).offset(16)
+      make.left.equalTo(view)
+      make.right.equalTo(view)
+      make.bottom.equalTo(view)
     }
   }
   
@@ -132,6 +133,7 @@ public final class RegisterViewController: UIViewController {
   
   fileprivate func prepareDisplayName() {
     displayNameField = MDCTextField()
+    displayNameField.backgroundColor = .red
     displayNameField.placeholder = "Display Name"
     displayNameField.autocapitalizationType = .none
     displayNameField.returnKeyType = .next
@@ -142,6 +144,7 @@ public final class RegisterViewController: UIViewController {
     
     displayNameField.snp.makeConstraints { make in
       make.width.equalTo(view).inset(20)
+      make.height.equalTo(50)
     }
     
     displayNameField.rx.text
@@ -163,6 +166,7 @@ public final class RegisterViewController: UIViewController {
     
     emailField.snp.makeConstraints { make in
       make.width.equalTo(view).inset(20)
+      make.height.equalTo(50)
     }
     
     emailField.rx.text
@@ -183,6 +187,7 @@ public final class RegisterViewController: UIViewController {
     
     passwordField.snp.makeConstraints { make in
       make.width.equalTo(view).inset(20)
+      make.height.equalTo(50)
     }
     
     passwordField.rx.text
