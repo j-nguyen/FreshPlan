@@ -50,13 +50,14 @@ public class ProfileViewModel: ProfileViewModelProtocol {
     // MARK: Friends Setup
     let friendsList = token
       .flatMap { self.requestFriends(userId: $0) }
-      .map([Friend].self, using: JSONDecoder.Decode)
+      .map([User].self, using: JSONDecoder.Decode)
       .catchErrorJustReturn([])
   
     let friendRequests = token
       .flatMap { self.requestFriendRequests(userId: $0) }
       .map([Friend].self, using: JSONDecoder.Decode)
       .catchErrorJustReturn([])
+      .map { $0.filter { !$0.accepted } }
     
     let friendsSection = friendsList
       .map { friends -> [SectionItem] in

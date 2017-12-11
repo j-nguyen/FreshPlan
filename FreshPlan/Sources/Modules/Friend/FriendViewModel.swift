@@ -75,14 +75,26 @@ public class FriendViewModel: FriendViewModelProtocol {
   private func setupFriendRequest(_ friend: User) {
     let token = Token.getJWT().filter { $0 != -1 }.share()
     
-    token
+    let friendRequests = token
+      .flatMap { self.requestFriendRequests(userId: $0) }
+      .map { friends -> Bool in
+        if let _ = friends.first(where: { $0.id == friend.id }) {
+          return false
+        }
+        return true
+      }
+    
+    let friends = token
       .flatMap { self.requestFriends(userId: $0) }
       .map { friends -> Bool in
         if let _ = friends.first(where: { $0.id == friend.id }) {
-          return true
+          return false
         }
-        return false
+        return true
       }
+    
+    Observable.zip(token, friendRequests, friends)
+      .map { $0.0 != friend.id && $0.1 && $0.2 }
       .bind(to: disabledSend)
       .disposed(by: disposeBag)
   }
@@ -99,8 +111,15 @@ public class FriendViewModel: FriendViewModelProtocol {
       .disposed(by: disposeBag)
   }
   
-  private func requestFriends(userId: Int) -> Observable<[Friend]> {
+  private func requestFriends(userId: Int) -> Observable<[User]> {
     return provider.rx.request(.friends(userId))
+      .asObservable()
+      .map([User].self, using: JSONDecoder.Decode)
+      .catchErrorJustReturn([])
+  }
+  
+  private func requestFriendRequests(userId: Int) -> Observable<[Friend]> {
+    return provider.rx.request(.friendRequests(userId))
       .asObservable()
       .map([Friend].self, using: JSONDecoder.Decode)
       .catchErrorJustReturn([])
