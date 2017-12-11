@@ -50,8 +50,7 @@ public class FriendViewModel: FriendViewModelProtocol {
       .bind(to: name)
       .disposed(by: disposeBag)
     
-    let profile = friendVar.map { SectionItem.profileTitle(order: 0, profileURL: $0.profileURL, fullName: "\($0.firstName) \($0.lastName)") }
-    let displayName = friendVar.map { SectionItem.info(order: 1, type: "Display Name:", title: $0.displayName) }
+    let profile = friendVar.map { SectionItem.profileTitle(order: 0, profileURL: $0.profileURL, fullName: $0.displayName) }
     let email = friendVar.map { SectionItem.info(order: 2, type: "Email:", title: $0.email) }
     let createdAt = friendVar
       .map { friend -> SectionItem in
@@ -61,7 +60,7 @@ public class FriendViewModel: FriendViewModelProtocol {
         return SectionItem.info(order: 3, type: "Last Joined:", title: date)
       }
     
-    Observable.from([profile, displayName, email, createdAt])
+    Observable.from([profile, email, createdAt])
       .flatMap { $0 }
       .toArray()
       .map { $0.sorted(by: { $0.order < $1.order }) }
