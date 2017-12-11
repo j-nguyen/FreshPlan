@@ -14,8 +14,6 @@ public struct User: Decodable {
 	public let verified: Bool
 	public let displayName: String
 	public let updatedAt: Date
-	public let firstName: String
-	public let lastName: String
 	public let profileURL: String
 	public let createdAt: Date
 }
