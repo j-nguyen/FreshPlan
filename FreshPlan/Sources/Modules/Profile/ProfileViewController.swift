@@ -112,7 +112,6 @@ public final class ProfileViewController: UIViewController {
   private func prepareNavigationBar() {
     appBar.headerViewController.headerView.backgroundColor = MDCPalette.blue.tint700
     appBar.navigationBar.tintColor = UIColor.white
-    appBar.headerViewController.headerView.maximumHeight = 76.0
     appBar.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor: UIColor.white ]
     
     appBar.headerViewController.headerView.trackingScrollView = profileTableView
@@ -129,11 +128,12 @@ public final class ProfileViewController: UIViewController {
     profileTableView.estimatedRowHeight = 44
     profileTableView.separatorStyle = .singleLine
     profileTableView.separatorInset = .zero
+    profileTableView.layoutMargins = .zero
     profileTableView.rx.setDelegate(self).disposed(by: disposeBag)
     profileTableView.registerCell(ProfileUserHeaderCell.self)
     profileTableView.registerCell(ProfileUserInfoCell.self)
     
-    view.addSubview(profileTableView)
+    view.insertSubview(profileTableView, belowSubview: appBar.headerViewController.headerView)
     
     profileTableView.snp.makeConstraints { $0.edges.equalTo(view) }
     

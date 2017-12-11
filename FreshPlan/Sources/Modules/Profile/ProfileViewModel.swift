@@ -38,30 +38,26 @@ public class ProfileViewModel: ProfileViewModelProtocol {
       .map(User.self, using: JSONDecoder.Decode)
 			.share()
 		
-		let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: "\($0.firstName) \($0.lastName)") }
+		let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: $0.displayName) }
 		let email = user.map { SectionItem.email(order: 1, description: "Email: \($0.email)") }
-		let displayName = user.map { SectionItem.displayName(order: 2, name: "Display Name: \($0.displayName)") }
     
-    let profileSection = Observable.from([profile, email, displayName])
+    let profileSection = Observable.from([profile, email])
       .flatMap { $0 }
       .toArray()
       .map { $0.sorted(by: { $0.order < $1.order }) }
       .map { SectionModel.profile(order: 0, title: "My Profile", items: $0) }
     
     // MARK: Friends Setup
-    let friends = token
+    let friendsList = token
       .flatMap { self.requestFriends(userId: $0) }
-      .share()
-    
-    let friendsList = friends
-      .map([Friend].self, using: JSONDecoder.Decode)
-      .map { $0.filter { $0.accepted } }
-      .ifEmpty(default: [])
+      .map([User].self, using: JSONDecoder.Decode)
+      .catchErrorJustReturn([])
   
-    let friendRequests = friends
+    let friendRequests = token
+      .flatMap { self.requestFriendRequests(userId: $0) }
       .map([Friend].self, using: JSONDecoder.Decode)
+      .catchErrorJustReturn([])
       .map { $0.filter { !$0.accepted } }
-      .ifEmpty(default: [])
     
     let friendsSection = friendsList
       .map { friends -> [SectionItem] in
@@ -84,21 +80,6 @@ public class ProfileViewModel: ProfileViewModelProtocol {
     
     setupFriendRequest()
 	}
-	
-  private func requestUser(userId: Int) -> Observable<Response> {
-    return provider.rx.request(.user(userId))
-			.asObservable()
-	}
-  
-  private func requestAcceptFriend(userId: Int, friendId: Int) -> Observable<Response> {
-    return provider.rx.request(.acceptFriend(userId, friendId))
-      .asObservable()
-  }
-  
-  private func requestFriends(userId: Int) -> Observable<Response> {
-    return provider.rx.request(.friends(userId))
-      .asObservable()
-  }
   
   private func setupFriendRequest() {
     acceptFriend
@@ -131,6 +112,26 @@ public class ProfileViewModel: ProfileViewModelProtocol {
       }
       .bind(to: acceptedFriendSuccess)
       .disposed(by: disposeBag)
+  }
+	
+  private func requestUser(userId: Int) -> Observable<Response> {
+    return provider.rx.request(.user(userId))
+			.asObservable()
+	}
+  
+  private func requestAcceptFriend(userId: Int, friendId: Int) -> Observable<Response> {
+    return provider.rx.request(.acceptFriend(userId, friendId))
+      .asObservable()
+  }
+  
+  private func requestFriends(userId: Int) -> Observable<Response> {
+    return provider.rx.request(.friends(userId))
+      .asObservable()
+  }
+  
+  private func requestFriendRequests(userId: Int) -> Observable<Response> {
+    return provider.rx.request(.friendRequests(userId))
+      .asObservable()
   }
 }
 
