@@ -26,16 +26,16 @@ public final class RegisterViewController: UIViewController {
   private var displayNameField: MDCTextField!
   private var emailField: MDCTextField!
   private var passwordField: MDCTextField!
+  private var confirmPasswordField: MDCTextField!
   
   // MARK - Floating Placeholder Input
-  private var firstNameFieldController: MDCTextInputController!
-  private var lastNameFieldController: MDCTextInputController!
   private var displayNameFieldController: MDCTextInputControllerDefault!
   private var emailFieldController: MDCTextInputControllerDefault!
   private var passwordFieldController: MDCTextInputControllerDefault!
+  private var passwordConfirmFieldController: MDCTextInputControllerDefault!
   
   // MARK - Buttons
-  private var signUpButton: MDCButton!
+  private var signUpButton: MDCRaisedButton!
   
   // MARK - Dispoable bag
   private let disposeBag = DisposeBag()
@@ -60,33 +60,31 @@ public final class RegisterViewController: UIViewController {
     prepareView()
   }
   
-  fileprivate func prepareView() {
+  private func prepareView() {
     prepareStackView()
     prepareDisplayName()
     prepareEmail()
     preparePassword()
+    prepareConfirmPassword()
     prepareSignUpButton()
     prepareLoginInLabel()
   }
   
-  fileprivate func prepareStackView() {
+  private func prepareStackView() {
     stackView = UIStackView()
     stackView.axis = .vertical
     stackView.alignment = .center
     stackView.distribution = .fill
-    stackView.spacing = 5
+    stackView.spacing = 10
     
     view.addSubview(stackView)
     
     stackView.snp.makeConstraints { make in
-      make.top.equalTo(view).offset(16)
-      make.left.equalTo(view)
-      make.right.equalTo(view)
-      make.bottom.equalTo(view)
+      make.center.equalTo(view)
     }
   }
   
-  fileprivate func prepareErrorBinding() {
+  private func prepareErrorBinding() {
     viewModel.error
       .asObservable()
       .filterNil()
@@ -98,7 +96,7 @@ public final class RegisterViewController: UIViewController {
       .disposed(by: disposeBag)
   }
   
-  fileprivate func prepareLoginInLabel() {
+  private func prepareLoginInLabel() {
     loginInLabel = UILabel()
     let registerText = "Already have an account? Login In here!"
     let mutableString = NSMutableAttributedString(attributedString: NSAttributedString(string: registerText))
@@ -120,7 +118,6 @@ public final class RegisterViewController: UIViewController {
       make.centerX.equalTo(view)
     }
     
-    
     loginInLabel.rx
       .tapGesture()
       .when(.recognized)
@@ -131,9 +128,8 @@ public final class RegisterViewController: UIViewController {
       .disposed(by: disposeBag)
   }
   
-  fileprivate func prepareDisplayName() {
+  private func prepareDisplayName() {
     displayNameField = MDCTextField()
-    displayNameField.backgroundColor = .red
     displayNameField.placeholder = "Display Name"
     displayNameField.autocapitalizationType = .none
     displayNameField.returnKeyType = .next
@@ -144,7 +140,6 @@ public final class RegisterViewController: UIViewController {
     
     displayNameField.snp.makeConstraints { make in
       make.width.equalTo(view).inset(20)
-      make.height.equalTo(50)
     }
     
     displayNameField.rx.text
@@ -153,7 +148,7 @@ public final class RegisterViewController: UIViewController {
       .disposed(by: disposeBag)
   }
   
-  fileprivate func prepareEmail() {
+  private func prepareEmail() {
     emailField = MDCTextField()
     emailField.placeholder = "Email Address"
     emailField.autocapitalizationType = .none
@@ -166,7 +161,6 @@ public final class RegisterViewController: UIViewController {
     
     emailField.snp.makeConstraints { make in
       make.width.equalTo(view).inset(20)
-      make.height.equalTo(50)
     }
     
     emailField.rx.text
@@ -175,7 +169,7 @@ public final class RegisterViewController: UIViewController {
       .disposed(by: disposeBag)
   }
   
-  fileprivate func preparePassword() {
+  private func preparePassword() {
     passwordField = MDCTextField()
     passwordField.placeholder = "Password"
     passwordField.isSecureTextEntry = true
@@ -187,7 +181,6 @@ public final class RegisterViewController: UIViewController {
     
     passwordField.snp.makeConstraints { make in
       make.width.equalTo(view).inset(20)
-      make.height.equalTo(50)
     }
     
     passwordField.rx.text
@@ -197,8 +190,13 @@ public final class RegisterViewController: UIViewController {
     
   }
   
-  fileprivate func prepareSignUpButton() {
-    signUpButton = MDCButton()
+  private func prepareConfirmPassword() {
+    
+  }
+  
+  private func prepareSignUpButton() {
+    // prepare the sign up button here
+    signUpButton = MDCRaisedButton()
     signUpButton.setTitle("Sign Up", for: .normal)
     signUpButton.backgroundColor = MDCPalette.lightBlue.tint800
     
@@ -206,7 +204,6 @@ public final class RegisterViewController: UIViewController {
     
     signUpButton.snp.makeConstraints { make in
       make.width.equalTo(view).inset(20)
-      make.height.equalTo(50)
     }
     
     viewModel.signUpEnabled
