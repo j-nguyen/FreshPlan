@@ -13,6 +13,7 @@ public protocol RegisterViewModelProtocol {
   var displayName: Variable<String> { get }
   var email: Variable<String> { get }
   var password: Variable<String> { get }
+  var confirmPassword: Variable<String> { get }
   var signUpEnabled: Observable<Bool> { get }
   var error: Variable<String?> { get }
   
@@ -32,6 +33,7 @@ public class RegisterViewModel: RegisterViewModelProtocol {
   public var displayName: Variable<String> = Variable("")
   public var email: Variable<String> = Variable("")
   public var password: Variable<String> = Variable("")
+  public var confirmPassword: Variable<String> = Variable("")
   public var error: Variable<String?> = Variable(nil)
   
   public var signUpEnabled: Observable<Bool> {

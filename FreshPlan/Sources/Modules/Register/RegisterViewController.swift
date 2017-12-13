@@ -173,7 +173,7 @@ public final class RegisterViewController: UIViewController {
     passwordField = MDCTextField()
     passwordField.placeholder = "Password"
     passwordField.isSecureTextEntry = true
-    passwordField.returnKeyType = .done
+    passwordField.returnKeyType = .next
     
     passwordFieldController = MDCTextInputControllerDefault(textInput: passwordField)
     
@@ -191,7 +191,18 @@ public final class RegisterViewController: UIViewController {
   }
   
   private func prepareConfirmPassword() {
+    confirmPasswordField = MDCTextField()
+    confirmPasswordField.placeholder = "Confirm Password"
+    confirmPasswordField.isSecureTextEntry = true
+    confirmPasswordField.returnKeyType = .done
     
+    passwordConfirmFieldController = MDCTextInputControllerDefault(textInput: confirmPasswordField)
+    
+    stackView.addArrangedSubview(confirmPasswordField)
+    
+    confirmPasswordField.snp.makeConstraints { make in
+      make.width.equalTo(view).inset(20)
+    }
   }
   
   private func prepareSignUpButton() {
