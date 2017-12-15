@@ -19,25 +19,28 @@ public final class RegisterViewController: UIViewController {
   // MARK: - Stack Views
   private var stackView: UIStackView!
   
-  // MARK - Labels
+  // MARK: - Labels
   private var loginInLabel: UILabel!
   
-  // MARK - TextFields
+  // MARK: - TextFields
   private var displayNameField: MDCTextField!
   private var emailField: MDCTextField!
   private var passwordField: MDCTextField!
   private var confirmPasswordField: MDCTextField!
   
-  // MARK - Floating Placeholder Input
+  // MARK: - Floating Placeholder Input
   private var displayNameFieldController: MDCTextInputControllerDefault!
   private var emailFieldController: MDCTextInputControllerDefault!
   private var passwordFieldController: MDCTextInputControllerDefault!
   private var passwordConfirmFieldController: MDCTextInputControllerDefault!
   
-  // MARK - Buttons
+  // MARK: - Constraints
+  private var bottomConstraint: Constraint!
+  
+  // MARK: - Buttons
   private var signUpButton: MDCRaisedButton!
   
-  // MARK - Dispoable bag
+  // MARK: - Dispoable bag
   private let disposeBag = DisposeBag()
   
   public convenience init(viewModel: RegisterViewModel, router: RegisterRouter) {
@@ -80,7 +83,8 @@ public final class RegisterViewController: UIViewController {
     view.addSubview(stackView)
     
     stackView.snp.makeConstraints { make in
-      make.center.equalTo(view)
+      bottomConstraint = make.centerY.equalTo(view).constraint
+      make.centerX.equalTo(view)
     }
   }
   
@@ -194,11 +198,31 @@ public final class RegisterViewController: UIViewController {
     confirmPasswordField = MDCTextField()
     confirmPasswordField.placeholder = "Confirm Password"
     confirmPasswordField.isSecureTextEntry = true
-    confirmPasswordField.returnKeyType = .done
+    confirmPasswordField.returnKeyType = .next
     
     passwordConfirmFieldController = MDCTextInputControllerDefault(textInput: confirmPasswordField)
     
     stackView.addArrangedSubview(confirmPasswordField)
+    
+    confirmPasswordField.rx.controlEvent(.touchDown)
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseOut], animations: {
+          this.bottomConstraint.update(offset: -100)
+        })
+      })
+      .disposed(by: disposeBag)
+    
+    confirmPasswordField.rx.controlEvent(.editingDidEndOnExit)
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        UIView.animate(withDuration: 0.2, delay: 0, options: [.curveLinear], animations: {
+          this.bottomConstraint.update(offset: 0)
+        })
+      })
+      .disposed(by: disposeBag)
     
     confirmPasswordField.snp.makeConstraints { make in
       make.width.equalTo(view).inset(20)
