@@ -25,6 +25,7 @@ public final class ProfileViewController: UIViewController {
   
   // MARK: TableView
   private var profileTableView: UITableView!
+  private var refreshControl: UIRefreshControl!
   fileprivate var dataSource: RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>!
   
   // MARK: Nav Buttons
@@ -63,11 +64,34 @@ public final class ProfileViewController: UIViewController {
   }
   
   private func prepareView() {
+    prepareRefreshControl()
     prepareProfileTableView()
     prepareNavigationBar()
     prepareNavigationSearchButton()
     prepareNavigationLogoutButton()
     appBar.addSubviewsToParent()
+  }
+  
+  private func prepareRefreshControl() {
+    refreshControl = UIRefreshControl()
+    
+    refreshControl.rx.controlEvent(.valueChanged)
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.viewModel.refreshContent.on(.next(()))
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel.refreshSuccess
+      .asObservable()
+      .filter { $0 }
+      .subscribe(onNext: { [weak self] _ in
+        if let this = self {
+          this.refreshControl.endRefreshing()
+        }
+      })
+      .disposed(by: disposeBag)
   }
   
   private func prepareNavigationLogoutButton() {
@@ -129,6 +153,7 @@ public final class ProfileViewController: UIViewController {
     profileTableView.separatorStyle = .singleLine
     profileTableView.separatorInset = .zero
     profileTableView.layoutMargins = .zero
+    profileTableView.refreshControl = refreshControl
     profileTableView.rx.setDelegate(self).disposed(by: disposeBag)
     profileTableView.registerCell(ProfileUserHeaderCell.self)
     profileTableView.registerCell(ProfileUserInfoCell.self)
@@ -268,18 +293,6 @@ extension ProfileViewController: UITableViewDelegate {
       return 70
     default:
       return UITableViewAutomaticDimension
-    }
-  }
-  
-  public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidScroll()
-    }
-  }
-  
-  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
     }
   }
 }

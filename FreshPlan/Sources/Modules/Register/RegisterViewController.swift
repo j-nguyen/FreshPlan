@@ -112,7 +112,7 @@ public final class RegisterViewController: UIViewController {
     )
     
     loginInLabel.attributedText = mutableString
-    loginInLabel.font = MDCTypography.body1Font()
+    loginInLabel.font = MDCTypography.titleFont()
     loginInLabel.isUserInteractionEnabled = true
     
     view.addSubview(loginInLabel)
@@ -155,6 +155,14 @@ public final class RegisterViewController: UIViewController {
       .asObservable()
       .bind(to: displayNameFieldController.rx.errorText)
       .disposed(by: disposeBag)
+    
+    displayNameField.rx.controlEvent(.editingDidEndOnExit)
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.emailField.becomeFirstResponder()
+      })
+      .disposed(by: disposeBag)
   }
   
   private func prepareEmail() {
@@ -181,6 +189,14 @@ public final class RegisterViewController: UIViewController {
       .asObservable()
       .bind(to: emailFieldController.rx.errorText)
       .disposed(by: disposeBag)
+    
+    emailField.rx.controlEvent(.editingDidEndOnExit)
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.passwordField.becomeFirstResponder()
+      })
+      .disposed(by: disposeBag)
   }
   
   private func preparePassword() {
@@ -206,6 +222,14 @@ public final class RegisterViewController: UIViewController {
       .asObservable()
       .bind(to: passwordFieldController.rx.errorText)
       .disposed(by: disposeBag)
+    
+    passwordField.rx.controlEvent(.editingDidEndOnExit)
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.confirmPasswordField.becomeFirstResponder()
+      })
+      .disposed(by: disposeBag)
   }
   
   private func prepareConfirmPassword() {
@@ -218,7 +242,7 @@ public final class RegisterViewController: UIViewController {
     
     stackView.addArrangedSubview(confirmPasswordField)
     
-    confirmPasswordField.rx.controlEvent(.touchDown)
+    confirmPasswordField.rx.controlEvent(.editingDidBegin)
       .asObservable()
       .subscribe(onNext: { [weak self] in
         guard let this = self else { return }
@@ -228,9 +252,9 @@ public final class RegisterViewController: UIViewController {
       })
       .disposed(by: disposeBag)
     
-    confirmPasswordField.rx.controlEvent(.editingDidEndOnExit)
+    NotificationCenter.default.rx.notification(Notification.Name.UIKeyboardDidHide)
       .asObservable()
-      .subscribe(onNext: { [weak self] in
+      .subscribe(onNext: { [weak self] _ in
         guard let this = self else { return }
         UIView.animate(withDuration: 0.2, delay: 0, options: [.curveLinear], animations: {
           this.bottomConstraint.update(offset: 0)
