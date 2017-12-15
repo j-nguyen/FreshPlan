@@ -17,6 +17,13 @@ public protocol RegisterViewModelProtocol {
   var signUpEnabled: Observable<Bool> { get }
   var error: Variable<String?> { get }
   
+  // custom made error (help-text on material)
+  // these must be publish subjects because we don't want to abuse variables
+  var displayNameHelpText: PublishSubject<String> { get }
+  var emailHelpText: PublishSubject<String> { get }
+  var passwordHelpText: PublishSubject<String> { get }
+  var confirmPasswordHelpText: PublishSubject<String> { get }
+  
   var signUpTap: Observable<Void>! { get set }
   var signUpSuccess: Variable<Bool> { get }
   var signUpUnSuccessful: Variable<Bool> { get }
@@ -36,16 +43,44 @@ public class RegisterViewModel: RegisterViewModelProtocol {
   public var confirmPassword: Variable<String> = Variable("")
   public var error: Variable<String?> = Variable(nil)
   
+  //MARK: - Help Texts
+  public var displayNameHelpText: PublishSubject<String> = PublishSubject()
+  public var emailHelpText: PublishSubject<String> = PublishSubject()
+  public var passwordHelpText: PublishSubject<String> = PublishSubject()
+  public var confirmPasswordHelpText: PublishSubject<String> = PublishSubject()
+  
+  // MARK: - Sign up info
   public var signUpEnabled: Observable<Bool> {
-    return Observable.combineLatest(displayName.asObservable(), email.asObservable(), password.asObservable()) { (displayName, email, password) -> Bool in
-      return !displayName.isEmpty && !email.isEmpty && !password.isEmpty
+    return Observable.combineLatest(displayName.asObservable(), email.asObservable(), password.asObservable(), confirmPassword.asObservable()) { (displayName, email, password, confirmPassword) -> Bool in
+      
+      var results = true
+      
+      if !displayName.isAlphanumeric {
+        self.displayNameHelpText.on(.next("Your display name must be alphanumeric!"))
+        results = false
+      }
+      
+      if !email.isEmail {
+        self.emailHelpText.on(.next("This is not a valid email!"))
+        results = false
+      }
+      
+      if !password.isPassword {
+        self.passwordHelpText.on(.next("Your password length must be greater than 8!"))
+        results = false
+      }
+      
+      if confirmPassword != password {
+        self.confirmPasswordHelpText.on(.next("Your password isn't the same!"))
+        results = false
+      }
+      
+      return results
     }
   }
   
   public var signUpTap: Observable<Void>!
-  
   public var signUpSuccess: Variable<Bool> = Variable(false)
-  
   public var signUpUnSuccessful: Variable<Bool> = Variable(false)
   
   public init(provider: MoyaProvider<FreshPlan>) {

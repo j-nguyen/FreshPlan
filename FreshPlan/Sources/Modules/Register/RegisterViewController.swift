@@ -198,7 +198,7 @@ public final class RegisterViewController: UIViewController {
     confirmPasswordField = MDCTextField()
     confirmPasswordField.placeholder = "Confirm Password"
     confirmPasswordField.isSecureTextEntry = true
-    confirmPasswordField.returnKeyType = .next
+    confirmPasswordField.returnKeyType = .done
     
     passwordConfirmFieldController = MDCTextInputControllerDefault(textInput: confirmPasswordField)
     
@@ -223,6 +223,16 @@ public final class RegisterViewController: UIViewController {
         })
       })
       .disposed(by: disposeBag)
+    
+    confirmPasswordField.rx.text
+      .orEmpty
+      .asObservable()
+      .bind(to: viewModel.confirmPassword)
+      .disposed(by: disposeBag)
+    
+//    viewModel.confirmPasswordHelpText
+//      .asObservable()
+//      .bind(to: passwordFieldController.rx.)
     
     confirmPasswordField.snp.makeConstraints { make in
       make.width.equalTo(view).inset(20)
