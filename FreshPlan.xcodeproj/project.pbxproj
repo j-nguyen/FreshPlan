@@ -761,7 +761,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 35PYRYEWH9;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = FreshPlan/Resources/Info.plist;
@@ -784,7 +784,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 35PYRYEWH9;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = FreshPlan/Resources/Info.plist;
