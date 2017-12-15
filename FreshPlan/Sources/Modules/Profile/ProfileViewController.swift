@@ -158,6 +158,10 @@ public final class ProfileViewController: UIViewController {
           let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
           cell.textLabel?.text = displayName
           return cell
+        case let .joined(_, description):
+          let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
+          cell.textLabel?.text = description
+          return cell
         }
     })
     
@@ -183,6 +187,20 @@ public final class ProfileViewController: UIViewController {
       .subscribe(onNext: { displayName in
         let message = MDCSnackbarMessage(text: "Successfully added \(displayName) as a friend.")
         MDCSnackbarManager.show(message)
+      })
+      .disposed(by: disposeBag)
+    
+    profileTableView.rx.itemSelected
+      .asObservable()
+      .subscribe(onNext: { [weak self] index in
+        if let this = self {
+          switch this.dataSource[index] {
+          case let .friend(id, _):
+            try? this.router.route(from: this, to: ProfileRouter.Routes.friend.rawValue, parameters: ["friendId": id])
+          default:
+            break
+          }
+        }
       })
       .disposed(by: disposeBag)
   }

@@ -38,10 +38,18 @@ public class ProfileViewModel: ProfileViewModelProtocol {
       .map(User.self, using: JSONDecoder.Decode)
 			.share()
 		
+    // TODO: This needs to be adjusted for the `title` label
 		let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: $0.displayName) }
 		let email = user.map { SectionItem.email(order: 1, description: "Email: \($0.email)") }
+    let createdAt = user
+      .map { user -> SectionItem in
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        let date = df.string(from: user.createdAt)
+        return SectionItem.joined(order: 2, description: "Last Joined: \(date)")
+    }
     
-    let profileSection = Observable.from([profile, email])
+    let profileSection = Observable.from([profile, email, createdAt])
       .flatMap { $0 }
       .toArray()
       .map { $0.sorted(by: { $0.order < $1.order }) }
@@ -147,6 +155,7 @@ extension ProfileViewModel {
 		case profile(order: Int, profileURL: String, fullName: String)
 		case email(order: Int, description: String)
 		case displayName(order: Int, name: String)
+    case joined(order: Int, description: String)
     case friend(id: Int, displayName: String)
 	}
 }
