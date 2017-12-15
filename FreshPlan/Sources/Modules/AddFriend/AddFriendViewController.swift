@@ -140,7 +140,7 @@ public final class AddFriendViewController: UIViewController {
           try? this.router.route(
             from: this,
             to: AddFriendRouter.Routes.friend.rawValue,
-            parameters: ["friend": friend]
+            parameters: ["friendId": friend.id]
           )
         }
       })

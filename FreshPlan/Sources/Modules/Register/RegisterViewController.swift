@@ -19,25 +19,28 @@ public final class RegisterViewController: UIViewController {
   // MARK: - Stack Views
   private var stackView: UIStackView!
   
-  // MARK - Labels
+  // MARK: - Labels
   private var loginInLabel: UILabel!
   
-  // MARK - TextFields
+  // MARK: - TextFields
   private var displayNameField: MDCTextField!
   private var emailField: MDCTextField!
   private var passwordField: MDCTextField!
+  private var confirmPasswordField: MDCTextField!
   
-  // MARK - Floating Placeholder Input
-  private var firstNameFieldController: MDCTextInputController!
-  private var lastNameFieldController: MDCTextInputController!
+  // MARK: - Floating Placeholder Input
   private var displayNameFieldController: MDCTextInputControllerDefault!
   private var emailFieldController: MDCTextInputControllerDefault!
   private var passwordFieldController: MDCTextInputControllerDefault!
+  private var passwordConfirmFieldController: MDCTextInputControllerDefault!
   
-  // MARK - Buttons
-  private var signUpButton: MDCButton!
+  // MARK: - Constraints
+  private var bottomConstraint: Constraint!
   
-  // MARK - Dispoable bag
+  // MARK: - Buttons
+  private var signUpButton: MDCRaisedButton!
+  
+  // MARK: - Dispoable bag
   private let disposeBag = DisposeBag()
   
   public convenience init(viewModel: RegisterViewModel, router: RegisterRouter) {
@@ -60,18 +63,17 @@ public final class RegisterViewController: UIViewController {
     prepareView()
   }
   
-  //
-  fileprivate func prepareView() {
+  private func prepareView() {
     prepareStackView()
-    prepareLoginInLabel()
     prepareDisplayName()
     prepareEmail()
     preparePassword()
+    prepareConfirmPassword()
     prepareSignUpButton()
-    
+    prepareLoginInLabel()
   }
   
-  fileprivate func prepareStackView() {
+  private func prepareStackView() {
     stackView = UIStackView()
     stackView.axis = .vertical
     stackView.alignment = .center
@@ -81,11 +83,12 @@ public final class RegisterViewController: UIViewController {
     view.addSubview(stackView)
     
     stackView.snp.makeConstraints { make in
-      make.center.equalTo(view)
+      bottomConstraint = make.centerY.equalTo(view).constraint
+      make.centerX.equalTo(view)
     }
   }
   
-  fileprivate func prepareErrorBinding() {
+  private func prepareErrorBinding() {
     viewModel.error
       .asObservable()
       .filterNil()
@@ -97,7 +100,7 @@ public final class RegisterViewController: UIViewController {
       .disposed(by: disposeBag)
   }
   
-  fileprivate func prepareLoginInLabel() {
+  private func prepareLoginInLabel() {
     loginInLabel = UILabel()
     let registerText = "Already have an account? Login In here!"
     let mutableString = NSMutableAttributedString(attributedString: NSAttributedString(string: registerText))
@@ -119,7 +122,6 @@ public final class RegisterViewController: UIViewController {
       make.centerX.equalTo(view)
     }
     
-    
     loginInLabel.rx
       .tapGesture()
       .when(.recognized)
@@ -130,7 +132,7 @@ public final class RegisterViewController: UIViewController {
       .disposed(by: disposeBag)
   }
   
-  fileprivate func prepareDisplayName() {
+  private func prepareDisplayName() {
     displayNameField = MDCTextField()
     displayNameField.placeholder = "Display Name"
     displayNameField.autocapitalizationType = .none
@@ -148,9 +150,14 @@ public final class RegisterViewController: UIViewController {
       .orEmpty
       .bind(to: viewModel.displayName)
       .disposed(by: disposeBag)
+    
+    viewModel.displayNameHelpText
+      .asObservable()
+      .bind(to: displayNameFieldController.rx.errorText)
+      .disposed(by: disposeBag)
   }
   
-  fileprivate func prepareEmail() {
+  private func prepareEmail() {
     emailField = MDCTextField()
     emailField.placeholder = "Email Address"
     emailField.autocapitalizationType = .none
@@ -169,13 +176,18 @@ public final class RegisterViewController: UIViewController {
       .orEmpty
       .bind(to: viewModel.email)
       .disposed(by: disposeBag)
+    
+    viewModel.emailHelpText
+      .asObservable()
+      .bind(to: emailFieldController.rx.errorText)
+      .disposed(by: disposeBag)
   }
   
-  fileprivate func preparePassword() {
+  private func preparePassword() {
     passwordField = MDCTextField()
     passwordField.placeholder = "Password"
     passwordField.isSecureTextEntry = true
-    passwordField.returnKeyType = .done
+    passwordField.returnKeyType = .next
     
     passwordFieldController = MDCTextInputControllerDefault(textInput: passwordField)
     
@@ -190,10 +202,61 @@ public final class RegisterViewController: UIViewController {
       .bind(to: viewModel.password)
       .disposed(by: disposeBag)
     
+    viewModel.passwordHelpText
+      .asObservable()
+      .bind(to: passwordFieldController.rx.errorText)
+      .disposed(by: disposeBag)
   }
   
-  fileprivate func prepareSignUpButton() {
-    signUpButton = MDCButton()
+  private func prepareConfirmPassword() {
+    confirmPasswordField = MDCTextField()
+    confirmPasswordField.placeholder = "Confirm Password"
+    confirmPasswordField.isSecureTextEntry = true
+    confirmPasswordField.returnKeyType = .done
+    
+    passwordConfirmFieldController = MDCTextInputControllerDefault(textInput: confirmPasswordField)
+    
+    stackView.addArrangedSubview(confirmPasswordField)
+    
+    confirmPasswordField.rx.controlEvent(.touchDown)
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseOut], animations: {
+          this.bottomConstraint.update(offset: -100)
+        })
+      })
+      .disposed(by: disposeBag)
+    
+    confirmPasswordField.rx.controlEvent(.editingDidEndOnExit)
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        UIView.animate(withDuration: 0.2, delay: 0, options: [.curveLinear], animations: {
+          this.bottomConstraint.update(offset: 0)
+        })
+      })
+      .disposed(by: disposeBag)
+    
+    confirmPasswordField.rx.text
+      .orEmpty
+      .asObservable()
+      .bind(to: viewModel.confirmPassword)
+      .disposed(by: disposeBag)
+    
+    viewModel.confirmPasswordHelpText
+      .asObservable()
+      .bind(to: passwordConfirmFieldController.rx.errorText)
+      .disposed(by: disposeBag)
+    
+    confirmPasswordField.snp.makeConstraints { make in
+      make.width.equalTo(view).inset(20)
+    }
+  }
+  
+  private func prepareSignUpButton() {
+    // prepare the sign up button here
+    signUpButton = MDCRaisedButton()
     signUpButton.setTitle("Sign Up", for: .normal)
     signUpButton.backgroundColor = MDCPalette.lightBlue.tint800
     
@@ -201,7 +264,6 @@ public final class RegisterViewController: UIViewController {
     
     signUpButton.snp.makeConstraints { make in
       make.width.equalTo(view).inset(20)
-      make.height.equalTo(50)
     }
     
     viewModel.signUpEnabled
@@ -220,6 +282,7 @@ public final class RegisterViewController: UIViewController {
         try? this.router.route(from: this, to: RegisterRouter.Routes.verify.rawValue, parameters: ["email": text])
         let message = MDCSnackbarMessage(text: "Successfully signed up! Please check your email to verify your account.")
         MDCSnackbarManager.show(message)
+        this.clearTextFields()
       })
       .disposed(by: disposeBag)
     
@@ -231,5 +294,12 @@ public final class RegisterViewController: UIViewController {
         MDCSnackbarManager.show(message)
       })
       .disposed(by: disposeBag)
+  }
+  
+  fileprivate func clearTextFields() {
+    displayNameField.text = ""
+    emailField.text = ""
+    passwordField.text = ""
+    confirmPasswordField.text = ""
   }
 }

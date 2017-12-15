@@ -36,28 +36,28 @@ public class FriendViewModel: FriendViewModelProtocol {
   //MARK: Observables
   public var tapSend: Observable<Void>!
   
-  //MARK: Other Variables
-  private var friend: User
+  //MARK: Friend Id
+  public var friendId: Int!
   
-  public init(_ provider: MoyaProvider<FreshPlan>, friend: User) {
+  public init(_ provider: MoyaProvider<FreshPlan>, friendId: Int) {
     self.provider = provider
-    self.friend = friend
+    self.friendId = friendId
     
-    let friendVar = Observable.just(friend).share()
-    
-    friendVar
+    let friend = self.requestUser(userId: friendId).share()
+  
+    friend
       .map { $0.displayName }
       .bind(to: name)
       .disposed(by: disposeBag)
     
-    let profile = friendVar.map { SectionItem.profileTitle(order: 0, profileURL: $0.profileURL, fullName: $0.displayName) }
-    let email = friendVar.map { SectionItem.info(order: 2, type: "Email:", title: $0.email) }
-    let createdAt = friendVar
+    let profile = friend.map { SectionItem.profileTitle(order: 0, profileURL: $0.profileURL, fullName: $0.displayName) }
+    let email = friend.map { SectionItem.info(order: 1, type: "Email:", title: $0.email) }
+    let createdAt = friend
       .map { friend -> SectionItem in
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd hh:mm:ss"
         let date = df.string(from: friend.createdAt)
-        return SectionItem.info(order: 3, type: "Last Joined:", title: date)
+        return SectionItem.info(order: 2, type: "Last Joined:", title: date)
       }
     
     Observable.from([profile, email, createdAt])
@@ -72,31 +72,31 @@ public class FriendViewModel: FriendViewModelProtocol {
     setupFriendRequest(friend)
   }
   
-  private func setupFriendRequest(_ friend: User) {
+  private func setupFriendRequest(_ friend: Observable<User>) {
     let token = Token.getJWT().filter { $0 != -1 }.share()
     
-    let friendRequests = token
-      .flatMap { self.requestFriendRequests(userId: $0) }
-      .map { friends -> Bool in
-        if let _ = friends.first(where: { $0.id == friend.id }) {
-          return false
-        }
-        return true
-      }
+    let friendRequestsList = token.flatMap { self.requestFriendRequests(userId: $0) }
+    let friendsList = token.flatMap { self.requestFriends(userId: $0) }
     
-    let friends = token
-      .flatMap { self.requestFriends(userId: $0) }
-      .map { friends -> Bool in
-        if let _ = friends.first(where: { $0.id == friend.id }) {
-          return false
-        }
-        return true
+    Observable.combineLatest(token.asObservable(), friend.asObservable(), friendRequestsList.asObservable(), friendsList.asObservable()) { token, friend, friendRequestsList, friendsList -> Bool in
+
+      if token == friend.id {
+        return false
       }
-    
-    Observable.zip(token, friendRequests, friends)
-      .map { $0.0 != friend.id && $0.1 && $0.2 }
-      .bind(to: disabledSend)
-      .disposed(by: disposeBag)
+      
+      if friendRequestsList.first(where: { $0.id == friend.id }) != nil {
+        return false
+      }
+      
+      if friendsList.first(where: { $0.id == friend.id }) != nil {
+        return false
+      }
+      
+      return true
+    }
+    .bind(to: disabledSend)
+    .disposed(by: disposeBag)
+
   }
   
   public func bindButtons() {
@@ -104,11 +104,18 @@ public class FriendViewModel: FriendViewModelProtocol {
     
     tapSend
       .flatMap { _ -> Observable<Int> in return token }
-      .flatMap { self.sendFriendRequest(userId: $0, friendId: self.friend.id) }
+      .flatMap { self.sendFriendRequest(userId: $0, friendId: self.friendId) }
       .filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
       .map { $0.statusCode >= 200 && $0.statusCode <= 299 }
       .bind(to: self.sendFriend)
       .disposed(by: disposeBag)
+  }
+  
+  private func requestUser(userId: Int) -> Observable<User> {
+    return provider.rx.request(.user(userId))
+      .asObservable()
+      .filterSuccessfulStatusCodes()
+      .map(User.self, using: JSONDecoder.Decode)
   }
   
   private func requestFriends(userId: Int) -> Observable<[User]> {
