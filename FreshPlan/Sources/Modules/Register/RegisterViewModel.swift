@@ -19,10 +19,10 @@ public protocol RegisterViewModelProtocol {
   
   // custom made error (help-text on material)
   // these must be publish subjects because we don't want to abuse variables
-  var displayNameHelpText: PublishSubject<String> { get }
-  var emailHelpText: PublishSubject<String> { get }
-  var passwordHelpText: PublishSubject<String> { get }
-  var confirmPasswordHelpText: PublishSubject<String> { get }
+  var displayNameHelpText: PublishSubject<String?> { get }
+  var emailHelpText: PublishSubject<String?> { get }
+  var passwordHelpText: PublishSubject<String?> { get }
+  var confirmPasswordHelpText: PublishSubject<String?> { get }
   
   var signUpTap: Observable<Void>! { get set }
   var signUpSuccess: Variable<Bool> { get }
@@ -44,38 +44,48 @@ public class RegisterViewModel: RegisterViewModelProtocol {
   public var error: Variable<String?> = Variable(nil)
   
   //MARK: - Help Texts
-  public var displayNameHelpText: PublishSubject<String> = PublishSubject()
-  public var emailHelpText: PublishSubject<String> = PublishSubject()
-  public var passwordHelpText: PublishSubject<String> = PublishSubject()
-  public var confirmPasswordHelpText: PublishSubject<String> = PublishSubject()
+  public var displayNameHelpText: PublishSubject<String?> = PublishSubject()
+  public var emailHelpText: PublishSubject<String?> = PublishSubject()
+  public var passwordHelpText: PublishSubject<String?> = PublishSubject()
+  public var confirmPasswordHelpText: PublishSubject<String?> = PublishSubject()
   
   // MARK: - Sign up info
   public var signUpEnabled: Observable<Bool> {
     return Observable.combineLatest(displayName.asObservable(), email.asObservable(), password.asObservable(), confirmPassword.asObservable()) { (displayName, email, password, confirmPassword) -> Bool in
       
-      var results = true
-      
-      if !displayName.isAlphanumeric {
-        self.displayNameHelpText.on(.next("Your display name must be alphanumeric!"))
-        results = false
+      if self.displayName.value.isNotEmpty {
+        if !displayName.isAlphanumeric {
+          self.displayNameHelpText.on(.next("This display name must be alphanumeric!"))
+        } else {
+          self.displayNameHelpText.on(.next(nil))
+        }
       }
       
-      if !email.isEmail {
-        self.emailHelpText.on(.next("This is not a valid email!"))
-        results = false
+      if self.email.value.isNotEmpty {
+        if !email.isEmail {
+          self.emailHelpText.on(.next("This email is invalid!"))
+        } else {
+          self.emailHelpText.on(.next(nil))
+        }
       }
       
-      if !password.isPassword {
-        self.passwordHelpText.on(.next("Your password length must be greater than 8!"))
-        results = false
+      if self.password.value.isNotEmpty {
+        if !password.isPassword {
+          self.passwordHelpText.on(.next("This password must be greater than a length of 8!"))
+        } else {
+          self.passwordHelpText.on(.next(nil))
+        }
       }
       
-      if confirmPassword != password {
-        self.confirmPasswordHelpText.on(.next("Your password isn't the same!"))
-        results = false
+      if self.confirmPassword.value.isNotEmpty {
+        if confirmPassword != password {
+          self.confirmPasswordHelpText.on(.next("Passwords do not match!"))
+        } else {
+          self.confirmPasswordHelpText.on(.next(nil))
+        }
       }
-      
-      return results
+    
+      return displayName.isAlphanumeric && email.isEmail && password.isPassword && confirmPassword == password
     }
   }
   

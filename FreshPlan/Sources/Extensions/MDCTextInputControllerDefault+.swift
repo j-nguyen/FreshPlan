@@ -12,8 +12,8 @@ import RxCocoa
 import MaterialComponents
 
 extension Reactive where Base: MDCTextInputControllerDefault {
-  public var errorText: Binder<String> {
-    return Binder(self.base) { (textInput: MDCTextInputControllerDefault, text: String) -> Void in
+  public var errorText: Binder<String?> {
+    return Binder(self.base) { (textInput: MDCTextInputControllerDefault, text: String?) -> Void in
       textInput.setErrorText(text, errorAccessibilityValue: nil)
     }
   }

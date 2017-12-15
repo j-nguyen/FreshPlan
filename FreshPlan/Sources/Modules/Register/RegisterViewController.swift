@@ -153,7 +153,6 @@ public final class RegisterViewController: UIViewController {
     
     viewModel.displayNameHelpText
       .asObservable()
-      .filterEmpty()
       .bind(to: displayNameFieldController.rx.errorText)
       .disposed(by: disposeBag)
   }
@@ -180,7 +179,6 @@ public final class RegisterViewController: UIViewController {
     
     viewModel.emailHelpText
       .asObservable()
-      .filterEmpty()
       .bind(to: emailFieldController.rx.errorText)
       .disposed(by: disposeBag)
   }
@@ -204,9 +202,8 @@ public final class RegisterViewController: UIViewController {
       .bind(to: viewModel.password)
       .disposed(by: disposeBag)
     
-    viewModel.confirmPasswordHelpText
+    viewModel.passwordHelpText
       .asObservable()
-      .filterEmpty()
       .bind(to: passwordFieldController.rx.errorText)
       .disposed(by: disposeBag)
   }
@@ -249,7 +246,6 @@ public final class RegisterViewController: UIViewController {
     
     viewModel.confirmPasswordHelpText
       .asObservable()
-      .filterEmpty()
       .bind(to: passwordConfirmFieldController.rx.errorText)
       .disposed(by: disposeBag)
     
