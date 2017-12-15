@@ -146,21 +146,24 @@ public final class ProfileViewController: UIViewController {
           cell.fullName.on(.next(fullName))
           cell.profileURL.on(.next(profileURL))
           return cell
-        case let .displayName(_, name):
+        case let .displayName(_, title, name):
           let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
-          cell.textLabel?.text = name
+          cell.title.on(.next(title))
+          cell.info.on(.next(name))
           return cell
-        case let .email(_, description):
+        case let .email(_, title, description):
           let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
-          cell.textLabel?.text = description
+          cell.title.on(.next(title))
+          cell.info.on(.next(description))
           return cell
         case let .friend(_, displayName):
           let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
           cell.textLabel?.text = displayName
           return cell
-        case let .joined(_, description):
+        case let .joined(_, title, description):
           let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
-          cell.textLabel?.text = description
+          cell.title.on(.next(title))
+          cell.info.on(.next(description))
           return cell
         }
     })

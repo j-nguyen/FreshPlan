@@ -40,13 +40,13 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 		
     // TODO: This needs to be adjusted for the `title` label
 		let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: $0.displayName) }
-		let email = user.map { SectionItem.email(order: 1, description: "Email: \($0.email)") }
+    let email = user.map { SectionItem.email(order: 1, title: "Email:", description: $0.email) }
     let createdAt = user
       .map { user -> SectionItem in
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd hh:mm:ss"
         let date = df.string(from: user.createdAt)
-        return SectionItem.joined(order: 2, description: "Last Joined: \(date)")
+        return SectionItem.joined(order: 2, title: "Last Joined:", description: date)
     }
     
     let profileSection = Observable.from([profile, email, createdAt])
@@ -153,9 +153,9 @@ extension ProfileViewModel {
 	
 	public enum SectionItem {
 		case profile(order: Int, profileURL: String, fullName: String)
-		case email(order: Int, description: String)
-		case displayName(order: Int, name: String)
-    case joined(order: Int, description: String)
+    case email(order: Int, title: String, description: String)
+    case displayName(order: Int, title: String, name: String)
+    case joined(order: Int, title: String, description: String)
     case friend(id: Int, displayName: String)
 	}
 }
@@ -252,9 +252,9 @@ extension ProfileViewModel.SectionItem {
 		switch self {
 		case let .profile(order, _, _):
 			return order
-		case let .displayName(order, _):
+		case let .displayName(order, _, _):
 			return order
-		case let .email(order, _):
+		case let .email(order, _, _):
 			return order
     default:
       return 0
