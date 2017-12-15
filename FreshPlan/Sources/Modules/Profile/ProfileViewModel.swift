@@ -16,6 +16,8 @@ import UIKit
 public protocol ProfileViewModelProtocol {
 	var profileItems: Variable<[ProfileViewModel.SectionModel]> { get }
   var acceptFriend: PublishSubject<IndexPath> { get }
+  var refreshContent: PublishSubject<Void> { get }
+  var refreshSuccess: PublishSubject<Bool> { get }
   var acceptedFriendSuccess: Variable<String?> { get }
 }
 
@@ -25,20 +27,37 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 	public var profileItems: Variable<[ProfileViewModel.SectionModel]> = Variable([])
   public var acceptFriend: PublishSubject<IndexPath> = PublishSubject()
   public var acceptedFriendSuccess: Variable<String?> = Variable(nil)
+  
+  public var refreshContent: PublishSubject<Void> = PublishSubject()
+  public var refreshSuccess: PublishSubject<Bool> = PublishSubject()
 	
 	private let disposeBag: DisposeBag = DisposeBag()
 	
 	public init(provider: MoyaProvider<FreshPlan>) {
 		self.provider = provider
     
-    let token = Token.getJWT().filter { $0 != -1 }.share()
+    refreshContent
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.setupFriends()
+        this.refreshSuccess.on(.next(true))
+      })
+      .disposed(by: disposeBag)
+    
+    setupFriends()
+    setupFriendRequest()
+	}
   
-		let user = token
-			.flatMap { self.requestUser(userId: $0) }
+  private func setupFriends() {
+    let token = Token.getJWT().filter { $0 != -1 }.share()
+    
+    let user = token
+      .flatMap { self.requestUser(userId: $0) }
       .map(User.self, using: JSONDecoder.Decode)
-			.share()
-		
-		let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: $0.displayName) }
+      .share()
+    
+    let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: $0.displayName) }
     let email = user.map { SectionItem.email(order: 1, title: "Email:", description: $0.email) }
     let createdAt = user
       .map { user -> SectionItem in
@@ -59,7 +78,7 @@ public class ProfileViewModel: ProfileViewModelProtocol {
       .flatMap { self.requestFriends(userId: $0) }
       .map([User].self, using: JSONDecoder.Decode)
       .catchErrorJustReturn([])
-  
+    
     let friendRequests = token
       .flatMap { self.requestFriendRequests(userId: $0) }
       .map([Friend].self, using: JSONDecoder.Decode)
@@ -77,16 +96,14 @@ public class ProfileViewModel: ProfileViewModelProtocol {
         return friends.map { SectionItem.friend(id: $0.id, displayName: $0.displayName) }
       }
       .map { SectionModel.friendRequests(order: 2, title: "My Friend Requests", items: $0) }
-		
-		Observable.from([profileSection, friendsSection, friendRequestsSection])
-			.flatMap { $0 }
-			.toArray()
-			.map { $0.sorted(by: { $0.order < $1.order }) }
-			.bind(to: profileItems)
-			.disposed(by: disposeBag)
     
-    setupFriendRequest()
-	}
+    Observable.from([profileSection, friendsSection, friendRequestsSection])
+      .flatMap { $0 }
+      .toArray()
+      .map { $0.sorted(by: { $0.order < $1.order }) }
+      .bind(to: profileItems)
+      .disposed(by: disposeBag)
+  }
   
   private func setupFriendRequest() {
     acceptFriend

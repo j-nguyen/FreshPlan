@@ -72,7 +72,6 @@ public class LoginViewController: UIViewController {
 	}
 	
 	fileprivate func prepareView() {
-		view.backgroundColor = .grayBackgroundColor
 		prepareStackView()
 		prepareEmailField()
 		preparePasswordField()
@@ -198,7 +197,7 @@ public class LoginViewController: UIViewController {
 		)
 		
 		registerLabel.attributedText = mutableString
-		registerLabel.font = UIFont(name: "Helvetica Neue", size: 16)
+		registerLabel.font = MDCTypography.titleFont()
 		registerLabel.isUserInteractionEnabled = true
 		
 		view.addSubview(registerLabel)
