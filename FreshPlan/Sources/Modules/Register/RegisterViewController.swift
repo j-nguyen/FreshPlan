@@ -228,9 +228,9 @@ public final class RegisterViewController: UIViewController {
       })
       .disposed(by: disposeBag)
     
-    confirmPasswordField.rx.controlEvent(.editingDidEndOnExit)
+    NotificationCenter.default.rx.notification(Notification.Name.UIKeyboardDidHide)
       .asObservable()
-      .subscribe(onNext: { [weak self] in
+      .subscribe(onNext: { [weak self] _ in
         guard let this = self else { return }
         UIView.animate(withDuration: 0.2, delay: 0, options: [.curveLinear], animations: {
           this.bottomConstraint.update(offset: 0)
