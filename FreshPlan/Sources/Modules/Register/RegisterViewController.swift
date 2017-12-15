@@ -150,6 +150,12 @@ public final class RegisterViewController: UIViewController {
       .orEmpty
       .bind(to: viewModel.displayName)
       .disposed(by: disposeBag)
+    
+    viewModel.displayNameHelpText
+      .asObservable()
+      .filterEmpty()
+      .bind(to: displayNameFieldController.rx.errorText)
+      .disposed(by: disposeBag)
   }
   
   private func prepareEmail() {
@@ -170,6 +176,12 @@ public final class RegisterViewController: UIViewController {
     emailField.rx.text
       .orEmpty
       .bind(to: viewModel.email)
+      .disposed(by: disposeBag)
+    
+    viewModel.emailHelpText
+      .asObservable()
+      .filterEmpty()
+      .bind(to: emailFieldController.rx.errorText)
       .disposed(by: disposeBag)
   }
   
@@ -192,6 +204,11 @@ public final class RegisterViewController: UIViewController {
       .bind(to: viewModel.password)
       .disposed(by: disposeBag)
     
+    viewModel.confirmPasswordHelpText
+      .asObservable()
+      .filterEmpty()
+      .bind(to: passwordFieldController.rx.errorText)
+      .disposed(by: disposeBag)
   }
   
   private func prepareConfirmPassword() {
@@ -230,9 +247,11 @@ public final class RegisterViewController: UIViewController {
       .bind(to: viewModel.confirmPassword)
       .disposed(by: disposeBag)
     
-//    viewModel.confirmPasswordHelpText
-//      .asObservable()
-//      .bind(to: passwordFieldController.rx.)
+    viewModel.confirmPasswordHelpText
+      .asObservable()
+      .filterEmpty()
+      .bind(to: passwordConfirmFieldController.rx.errorText)
+      .disposed(by: disposeBag)
     
     confirmPasswordField.snp.makeConstraints { make in
       make.width.equalTo(view).inset(20)
