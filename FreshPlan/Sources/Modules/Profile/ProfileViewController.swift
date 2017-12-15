@@ -196,7 +196,11 @@ public final class ProfileViewController: UIViewController {
         if let this = self {
           switch this.dataSource[index] {
           case let .friend(id, _):
-            try? this.router.route(from: this, to: ProfileRouter.Routes.friend.rawValue, parameters: ["friendId": id])
+            try? this.router.route(
+              from: this,
+              to: ProfileRouter.Routes.friend.rawValue,
+              parameters: ["friendId": id]
+            )
           default:
             break
           }
