@@ -133,7 +133,7 @@ public final class ProfileViewController: UIViewController {
     profileTableView.registerCell(ProfileUserHeaderCell.self)
     profileTableView.registerCell(ProfileUserInfoCell.self)
     
-    view.insertSubview(profileTableView, belowSubview: appBar.headerViewController.headerView)
+    view.addSubview(profileTableView)
     
     profileTableView.snp.makeConstraints { $0.edges.equalTo(view) }
     

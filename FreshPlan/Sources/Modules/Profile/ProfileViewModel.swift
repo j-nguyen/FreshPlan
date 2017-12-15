@@ -38,7 +38,6 @@ public class ProfileViewModel: ProfileViewModelProtocol {
       .map(User.self, using: JSONDecoder.Decode)
 			.share()
 		
-    // TODO: This needs to be adjusted for the `title` label
 		let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: $0.displayName) }
     let email = user.map { SectionItem.email(order: 1, title: "Email:", description: $0.email) }
     let createdAt = user
