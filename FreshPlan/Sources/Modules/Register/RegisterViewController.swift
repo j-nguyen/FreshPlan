@@ -282,6 +282,7 @@ public final class RegisterViewController: UIViewController {
         try? this.router.route(from: this, to: RegisterRouter.Routes.verify.rawValue, parameters: ["email": text])
         let message = MDCSnackbarMessage(text: "Successfully signed up! Please check your email to verify your account.")
         MDCSnackbarManager.show(message)
+        clearTextFields()
       })
       .disposed(by: disposeBag)
     
@@ -293,5 +294,12 @@ public final class RegisterViewController: UIViewController {
         MDCSnackbarManager.show(message)
       })
       .disposed(by: disposeBag)
+  }
+  
+  fileprivate func clearTextFields() {
+    displayNameField.text = ""
+    emailField.text = ""
+    passwordField.text = ""
+    confirmPasswordField.text = ""
   }
 }
