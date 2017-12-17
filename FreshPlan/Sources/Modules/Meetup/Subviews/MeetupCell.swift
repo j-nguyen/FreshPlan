@@ -61,14 +61,14 @@ public final class MeetupCell: UITableViewCell {
       make.left.equalTo(contentView).inset(10)
     }
     
-    startDate
+    endDate
       .asObservable()
       .filter { $0 < Date() }
       .map { _ in MDCPalette.red.tint400 }
       .bind(to: typeImageView.rx.tintColor)
       .disposed(by: disposeBag)
     
-    startDate
+    endDate
       .asObservable()
       .filter { $0 > Date() }
       .map { _ in MDCPalette.green.tint400 }

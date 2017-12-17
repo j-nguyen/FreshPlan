@@ -38,7 +38,7 @@ extension FreshPlan: TargetType {
 		case .verify:
 			return "/auth/verify"
     case .meetup:
-      return "/meetup"
+      return "/meetups"
 		case let .user(userId):
 			return "/users/\(userId)"
     case .friends(let userId):

@@ -197,7 +197,7 @@ public class LoginViewController: UIViewController {
 		)
 		
 		registerLabel.attributedText = mutableString
-		registerLabel.font = MDCTypography.titleFont()
+		registerLabel.font = MDCTypography.subheadFont()
 		registerLabel.isUserInteractionEnabled = true
 		
 		view.addSubview(registerLabel)
