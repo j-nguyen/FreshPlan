@@ -72,6 +72,7 @@ public final class MeetupController: UIViewController {
     tableView.snp.makeConstraints { make in
       make.edges.equalTo(tableView)
     }
+    
   }
   
   private func prepareEmptyMeetupView() {
@@ -79,7 +80,21 @@ public final class MeetupController: UIViewController {
     
     view.addSubview(emptyMeetupView)
     
+    emptyMeetupView.snp.makeConstraints { make in
+      make.edges.equalTo(view)
+    }
     
+    viewModel.meetups
+      .asObservable()
+      .map { $0.count == 0 }
+      .bind(to: tableView.rx.isHidden)
+      .disposed(by: disposeBag)
+    
+    viewModel.meetups
+      .asObservable()
+      .map { $0.count > 0 }
+      .bind(to: emptyMeetupView.rx.isHidden)
+      .disposed(by: disposeBag)
   }
   
   private func prepareNavigationBar() {

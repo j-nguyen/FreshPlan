@@ -39,6 +39,7 @@ public class EmptyMeetupView: UIView {
     prepareTitleStackView()
     prepareTitleImageView()
     prepareTitleLabel()
+    prepareDescriptionLabel()
   }
   
   private func prepareStackView() {
@@ -80,9 +81,18 @@ public class EmptyMeetupView: UIView {
   
   private func prepareTitleLabel() {
     titleLabel = UILabel()
-    titleLabel.font = MDCTypography.body1Font()
+    titleLabel.font = MDCTypography.body2Font()
     titleLabel.text = "No Meetups"
     
     titleStackView.addArrangedSubview(titleLabel)
+  }
+  
+  private func prepareDescriptionLabel() {
+    descriptionLabel = UILabel()
+    descriptionLabel.font = MDCTypography.body1Font()
+    descriptionLabel.numberOfLines = 2
+    descriptionLabel.text = "To add a 'meetup', click the '+' on the top right."
+    
+    stackView.addArrangedSubview(descriptionLabel)
   }
 }
