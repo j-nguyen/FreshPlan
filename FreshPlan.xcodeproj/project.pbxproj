@@ -15,6 +15,7 @@
 		40426D0D1F86B86800875179 /* LoginAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D0C1F86B86800875179 /* LoginAssembler.swift */; };
 		40426D151F86BC9C00875179 /* RouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D141F86BC9C00875179 /* RouterProtocol.swift */; };
 		40426D1A1F86C12600875179 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D191F86C12600875179 /* LoginRouter.swift */; };
+		4045A2901FE5FE200059482E /* EmptyMeetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4045A28F1FE5FE200059482E /* EmptyMeetupView.swift */; };
 		40497D1F1F8CF3A500A4E046 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40497D1E1F8CF3A500A4E046 /* UIColor+.swift */; };
 		4055B0BA1FD079FE007C5CCC /* ProfileUserHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4055B0B91FD079FE007C5CCC /* ProfileUserHeaderView.swift */; };
 		4056A4EC1FD4B70B006415A7 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4EB1FD4B70B006415A7 /* AddFriendViewController.swift */; };
@@ -75,6 +76,7 @@
 		40426D0C1F86B86800875179 /* LoginAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAssembler.swift; sourceTree = "<group>"; };
 		40426D141F86BC9C00875179 /* RouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterProtocol.swift; sourceTree = "<group>"; };
 		40426D191F86C12600875179 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
+		4045A28F1FE5FE200059482E /* EmptyMeetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMeetupView.swift; sourceTree = "<group>"; };
 		40497D1E1F8CF3A500A4E046 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		4055B0B91FD079FE007C5CCC /* ProfileUserHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserHeaderView.swift; sourceTree = "<group>"; };
 		4056A4EB1FD4B70B006415A7 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
@@ -230,6 +232,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		4045A28E1FE5FE0E0059482E /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				4045A28F1FE5FE200059482E /* EmptyMeetupView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
 		4056A4EA1FD4B6FE006415A7 /* AddFriend */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,6 +390,7 @@
 				40BD70111F910FD6005B3B9D /* MeetupViewModel.swift */,
 				40BD70131F910FFA005B3B9D /* MeetupRouter.swift */,
 				40BD70151F911022005B3B9D /* MeetupAssembler.swift */,
+				4045A28E1FE5FE0E0059482E /* Subviews */,
 			);
 			path = Meetup;
 			sourceTree = "<group>";
@@ -579,6 +590,7 @@
 				40BD70121F910FD6005B3B9D /* MeetupViewModel.swift in Sources */,
 				4079B14C1FC475E9007E9407 /* UITableView+.swift in Sources */,
 				405C5A981F8D94E700AC8F9F /* HomeViewController.swift in Sources */,
+				4045A2901FE5FE200059482E /* EmptyMeetupView.swift in Sources */,
 				409B2BF81FBE64F9000A7F16 /* User.swift in Sources */,
 				40BF713D1FDC623200495B81 /* FriendCell.swift in Sources */,
 				40426D151F86BC9C00875179 /* RouterProtocol.swift in Sources */,

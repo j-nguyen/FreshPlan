@@ -43,9 +43,16 @@ public final class MeetupController: UIViewController {
   public override var childViewControllerForStatusBarStyle: UIViewController? {
     return appBar.headerViewController
   }
+  
+  public override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
 	
 	public override func viewDidLoad() {
 		super.viewDidLoad()
+    prepareView()
 	}
   
   private func prepareView() {
