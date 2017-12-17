@@ -32,7 +32,7 @@ public class MeetupViewModel: MeetupViewModelProtocol {
     
     refreshContent
       .asObservable()
-      .flatMap { self.requestMeetups() }
+      .flatMap { self.requestMeetups().map { $0.sorted(by: { $0.startDate < $1.startDate }) } }
       .do(onNext: { [weak self] meetup in
         self?.refreshSuccess.on(.next(true))
       })
@@ -40,6 +40,7 @@ public class MeetupViewModel: MeetupViewModelProtocol {
       .disposed(by: disposeBag)
     
     self.requestMeetups()
+      .map { $0.sorted(by: { $0.startDate < $1.startDate }) }
       .bind(to: meetups)
       .disposed(by: disposeBag)
   }
@@ -48,5 +49,6 @@ public class MeetupViewModel: MeetupViewModelProtocol {
     return provider.rx.request(.meetup)
       .asObservable()
       .map([Meetup].self, using: JSONDecoder.Decode)
+      .catchErrorJustReturn([])
   }
 }

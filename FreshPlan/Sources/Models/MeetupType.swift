@@ -12,3 +12,10 @@ public struct MeetupType: Decodable {
   public let id: Int
   public let type: String
 }
+
+extension MeetupType {
+  public enum Options: String {
+    case location
+    case other
+  }
+}

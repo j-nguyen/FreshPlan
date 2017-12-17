@@ -49,6 +49,7 @@
 		408D08391F8D285E006BCA8E /* VerifyAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D08381F8D285E006BCA8E /* VerifyAssembler.swift */; };
 		408D083B1F8D2865006BCA8E /* VerifyRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D083A1F8D2865006BCA8E /* VerifyRouter.swift */; };
 		408D083D1F8D286D006BCA8E /* VerifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D083C1F8D286D006BCA8E /* VerifyViewModel.swift */; };
+		40934BFC1FE61E8F00AD7331 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40934BFB1FE61E8F00AD7331 /* UIImageView+.swift */; };
 		409A55351F86B0D200EB29A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409A55341F86B0D200EB29A4 /* AppDelegate.swift */; };
 		409A553C1F86B0D200EB29A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 409A553B1F86B0D200EB29A4 /* Assets.xcassets */; };
 		409A553F1F86B0D200EB29A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 409A553D1F86B0D200EB29A4 /* LaunchScreen.storyboard */; };
@@ -114,6 +115,7 @@
 		408D08381F8D285E006BCA8E /* VerifyAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyAssembler.swift; sourceTree = "<group>"; };
 		408D083A1F8D2865006BCA8E /* VerifyRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyRouter.swift; sourceTree = "<group>"; };
 		408D083C1F8D286D006BCA8E /* VerifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyViewModel.swift; sourceTree = "<group>"; };
+		40934BFB1FE61E8F00AD7331 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		409A55311F86B0D200EB29A4 /* FreshPlan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreshPlan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		409A55341F86B0D200EB29A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		409A553B1F86B0D200EB29A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -233,10 +235,11 @@
 			isa = PBXGroup;
 			children = (
 				40497D1E1F8CF3A500A4E046 /* UIColor+.swift */,
+				4079B14D1FC4763B007E9407 /* UILabel+.swift */,
+				40934BFB1FE61E8F00AD7331 /* UIImageView+.swift */,
 				40C429011FC3D08C004579A6 /* JSONDecoder+.swift */,
 				4079B1491FC47407007E9407 /* Token+.swift */,
 				4079B14B1FC475E9007E9407 /* UITableView+.swift */,
-				4079B14D1FC4763B007E9407 /* UILabel+.swift */,
 				4003B3A81FE368C300BF682F /* MDCTextInputControllerDefault+.swift */,
 				4003B3A61FE3625E00BF682F /* String+.swift */,
 			);
@@ -620,6 +623,7 @@
 				4056A4F01FD4B988006415A7 /* AddFriendAssembler.swift in Sources */,
 				40426D091F86B85500875179 /* LoginViewController.swift in Sources */,
 				408D083B1F8D2865006BCA8E /* VerifyRouter.swift in Sources */,
+				40934BFC1FE61E8F00AD7331 /* UIImageView+.swift in Sources */,
 				4079B1511FC4785F007E9407 /* ProfileUserHeaderCell.swift in Sources */,
 				4003B3A71FE3625E00BF682F /* String+.swift in Sources */,
 				4056A4EE1FD4B7FE006415A7 /* AddFriendViewModel.swift in Sources */,

@@ -71,8 +71,7 @@ public final class MeetupController: UIViewController {
     tableView.separatorStyle = .singleLine
     tableView.separatorInset = .zero
     tableView.layoutMargins = .zero
-    tableView.rowHeight = UITableViewAutomaticDimension
-    tableView.estimatedRowHeight = 44.0
+    tableView.rowHeight = 80
     tableView.registerCell(MeetupCell.self)
     
     view.addSubview(tableView)
@@ -85,7 +84,6 @@ public final class MeetupController: UIViewController {
       .asObservable()
       .bind(to: tableView.rx.items(cellIdentifier: String(describing: MeetupCell.self), cellType: MeetupCell.self)) { index, meetup, cell in
         cell.name.on(.next(meetup.title))
-        cell.type.on(.next(meetup.meetupType.type))
         cell.startDate.on(.next(meetup.startDate))
         cell.endDate.on(.next(meetup.endDate))
       }
