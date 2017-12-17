@@ -7,11 +7,23 @@
 //
 
 import Foundation
+import Moya
+import RxSwift
+import RxDataSources
+
 
 public protocol InviteViewModelProtocol {
+    var invitations: Variable<[Invitation]> { get }
+    
+   
+
     
 }
 
 public class InviteViewModel: InviteViewModelProtocol {
     
+    
+
+    
+  
 }

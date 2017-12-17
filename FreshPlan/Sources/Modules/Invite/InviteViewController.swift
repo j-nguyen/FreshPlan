@@ -24,6 +24,9 @@ public final class InviteViewController: UIViewController {
     private var containerView: UIView!
     private var tableView: UITableView!
     
+    // MARK:  DisposeBag
+    private var disposeBag: DisposeBag = DisposeBag()
+    
     public convenience init(viewModel: InviteViewModel, router: InviteRouter) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
@@ -45,9 +48,20 @@ public final class InviteViewController: UIViewController {
         prepareView()
     }
     
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    public override var childViewControllerForStatusBarStyle: UIViewController? {
+        return appBar.headerViewController
+    }
+    
     public func prepareView() {
         prepareTableView()
         prepareNavigationBar()
+        appBar.addSubviewsToParent()
     }
     
     private func prepareTableView() {
@@ -62,21 +76,38 @@ public final class InviteViewController: UIViewController {
     private func prepareNavigationBar() {
         appBar.headerViewController.headerView.backgroundColor = MDCPalette.blue.tint700
         appBar.navigationBar.tintColor = UIColor.white
-        appBar.headerViewController.headerView.maximumHeight = 120
-        appBar.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
-        
+        appBar.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor: UIColor.white ]
         appBar.headerViewController.headerView.trackingScrollView = tableView
         
+        // set the nav bar title
+        Observable.just("My Invitations")
+            .bind(to: navigationItem.rx.title)
+            .disposed(by: disposeBag)
+            
         tableView.layoutMargins = UIEdgeInsets.zero
         tableView.separatorInset = UIEdgeInsets.zero
-    
         
-        
-        
+        appBar.navigationBar.observe(navigationItem)
         
     }
     
-    
-    
-    
+    deinit {
+        appBar.navigationBar.unobserveNavigationItem()
+    }
 }
+
+// MARK:  TableViewDelegate
+extension InviteViewController: UITableViewDelegate {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+            appBar.headerViewController.headerView.trackingScrollDidScroll()
+        }
+    }
+    
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+            appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
+        }
+    }
+}
+

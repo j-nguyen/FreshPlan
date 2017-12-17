@@ -15,16 +15,16 @@ import UIKit
 
 public protocol ProfileViewModelProtocol {
 	var profileItems: Variable<[ProfileViewModel.SectionModel]> { get }
-  var acceptFriend: PublishSubject<IndexPath> { get }
-  var acceptedFriendSuccess: Variable<String?> { get }
+    var acceptFriend: PublishSubject<IndexPath> { get }
+    var acceptedFriendSuccess: Variable<String?> { get }
 }
 
 public class ProfileViewModel: ProfileViewModelProtocol {
 	private let provider: MoyaProvider<FreshPlan>!
 
 	public var profileItems: Variable<[ProfileViewModel.SectionModel]> = Variable([])
-  public var acceptFriend: PublishSubject<IndexPath> = PublishSubject()
-  public var acceptedFriendSuccess: Variable<String?> = Variable(nil)
+    public var acceptFriend: PublishSubject<IndexPath> = PublishSubject()
+    public var acceptedFriendSuccess: Variable<String?> = Variable(nil)
 	
 	private let disposeBag: DisposeBag = DisposeBag()
 	
