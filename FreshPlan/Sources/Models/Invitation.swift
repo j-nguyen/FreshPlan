@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Invite: Decodable {
+public struct Invitation: Decodable {
   public let id: Int
   public let meetup: Meetup
   public let inviter: User

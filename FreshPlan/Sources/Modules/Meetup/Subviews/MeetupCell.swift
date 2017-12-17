@@ -42,7 +42,29 @@ public final class MeetupCell: UITableViewCell {
   }
   
   private func prepareView() {
+    prepareNameLabel()
     prepareInkView()
+  }
+  
+  private func prepareNameLabel() {
+    nameLabel = UILabel()
+    nameLabel.font = MDCTypography.body1Font()
+    
+    contentView.addSubview(nameLabel)
+    
+    nameLabel.snp.makeConstraints { make in
+      make.left.equalTo(contentView).inset(10)
+      make.centerY.equalTo(contentView)
+    }
+    
+    name
+      .asObservable()
+      .map { text in
+        print ("YO: \(text)")
+        return text
+      }
+      .bind(to: nameLabel.rx.text)
+      .disposed(by: disposeBag)
   }
   
   private func prepareInkView() {

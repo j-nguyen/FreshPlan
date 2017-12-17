@@ -35,6 +35,5 @@ public class MeetupViewModel: MeetupViewModelProtocol {
     return provider.rx.request(.meetup)
       .asObservable()
       .map([Meetup].self, using: JSONDecoder.Decode)
-      .catchErrorJustReturn([])
   }
 }

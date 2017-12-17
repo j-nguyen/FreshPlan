@@ -57,8 +57,8 @@ public final class MeetupController: UIViewController {
 	}
   
   private func prepareView() {
-    prepareTableView()
     prepareEmptyMeetupView()
+    prepareTableView()
     prepareNavigationBar()
     appBar.addSubviewsToParent()
   }
@@ -85,16 +85,6 @@ public final class MeetupController: UIViewController {
         cell.endDate.on(.next(meetup.endDate))
       }
       .disposed(by: disposeBag)
-  }
-  
-  private func prepareEmptyMeetupView() {
-    emptyMeetupView = EmptyMeetupView()
-    
-    view.addSubview(emptyMeetupView)
-    
-    emptyMeetupView.snp.makeConstraints { make in
-      make.edges.equalTo(view)
-    }
     
     viewModel.meetups
       .asObservable()
@@ -107,6 +97,16 @@ public final class MeetupController: UIViewController {
       .map { $0.count > 0 }
       .bind(to: emptyMeetupView.rx.isHidden)
       .disposed(by: disposeBag)
+  }
+  
+  private func prepareEmptyMeetupView() {
+    emptyMeetupView = EmptyMeetupView()
+    
+    view.addSubview(emptyMeetupView)
+    
+    emptyMeetupView.snp.makeConstraints { make in
+      make.edges.equalTo(view)
+    }
   }
   
   private func prepareNavigationBar() {
