@@ -18,6 +18,7 @@ public final class MeetupController: UIViewController {
   //MARK: views
   private var emptyMeetupView: EmptyMeetupView!
   private var tableView: UITableView!
+  private var refreshControl: UIRefreshControl!
   
   //MARK: App Bar
   fileprivate let appBar: MDCAppBar = MDCAppBar()
@@ -57,14 +58,18 @@ public final class MeetupController: UIViewController {
 	}
   
   private func prepareView() {
-    prepareEmptyMeetupView()
+    prepareRefreshControl()
     prepareTableView()
+    prepareEmptyMeetupView()
     prepareNavigationBar()
     appBar.addSubviewsToParent()
   }
   
   private func prepareTableView() {
     tableView = UITableView()
+    tableView.refreshControl = refreshControl
+    tableView.separatorStyle = .singleLine
+    tableView.separatorInset = .zero
     tableView.layoutMargins = .zero
     tableView.rowHeight = UITableViewAutomaticDimension
     tableView.estimatedRowHeight = 44.0
@@ -73,7 +78,7 @@ public final class MeetupController: UIViewController {
     view.addSubview(tableView)
     
     tableView.snp.makeConstraints { make in
-      make.edges.equalTo(tableView)
+      make.edges.equalTo(view)
     }
     
     viewModel.meetups
@@ -85,6 +90,38 @@ public final class MeetupController: UIViewController {
         cell.endDate.on(.next(meetup.endDate))
       }
       .disposed(by: disposeBag)
+  }
+  
+  private func prepareRefreshControl() {
+    refreshControl = UIRefreshControl()
+    
+    refreshControl.rx.controlEvent(.valueChanged)
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.viewModel.refreshContent.on(.next(()))
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel.refreshSuccess
+      .asObservable()
+      .filter { $0 }
+      .subscribe(onNext: { [weak self] _ in
+        if let this = self {
+          this.refreshControl.endRefreshing()
+        }
+      })
+      .disposed(by: disposeBag)
+  }
+  
+  private func prepareEmptyMeetupView() {
+    emptyMeetupView = EmptyMeetupView()
+    
+    view.addSubview(emptyMeetupView)
+    
+    emptyMeetupView.snp.makeConstraints { make in
+      make.edges.equalTo(view)
+    }
     
     viewModel.meetups
       .asObservable()
@@ -97,16 +134,6 @@ public final class MeetupController: UIViewController {
       .map { $0.count > 0 }
       .bind(to: emptyMeetupView.rx.isHidden)
       .disposed(by: disposeBag)
-  }
-  
-  private func prepareEmptyMeetupView() {
-    emptyMeetupView = EmptyMeetupView()
-    
-    view.addSubview(emptyMeetupView)
-    
-    emptyMeetupView.snp.makeConstraints { make in
-      make.edges.equalTo(view)
-    }
   }
   
   private func prepareNavigationBar() {

@@ -42,6 +42,7 @@ public final class MeetupCell: UITableViewCell {
   }
   
   private func prepareView() {
+    selectionStyle = .none
     prepareNameLabel()
     prepareInkView()
   }
@@ -59,10 +60,6 @@ public final class MeetupCell: UITableViewCell {
     
     name
       .asObservable()
-      .map { text in
-        print ("YO: \(text)")
-        return text
-      }
       .bind(to: nameLabel.rx.text)
       .disposed(by: disposeBag)
   }

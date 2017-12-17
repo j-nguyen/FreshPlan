@@ -11,6 +11,8 @@ import Moya
 
 public protocol MeetupViewModelProtocol {
   var meetups: Variable<[Meetup]> { get }
+  var refreshContent: PublishSubject<Void> { get }
+  var refreshSuccess: PublishSubject<Bool> { get }
 }
 
 public class MeetupViewModel: MeetupViewModelProtocol {
@@ -19,6 +21,8 @@ public class MeetupViewModel: MeetupViewModelProtocol {
   
   //MARK: Variables
   public var meetups: Variable<[Meetup]> = Variable([])
+  public var refreshContent: PublishSubject<Void> = PublishSubject()
+  public var refreshSuccess: PublishSubject<Bool> = PublishSubject()
   
   //MARK: DisposeBag
   private let disposeBag: DisposeBag = DisposeBag()
@@ -26,7 +30,16 @@ public class MeetupViewModel: MeetupViewModelProtocol {
   public init(provider: MoyaProvider<FreshPlan>) {
     self.provider = provider
     
-   self.requestMeetups()
+    refreshContent
+      .asObservable()
+      .flatMap { self.requestMeetups() }
+      .do(onNext: { [weak self] meetup in
+        self?.refreshSuccess.on(.next(true))
+      })
+      .bind(to: meetups)
+      .disposed(by: disposeBag)
+    
+    self.requestMeetups()
       .bind(to: meetups)
       .disposed(by: disposeBag)
   }
