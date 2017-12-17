@@ -16,6 +16,9 @@
 		40426D151F86BC9C00875179 /* RouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D141F86BC9C00875179 /* RouterProtocol.swift */; };
 		40426D1A1F86C12600875179 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D191F86C12600875179 /* LoginRouter.swift */; };
 		4045A2901FE5FE200059482E /* EmptyMeetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4045A28F1FE5FE200059482E /* EmptyMeetupView.swift */; };
+		4045A2931FE601060059482E /* Meetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4045A2921FE601060059482E /* Meetup.swift */; };
+		4045A2951FE601490059482E /* MeetupType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4045A2941FE601490059482E /* MeetupType.swift */; };
+		4045A2971FE601650059482E /* Invite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4045A2961FE601650059482E /* Invite.swift */; };
 		40497D1F1F8CF3A500A4E046 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40497D1E1F8CF3A500A4E046 /* UIColor+.swift */; };
 		4055B0BA1FD079FE007C5CCC /* ProfileUserHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4055B0B91FD079FE007C5CCC /* ProfileUserHeaderView.swift */; };
 		4056A4EC1FD4B70B006415A7 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4EB1FD4B70B006415A7 /* AddFriendViewController.swift */; };
@@ -77,6 +80,9 @@
 		40426D141F86BC9C00875179 /* RouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterProtocol.swift; sourceTree = "<group>"; };
 		40426D191F86C12600875179 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
 		4045A28F1FE5FE200059482E /* EmptyMeetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMeetupView.swift; sourceTree = "<group>"; };
+		4045A2921FE601060059482E /* Meetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meetup.swift; sourceTree = "<group>"; };
+		4045A2941FE601490059482E /* MeetupType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupType.swift; sourceTree = "<group>"; };
+		4045A2961FE601650059482E /* Invite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invite.swift; sourceTree = "<group>"; };
 		40497D1E1F8CF3A500A4E046 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		4055B0B91FD079FE007C5CCC /* ProfileUserHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserHeaderView.swift; sourceTree = "<group>"; };
 		4056A4EB1FD4B70B006415A7 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +201,9 @@
 				40A311351F9EF503000FAFEB /* Token.swift */,
 				409B2BF71FBE64F9000A7F16 /* User.swift */,
 				409B2BF91FBE65AF000A7F16 /* Friend.swift */,
+				4045A2921FE601060059482E /* Meetup.swift */,
+				4045A2941FE601490059482E /* MeetupType.swift */,
+				4045A2961FE601650059482E /* Invite.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -588,6 +597,7 @@
 				4056A4F31FD4BDB4006415A7 /* EmptyView.swift in Sources */,
 				408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */,
 				40BD70121F910FD6005B3B9D /* MeetupViewModel.swift in Sources */,
+				4045A2951FE601490059482E /* MeetupType.swift in Sources */,
 				4079B14C1FC475E9007E9407 /* UITableView+.swift in Sources */,
 				405C5A981F8D94E700AC8F9F /* HomeViewController.swift in Sources */,
 				4045A2901FE5FE200059482E /* EmptyMeetupView.swift in Sources */,
@@ -599,6 +609,7 @@
 				40BF713F1FDC73DC00495B81 /* AddFriendRouter.swift in Sources */,
 				409B2BF11FBE619B000A7F16 /* ProfileViewModel.swift in Sources */,
 				409B2BEF1FBE6192000A7F16 /* ProfileViewController.swift in Sources */,
+				4045A2971FE601650059482E /* Invite.swift in Sources */,
 				408D08391F8D285E006BCA8E /* VerifyAssembler.swift in Sources */,
 				4071F94F1FDCB14D0061C34E /* FriendInfoCell.swift in Sources */,
 				408D08371F8D2818006BCA8E /* VerifyViewController.swift in Sources */,
@@ -623,6 +634,7 @@
 				4055B0BA1FD079FE007C5CCC /* ProfileUserHeaderView.swift in Sources */,
 				408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */,
 				40426D1A1F86C12600875179 /* LoginRouter.swift in Sources */,
+				4045A2931FE601060059482E /* Meetup.swift in Sources */,
 				40BD70161F911022005B3B9D /* MeetupAssembler.swift in Sources */,
 				405C5A9C1F8D950500AC8F9F /* HomeViewModel.swift in Sources */,
 				40426D0D1F86B86800875179 /* LoginAssembler.swift in Sources */,

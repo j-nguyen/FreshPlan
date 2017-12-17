@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import MaterialComponents
 
 public class EmptyMeetupView: UIView {
   //MARK: StackView
@@ -64,10 +65,24 @@ public class EmptyMeetupView: UIView {
   }
   
   private func prepareTitleImageView() {
+    titleImageView = UIImageView()
+    titleImageView.contentMode = .scaleAspectFit
+    titleImageView.image = UIImage(named: "ic_event")?.withRenderingMode(.alwaysTemplate)
+    titleImageView.tintColor = .black
     
+    titleStackView.addArrangedSubview(titleImageView)
+    
+    titleImageView.snp.makeConstraints { make in
+      make.width.equalTo(30)
+      make.height.equalTo(30)
+    }
   }
   
   private func prepareTitleLabel() {
+    titleLabel = UILabel()
+    titleLabel.font = MDCTypography.body1Font()
+    titleLabel.text = "No Meetups"
     
+    titleStackView.addArrangedSubview(titleLabel)
   }
 }

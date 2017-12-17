@@ -15,7 +15,8 @@ public final class MeetupController: UIViewController {
 	private var viewModel: MeetupViewModelProtocol!
 	private var router: MeetupRouter!
   
-  //MARK: TableView
+  //MARK: views
+  private var emptyMeetupView: EmptyMeetupView!
   private var tableView: UITableView!
   
   //MARK: App Bar
@@ -57,6 +58,7 @@ public final class MeetupController: UIViewController {
   
   private func prepareView() {
     prepareTableView()
+    prepareEmptyMeetupView()
     prepareNavigationBar()
     appBar.addSubviewsToParent()
   }
@@ -70,6 +72,14 @@ public final class MeetupController: UIViewController {
     tableView.snp.makeConstraints { make in
       make.edges.equalTo(tableView)
     }
+  }
+  
+  private func prepareEmptyMeetupView() {
+    emptyMeetupView = EmptyMeetupView()
+    
+    view.addSubview(emptyMeetupView)
+    
+    
   }
   
   private func prepareNavigationBar() {
