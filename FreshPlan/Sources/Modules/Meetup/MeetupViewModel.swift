@@ -25,5 +25,16 @@ public class MeetupViewModel: MeetupViewModelProtocol {
   
   public init(provider: MoyaProvider<FreshPlan>) {
     self.provider = provider
+    
+   self.requestMeetups()
+      .bind(to: meetups)
+      .disposed(by: disposeBag)
+  }
+  
+  private func requestMeetups() -> Observable<[Meetup]> {
+    return provider.rx.request(.meetup)
+      .asObservable()
+      .map([Meetup].self, using: JSONDecoder.Decode)
+      .catchErrorJustReturn([])
   }
 }

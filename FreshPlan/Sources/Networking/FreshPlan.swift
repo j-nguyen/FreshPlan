@@ -22,6 +22,7 @@ public enum FreshPlan {
   case sendFriendRequest(Int, Int)
   case friendRequests(Int)
   case friendRequest(Int, Int)
+  case meetup
 }
 
 extension FreshPlan: TargetType {
@@ -36,6 +37,8 @@ extension FreshPlan: TargetType {
 			return "/auth/register"
 		case .verify:
 			return "/auth/verify"
+    case .meetup:
+      return "/meetups"
 		case let .user(userId):
 			return "/users/\(userId)"
     case .friends(let userId):
@@ -60,7 +63,7 @@ extension FreshPlan: TargetType {
 		switch self {
 		case .login, .register, .verify, .resend, .sendFriendRequest:
 			return .post
-		case .user, .friends, .friendSearch, .friendRequests, .friendRequest:
+		case .user, .friends, .friendSearch, .friendRequests, .friendRequest, .meetup:
 			return .get
     case .acceptFriend:
       return .patch
@@ -87,7 +90,7 @@ extension FreshPlan: TargetType {
 			return .requestParameters(parameters: ["email": email, "code": code], encoding: JSONEncoding.default)
     case let .friendSearch(query):
       return .requestParameters(parameters: ["search": query], encoding: URLEncoding.default)
-    case .user, .friends, .friendRequests, .friendRequest:
+    case .user, .friends, .friendRequests, .friendRequest, .meetup:
 			return .requestPlain
     case .acceptFriend:
       return .requestParameters(
@@ -111,7 +114,7 @@ extension FreshPlan: TargetType {
 		switch self {
 		case .login, .register, .verify, .resend:
 			return ["Content-Type": "application/json"]
-		case .user, .friends, .acceptFriend, .friendSearch, .sendFriendRequest, .friendRequest, .friendRequests:
+		case .user, .friends, .acceptFriend, .friendSearch, .sendFriendRequest, .friendRequest, .friendRequests, .meetup:
 			return ["Content-Type": "application/json", "Authorization": UserDefaults.standard.string(forKey: "token")!]
 		}
 	}

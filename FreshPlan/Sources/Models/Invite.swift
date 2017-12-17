@@ -11,7 +11,8 @@ import Foundation
 public struct Invite: Decodable {
   public let id: Int
   public let meetup: Meetup
-  public let user: User
+  public let inviter: User
+  public let invitee: User
   public let accepted: Bool
   public let createdAt: Date
   public let updatedAt: Date
