@@ -66,6 +66,9 @@ public final class MeetupController: UIViewController {
   private func prepareTableView() {
     tableView = UITableView()
     tableView.layoutMargins = .zero
+    tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.estimatedRowHeight = 44.0
+    tableView.registerCell(MeetupCell.self)
     
     view.addSubview(tableView)
     
@@ -73,6 +76,15 @@ public final class MeetupController: UIViewController {
       make.edges.equalTo(tableView)
     }
     
+    viewModel.meetups
+      .asObservable()
+      .bind(to: tableView.rx.items(cellIdentifier: String(describing: MeetupCell.self), cellType: MeetupCell.self)) { index, meetup, cell in
+        cell.name.on(.next(meetup.title))
+        cell.type.on(.next(meetup.meetupType.type))
+        cell.startDate.on(.next(meetup.startDate))
+        cell.endDate.on(.next(meetup.endDate))
+      }
+      .disposed(by: disposeBag)
   }
   
   private func prepareEmptyMeetupView() {

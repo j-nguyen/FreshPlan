@@ -19,10 +19,11 @@ public final class MeetupCell: UITableViewCell {
   public var type: PublishSubject<String> = PublishSubject()
   
   //MARK: Views
-  public var nameLabel: UILabel!
-  public var startDateLabel: UILabel!
-  public var endDateLabel: UILabel!
-  public var typeImageView: UIImageView!
+  private var nameLabel: UILabel!
+  private var startDateLabel: UILabel!
+  private var endDateLabel: UILabel!
+  private var typeImageView: UIImageView!
+  private var inkViewController: MDCInkTouchController!
   
   //MARK: DisposeBag
   private let disposeBag: DisposeBag = DisposeBag()
@@ -41,6 +42,18 @@ public final class MeetupCell: UITableViewCell {
   }
   
   private func prepareView() {
-    
+    prepareInkView()
+  }
+  
+  private func prepareInkView() {
+    inkViewController = MDCInkTouchController(view: self)
+    inkViewController.delegate = self
+    inkViewController.addInkView()
+  }
+}
+
+extension MeetupCell: MDCInkTouchControllerDelegate {
+  public func inkTouchController(_ inkTouchController: MDCInkTouchController, shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
+    return true
   }
 }
