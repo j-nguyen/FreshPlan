@@ -11,7 +11,7 @@ import UIKit
 
 public class MeetupRouter {
 	public enum Routes: String {
-		case login
+		case meetup
 	}
 	
 	fileprivate enum RouteError: Error {
@@ -25,8 +25,10 @@ extension MeetupRouter: RouterProtocol {
 		guard let route = Routes(rawValue: route) else { throw RouteError.invalidRoute("Invalid route!") }
 		
 		switch route {
-		case .login:
-			break
+		case .meetup:
+      guard let params = parameters, let meetupId = params["meetupId"] as? Int else { return }
+			
+      context.navigationController?.pushViewController(MeetupDetailAssembler.make(meetupId: meetupId), animated: true)
 		}
 	}
 }

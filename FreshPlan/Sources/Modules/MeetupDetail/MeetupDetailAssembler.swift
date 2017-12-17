@@ -10,8 +10,8 @@ import Foundation
 import Moya
 
 public final class MeetupDetailAssembler {
-  public static func make() -> UIViewController {
-    let viewModel = MeetupDetailViewModel(provider: provider)
+  public static func make(meetupId: Int) -> UIViewController {
+    let viewModel = MeetupDetailViewModel(provider: provider, meetupId: meetupId)
     let router = MeetupDetailRouter()
     
     return MeetupDetailViewController(viewModel: viewModel, router: router)

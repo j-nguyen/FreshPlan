@@ -88,6 +88,19 @@ public final class MeetupController: UIViewController {
         cell.endDate.on(.next(meetup.endDate))
       }
       .disposed(by: disposeBag)
+    
+    tableView.rx.modelSelected(Meetup.self)
+      .asObservable()
+      .subscribe(onNext: { [weak self] meetup in
+        if let this = self {
+          try? this.router.route(
+            from: this,
+            to: MeetupRouter.Routes.meetup.rawValue,
+            parameters: ["meetupId": meetup.id]
+          )
+        }
+      })
+      .disposed(by: disposeBag)
   }
   
   private func prepareRefreshControl() {

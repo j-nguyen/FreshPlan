@@ -19,7 +19,10 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
   
   private let disposeBag: DisposeBag = DisposeBag()
   
-  public init(provider: MoyaProvider<FreshPlan>) {
+  private var meetupId: Int
+  
+  public init(provider: MoyaProvider<FreshPlan>, meetupId: Int) {
     self.provider = provider
+    self.meetupId = meetupId
   }
 }
