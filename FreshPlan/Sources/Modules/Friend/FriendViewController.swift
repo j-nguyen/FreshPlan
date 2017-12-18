@@ -54,6 +54,7 @@ public class FriendViewController: UIViewController {
   
   public override func viewDidLoad() {
     super.viewDidLoad()
+    setNeedsStatusBarAppearanceUpdate()
     view.backgroundColor = .white
     prepareView()
   }

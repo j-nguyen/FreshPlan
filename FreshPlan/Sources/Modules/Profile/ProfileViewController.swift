@@ -25,6 +25,7 @@ public final class ProfileViewController: UIViewController {
   
   // MARK: TableView
   private var profileTableView: UITableView!
+  private var refreshControl: UIRefreshControl!
   fileprivate var dataSource: RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>!
   
   // MARK: Nav Buttons
@@ -63,11 +64,34 @@ public final class ProfileViewController: UIViewController {
   }
   
   private func prepareView() {
+    prepareRefreshControl()
     prepareProfileTableView()
     prepareNavigationBar()
     prepareNavigationSearchButton()
     prepareNavigationLogoutButton()
     appBar.addSubviewsToParent()
+  }
+  
+  private func prepareRefreshControl() {
+    refreshControl = UIRefreshControl()
+    
+    refreshControl.rx.controlEvent(.valueChanged)
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.viewModel.refreshContent.on(.next(()))
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel.refreshSuccess
+      .asObservable()
+      .filter { $0 }
+      .subscribe(onNext: { [weak self] _ in
+        if let this = self {
+          this.refreshControl.endRefreshing()
+        }
+      })
+      .disposed(by: disposeBag)
   }
   
   private func prepareNavigationLogoutButton() {
@@ -129,11 +153,12 @@ public final class ProfileViewController: UIViewController {
     profileTableView.separatorStyle = .singleLine
     profileTableView.separatorInset = .zero
     profileTableView.layoutMargins = .zero
+    profileTableView.refreshControl = refreshControl
     profileTableView.rx.setDelegate(self).disposed(by: disposeBag)
     profileTableView.registerCell(ProfileUserHeaderCell.self)
     profileTableView.registerCell(ProfileUserInfoCell.self)
     
-    view.insertSubview(profileTableView, belowSubview: appBar.headerViewController.headerView)
+    view.addSubview(profileTableView)
     
     profileTableView.snp.makeConstraints { $0.edges.equalTo(view) }
     
@@ -146,17 +171,24 @@ public final class ProfileViewController: UIViewController {
           cell.fullName.on(.next(fullName))
           cell.profileURL.on(.next(profileURL))
           return cell
-        case let .displayName(_, name):
+        case let .displayName(_, title, name):
           let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
-          cell.textLabel?.text = name
+          cell.title.on(.next(title))
+          cell.info.on(.next(name))
           return cell
-        case let .email(_, description):
+        case let .email(_, title, description):
           let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
-          cell.textLabel?.text = description
+          cell.title.on(.next(title))
+          cell.info.on(.next(description))
           return cell
         case let .friend(_, displayName):
           let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
           cell.textLabel?.text = displayName
+          return cell
+        case let .joined(_, title, description):
+          let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
+          cell.title.on(.next(title))
+          cell.info.on(.next(description))
           return cell
         }
     })
@@ -183,6 +215,24 @@ public final class ProfileViewController: UIViewController {
       .subscribe(onNext: { displayName in
         let message = MDCSnackbarMessage(text: "Successfully added \(displayName) as a friend.")
         MDCSnackbarManager.show(message)
+      })
+      .disposed(by: disposeBag)
+    
+    profileTableView.rx.itemSelected
+      .asObservable()
+      .subscribe(onNext: { [weak self] index in
+        if let this = self {
+          switch this.dataSource[index] {
+          case let .friend(id, _):
+            try? this.router.route(
+              from: this,
+              to: ProfileRouter.Routes.friend.rawValue,
+              parameters: ["friendId": id]
+            )
+          default:
+            break
+          }
+        }
       })
       .disposed(by: disposeBag)
   }
@@ -243,18 +293,6 @@ extension ProfileViewController: UITableViewDelegate {
       return 70
     default:
       return UITableViewAutomaticDimension
-    }
-  }
-  
-  public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidScroll()
-    }
-  }
-  
-  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
     }
   }
 }

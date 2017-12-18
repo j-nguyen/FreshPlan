@@ -35,14 +35,6 @@ public class VerifyViewModel: VerifyViewModelProtocol {
 	public init(provider: MoyaProvider<FreshPlan>, email: String) {
 		self.provider = provider
 		self.email = email
-    
-    Observable.just(self.email)
-      .filterEmpty()
-      .flatMap { self.resendVerification(email: $0) }
-      .filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
-      .map { $0.statusCode >= 200 && $0.statusCode <= 299 }
-      .bind(to: resendSuccess)
-      .disposed(by: disposeBag)
 	}
 	
 	public func bindButton() {
@@ -52,10 +44,16 @@ public class VerifyViewModel: VerifyViewModelProtocol {
       .share()
 
 		response
-			.filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
-			.map { $0.statusCode >= 200 && $0.statusCode <= 299 }
+			.filter { $0.statusCode == 200 }
+			.map { $0.statusCode == 200 }
 			.bind(to: submitSuccess)
 			.disposed(by: disposeBag)
+    
+    response
+      .filter { $0.statusCode == 201 }
+      .map { $0.statusCode == 201 }
+      .bind(to: resendSuccess)
+      .disposed(by: disposeBag)
 		
 		response
 			.filter { $0.statusCode >= 300 }

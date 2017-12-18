@@ -14,8 +14,11 @@ import JWTDecode
 import UIKit
 
 public protocol ProfileViewModelProtocol {
-	var profileItems: Variable<[ProfileViewModel.SectionModel]> { get }
+    
+    var profileItems: Variable<[ProfileViewModel.SectionModel]> { get }
     var acceptFriend: PublishSubject<IndexPath> { get }
+    var refreshContent: PublishSubject<Void> { get }
+    var refreshSuccess: PublishSubject<Bool> { get }
     var acceptedFriendSuccess: Variable<String?> { get }
 }
 
@@ -25,23 +28,47 @@ public class ProfileViewModel: ProfileViewModelProtocol {
 	public var profileItems: Variable<[ProfileViewModel.SectionModel]> = Variable([])
     public var acceptFriend: PublishSubject<IndexPath> = PublishSubject()
     public var acceptedFriendSuccess: Variable<String?> = Variable(nil)
+  
+    public var refreshContent: PublishSubject<Void> = PublishSubject()
+    public var refreshSuccess: PublishSubject<Bool> = PublishSubject()
 	
 	private let disposeBag: DisposeBag = DisposeBag()
 	
 	public init(provider: MoyaProvider<FreshPlan>) {
 		self.provider = provider
     
-    let token = Token.getJWT().filter { $0 != -1 }.share()
-  
-		let user = token
-			.flatMap { self.requestUser(userId: $0) }
-      .map(User.self, using: JSONDecoder.Decode)
-			.share()
-		
-		let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: $0.displayName) }
-		let email = user.map { SectionItem.email(order: 1, description: "Email: \($0.email)") }
+    refreshContent
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.setupFriends()
+        this.refreshSuccess.on(.next(true))
+      })
+      .disposed(by: disposeBag)
     
-    let profileSection = Observable.from([profile, email])
+    setupFriends()
+    setupFriendRequest()
+	}
+  
+  private func setupFriends() {
+    let token = Token.getJWT().filter { $0 != -1 }.share()
+    
+    let user = token
+      .flatMap { self.requestUser(userId: $0) }
+      .map(User.self, using: JSONDecoder.Decode)
+      .share()
+    
+    let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: $0.displayName) }
+    let email = user.map { SectionItem.email(order: 1, title: "Email:", description: $0.email) }
+    let createdAt = user
+      .map { user -> SectionItem in
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        let date = df.string(from: user.createdAt)
+        return SectionItem.joined(order: 2, title: "Last Joined:", description: date)
+    }
+    
+    let profileSection = Observable.from([profile, email, createdAt])
       .flatMap { $0 }
       .toArray()
       .map { $0.sorted(by: { $0.order < $1.order }) }
@@ -52,7 +79,7 @@ public class ProfileViewModel: ProfileViewModelProtocol {
       .flatMap { self.requestFriends(userId: $0) }
       .map([User].self, using: JSONDecoder.Decode)
       .catchErrorJustReturn([])
-  
+    
     let friendRequests = token
       .flatMap { self.requestFriendRequests(userId: $0) }
       .map([Friend].self, using: JSONDecoder.Decode)
@@ -70,16 +97,14 @@ public class ProfileViewModel: ProfileViewModelProtocol {
         return friends.map { SectionItem.friend(id: $0.id, displayName: $0.displayName) }
       }
       .map { SectionModel.friendRequests(order: 2, title: "My Friend Requests", items: $0) }
-		
-		Observable.from([profileSection, friendsSection, friendRequestsSection])
-			.flatMap { $0 }
-			.toArray()
-			.map { $0.sorted(by: { $0.order < $1.order }) }
-			.bind(to: profileItems)
-			.disposed(by: disposeBag)
     
-    setupFriendRequest()
-	}
+    Observable.from([profileSection, friendsSection, friendRequestsSection])
+      .flatMap { $0 }
+      .toArray()
+      .map { $0.sorted(by: { $0.order < $1.order }) }
+      .bind(to: profileItems)
+      .disposed(by: disposeBag)
+  }
   
   private func setupFriendRequest() {
     acceptFriend
@@ -145,8 +170,9 @@ extension ProfileViewModel {
 	
 	public enum SectionItem {
 		case profile(order: Int, profileURL: String, fullName: String)
-		case email(order: Int, description: String)
-		case displayName(order: Int, name: String)
+    case email(order: Int, title: String, description: String)
+    case displayName(order: Int, title: String, name: String)
+    case joined(order: Int, title: String, description: String)
     case friend(id: Int, displayName: String)
 	}
 }
@@ -243,9 +269,9 @@ extension ProfileViewModel.SectionItem {
 		switch self {
 		case let .profile(order, _, _):
 			return order
-		case let .displayName(order, _):
+		case let .displayName(order, _, _):
 			return order
-		case let .email(order, _):
+		case let .email(order, _, _):
 			return order
     default:
       return 0

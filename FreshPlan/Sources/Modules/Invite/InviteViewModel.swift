@@ -12,6 +12,7 @@ import RxSwift
 import RxDataSources
 
 
+
 public protocol InviteViewModelProtocol {
     var invitations: Variable<[Invitation]> { get }
     
@@ -22,8 +23,26 @@ public protocol InviteViewModelProtocol {
 
 public class InviteViewModel: InviteViewModelProtocol {
     
+    private let provider: MoyaProvider<FreshPlan>!
+    public var invitations: Variable<[Invitation]> = Variable([])
+  
+  // MARK: disposeBag
+  private let disposeBag: DisposeBag = DisposeBag()
     
-
+    public init(provider: MoyaProvider<FreshPlan>) {
+        self.provider = provider
+      
+        requestInvitation()
+          .bind(to: invitations)
+          .disposed(by: disposeBag)
+    }
     
+    private func requestInvitation() -> Observable<[Invitation]> {
+        return provider.rx.request(.invitations)
+          .asObservable()
+          .map([Invitation].self, using: JSONDecoder.Decode)
+          .catchErrorJustReturn([])
+      
+    }
   
 }

@@ -8,12 +8,17 @@
 
 import Foundation
 import UIKit
+import Moya
 
 public final class InviteAssembler {
     public static func make() -> UIViewController {
-        let viewModel = InviteViewModel()
+        let viewModel = InviteViewModel(provider: provider)
         let router = InviteRouter()
         
         return InviteViewController(viewModel: viewModel, router: router)
+    }
+    
+    private static var provider: MoyaProvider<FreshPlan> {
+        return MoyaProvider<FreshPlan>(plugins: [NetworkLoggerPlugin(verbose: true)])
     }
 }

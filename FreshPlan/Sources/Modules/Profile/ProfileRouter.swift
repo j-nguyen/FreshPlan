@@ -20,6 +20,7 @@ import UIKit
 public class ProfileRouter {
 	public enum Routes: String {
 		case addFriend
+    case friend
     case logout
 	}
 	
@@ -42,6 +43,9 @@ extension ProfileRouter: RouterProtocol {
       guard let window = UIApplication.shared.keyWindow else { return }
       UserDefaults.standard.removeObject(forKey: "token")
       window.rootViewController? = LoginAssembler.make()
+    case .friend:
+      guard let params = parameters, let friendId = params["friendId"] as? Int else { return }
+      context.navigationController?.pushViewController(FriendAssembler.make(friendId: friendId), animated: true)
 		}
 	}
 }

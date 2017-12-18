@@ -11,10 +11,10 @@ import Moya
 
 // our endpoints
 public enum FreshPlan {
-	case login(String, String)
-	case register(String, String, String)
-	case verify(String, Int)
-	case user(Int)
+  case login(String, String)
+  case register(String, String, String)
+  case verify(String, Int)
+  case user(Int)
   case friends(Int)
   case friendSearch(String)
   case acceptFriend(Int, Int)
@@ -22,6 +22,8 @@ public enum FreshPlan {
   case sendFriendRequest(Int, Int)
   case friendRequests(Int)
   case friendRequest(Int, Int)
+  case meetup
+  case invitations
 }
 
 extension FreshPlan: TargetType {
@@ -36,6 +38,8 @@ extension FreshPlan: TargetType {
 			return "/auth/register"
 		case .verify:
 			return "/auth/verify"
+    case .meetup:
+      return "/meetup"
 		case let .user(userId):
 			return "/users/\(userId)"
     case .friends(let userId):
@@ -52,7 +56,9 @@ extension FreshPlan: TargetType {
       return "/users/\(userId)/friends/requests"
     case .friendRequest(let userId, let friendId):
       return "/users/\(userId)/friends/\(friendId)/requests"
-		}
+    case .invitations:
+      return "/invites"
+    }
 	}
 	
 	// type of method (POST/GET/PATCH/DELETE)
@@ -60,11 +66,12 @@ extension FreshPlan: TargetType {
 		switch self {
 		case .login, .register, .verify, .resend, .sendFriendRequest:
 			return .post
-		case .user, .friends, .friendSearch, .friendRequests, .friendRequest:
+		case .user, .friends, .friendSearch, .friendRequests, .friendRequest, .meetup, .invitations:
 			return .get
     case .acceptFriend:
       return .patch
-		}
+    
+    }
 	}
 
 	// this is used primarily for a request, (file could be added)
@@ -87,7 +94,7 @@ extension FreshPlan: TargetType {
 			return .requestParameters(parameters: ["email": email, "code": code], encoding: JSONEncoding.default)
     case let .friendSearch(query):
       return .requestParameters(parameters: ["search": query], encoding: URLEncoding.default)
-    case .user, .friends, .friendRequests, .friendRequest:
+    case .user, .friends, .friendRequests, .friendRequest, .meetup, .invitations:
 			return .requestPlain
     case .acceptFriend:
       return .requestParameters(
@@ -111,7 +118,7 @@ extension FreshPlan: TargetType {
 		switch self {
 		case .login, .register, .verify, .resend:
 			return ["Content-Type": "application/json"]
-		case .user, .friends, .acceptFriend, .friendSearch, .sendFriendRequest, .friendRequest, .friendRequests:
+		case .user, .friends, .acceptFriend, .friendSearch, .sendFriendRequest, .friendRequest, .friendRequests, .meetup, .invitations:
 			return ["Content-Type": "application/json", "Authorization": UserDefaults.standard.string(forKey: "token")!]
 		}
 	}

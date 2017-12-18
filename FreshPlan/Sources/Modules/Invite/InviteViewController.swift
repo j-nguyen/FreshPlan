@@ -68,9 +68,18 @@ public final class InviteViewController: UIViewController {
         tableView = UITableView()
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableViewAutomaticDimension
+      tableView.rx.setDelegate(self).disposed(by: disposeBag)
+      tableView.registerCell(InviteCell.self)
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints{ $0.edges.equalTo(view) }
+      
+      viewModel.invitations
+        .asObservable()
+        .bind(to: tableView.rx.items(cellIdentifier: String(describing: InviteCell.self))) { (index, invite, cell) in
+          
+      }
+      .disposed(by: disposeBag)
     }
     
     private func prepareNavigationBar() {
