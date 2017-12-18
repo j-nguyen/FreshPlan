@@ -11,13 +11,13 @@ import RxSwift
 import Moya
 
 public protocol MeetupDetailViewModelProtocol {
-  var meetup: Variable<Meetup?> { get }
+  var title: Variable<String> { get }
 }
 
 public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
   private let provider: MoyaProvider<FreshPlan>!
   
-  public var meetup: Variable<Meetup?> = Variable(nil)
+  public var title: Variable<String> = Variable("")
   
   private let disposeBag: DisposeBag = DisposeBag()
   
@@ -27,8 +27,12 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
     self.provider = provider
     self.meetupId = meetupId
     
-    requestMeetup(meetupId: meetupId)
-      .bind(to: meetup)
+    let meetup = requestMeetup(meetupId: meetupId)
+      .share()
+    
+    meetup
+      .map { $0.title }
+      .bind(to: self.title)
       .disposed(by: disposeBag)
   }
   

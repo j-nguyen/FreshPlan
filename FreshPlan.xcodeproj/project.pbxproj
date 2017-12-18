@@ -73,6 +73,7 @@
 		40BF713F1FDC73DC00495B81 /* AddFriendRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BF713E1FDC73DC00495B81 /* AddFriendRouter.swift */; };
 		40BF71411FDC750400495B81 /* FriendAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BF71401FDC750400495B81 /* FriendAssembler.swift */; };
 		40C429021FC3D08C004579A6 /* JSONDecoder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C429011FC3D08C004579A6 /* JSONDecoder+.swift */; };
+		40E1EE9C1FE805C00055CBF6 /* MeetupTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E1EE9B1FE805C00055CBF6 /* MeetupTitleCell.swift */; };
 		7BED1FB6487CD40A991B8614 /* Pods_FreshPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */; };
 /* End PBXBuildFile section */
 
@@ -145,6 +146,7 @@
 		40BF713E1FDC73DC00495B81 /* AddFriendRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendRouter.swift; sourceTree = "<group>"; };
 		40BF71401FDC750400495B81 /* FriendAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendAssembler.swift; sourceTree = "<group>"; };
 		40C429011FC3D08C004579A6 /* JSONDecoder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+.swift"; sourceTree = "<group>"; };
+		40E1EE9B1FE805C00055CBF6 /* MeetupTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupTitleCell.swift; sourceTree = "<group>"; };
 		66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreshPlan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		961AF7C9502FB2E5362945B5 /* Pods-FreshPlan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.release.xcconfig"; sourceTree = "<group>"; };
 		F2535B961F6CEAE83F9AC1E5 /* Pods-FreshPlan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.debug.xcconfig"; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				4044C47B1FE726DB00C0C244 /* MeetupDetailViewModel.swift */,
 				409602AA1FE7276D004D7606 /* MeetupDetailRouter.swift */,
 				409602AC1FE72775004D7606 /* MeetupDetailAssembler.swift */,
+				40E1EE9A1FE804D50055CBF6 /* Subviews */,
 			);
 			path = MeetupDetail;
 			sourceTree = "<group>";
@@ -428,6 +431,14 @@
 				4045A28E1FE5FE0E0059482E /* Subviews */,
 			);
 			path = Meetup;
+			sourceTree = "<group>";
+		};
+		40E1EE9A1FE804D50055CBF6 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				40E1EE9B1FE805C00055CBF6 /* MeetupTitleCell.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		63B037B023A8BC3303DFC20E /* Pods */ = {
@@ -622,6 +633,7 @@
 				405C5A9A1F8D94FA00AC8F9F /* HomeAssembler.swift in Sources */,
 				4056A4F31FD4BDB4006415A7 /* EmptyView.swift in Sources */,
 				408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */,
+				40E1EE9C1FE805C00055CBF6 /* MeetupTitleCell.swift in Sources */,
 				40BD70121F910FD6005B3B9D /* MeetupViewModel.swift in Sources */,
 				409602AB1FE7276D004D7606 /* MeetupDetailRouter.swift in Sources */,
 				4045A2951FE601490059482E /* MeetupType.swift in Sources */,

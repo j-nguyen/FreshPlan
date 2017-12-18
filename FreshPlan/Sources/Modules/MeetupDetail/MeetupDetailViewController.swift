@@ -69,6 +69,7 @@ public class MeetupDetailViewController: UIViewController {
     tableView = UITableView()
     tableView.estimatedRowHeight = 44
     tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.registerCell(MeetupTitleCell.self)
     
     view.addSubview(tableView)
     
@@ -84,10 +85,7 @@ public class MeetupDetailViewController: UIViewController {
     
     appBar.headerViewController.headerView.trackingScrollView = tableView
     
-    viewModel.meetup
-      .asObservable()
-      .filterNil()
-      .map { $0.title }
+    viewModel.title
       .bind(to: navigationItem.rx.title)
       .disposed(by: disposeBag)
     
