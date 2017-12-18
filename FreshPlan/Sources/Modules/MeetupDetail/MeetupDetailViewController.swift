@@ -86,6 +86,7 @@ public class MeetupDetailViewController: UIViewController {
     appBar.headerViewController.headerView.trackingScrollView = tableView
     
     viewModel.title
+      .asObservable()
       .bind(to: navigationItem.rx.title)
       .disposed(by: disposeBag)
     

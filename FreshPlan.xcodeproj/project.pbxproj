@@ -73,6 +73,8 @@
 		40BF713F1FDC73DC00495B81 /* AddFriendRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BF713E1FDC73DC00495B81 /* AddFriendRouter.swift */; };
 		40BF71411FDC750400495B81 /* FriendAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BF71401FDC750400495B81 /* FriendAssembler.swift */; };
 		40C429021FC3D08C004579A6 /* JSONDecoder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C429011FC3D08C004579A6 /* JSONDecoder+.swift */; };
+		40D8B0281FE8199E00CE2626 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D8B0271FE8199E00CE2626 /* Location.swift */; };
+		40D8B02A1FE819BB00CE2626 /* Other.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D8B0291FE819BB00CE2626 /* Other.swift */; };
 		40E1EE9C1FE805C00055CBF6 /* MeetupTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E1EE9B1FE805C00055CBF6 /* MeetupTitleCell.swift */; };
 		7BED1FB6487CD40A991B8614 /* Pods_FreshPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */; };
 /* End PBXBuildFile section */
@@ -146,6 +148,8 @@
 		40BF713E1FDC73DC00495B81 /* AddFriendRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendRouter.swift; sourceTree = "<group>"; };
 		40BF71401FDC750400495B81 /* FriendAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendAssembler.swift; sourceTree = "<group>"; };
 		40C429011FC3D08C004579A6 /* JSONDecoder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+.swift"; sourceTree = "<group>"; };
+		40D8B0271FE8199E00CE2626 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		40D8B0291FE819BB00CE2626 /* Other.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Other.swift; sourceTree = "<group>"; };
 		40E1EE9B1FE805C00055CBF6 /* MeetupTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupTitleCell.swift; sourceTree = "<group>"; };
 		66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreshPlan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		961AF7C9502FB2E5362945B5 /* Pods-FreshPlan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.release.xcconfig"; sourceTree = "<group>"; };
@@ -219,6 +223,8 @@
 				4045A2921FE601060059482E /* Meetup.swift */,
 				4045A2941FE601490059482E /* MeetupType.swift */,
 				4045A2961FE601650059482E /* Invitation.swift */,
+				40D8B0271FE8199E00CE2626 /* Location.swift */,
+				40D8B0291FE819BB00CE2626 /* Other.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -657,6 +663,7 @@
 				409602AD1FE72775004D7606 /* MeetupDetailAssembler.swift in Sources */,
 				40426D091F86B85500875179 /* LoginViewController.swift in Sources */,
 				408D083B1F8D2865006BCA8E /* VerifyRouter.swift in Sources */,
+				40D8B02A1FE819BB00CE2626 /* Other.swift in Sources */,
 				40934BFC1FE61E8F00AD7331 /* UIImageView+.swift in Sources */,
 				4079B1511FC4785F007E9407 /* ProfileUserHeaderCell.swift in Sources */,
 				4003B3A71FE3625E00BF682F /* String+.swift in Sources */,
@@ -664,6 +671,7 @@
 				408D083D1F8D286D006BCA8E /* VerifyViewModel.swift in Sources */,
 				4003B3A91FE368C300BF682F /* MDCTextInputControllerDefault+.swift in Sources */,
 				4071F8F91FDB0143001B77A1 /* FriendViewModel.swift in Sources */,
+				40D8B0281FE8199E00CE2626 /* Location.swift in Sources */,
 				4079B1561FC49367007E9407 /* ProfileUserInfoCell.swift in Sources */,
 				40BF71411FDC750400495B81 /* FriendAssembler.swift in Sources */,
 				4044C47A1FE7266A00C0C244 /* MeetupDetailViewController.swift in Sources */,

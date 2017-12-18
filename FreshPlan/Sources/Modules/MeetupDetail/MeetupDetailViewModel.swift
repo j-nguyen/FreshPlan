@@ -8,17 +8,20 @@
 
 import Foundation
 import RxSwift
-import Moya
 import RxDataSources
+import RxOptional
+import Moya
 
 public protocol MeetupDetailViewModelProtocol {
   var title: Variable<String> { get }
+  var section: Variable<[MeetupDetailViewModel.Section]> { get }
 }
 
 public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
   private let provider: MoyaProvider<FreshPlan>!
   
   public var title: Variable<String> = Variable("")
+  public var section: Variable<[MeetupDetailViewModel.Section]> = Variable([])
   
   private let disposeBag: DisposeBag = DisposeBag()
   
@@ -35,6 +38,52 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
       .map { $0.title }
       .bind(to: self.title)
       .disposed(by: disposeBag)
+    
+    //MARK: Table Creation
+    
+    let title = meetup.map { SectionItem.title(order: 0, title: $0.title, startDate: $0.startDate, endDate: $0.endDate) }
+    // we're checking the type so we can dislpay accordingly on the SectionItem
+    let type = meetup.map { meetup -> SectionItem? in
+      // convert to a json data format
+      if let data = meetup.metadata.data(using: .utf8) {
+        if meetup.meetupType.type == MeetupType.Options.location.rawValue {
+          let metadata = try JSONDecoder().decode(Location.self, from: data)
+          return SectionItem.location(order: 1, title: metadata.title, latitude: metadata.latitude, longitude: metadata.longitude)
+        } else if meetup.meetupType.type == MeetupType.Options.other.rawValue {
+          let metadata = try JSONDecoder().decode(Other.self, from: data)
+          return SectionItem.other(order: 1, title: metadata.title, description: metadata.description)
+        }
+      }
+      return nil
+    }
+    .filterNil()
+    
+    // now wrap these into a group
+    let meetupSection = Observable.from([title, type])
+      .asObservable()
+      .flatMap { $0 }
+      .toArray()
+      .map { $0.sorted(by: { $0.order < $1.order }) }
+      .map { Section(order: 0, title: "", items: $0) }
+    
+    //MARK: Invitations
+    let invitationSection = meetup
+      .map { $0.invitations }
+      .map { invitations -> [SectionItem] in
+        return invitations.enumerated().map { (index, invite) -> SectionItem in
+          return SectionItem.invitations(order: index, inviteeId: invite.invitee.id, invitee: invite.invitee.displayName, accepted: invite.accepted)
+        }
+      }
+      .map { $0.sorted(by: { $0.order < $1.order } )}
+      .map { Section(order: 1, title: "Invited", items: $0) }
+    
+    // MARK: Table Add
+    Observable.from([meetupSection, invitationSection])
+      .flatMap { $0 }
+      .toArray()
+      .map { $0.sorted(by: { $0.order < $1.order }) }
+      .bind(to: section)
+      .disposed(by: disposeBag)
   }
   
   private func requestMeetup(meetupId: Int) -> Observable<Meetup> {
@@ -46,12 +95,15 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
 
 extension MeetupDetailViewModel {
   public struct Section {
+    public var order: Int
     public var title: String
     public var items: [SectionItem]
   }
   
   public enum SectionItem {
-    case title(order: Int, title: String)
+    case title(order: Int, title: String, startDate: Date, endDate: Date)
+    case location(order: Int, title: String, latitude: Double, longitude: Double)
+    case other(order: Int, title: String, description: String)
     case invitations(order: Int, inviteeId: Int, invitee: String, accepted: Bool)
   }
 }
@@ -68,7 +120,11 @@ extension MeetupDetailViewModel.Section: SectionModelType {
 extension MeetupDetailViewModel.SectionItem: Equatable {
   public var order: Int {
     switch self {
-    case .title(let order, _):
+    case .title(let order, _, _, _):
+      return order
+    case .location(let order, _, _, _):
+      return order
+    case .other(let order, _, _):
       return order
     case .invitations(let order, _, _, _):
       return order
