@@ -20,6 +20,8 @@ public final class MeetupTitleCell: UITableViewCell {
   
   //MARK: Views
   public var titleLabel: UILabel!
+  public var startDateLabel: UILabel!
+  public var endDateLabel: UILabel!
   private var inkViewController: MDCInkTouchController!
   
   //MARK: DisposeBag
@@ -37,6 +39,8 @@ public final class MeetupTitleCell: UITableViewCell {
   private func prepareView() {
     selectionStyle = .none
     prepareTitleLabel()
+    prepareStartDateLabel()
+    prepareEndDateLabel()
     prepareInkView()
   }
   
@@ -48,17 +52,68 @@ public final class MeetupTitleCell: UITableViewCell {
   
   private func prepareTitleLabel() {
     titleLabel = UILabel()
-    titleLabel.font = MDCTypography.titleFont()
+    titleLabel.font = MDCTypography.headlineFont()
     
     contentView.addSubview(titleLabel)
     
     titleLabel.snp.makeConstraints { make in
-      make.center.equalTo(contentView)
+      make.centerX.equalTo(contentView)
+      make.top.equalTo(contentView).offset(10)
     }
     
     title
       .asObservable()
       .bind(to: titleLabel.rx.text)
+      .disposed(by: disposeBag)
+  }
+  
+  private func prepareStartDateLabel() {
+    startDateLabel = UILabel()
+    startDateLabel.font = MDCTypography.body1Font()
+    
+    contentView.addSubview(startDateLabel)
+    
+    startDateLabel.snp.makeConstraints { make in
+      make.top.equalTo(titleLabel.snp.bottom).offset(5)
+      make.centerX.equalTo(contentView)
+    }
+    
+    startDate
+      .asObservable()
+      .map { date -> String? in
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.dateFormat = "MMM d, h:mm a"
+        let dateString = dateFormatter.string(from: date)
+        return "Start Date: \(dateString)"
+      }
+      .bind(to: startDateLabel.rx.text)
+      .disposed(by: disposeBag)
+  }
+  
+  private func prepareEndDateLabel() {
+    endDateLabel = UILabel()
+    endDateLabel.font = MDCTypography.body1Font()
+    
+    contentView.addSubview(endDateLabel)
+    
+    endDateLabel.snp.makeConstraints { make in
+      make.top.equalTo(startDateLabel.snp.bottom).offset(5)
+      make.centerX.equalTo(contentView)
+    }
+    
+    endDate
+      .asObservable()
+      .map { date -> String? in
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.dateFormat = "MMM d, h:mm a"
+        let dateString = dateFormatter.string(from: date)
+        return "End Date: \(dateString)"
+      }
+      .bind(to: endDateLabel.rx.text)
       .disposed(by: disposeBag)
   }
 }

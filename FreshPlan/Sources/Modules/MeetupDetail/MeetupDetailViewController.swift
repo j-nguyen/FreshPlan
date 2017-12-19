@@ -69,8 +69,9 @@ public class MeetupDetailViewController: UIViewController {
   
   private func prepareTableView() {
     tableView = UITableView()
-    tableView.estimatedRowHeight = 70
+    tableView.estimatedRowHeight = 100
     tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.rx.setDelegate(self).disposed(by: disposeBag)
     tableView.registerCell(MeetupTitleCell.self)
     
     view.addSubview(tableView)
@@ -143,3 +144,16 @@ public class MeetupDetailViewController: UIViewController {
     appBar.navigationBar.unobserveNavigationItem()
   }
 }
+
+//MARK: TableViewDelegate
+extension MeetupDetailViewController: UITableViewDelegate {
+  public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    switch dataSource[indexPath] {
+    case .title:
+      return 100
+    default:
+      return UITableViewAutomaticDimension
+    }
+  }
+}
+
