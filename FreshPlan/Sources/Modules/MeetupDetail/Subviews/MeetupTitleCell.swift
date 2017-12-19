@@ -15,6 +15,8 @@ import MaterialComponents
 public final class MeetupTitleCell: UITableViewCell {
   //MARK: PublishSubject
   public var title: PublishSubject<String> = PublishSubject()
+  public var startDate: PublishSubject<Date> = PublishSubject()
+  public var endDate: PublishSubject<Date> = PublishSubject()
   
   //MARK: Views
   public var titleLabel: UILabel!
@@ -46,7 +48,7 @@ public final class MeetupTitleCell: UITableViewCell {
   
   private func prepareTitleLabel() {
     titleLabel = UILabel()
-    titleLabel.font = MDCTypography.body1Font()
+    titleLabel.font = MDCTypography.titleFont()
     
     contentView.addSubview(titleLabel)
     

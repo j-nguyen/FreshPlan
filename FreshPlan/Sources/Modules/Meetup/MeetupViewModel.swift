@@ -12,7 +12,7 @@ import Moya
 public protocol MeetupViewModelProtocol {
   var meetups: Variable<[Meetup]> { get }
   var refreshContent: PublishSubject<Void> { get }
-  var refreshSuccess: PublishSubject<Bool> { get }
+  var refreshSuccess: PublishSubject<Void> { get }
 }
 
 public class MeetupViewModel: MeetupViewModelProtocol {
@@ -22,7 +22,7 @@ public class MeetupViewModel: MeetupViewModelProtocol {
   //MARK: Variables
   public var meetups: Variable<[Meetup]> = Variable([])
   public var refreshContent: PublishSubject<Void> = PublishSubject()
-  public var refreshSuccess: PublishSubject<Bool> = PublishSubject()
+  public var refreshSuccess: PublishSubject<Void> = PublishSubject()
   
   //MARK: DisposeBag
   private let disposeBag: DisposeBag = DisposeBag()
@@ -34,7 +34,7 @@ public class MeetupViewModel: MeetupViewModelProtocol {
       .asObservable()
       .flatMap { self.requestMeetups().map { $0.sorted(by: { $0.startDate < $1.startDate }) } }
       .do(onNext: { [weak self] meetup in
-        self?.refreshSuccess.on(.next(true))
+        self?.refreshSuccess.on(.next(()))
       })
       .bind(to: meetups)
       .disposed(by: disposeBag)

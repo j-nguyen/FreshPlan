@@ -116,11 +116,9 @@ public final class MeetupController: UIViewController {
     
     viewModel.refreshSuccess
       .asObservable()
-      .filter { $0 }
-      .subscribe(onNext: { [weak self] _ in
-        if let this = self {
-          this.refreshControl.endRefreshing()
-        }
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.refreshControl.endRefreshing()
       })
       .disposed(by: disposeBag)
   }

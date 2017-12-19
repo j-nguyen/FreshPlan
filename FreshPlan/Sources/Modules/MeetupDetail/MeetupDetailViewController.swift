@@ -9,6 +9,7 @@
 import Foundation
 import RxOptional
 import RxSwift
+import RxDataSources
 import SnapKit
 import MaterialComponents
 
@@ -23,6 +24,7 @@ public class MeetupDetailViewController: UIViewController {
   
   //MARK: TableView
   private var tableView: UITableView!
+  private var dataSource: RxTableViewSectionedReloadDataSource<MeetupDetailViewModel.Section>!
   
   private let disposeBag: DisposeBag = DisposeBag()
   
@@ -67,7 +69,7 @@ public class MeetupDetailViewController: UIViewController {
   
   private func prepareTableView() {
     tableView = UITableView()
-    tableView.estimatedRowHeight = 44
+    tableView.estimatedRowHeight = 70
     tableView.rowHeight = UITableViewAutomaticDimension
     tableView.registerCell(MeetupTitleCell.self)
     
@@ -76,6 +78,28 @@ public class MeetupDetailViewController: UIViewController {
     tableView.snp.makeConstraints { make in
       make.edges.equalTo(view)
     }
+    
+    // configure dataSource
+    dataSource = RxTableViewSectionedReloadDataSource<MeetupDetailViewModel.Section>(
+      configureCell: { (dataSource, tableView, index, section) in
+      switch dataSource[index] {
+      case let .title(_, title, startDate, endDate):
+        let cell = tableView.dequeueCell(ofType: MeetupTitleCell.self, for: index)
+        cell.title.on(.next(title))
+        cell.startDate.on(.next(startDate))
+        cell.endDate.on(.next(endDate))
+        return cell
+      default:
+        return UITableViewCell()
+      }
+    })
+    
+    dataSource.titleForHeaderInSection = { _, _ in return "" }
+    
+    viewModel.section
+      .asObservable()
+      .bind(to: tableView.rx.items(dataSource: dataSource))
+      .disposed(by: disposeBag)
   }
   
   private func prepareNavigationBar() {

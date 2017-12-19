@@ -45,7 +45,7 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
     // we're checking the type so we can dislpay accordingly on the SectionItem
     let type = meetup.map { meetup -> SectionItem? in
       // convert to a json data format
-      if let data = meetup.metadata.data(using: .utf8) {
+      if meetup.metadata.isNotEmpty, let data = meetup.metadata.data(using: .utf8) {
         if meetup.meetupType.type == MeetupType.Options.location.rawValue {
           let metadata = try JSONDecoder().decode(Location.self, from: data)
           return SectionItem.location(order: 1, title: metadata.title, latitude: metadata.latitude, longitude: metadata.longitude)
@@ -64,7 +64,7 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
       .flatMap { $0 }
       .toArray()
       .map { $0.sorted(by: { $0.order < $1.order }) }
-      .map { Section(order: 0, title: "", items: $0) }
+      .map { Section.meetup(order: 0, title: "", items: $0) }
     
     //MARK: Invitations
     let invitationSection = meetup
@@ -75,7 +75,7 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
         }
       }
       .map { $0.sorted(by: { $0.order < $1.order } )}
-      .map { Section(order: 1, title: "Invited", items: $0) }
+      .map { Section.invitations(order: 1, title: "Invited", items: $0) }
     
     // MARK: Table Add
     Observable.from([meetupSection, invitationSection])
@@ -94,10 +94,9 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
 }
 
 extension MeetupDetailViewModel {
-  public struct Section {
-    public var order: Int
-    public var title: String
-    public var items: [SectionItem]
+  public enum Section {
+    case meetup(order: Int, title: String, items: [SectionItem])
+    case invitations(order: Int, title: String, items: [SectionItem])
   }
   
   public enum SectionItem {
@@ -111,9 +110,40 @@ extension MeetupDetailViewModel {
 extension MeetupDetailViewModel.Section: SectionModelType {
   public typealias Items = MeetupDetailViewModel.SectionItem
   
+  public var items: [Items] {
+    switch self {
+    case let .meetup(_, _, items):
+      return items.map { $0 }
+    case let .invitations(_, _, items):
+      return items.map { $0 }
+    }
+  }
+  
+  public var order: Int {
+    switch self {
+    case let .meetup(order, _, _):
+      return order
+    case let .invitations(order, _, _):
+      return order
+    }
+  }
+  
+  public var title: String {
+    switch self {
+    case let .meetup(_, title, _):
+      return title
+    case let .invitations(_, title, _):
+      return title
+    }
+  }
+  
   public init(original: MeetupDetailViewModel.Section, items: [Items]) {
-    self = original
-    self.items = items
+    switch original {
+    case let .invitations(order: order, title: title, _):
+      self = .invitations(order: order, title: title, items: items)
+    case let .meetup(order, title, _):
+      self = .meetup(order: order, title: title, items: items)
+    }
   }
 }
 
