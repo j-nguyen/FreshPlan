@@ -126,22 +126,30 @@ public final class MeetupController: UIViewController {
   private func prepareEmptyMeetupView() {
     emptyMeetupView = EmptyMeetupView()
     
-    view.addSubview(emptyMeetupView)
+    tableView.backgroundView = emptyMeetupView
     
     emptyMeetupView.snp.makeConstraints { make in
       make.edges.equalTo(view)
     }
     
-    viewModel.meetups
-      .asObservable()
+    let meetup = viewModel.meetups.asObservable().share()
+    
+    meetup
       .map { $0.count == 0 }
-      .bind(to: tableView.rx.isHidden)
+      .subscribe(onNext: { [weak self] _ in
+        guard let this = self else { return }
+        this.tableView.separatorStyle = .none
+        this.tableView.backgroundView?.isHidden = false
+      })
       .disposed(by: disposeBag)
     
-    viewModel.meetups
-      .asObservable()
+    meetup
       .map { $0.count > 0 }
-      .bind(to: emptyMeetupView.rx.isHidden)
+      .subscribe(onNext: { [weak self] _ in
+        guard let this = self else { return }
+        this.tableView.separatorStyle = .singleLine
+        this.tableView.backgroundView?.isHidden = true
+      })
       .disposed(by: disposeBag)
   }
   

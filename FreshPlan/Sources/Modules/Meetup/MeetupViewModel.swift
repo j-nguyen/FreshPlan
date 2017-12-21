@@ -39,10 +39,10 @@ public class MeetupViewModel: MeetupViewModelProtocol {
       .bind(to: meetups)
       .disposed(by: disposeBag)
     
-    self.requestMeetups()
-      .map { $0.sorted(by: { $0.startDate < $1.startDate }) }
-      .bind(to: meetups)
-      .disposed(by: disposeBag)
+//    self.requestMeetups()
+//      .map { $0.sorted(by: { $0.startDate < $1.startDate }) }
+//      .bind(to: meetups)
+//      .disposed(by: disposeBag)
   }
   
   private func requestMeetups() -> Observable<[Meetup]> {
