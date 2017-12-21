@@ -77,6 +77,8 @@ public final class InviteViewController: UIViewController {
       viewModel.invitations
         .asObservable()
         .bind(to: tableView.rx.items(cellIdentifier: String(describing: InviteCell.self))) { (index, invite, cell) in
+        cell.textLabel?.text = invite.inviter.displayName
+          cell.detailTextLabel?.text = invite.inviter.email
           
       }
       .disposed(by: disposeBag)
@@ -107,12 +109,6 @@ public final class InviteViewController: UIViewController {
 
 // MARK:  TableViewDelegate
 extension InviteViewController: UITableViewDelegate {
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-            appBar.headerViewController.headerView.trackingScrollDidScroll()
-        }
-    }
-    
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if scrollView == appBar.headerViewController.headerView.trackingScrollView {
             appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()

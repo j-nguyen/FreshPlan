@@ -14,14 +14,14 @@ import RxDataSources
 
 
 public protocol InviteViewModelProtocol {
-    var invitations: Variable<[Invitation]> { get }
-    
-   
-
-    
+  var invitations: Variable<[Invitation]> { get }
+  var acceptInvitation: PublishSubject<IndexPath> { get }
 }
 
 public class InviteViewModel: InviteViewModelProtocol {
+  
+  public var acceptInvitation: PublishSubject<IndexPath> = PublishSubject()
+  
     
     private let provider: MoyaProvider<FreshPlan>!
     public var invitations: Variable<[Invitation]> = Variable([])
