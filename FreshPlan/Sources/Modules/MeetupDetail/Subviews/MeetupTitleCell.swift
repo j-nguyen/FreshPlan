@@ -38,13 +38,6 @@ public final class MeetupTitleCell: UITableViewCell {
     selectionStyle = .none
     prepareStartDateLabel()
     prepareEndDateLabel()
-    prepareInkView()
-  }
-  
-  private func prepareInkView() {
-    inkViewController = MDCInkTouchController(view: self)
-    inkViewController.delegate = self
-    inkViewController.addInkView()
   }
   
   private func prepareStartDateLabel() {
@@ -95,12 +88,5 @@ public final class MeetupTitleCell: UITableViewCell {
       }
       .bind(to: endDateLabel.rx.text)
       .disposed(by: disposeBag)
-  }
-}
-
-// MARK: Ink
-extension MeetupTitleCell: MDCInkTouchControllerDelegate {
-  public func inkTouchController(_ inkTouchController: MDCInkTouchController, shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
-    return true
   }
 }

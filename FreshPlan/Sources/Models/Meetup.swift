@@ -13,6 +13,7 @@ public struct Meetup: Decodable {
   public let meetupType: MeetupType
   public let user: User
   public let title: String
+  public let description: String
   public let startDate: Date
   public let endDate: Date
   public let invitations: [Invitation]

@@ -8,13 +8,20 @@
 
 import Foundation
 import UIKit
+import MapKit
 import RxSwift
 import RxOptional
+import MaterialComponents
 
 public final class MeetupLocationCell: UITableViewCell {
   // MARK: PublishSubjects
   public var latitude: PublishSubject<Double> = PublishSubject()
   public var longitude: PublishSubject<Double> = PublishSubject()
+  
+  // MARK: - Views
+  private var mapView: MKMapView!
+  
+  private let disposeBag: DisposeBag = DisposeBag()
   
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -26,6 +33,17 @@ public final class MeetupLocationCell: UITableViewCell {
   }
   
   private func prepareView() {
+    selectionStyle = .none
+    prepareMapView()
+  }
+  
+  private func prepareMapView() {
+    mapView = MKMapView()
     
+    contentView.addSubview(mapView)
+    
+    mapView.snp.makeConstraints { make in
+      make.edges.equalTo(contentView)
+    }
   }
 }

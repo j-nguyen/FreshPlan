@@ -367,6 +367,9 @@ PODS:
   - RxGesture (1.2.1):
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
+  - RxMKMapView (4.0.0):
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
   - RxOptional (3.3.0):
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
@@ -382,6 +385,7 @@ DEPENDENCIES:
   - RxCocoa (~> 4.0.0)
   - RxDataSources
   - RxGesture
+  - RxMKMapView
   - RxOptional
   - RxSwift (~> 4.0.0)
   - SnapKit (~> 4.0.0)
@@ -403,10 +407,11 @@ SPEC CHECKSUMS:
   RxCocoa: d62846ca96495d862fa4c59ea7d87e5031d7340e
   RxDataSources: cb7c31e652a87ebb919da45f716bbb87b3765f6b
   RxGesture: c278eb05b187abd47e11e65464ae4de53ab71d95
+  RxMKMapView: 5cd47305a35e6dbf8bceb7713280060950203188
   RxOptional: e5448d3e21024489e07c31f6a262f2b50c975367
   RxSwift: fd680d75283beb5e2559486f3c0ff852f0d35334
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: e8c1197163b3a9d31564574f8b53799cf76e2419
+PODFILE CHECKSUM: 02993399ee8152f81001747159ba56a3e2b985f8
 
 COCOAPODS: 1.3.1

@@ -70,10 +70,12 @@ public class MeetupDetailViewController: UIViewController {
   private func prepareTableView() {
     tableView = UITableView()
     tableView.separatorInset = .zero
-    tableView.estimatedRowHeight = 50
+    tableView.estimatedRowHeight = 44
     tableView.rowHeight = UITableViewAutomaticDimension
     tableView.rx.setDelegate(self).disposed(by: disposeBag)
     tableView.registerCell(MeetupTitleCell.self)
+    tableView.registerCell(MeetupDescriptionCell.self)
+    tableView.registerCell(MeetupLocationCell.self)
     
     view.addSubview(tableView)
     
@@ -89,6 +91,15 @@ public class MeetupDetailViewController: UIViewController {
         let cell = tableView.dequeueCell(ofType: MeetupTitleCell.self, for: index)
         cell.startDate.on(.next(startDate))
         cell.endDate.on(.next(endDate))
+        return cell
+      case let .desc(_, description):
+        let cell = tableView.dequeueCell(ofType: MeetupDescriptionCell.self, for: index)
+        cell.descriptionText.on(.next(description))
+        return cell
+      case let .location(_, latitude, longitude):
+        let cell = tableView.dequeueCell(ofType: MeetupLocationCell.self, for: index)
+        cell.latitude.on(.next(latitude))
+        cell.longitude.on(.next(longitude))
         return cell
       default:
         return UITableViewCell()
@@ -149,7 +160,7 @@ public class MeetupDetailViewController: UIViewController {
 extension MeetupDetailViewController: UITableViewDelegate {
   public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     switch dataSource[indexPath] {
-    case .title:
+    case .location:
       return 50
     default:
       return UITableViewAutomaticDimension

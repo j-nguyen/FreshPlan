@@ -9,6 +9,5 @@
 import Foundation
 
 public struct Other: Decodable {
-  public let title: String
-  public let description: String
+  public let notes: String
 }

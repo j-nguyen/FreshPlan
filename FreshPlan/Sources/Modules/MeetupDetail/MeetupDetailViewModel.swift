@@ -40,18 +40,19 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
       .disposed(by: disposeBag)
     
     //MARK: Table Creation
-    
     let title = meetup.map { SectionItem.title(order: 0, startDate: $0.startDate, endDate: $0.endDate) }
+    let desc = meetup.map { SectionItem.desc(order: 1, description: $0.description) }
+    
     // we're checking the type so we can dislpay accordingly on the SectionItem
     let type = meetup.map { meetup -> SectionItem? in
       // convert to a json data format
       if meetup.metadata.isNotEmpty, let data = meetup.metadata.data(using: .utf8) {
         if meetup.meetupType.type == MeetupType.Options.location.rawValue {
           let metadata = try JSONDecoder().decode(Location.self, from: data)
-          return SectionItem.location(order: 1, title: metadata.title, latitude: metadata.latitude, longitude: metadata.longitude)
+          return SectionItem.location(order: 2, latitude: metadata.latitude, longitude: metadata.longitude)
         } else if meetup.meetupType.type == MeetupType.Options.other.rawValue {
           let metadata = try JSONDecoder().decode(Other.self, from: data)
-          return SectionItem.other(order: 1, title: metadata.title, description: metadata.description)
+          return SectionItem.other(order: 2, notes: metadata.notes)
         }
       }
       return nil
@@ -59,7 +60,7 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
     .filterNil()
     
     // now wrap these into a group
-    let meetupSection = Observable.from([title, type])
+    let meetupSection = Observable.from([title, desc, type])
       .asObservable()
       .flatMap { $0 }
       .toArray()
@@ -101,8 +102,9 @@ extension MeetupDetailViewModel {
   
   public enum SectionItem {
     case title(order: Int, startDate: Date, endDate: Date)
-    case location(order: Int, title: String, latitude: Double, longitude: Double)
-    case other(order: Int, title: String, description: String)
+    case desc(order: Int, description: String)
+    case location(order: Int, latitude: Double, longitude: Double)
+    case other(order: Int, notes: String)
     case invitations(order: Int, inviteeId: Int, invitee: String, accepted: Bool)
   }
 }
@@ -152,9 +154,11 @@ extension MeetupDetailViewModel.SectionItem: Equatable {
     switch self {
     case .title(let order, _, _):
       return order
-    case .location(let order, _, _, _):
+    case .desc(let order, _):
       return order
-    case .other(let order, _, _):
+    case .location(let order, _, _):
+      return order
+    case .other(let order, _):
       return order
     case .invitations(let order, _, _, _):
       return order
