@@ -69,7 +69,8 @@ public class MeetupDetailViewController: UIViewController {
   
   private func prepareTableView() {
     tableView = UITableView()
-    tableView.estimatedRowHeight = 100
+    tableView.separatorInset = .zero
+    tableView.estimatedRowHeight = 50
     tableView.rowHeight = UITableViewAutomaticDimension
     tableView.rx.setDelegate(self).disposed(by: disposeBag)
     tableView.registerCell(MeetupTitleCell.self)
@@ -84,9 +85,8 @@ public class MeetupDetailViewController: UIViewController {
     dataSource = RxTableViewSectionedReloadDataSource<MeetupDetailViewModel.Section>(
       configureCell: { (dataSource, tableView, index, section) in
       switch dataSource[index] {
-      case let .title(_, title, startDate, endDate):
+      case let .title(_, startDate, endDate):
         let cell = tableView.dequeueCell(ofType: MeetupTitleCell.self, for: index)
-        cell.title.on(.next(title))
         cell.startDate.on(.next(startDate))
         cell.endDate.on(.next(endDate))
         return cell
@@ -150,7 +150,7 @@ extension MeetupDetailViewController: UITableViewDelegate {
   public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     switch dataSource[indexPath] {
     case .title:
-      return 100
+      return 50
     default:
       return UITableViewAutomaticDimension
     }

@@ -41,7 +41,7 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
     
     //MARK: Table Creation
     
-    let title = meetup.map { SectionItem.title(order: 0, title: $0.title, startDate: $0.startDate, endDate: $0.endDate) }
+    let title = meetup.map { SectionItem.title(order: 0, startDate: $0.startDate, endDate: $0.endDate) }
     // we're checking the type so we can dislpay accordingly on the SectionItem
     let type = meetup.map { meetup -> SectionItem? in
       // convert to a json data format
@@ -100,7 +100,7 @@ extension MeetupDetailViewModel {
   }
   
   public enum SectionItem {
-    case title(order: Int, title: String, startDate: Date, endDate: Date)
+    case title(order: Int, startDate: Date, endDate: Date)
     case location(order: Int, title: String, latitude: Double, longitude: Double)
     case other(order: Int, title: String, description: String)
     case invitations(order: Int, inviteeId: Int, invitee: String, accepted: Bool)
@@ -150,7 +150,7 @@ extension MeetupDetailViewModel.Section: SectionModelType {
 extension MeetupDetailViewModel.SectionItem: Equatable {
   public var order: Int {
     switch self {
-    case .title(let order, _, _, _):
+    case .title(let order, _, _):
       return order
     case .location(let order, _, _, _):
       return order
