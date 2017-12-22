@@ -27,6 +27,7 @@ extension AddMeetupRouter: RouterProtocol {
     
     switch route {
     case .meetup:
+      context.dismiss(animated: true, completion: nil)
       break
     }
   }

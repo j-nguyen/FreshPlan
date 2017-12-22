@@ -60,7 +60,9 @@ extension MeetupRouter: RouterProtocol {
       break
     case .addMeetup:
       guard let params = parameters, let type = params["type"] as? String else { return }
-      print(type)
+      
+      context.present(AddMeetupAssembler.make(type: type), animated: true, completion: nil)
+      
       break
 		}
 	}
