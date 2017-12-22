@@ -9,6 +9,7 @@
 import UIKit
 import MaterialComponents
 import RxSwift
+import RxDataSources
 import SnapKit
 
 public final class MeetupController: UIViewController {
@@ -18,6 +19,7 @@ public final class MeetupController: UIViewController {
   //MARK: views
   private var emptyMeetupView: EmptyMeetupView!
   private var tableView: UITableView!
+  fileprivate var dataSource: RxTableViewSectionedAnimatedDataSource<MeetupViewModel.Section>!
   private var refreshControl: UIRefreshControl!
   
   //MARK: App Bar
@@ -80,13 +82,27 @@ public final class MeetupController: UIViewController {
       make.edges.equalTo(view)
     }
     
+    dataSource = RxTableViewSectionedAnimatedDataSource(
+      configureCell: { dataSource, tableView, index, model in
+        let cell = tableView.dequeueCell(ofType: MeetupCell.self, for: index)
+        cell.name.on(.next(model.title))
+        cell.startDate.on(.next(model.startDate))
+        cell.endDate.on(.next(model.endDate))
+        return cell
+      }
+    )
+    
+    dataSource.titleForHeaderInSection = { _,_ in return "" }
+    
+    dataSource.animationConfiguration = AnimationConfiguration(insertAnimation: .automatic, reloadAnimation: .automatic, deleteAnimation: .automatic)
+    
+    dataSource.canEditRowAtIndexPath = { _, _ in
+      return true
+    }
+    
     viewModel.meetups
       .asObservable()
-      .bind(to: tableView.rx.items(cellIdentifier: String(describing: MeetupCell.self), cellType: MeetupCell.self)) { index, meetup, cell in
-        cell.name.on(.next(meetup.title))
-        cell.startDate.on(.next(meetup.startDate))
-        cell.endDate.on(.next(meetup.endDate))
-      }
+      .bind(to: tableView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
     
     tableView.rx.modelSelected(Meetup.self)
@@ -101,6 +117,26 @@ public final class MeetupController: UIViewController {
         }
       })
       .disposed(by: disposeBag)
+    
+    viewModel.itemDeleted = tableView.rx.itemDeleted.asObservable()
+    
+    viewModel.authCheck
+      .filter { !$0 }
+      .subscribe(onNext: { _ in
+        let message = MDCSnackbarMessage(text: "You are not the host of this meetup!")
+        MDCSnackbarManager.show(message)
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel.authCheck
+      .filter { $0 }
+      .subscribe(onNext: { _ in
+        let message = MDCSnackbarMessage(text: "Successfully removed meetup!")
+        MDCSnackbarManager.show(message)
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel.bindButtons()
   }
   
   private func prepareRefreshControl() {
