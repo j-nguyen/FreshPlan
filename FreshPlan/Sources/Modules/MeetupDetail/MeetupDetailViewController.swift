@@ -77,6 +77,7 @@ public class MeetupDetailViewController: UIViewController {
     tableView.registerCell(MeetupDescriptionCell.self)
     tableView.registerCell(MeetupLocationCell.self)
     tableView.registerCell(MeetupDirectionCell.self)
+    tableView.registerCell(MeetupInviteCell.self)
     
     view.addSubview(tableView)
     
@@ -106,6 +107,12 @@ public class MeetupDetailViewController: UIViewController {
       case let .directions(_, text, _, _):
         let cell = tableView.dequeueCell(ofType: MeetupDirectionCell.self, for: index)
         cell.title.on(.next(text))
+        return cell
+      case let .invitations(_, _, invitee, email, accepted):
+        let cell = tableView.dequeueCell(ofType: MeetupInviteCell.self, for: index)
+        cell.displayName.on(.next(invitee))
+        cell.email.on(.next(email))
+        cell.accepted.on(.next(accepted))
         return cell
       default:
         return UITableViewCell()
