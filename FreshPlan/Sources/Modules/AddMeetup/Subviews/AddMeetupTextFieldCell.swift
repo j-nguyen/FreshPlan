@@ -44,7 +44,7 @@ public final class AddMeetupTextFieldCell: UITableViewCell {
     contentView.addSubview(titleLabel)
     
     titleLabel.snp.makeConstraints { make in
-      make.left.equalTo(contentView)
+      make.left.equalTo(contentView).offset(5)
       make.centerY.equalTo(contentView)
     }
     
@@ -59,6 +59,8 @@ public final class AddMeetupTextFieldCell: UITableViewCell {
     titleTextField.font = MDCTypography.body1Font()
     titleTextField.clearButtonMode = .always
     titleTextField.returnKeyType = .done
+    titleTextField.contentMode = .left
+    titleTextField.textAlignment = .left
     titleTextField.placeholder = "Meetup name"
     
     contentView.addSubview(titleTextField)
@@ -67,7 +69,7 @@ public final class AddMeetupTextFieldCell: UITableViewCell {
       make.top.equalTo(contentView)
       make.bottom.equalTo(contentView)
       make.left.equalTo(titleLabel.snp.right).offset(5)
-      make.right.equalTo(contentView.snp.right).offset(-5)
+      make.width.equalTo(contentView).multipliedBy(0.60)
     }
   }
 }

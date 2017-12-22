@@ -199,7 +199,7 @@ extension AddMeetupViewController: UITableViewDelegate {
     case .name:
       return 50
     case .description:
-      return 150
+      return 125
     default:
       return UITableViewAutomaticDimension
     }

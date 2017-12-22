@@ -87,6 +87,9 @@
 		40E1EE9C1FE805C00055CBF6 /* MeetupTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E1EE9B1FE805C00055CBF6 /* MeetupTitleCell.swift */; };
 		40F8C6D81FED5DE40040D334 /* AddMeetupTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6D71FED5DE40040D334 /* AddMeetupTextFieldCell.swift */; };
 		40F8C6DA1FED741C0040D334 /* AddMeetupTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6D91FED741C0040D334 /* AddMeetupTextViewCell.swift */; };
+		40F8C6DC1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6DB1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift */; };
+		40F8C6DE1FED7FE80040D334 /* AddMeetupNotesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6DD1FED7FE80040D334 /* AddMeetupNotesCell.swift */; };
+		40F8C6E01FED7FF60040D334 /* AddMeetupDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6DF1FED7FF60040D334 /* AddMeetupDateCell.swift */; };
 		7BED1FB6487CD40A991B8614 /* Pods_FreshPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */; };
 /* End PBXBuildFile section */
 
@@ -173,6 +176,9 @@
 		40E1EE9B1FE805C00055CBF6 /* MeetupTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupTitleCell.swift; sourceTree = "<group>"; };
 		40F8C6D71FED5DE40040D334 /* AddMeetupTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupTextFieldCell.swift; sourceTree = "<group>"; };
 		40F8C6D91FED741C0040D334 /* AddMeetupTextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupTextViewCell.swift; sourceTree = "<group>"; };
+		40F8C6DB1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupGeocodeCell.swift; sourceTree = "<group>"; };
+		40F8C6DD1FED7FE80040D334 /* AddMeetupNotesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupNotesCell.swift; sourceTree = "<group>"; };
+		40F8C6DF1FED7FF60040D334 /* AddMeetupDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupDateCell.swift; sourceTree = "<group>"; };
 		66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreshPlan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		961AF7C9502FB2E5362945B5 /* Pods-FreshPlan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.release.xcconfig"; sourceTree = "<group>"; };
 		F2535B961F6CEAE83F9AC1E5 /* Pods-FreshPlan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.debug.xcconfig"; sourceTree = "<group>"; };
@@ -492,6 +498,9 @@
 			children = (
 				40F8C6D71FED5DE40040D334 /* AddMeetupTextFieldCell.swift */,
 				40F8C6D91FED741C0040D334 /* AddMeetupTextViewCell.swift */,
+				40F8C6DB1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift */,
+				40F8C6DD1FED7FE80040D334 /* AddMeetupNotesCell.swift */,
+				40F8C6DF1FED7FF60040D334 /* AddMeetupDateCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -749,6 +758,7 @@
 				4045A2931FE601060059482E /* Meetup.swift in Sources */,
 				40BD70161F911022005B3B9D /* MeetupAssembler.swift in Sources */,
 				400BEC251FEC914800D8BADE /* MeetupDirectionCell.swift in Sources */,
+				40F8C6E01FED7FF60040D334 /* AddMeetupDateCell.swift in Sources */,
 				405C5A9C1F8D950500AC8F9F /* HomeViewModel.swift in Sources */,
 				40426D0D1F86B86800875179 /* LoginAssembler.swift in Sources */,
 				409B2BF31FBE61F5000A7F16 /* ProfileRouter.swift in Sources */,
@@ -756,6 +766,7 @@
 				40497D1F1F8CF3A500A4E046 /* UIColor+.swift in Sources */,
 				408D08341F8D274A006BCA8E /* RegisterAssembler.swift in Sources */,
 				40BE77901F9ED2310011C899 /* ResponseError.swift in Sources */,
+				40F8C6DE1FED7FE80040D334 /* AddMeetupNotesCell.swift in Sources */,
 				4079B14A1FC47407007E9407 /* Token+.swift in Sources */,
 				40AD4A7F1FECD09900AC2AB3 /* AddMeetupViewModel.swift in Sources */,
 				4056A4F51FD4C2DD006415A7 /* SearchBar.swift in Sources */,
@@ -765,6 +776,7 @@
 				40BD70101F910F53005B3B9D /* MeetupController.swift in Sources */,
 				409B2BFA1FBE65AF000A7F16 /* Friend.swift in Sources */,
 				40C429021FC3D08C004579A6 /* JSONDecoder+.swift in Sources */,
+				40F8C6DC1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
