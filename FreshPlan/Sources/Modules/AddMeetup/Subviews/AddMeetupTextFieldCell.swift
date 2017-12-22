@@ -19,6 +19,8 @@ public final class AddMeetupTextFieldCell: UITableViewCell {
   private var titleLabel: UILabel!
   private var titleTextField: UITextField!
   
+  private let disposeBag: DisposeBag = DisposeBag()
+  
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     prepareView()
@@ -29,23 +31,43 @@ public final class AddMeetupTextFieldCell: UITableViewCell {
   }
   
   private func prepareView() {
+    selectionStyle = .none
     prepareTitleLabel()
     prepareTitleTextField()
   }
   
   private func prepareTitleLabel() {
     titleLabel = UILabel()
-    titleLabel.font = MDCTypography.body1Font()
+    titleLabel.font = MDCTypography.boldFont(from: MDCTypography.subheadFont())
+    titleLabel.lineBreakMode = .byWordWrapping
     
     contentView.addSubview(titleLabel)
     
     titleLabel.snp.makeConstraints { make in
-      make.left.equalTo(contentView).offset(5)
-      make.top.equalTo(contentView).offset(5)
+      make.left.equalTo(contentView)
+      make.centerY.equalTo(contentView)
     }
+    
+    title
+      .asObservable()
+      .bind(to: titleLabel.rx.text)
+      .disposed(by: disposeBag)
   }
   
   private func prepareTitleTextField() {
+    titleTextField = UITextField()
+    titleTextField.font = MDCTypography.body1Font()
+    titleTextField.clearButtonMode = .always
+    titleTextField.returnKeyType = .done
+    titleTextField.placeholder = "Meetup name"
     
+    contentView.addSubview(titleTextField)
+    
+    titleTextField.snp.makeConstraints { make in
+      make.top.equalTo(contentView)
+      make.bottom.equalTo(contentView)
+      make.left.equalTo(titleLabel.snp.right).offset(5)
+      make.right.equalTo(contentView.snp.right).offset(-5)
+    }
   }
 }

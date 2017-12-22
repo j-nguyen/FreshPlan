@@ -25,7 +25,7 @@ public final class AddMeetupViewController: UIViewController {
   
   // MARK: TableView
   private var tableView: UITableView!
-//  fileprivate var dataSource: RxTableViewSectionedReloadDataSource<AddMeetupViewModel.Section>!
+  fileprivate var dataSource: RxTableViewSectionedReloadDataSource<AddMeetupViewModel.Section>!
   
   private let disposeBag: DisposeBag = DisposeBag()
   
@@ -71,14 +71,57 @@ public final class AddMeetupViewController: UIViewController {
   }
   
   private func prepareTableView() {
-    tableView = UITableView(frame: view.frame, style: .grouped)
+    tableView = UITableView()
+    tableView.separatorInset = .zero
+    tableView.layoutMargins = .zero
+    tableView.estimatedRowHeight = 70
+    tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.rx.setDelegate(self).disposed(by: disposeBag)
     
+    if #available(iOS 11.0, *) {
+      tableView.contentInsetAdjustmentBehavior = .never
+    }
     
+    tableView.registerCell(AddMeetupTextFieldCell.self)
+    tableView.registerCell(AddMeetupTextViewCell.self)
+  
     view.addSubview(tableView)
     
     tableView.snp.makeConstraints { make in
       make.edges.equalTo(view)
     }
+    
+    dataSource = RxTableViewSectionedReloadDataSource(
+      configureCell: { dataSource, tableView, index, model in
+        switch dataSource[index] {
+        case let .name(_, label):
+          let cell = tableView.dequeueCell(ofType: AddMeetupTextFieldCell.self, for: index)
+          cell.title.on(.next(label))
+          return cell
+        case let .description(_, label):
+          let cell = tableView.dequeueCell(ofType: AddMeetupTextViewCell.self, for: index)
+          cell.title.on(.next(label))
+          
+          cell.textChanged
+            .subscribe(onNext: { [weak self] in
+              guard let this = self else { return }
+              this.textViewDidChange()
+            })
+            .disposed(by: cell.disposeBag)
+          
+          return cell
+        default:
+          return UITableViewCell()
+        }
+      }
+    )
+    
+    dataSource.titleForHeaderInSection = { _, _ in return "" }
+    
+    viewModel.meetup
+      .asObservable()
+      .bind(to: tableView.rx.items(dataSource: dataSource))
+      .disposed(by: disposeBag)
   }
   
   private func prepareNavigationBar() {
@@ -132,7 +175,33 @@ public final class AddMeetupViewController: UIViewController {
     navigationItem.rightBarButtonItem = addButton
   }
   
+  /**
+   Fixes the offset issue of the thing
+  **/
+  private func textViewDidChange() {
+    let currentOffset = tableView.contentOffset
+    UIView.setAnimationsEnabled(false)
+    tableView.beginUpdates()
+    tableView.endUpdates()
+    UIView.setAnimationsEnabled(true)
+    tableView.setContentOffset(currentOffset, animated: false)
+  }
+  
   deinit {
     appBar.navigationBar.unobserveNavigationItem()
+  }
+}
+
+//MARK: UITableViewDelegate
+extension AddMeetupViewController: UITableViewDelegate {
+  public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    switch dataSource[indexPath] {
+    case .name:
+      return 50
+    case .description:
+      return 150
+    default:
+      return UITableViewAutomaticDimension
+    }
   }
 }
