@@ -59,8 +59,19 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
     }
     .filterNil()
     
+    // this is bad and kind of rushed but it's ok
+    let directions = Observable.zip(Observable.just("Get Directions"), meetup)
+      .map { content -> SectionItem? in
+        if content.1.metadata.isNotEmpty, content.1.meetupType.type == MeetupType.Options.location.rawValue, let data = content.1.metadata.data(using: .utf8) {
+          let metadata = try JSONDecoder().decode(Location.self, from: data)
+          return SectionItem.directions(order: 3, text: content.0, latitude: metadata.latitude, longitude: metadata.longitude)
+        }
+        return nil
+      }
+    .filterNil()
+    
     // now wrap these into a group
-    let meetupSection = Observable.from([title, desc, type])
+    let meetupSection = Observable.from([title, desc, type, directions])
       .asObservable()
       .flatMap { $0 }
       .toArray()
@@ -104,6 +115,7 @@ extension MeetupDetailViewModel {
     case title(order: Int, startDate: Date, endDate: Date)
     case desc(order: Int, description: String)
     case location(order: Int, title: String, latitude: Double, longitude: Double)
+    case directions(order: Int, text: String, latitude: Double, longitude: Double)
     case other(order: Int, notes: String)
     case invitations(order: Int, inviteeId: Int, invitee: String, accepted: Bool)
   }
@@ -155,6 +167,8 @@ extension MeetupDetailViewModel.SectionItem: Equatable {
     case .title(let order, _, _):
       return order
     case .desc(let order, _):
+      return order
+    case .directions(let order, _, _, _):
       return order
     case .location(let order, _, _, _):
       return order

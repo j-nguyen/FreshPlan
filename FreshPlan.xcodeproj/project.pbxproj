@@ -10,6 +10,7 @@
 		4003B3A71FE3625E00BF682F /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4003B3A61FE3625E00BF682F /* String+.swift */; };
 		4003B3A91FE368C300BF682F /* MDCTextInputControllerDefault+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4003B3A81FE368C300BF682F /* MDCTextInputControllerDefault+.swift */; };
 		400BEC231FEC860700D8BADE /* CLGeocoder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400BEC221FEC860700D8BADE /* CLGeocoder+.swift */; };
+		400BEC251FEC914800D8BADE /* MeetupDirectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400BEC241FEC914800D8BADE /* MeetupDirectionCell.swift */; };
 		400FC2161F897BA200B3098B /* FreshPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400FC2151F897BA200B3098B /* FreshPlan.swift */; };
 		40426D091F86B85500875179 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D081F86B85500875179 /* LoginViewController.swift */; };
 		40426D0B1F86B85E00875179 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D0A1F86B85E00875179 /* LoginViewModel.swift */; };
@@ -86,6 +87,7 @@
 		4003B3A61FE3625E00BF682F /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		4003B3A81FE368C300BF682F /* MDCTextInputControllerDefault+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MDCTextInputControllerDefault+.swift"; sourceTree = "<group>"; };
 		400BEC221FEC860700D8BADE /* CLGeocoder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLGeocoder+.swift"; sourceTree = "<group>"; };
+		400BEC241FEC914800D8BADE /* MeetupDirectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupDirectionCell.swift; sourceTree = "<group>"; };
 		400FC2151F897BA200B3098B /* FreshPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshPlan.swift; sourceTree = "<group>"; };
 		40426D081F86B85500875179 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		40426D0A1F86B85E00875179 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 				40E1EE9B1FE805C00055CBF6 /* MeetupTitleCell.swift */,
 				40B4782D1FEC5CEA0033DFFF /* MeetupDescriptionCell.swift */,
 				40B4782B1FEC50B00033DFFF /* MeetupLocationCell.swift */,
+				400BEC241FEC914800D8BADE /* MeetupDirectionCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -702,6 +705,7 @@
 				40426D1A1F86C12600875179 /* LoginRouter.swift in Sources */,
 				4045A2931FE601060059482E /* Meetup.swift in Sources */,
 				40BD70161F911022005B3B9D /* MeetupAssembler.swift in Sources */,
+				400BEC251FEC914800D8BADE /* MeetupDirectionCell.swift in Sources */,
 				405C5A9C1F8D950500AC8F9F /* HomeViewModel.swift in Sources */,
 				40426D0D1F86B86800875179 /* LoginAssembler.swift in Sources */,
 				409B2BF31FBE61F5000A7F16 /* ProfileRouter.swift in Sources */,

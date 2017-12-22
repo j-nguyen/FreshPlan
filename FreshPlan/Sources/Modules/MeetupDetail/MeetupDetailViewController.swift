@@ -76,6 +76,7 @@ public class MeetupDetailViewController: UIViewController {
     tableView.registerCell(MeetupTitleCell.self)
     tableView.registerCell(MeetupDescriptionCell.self)
     tableView.registerCell(MeetupLocationCell.self)
+    tableView.registerCell(MeetupDirectionCell.self)
     
     view.addSubview(tableView)
     
@@ -102,12 +103,29 @@ public class MeetupDetailViewController: UIViewController {
         cell.latitude.on(.next(latitude))
         cell.longitude.on(.next(longitude))
         return cell
+      case let .directions(_, text, _, _):
+        let cell = tableView.dequeueCell(ofType: MeetupDirectionCell.self, for: index)
+        cell.title.on(.next(text))
+        return cell
       default:
         return UITableViewCell()
       }
     })
     
-    dataSource.titleForHeaderInSection = { _, _ in return "" }
+    dataSource.titleForHeaderInSection = { dataSource, index in
+      return index == 0 ? "" : dataSource[index].title
+    }
+    
+    tableView.rx.modelSelected(MeetupDetailViewModel.SectionItem.self)
+      .subscribe(onNext: { item in
+        switch item {
+        case let .directions(_, _, latitude, longitude):
+          return
+        default:
+          return
+        }
+      })
+      .disposed(by: disposeBag)
     
     viewModel.section
       .asObservable()

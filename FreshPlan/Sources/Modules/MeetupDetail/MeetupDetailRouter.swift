@@ -11,6 +11,7 @@ import UIKit
 public class MeetupDetailRouter {
   public enum Routes: String {
     case meetup
+    case googlemaps
   }
   
   fileprivate enum RouteError: Error {
@@ -27,6 +28,15 @@ extension MeetupDetailRouter: RouterProtocol {
     switch route {
     case .meetup:
       context.navigationController?.popViewController(animated: true)
+    case .googlemaps:
+      guard let googleMapsURL = URL(string: "comgooglemaps://") else { return }
+      guard let params = parameters, let latitude = params["latitude"] as? Double, let longitude = params["longitude"] as? Double else {
+        return
+      }
+      if (UIApplication.shared.canOpenURL(googleMapsURL)) {
+        let url = URL(string: "comgooglemaps://?saddr=&daddr=\(latitude),\(longitude)&directionsmode=driving")
+        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+      }
     }
   }
 }
