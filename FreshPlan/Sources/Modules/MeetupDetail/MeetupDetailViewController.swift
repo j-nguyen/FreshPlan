@@ -96,8 +96,9 @@ public class MeetupDetailViewController: UIViewController {
         let cell = tableView.dequeueCell(ofType: MeetupDescriptionCell.self, for: index)
         cell.descriptionText.on(.next(description))
         return cell
-      case let .location(_, latitude, longitude):
+      case let .location(_, title, latitude, longitude):
         let cell = tableView.dequeueCell(ofType: MeetupLocationCell.self, for: index)
+        cell.title.on(.next(title))
         cell.latitude.on(.next(latitude))
         cell.longitude.on(.next(longitude))
         return cell
@@ -161,7 +162,7 @@ extension MeetupDetailViewController: UITableViewDelegate {
   public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     switch dataSource[indexPath] {
     case .location:
-      return 50
+      return 300
     default:
       return UITableViewAutomaticDimension
     }

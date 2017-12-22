@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4003B3A71FE3625E00BF682F /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4003B3A61FE3625E00BF682F /* String+.swift */; };
 		4003B3A91FE368C300BF682F /* MDCTextInputControllerDefault+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4003B3A81FE368C300BF682F /* MDCTextInputControllerDefault+.swift */; };
+		400BEC231FEC860700D8BADE /* CLGeocoder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400BEC221FEC860700D8BADE /* CLGeocoder+.swift */; };
 		400FC2161F897BA200B3098B /* FreshPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400FC2151F897BA200B3098B /* FreshPlan.swift */; };
 		40426D091F86B85500875179 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D081F86B85500875179 /* LoginViewController.swift */; };
 		40426D0B1F86B85E00875179 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D0A1F86B85E00875179 /* LoginViewModel.swift */; };
@@ -66,6 +67,7 @@
 		40A311361F9EF503000FAFEB /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A311351F9EF503000FAFEB /* Token.swift */; };
 		40B4782C1FEC50B00033DFFF /* MeetupLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B4782B1FEC50B00033DFFF /* MeetupLocationCell.swift */; };
 		40B4782E1FEC5CEA0033DFFF /* MeetupDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B4782D1FEC5CEA0033DFFF /* MeetupDescriptionCell.swift */; };
+		40B478301FEC65550033DFFF /* MeetupAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B4782F1FEC65550033DFFF /* MeetupAnnotationView.swift */; };
 		40BD70101F910F53005B3B9D /* MeetupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD700F1F910F53005B3B9D /* MeetupController.swift */; };
 		40BD70121F910FD6005B3B9D /* MeetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD70111F910FD6005B3B9D /* MeetupViewModel.swift */; };
 		40BD70141F910FFA005B3B9D /* MeetupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD70131F910FFA005B3B9D /* MeetupRouter.swift */; };
@@ -84,6 +86,7 @@
 /* Begin PBXFileReference section */
 		4003B3A61FE3625E00BF682F /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		4003B3A81FE368C300BF682F /* MDCTextInputControllerDefault+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MDCTextInputControllerDefault+.swift"; sourceTree = "<group>"; };
+		400BEC221FEC860700D8BADE /* CLGeocoder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLGeocoder+.swift"; sourceTree = "<group>"; };
 		400FC2151F897BA200B3098B /* FreshPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreshPlan.swift; sourceTree = "<group>"; };
 		40426D081F86B85500875179 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		40426D0A1F86B85E00875179 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -143,6 +146,7 @@
 		40A311351F9EF503000FAFEB /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		40B4782B1FEC50B00033DFFF /* MeetupLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupLocationCell.swift; sourceTree = "<group>"; };
 		40B4782D1FEC5CEA0033DFFF /* MeetupDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupDescriptionCell.swift; sourceTree = "<group>"; };
+		40B4782F1FEC65550033DFFF /* MeetupAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupAnnotationView.swift; sourceTree = "<group>"; };
 		40BD700F1F910F53005B3B9D /* MeetupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupController.swift; sourceTree = "<group>"; };
 		40BD70111F910FD6005B3B9D /* MeetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupViewModel.swift; sourceTree = "<group>"; };
 		40BD70131F910FFA005B3B9D /* MeetupRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupRouter.swift; sourceTree = "<group>"; };
@@ -263,6 +267,7 @@
 				4079B14B1FC475E9007E9407 /* UITableView+.swift */,
 				4003B3A81FE368C300BF682F /* MDCTextInputControllerDefault+.swift */,
 				4003B3A61FE3625E00BF682F /* String+.swift */,
+				400BEC221FEC860700D8BADE /* CLGeocoder+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -449,6 +454,7 @@
 				40E1EE9B1FE805C00055CBF6 /* MeetupTitleCell.swift */,
 				40B4782D1FEC5CEA0033DFFF /* MeetupDescriptionCell.swift */,
 				40B4782B1FEC50B00033DFFF /* MeetupLocationCell.swift */,
+				40B4782F1FEC65550033DFFF /* MeetupAnnotationView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -645,6 +651,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				40B4782C1FEC50B00033DFFF /* MeetupLocationCell.swift in Sources */,
+				40B478301FEC65550033DFFF /* MeetupAnnotationView.swift in Sources */,
 				405C5A9A1F8D94FA00AC8F9F /* HomeAssembler.swift in Sources */,
 				4056A4F31FD4BDB4006415A7 /* EmptyView.swift in Sources */,
 				408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */,
@@ -687,6 +694,7 @@
 				40B4782E1FEC5CEA0033DFFF /* MeetupDescriptionCell.swift in Sources */,
 				4044C47C1FE726DB00C0C244 /* MeetupDetailViewModel.swift in Sources */,
 				40A311361F9EF503000FAFEB /* Token.swift in Sources */,
+				400BEC231FEC860700D8BADE /* CLGeocoder+.swift in Sources */,
 				409B2BF51FBE6234000A7F16 /* ProfileAssembler.swift in Sources */,
 				400FC2161F897BA200B3098B /* FreshPlan.swift in Sources */,
 				4079B14E1FC4763B007E9407 /* UILabel+.swift in Sources */,
@@ -848,6 +856,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 3;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 35PYRYEWH9;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/FreshPlan/Resources/Info.plist";

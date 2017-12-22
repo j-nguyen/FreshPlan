@@ -49,7 +49,7 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
       if meetup.metadata.isNotEmpty, let data = meetup.metadata.data(using: .utf8) {
         if meetup.meetupType.type == MeetupType.Options.location.rawValue {
           let metadata = try JSONDecoder().decode(Location.self, from: data)
-          return SectionItem.location(order: 2, latitude: metadata.latitude, longitude: metadata.longitude)
+          return SectionItem.location(order: 2, title: meetup.title, latitude: metadata.latitude, longitude: metadata.longitude)
         } else if meetup.meetupType.type == MeetupType.Options.other.rawValue {
           let metadata = try JSONDecoder().decode(Other.self, from: data)
           return SectionItem.other(order: 2, notes: metadata.notes)
@@ -103,7 +103,7 @@ extension MeetupDetailViewModel {
   public enum SectionItem {
     case title(order: Int, startDate: Date, endDate: Date)
     case desc(order: Int, description: String)
-    case location(order: Int, latitude: Double, longitude: Double)
+    case location(order: Int, title: String, latitude: Double, longitude: Double)
     case other(order: Int, notes: String)
     case invitations(order: Int, inviteeId: Int, invitee: String, accepted: Bool)
   }
@@ -156,7 +156,7 @@ extension MeetupDetailViewModel.SectionItem: Equatable {
       return order
     case .desc(let order, _):
       return order
-    case .location(let order, _, _):
+    case .location(let order, _, _, _):
       return order
     case .other(let order, _):
       return order
