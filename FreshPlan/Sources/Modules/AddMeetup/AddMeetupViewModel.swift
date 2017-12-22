@@ -30,8 +30,41 @@ public class AddMeetupViewModel: AddMeetupViewModelProtocol {
     self.provider = provider
     
     // conform the type right in
-    Observable.just(type)
+    let typeObservable = Observable.just(type).share()
+      
+    typeObservable
       .bind(to: typeHidden)
       .disposed(by: disposeBag)
+  }
+}
+
+extension AddMeetupViewModel {
+  public struct Section {
+    public var header: String
+    public var items: [SectionItem]
+  }
+  
+  public enum SectionItem {
+    case name(order: Int, title: String)
+  }
+}
+
+//MARK: SectionModelType - RxDataSources
+extension AddMeetupViewModel.Section: SectionModelType {
+  public typealias Item = AddMeetupViewModel.SectionItem
+  
+  public init(original: AddMeetupViewModel.Section, items: [Item]) {
+    self = original
+    self.items = items
+  }
+}
+
+//MARK: SectionItem
+extension AddMeetupViewModel.SectionItem {
+  public var order: Int {
+    switch self {
+    case .name(let order, _):
+      return order
+    }
   }
 }

@@ -21,6 +21,7 @@ public class MeetupDetailViewController: UIViewController {
   //MARK: AppBar
   private let appBar: MDCAppBar = MDCAppBar()
   private var backButton: UIBarButtonItem!
+  private var deleteButton: UIBarButtonItem!
   
   //MARK: TableView
   private var tableView: UITableView!
@@ -66,6 +67,7 @@ public class MeetupDetailViewController: UIViewController {
     prepareTableView()
     prepareNavigationBar()
     prepareNavigationBackButton()
+    prepareNavigationDeleteButton()
     appBar.addSubviewsToParent()
   }
   
@@ -214,6 +216,45 @@ public class MeetupDetailViewController: UIViewController {
       .disposed(by: disposeBag)
     
     navigationItem.leftBarButtonItem = backButton
+  }
+  
+  private func prepareNavigationDeleteButton() {
+    deleteButton = UIBarButtonItem(
+      image: UIImage(named: "ic_delete")?.withRenderingMode(.alwaysTemplate),
+      style: .plain,
+      target: nil,
+      action: nil
+    )
+    
+    viewModel.canDelete
+      .bind(to: deleteButton.rx.isEnabled)
+      .disposed(by: disposeBag)
+    
+    viewModel.deleteHandler = deleteButton.rx.tap.asObservable()
+    
+    viewModel.bindButtons()
+    
+    viewModel.deleteSuccess
+      .asObservable()
+      .filter { $0 }
+      .subscribe(onNext: { [weak self] _ in
+        guard let this = self else { return }
+        this.navigationController?.popViewController(animated: true)
+        let message = MDCSnackbarMessage(text: "Successfully deleted meetup!")
+        MDCSnackbarManager.show(message)
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel.deleteSuccess
+      .asObservable()
+      .filter { !$0 }
+      .subscribe(onNext: { _ in
+        let message = MDCSnackbarMessage(text: "Cannot delete meetup. Are you sure you're the host?")
+        MDCSnackbarManager.show(message)
+      })
+      .disposed(by: disposeBag)
+    
+    navigationItem.rightBarButtonItem = deleteButton
   }
   
   deinit {

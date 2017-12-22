@@ -15,8 +15,15 @@ import Moya
 public protocol MeetupDetailViewModelProtocol {
   var title: Variable<String> { get }
   var section: Variable<[MeetupDetailViewModel.Section]> { get }
+  var canDelete: Observable<Bool> { get }
   var refreshContent: PublishSubject<Void> { get }
   var refreshSuccess: PublishSubject<Void> { get }
+  
+  // other
+  var deleteHandler: Observable<Void>! { get set }
+  var deleteSuccess: PublishSubject<Bool> { get }
+  
+  func bindButtons()
 }
 
 public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
@@ -27,6 +34,21 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
   
   public var refreshContent: PublishSubject<Void> = PublishSubject()
   public var refreshSuccess: PublishSubject<Void> = PublishSubject()
+  
+  //MARK: OBservable
+  public var canDelete: Observable<Bool> {
+    return requestMeetup(meetupId: self.meetupId)
+      .map { $0.user.id }
+      .map { userId -> Bool in
+        if let jwt = Token.decodeJWT, let tokenId = jwt.body["userId"] as? Int {
+          return tokenId == userId
+        }
+        return false
+      }
+  }
+  
+  public var deleteHandler: Observable<Void>!
+  public var deleteSuccess: PublishSubject<Bool> = PublishSubject()
   
   private let disposeBag: DisposeBag = DisposeBag()
   
@@ -46,6 +68,17 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
       .disposed(by: disposeBag)
     
     setup()
+  }
+  
+  public func bindButtons() {
+    deleteHandler
+      .flatMap { [weak self] _ -> Observable<Response> in
+        guard let this = self else { fatalError() }
+        return this.deleteMeetup(meetupId: this.meetupId)
+      }
+      .map { $0.statusCode >= 200 && $0.statusCode <= 299 }
+      .bind(to: deleteSuccess)
+      .disposed(by: disposeBag)
   }
   
   private func setup() {
@@ -120,6 +153,11 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
     return provider.rx.request(.getMeetup(meetupId))
       .asObservable()
       .map(Meetup.self, using: JSONDecoder.Decode)
+  }
+  
+  private func deleteMeetup(meetupId: Int) -> Observable<Response> {
+    return provider.rx.request(.deleteMeetup(meetupId))
+      .asObservable()
   }
 }
 

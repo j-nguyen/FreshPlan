@@ -170,19 +170,19 @@ public final class MeetupController: UIViewController {
       make.edges.equalTo(view)
     }
     
-    let meetup = viewModel.meetups.asObservable().share()
-    
-    meetup
-      .map { $0.count == 0 }
+    viewModel.meetups
+      .asObservable()
+      .filter { $0.isNotEmpty && $0[0].items.isEmpty }
       .subscribe(onNext: { [weak self] _ in
         guard let this = self else { return }
         this.tableView.separatorStyle = .none
         this.tableView.backgroundView?.isHidden = false
       })
       .disposed(by: disposeBag)
-    
-    meetup
-      .map { $0.count > 0 }
+
+    viewModel.meetups
+      .asObservable()
+      .filter { $0.isNotEmpty && $0[0].items.isNotEmpty }
       .subscribe(onNext: { [weak self] _ in
         guard let this = self else { return }
         this.tableView.separatorStyle = .singleLine

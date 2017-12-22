@@ -11,6 +11,7 @@ import UIKit
 import SnapKit
 import MaterialComponents
 import RxSwift
+import RxDataSources
 
 public final class AddMeetupViewController: UIViewController {
   // MARK: Required
@@ -24,6 +25,7 @@ public final class AddMeetupViewController: UIViewController {
   
   // MARK: TableView
   private var tableView: UITableView!
+//  fileprivate var dataSource: RxTableViewSectionedReloadDataSource<AddMeetupViewModel.Section>!
   
   private let disposeBag: DisposeBag = DisposeBag()
   
@@ -61,10 +63,22 @@ public final class AddMeetupViewController: UIViewController {
   }
   
   private func prepareView() {
+    prepareTableView()
     prepareNavigationBar()
     prepareNavigationCloseButton()
     prepareNavigationAddButton()
     appBar.addSubviewsToParent()
+  }
+  
+  private func prepareTableView() {
+    tableView = UITableView(frame: view.frame, style: .grouped)
+    
+    
+    view.addSubview(tableView)
+    
+    tableView.snp.makeConstraints { make in
+      make.edges.equalTo(view)
+    }
   }
   
   private func prepareNavigationBar() {
