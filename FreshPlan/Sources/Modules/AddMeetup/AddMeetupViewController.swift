@@ -20,6 +20,7 @@ public final class AddMeetupViewController: UIViewController {
   // MARK: AppBar
   private let appBar: MDCAppBar = MDCAppBar()
   private var closeButton: UIBarButtonItem!
+  private var addButton: UIBarButtonItem!
   
   // MARK: TableView
   private var tableView: UITableView!
@@ -62,6 +63,7 @@ public final class AddMeetupViewController: UIViewController {
   private func prepareView() {
     prepareNavigationBar()
     prepareNavigationCloseButton()
+    prepareNavigationAddButton()
     appBar.addSubviewsToParent()
   }
   
@@ -96,6 +98,24 @@ public final class AddMeetupViewController: UIViewController {
       .disposed(by: disposeBag)
     
     navigationItem.leftBarButtonItem = closeButton
+  }
+  
+  private func prepareNavigationAddButton() {
+    addButton = UIBarButtonItem(
+      image: UIImage(named: "ic_done")?.withRenderingMode(.alwaysTemplate),
+      style: .plain,
+      target: nil,
+      action: nil
+    )
+    
+    addButton.rx.tap
+      .asObservable()
+      .subscribe(onNext: {
+        
+      })
+      .disposed(by: disposeBag)
+    
+    navigationItem.rightBarButtonItem = addButton
   }
   
   deinit {

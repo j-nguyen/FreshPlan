@@ -13,7 +13,7 @@ import RxDataSources
 import Moya
 
 public protocol AddMeetupViewModelProtocol {
-  
+  var typeHidden: Variable<String> { get }
 }
 
 public class AddMeetupViewModel: AddMeetupViewModelProtocol {
@@ -21,8 +21,17 @@ public class AddMeetupViewModel: AddMeetupViewModelProtocol {
   private var type: String
   private var provider: MoyaProvider<FreshPlan>
   
+  public var typeHidden: Variable<String> = Variable("")
+  
+  private let disposeBag: DisposeBag = DisposeBag()
+  
   public init(type: String, provider: MoyaProvider<FreshPlan>) {
     self.type = type
     self.provider = provider
+    
+    // conform the type right in
+    Observable.just(type)
+      .bind(to: typeHidden)
+      .disposed(by: disposeBag)
   }
 }
