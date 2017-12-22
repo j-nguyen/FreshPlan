@@ -24,6 +24,7 @@ public final class MeetupController: UIViewController {
   
   //MARK: App Bar
   fileprivate let appBar: MDCAppBar = MDCAppBar()
+  private var addButton: UIBarButtonItem!
   
   //MARK: DisposeBag
   private let disposeBag: DisposeBag = DisposeBag()
@@ -64,6 +65,7 @@ public final class MeetupController: UIViewController {
     prepareTableView()
     prepareEmptyMeetupView()
     prepareNavigationBar()
+    prepareNavigationAddButton()
     appBar.addSubviewsToParent()
   }
   
@@ -201,6 +203,29 @@ public final class MeetupController: UIViewController {
       .disposed(by: disposeBag)
     
     appBar.navigationBar.observe(navigationItem)
+  }
+  
+  private func prepareNavigationAddButton() {
+    addButton = UIBarButtonItem(
+      image: UIImage(named: "ic_add")?.withRenderingMode(.alwaysTemplate),
+      style: .plain,
+      target: nil,
+      action: nil
+    )
+    
+    addButton.rx.tap
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        try? this.router.route(
+          from: this,
+          to: MeetupRouter.Routes.addMeetupOption.rawValue,
+          parameters: nil
+        )
+      })
+      .disposed(by: disposeBag)
+    
+    navigationItem.rightBarButtonItem = addButton
   }
   
   deinit {

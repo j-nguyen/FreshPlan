@@ -8,10 +8,13 @@
 
 import Foundation
 import UIKit
+import MaterialComponents
 
 public class MeetupRouter {
 	public enum Routes: String {
 		case meetup
+    case addMeetupOption
+    case addMeetup
 	}
 	
 	fileprivate enum RouteError: Error {
@@ -29,6 +32,36 @@ extension MeetupRouter: RouterProtocol {
       guard let params = parameters, let meetupId = params["meetupId"] as? Int else { return }
 			
       context.navigationController?.pushViewController(MeetupDetailAssembler.make(meetupId: meetupId), animated: true)
+    case .addMeetupOption:
+      let dialog = MDCAlertController(title: "Add Meetup", message: "Please select which meetup option you would like to create.")
+      let locationHandler = MDCAlertAction(title: "Location", handler: { [weak self] _ in
+        guard let this = self else { return }
+        try? this.route(
+          from: context,
+          to: MeetupRouter.Routes.addMeetup.rawValue,
+          parameters: ["type": MeetupType.Options.location.rawValue]
+        )
+      })
+      let otherHandler = MDCAlertAction(title: "Other", handler: { [weak self] _ in
+        guard let this = self else { return }
+        try? this.route(
+          from: context,
+          to: MeetupRouter.Routes.addMeetup.rawValue,
+          parameters: ["type": MeetupType.Options.other.rawValue]
+        )
+      })
+      let cancelHandler = MDCAlertAction(title: "Cancel", handler: nil)
+      dialog.addAction(locationHandler)
+      dialog.addAction(otherHandler)
+      dialog.addAction(cancelHandler)
+      
+      context.present(dialog, animated: true, completion: nil)
+      
+      break
+    case .addMeetup:
+      guard let params = parameters, let type = params["type"] as? String else { return }
+      print(type)
+      break
 		}
 	}
 }
