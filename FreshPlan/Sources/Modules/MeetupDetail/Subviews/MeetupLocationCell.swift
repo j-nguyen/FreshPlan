@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import MapKit
-import CoreLocation
 import RxSwift
 import RxOptional
 import MaterialComponents
@@ -47,7 +46,6 @@ public final class MeetupLocationCell: UITableViewCell {
   private func prepareLocationManager() {
     locationManager = CLLocationManager()
     locationManager.requestWhenInUseAuthorization()
-    locationManager.delegate = self
     locationManager.desiredAccuracy = kCLLocationAccuracyBest
     locationManager.startUpdatingLocation()
   }
@@ -56,6 +54,12 @@ public final class MeetupLocationCell: UITableViewCell {
     mapView = MKMapView()
     mapView.delegate = self
     mapView.showsUserLocation = true
+    // deal with the scale
+    if #available(iOS 11.0, *) {
+      let scale = MKScaleView(mapView: mapView)
+      scale.scaleVisibility = .visible // always visible
+      contentView.addSubview(scale)
+    }
     
     contentView.addSubview(mapView)
     
@@ -80,17 +84,46 @@ public final class MeetupLocationCell: UITableViewCell {
       .map { $0.0 }
       .subscribe(onNext: { [weak self] coords in
         guard let this = self else { return }
-        let annotation = MeetupAnnotationView(
-          title: coords.0,
-          locationName: this.placemarkName.value,
-          coordinate: CLLocationCoordinate2D(latitude: coords.1, longitude: coords.2)
-        )
+        this.centerLocation(location: CLLocation(latitude: coords.1, longitude: coords.2))
+        let annotation = MKPointAnnotation()
+        annotation.title = this.placemarkName.value
+        annotation.subtitle = coords.0
+        annotation.coordinate = CLLocationCoordinate2D(latitude: coords.1, longitude: coords.2)
+        
         this.mapView.addAnnotation(annotation)
       })
       .disposed(by: disposeBag)
   }
+  
+  /**
+    Centers the location for us when setting up the region
+   **/
+  fileprivate func centerLocation(location: CLLocation) {
+    // some random constant
+    let regionRadius: CLLocationDistance = 10000
+    let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius, regionRadius)
+    mapView.setRegion(coordinateRegion, animated: true)
+  }
 }
 
-extension MeetupLocationCell: MKMapViewDelegate, CLLocationManagerDelegate {
-  
+// MARK: MKMapViewDelegate
+extension MeetupLocationCell: MKMapViewDelegate {
+  // gets the annotation for us
+  public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    // if the annotation is the user's location, then we can't do a call out
+    if annotation is MKUserLocation { return nil }
+    // create an identifier so the next time we do it it'll open for us
+    let identifier = "meetup"
+    // attempt to see
+    var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView
+    // check the notifications
+    if annotationView == nil {
+      annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+      annotationView?.canShowCallout = true
+    } else {
+      annotationView?.annotation = annotation
+    }
+    
+    return annotationView
+  }
 }

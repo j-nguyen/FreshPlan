@@ -162,7 +162,7 @@ extension MeetupDetailViewController: UITableViewDelegate {
   public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     switch dataSource[indexPath] {
     case .location:
-      return 300
+      return 350
     default:
       return UITableViewAutomaticDimension
     }
