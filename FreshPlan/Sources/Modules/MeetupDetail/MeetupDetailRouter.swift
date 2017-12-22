@@ -12,6 +12,7 @@ public class MeetupDetailRouter {
   public enum Routes: String {
     case meetup
     case googlemaps
+    case invitee
   }
   
   fileprivate enum RouteError: Error {
@@ -42,6 +43,10 @@ extension MeetupDetailRouter: RouterProtocol {
         let url = URL(string: "https://maps.google.com/?q=@\(latitude),\(longitude)")
         UIApplication.shared.open(url!, options: [:], completionHandler: nil)
       }
+    case .invitee:
+      guard let params = parameters, let userId = params["inviteeId"] as? Int else { return }
+      
+      context.navigationController?.pushViewController(FriendAssembler.make(friendId: userId), animated: true)
     }
   }
 }

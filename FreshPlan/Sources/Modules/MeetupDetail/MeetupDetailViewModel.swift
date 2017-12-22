@@ -87,7 +87,7 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
         }
       }
       .map { $0.sorted(by: { $0.order < $1.order } )}
-      .map { Section.invitations(order: 1, title: "Invited", items: $0) }
+      .map { Section.invitations(order: 1, title: "Invited Users", items: $0) }
     
     // MARK: Table Add
     Observable.from([meetupSection, invitationSection])

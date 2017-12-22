@@ -136,6 +136,14 @@ public class MeetupDetailViewController: UIViewController {
               "longitude": longitude
             ]
           )
+        case let .invitations(_, inviteeId, _, _, _):
+          try? this.router.route(
+            from: this,
+            to: MeetupDetailRouter.Routes.invitee.rawValue,
+            parameters: [
+              "inviteeId": inviteeId
+            ]
+          )
         default:
           return
         }
