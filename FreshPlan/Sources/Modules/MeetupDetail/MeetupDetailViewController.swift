@@ -117,10 +117,18 @@ public class MeetupDetailViewController: UIViewController {
     }
     
     tableView.rx.modelSelected(MeetupDetailViewModel.SectionItem.self)
-      .subscribe(onNext: { item in
+      .subscribe(onNext: { [weak self] item in
+        guard let this = self else { return }
         switch item {
         case let .directions(_, _, latitude, longitude):
-          return
+          try? this.router.route(
+            from: this,
+            to: MeetupDetailRouter.Routes.googlemaps.rawValue,
+            parameters: [
+              "latitude": latitude,
+              "longitude": longitude
+            ]
+          )
         default:
           return
         }
