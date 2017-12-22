@@ -15,6 +15,8 @@ import Moya
 public protocol MeetupDetailViewModelProtocol {
   var title: Variable<String> { get }
   var section: Variable<[MeetupDetailViewModel.Section]> { get }
+  var refreshContent: PublishSubject<Void> { get }
+  var refreshSuccess: PublishSubject<Void> { get }
 }
 
 public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
@@ -22,6 +24,9 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
   
   public var title: Variable<String> = Variable("")
   public var section: Variable<[MeetupDetailViewModel.Section]> = Variable([])
+  
+  public var refreshContent: PublishSubject<Void> = PublishSubject()
+  public var refreshSuccess: PublishSubject<Void> = PublishSubject()
   
   private let disposeBag: DisposeBag = DisposeBag()
   
@@ -31,6 +36,19 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
     self.provider = provider
     self.meetupId = meetupId
     
+    refreshContent
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.setup()
+        this.refreshSuccess.on(.next(()))
+      })
+      .disposed(by: disposeBag)
+    
+    setup()
+  }
+  
+  private func setup() {
     let meetup = requestMeetup(meetupId: meetupId)
       .share()
     
@@ -56,8 +74,8 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
         }
       }
       return nil
-    }
-    .filterNil()
+      }
+      .filterNil()
     
     // this is bad and kind of rushed but it's ok
     let directions = Observable.zip(Observable.just("Get Directions"), meetup)
@@ -68,7 +86,7 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
         }
         return nil
       }
-    .filterNil()
+      .filterNil()
     
     // now wrap these into a group
     let meetupSection = Observable.from([title, desc, type, directions])

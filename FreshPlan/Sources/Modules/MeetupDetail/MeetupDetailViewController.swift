@@ -25,6 +25,7 @@ public class MeetupDetailViewController: UIViewController {
   //MARK: TableView
   private var tableView: UITableView!
   private var dataSource: RxTableViewSectionedReloadDataSource<MeetupDetailViewModel.Section>!
+  private var refreshControl: UIRefreshControl!
   
   private let disposeBag: DisposeBag = DisposeBag()
   
@@ -61,14 +62,36 @@ public class MeetupDetailViewController: UIViewController {
   }
   
   private func prepareView() {
+    prepareRefreshControl()
     prepareTableView()
     prepareNavigationBar()
     prepareNavigationBackButton()
     appBar.addSubviewsToParent()
   }
   
+  private func prepareRefreshControl() {
+    refreshControl = UIRefreshControl()
+    
+    refreshControl.rx.controlEvent(.valueChanged)
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.viewModel.refreshContent.on(.next(()))
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel.refreshSuccess
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.refreshControl.endRefreshing()
+      })
+      .disposed(by: disposeBag)
+  }
+  
   private func prepareTableView() {
     tableView = UITableView()
+    tableView.refreshControl = refreshControl
     tableView.separatorInset = .zero
     tableView.estimatedRowHeight = 44
     tableView.rowHeight = UITableViewAutomaticDimension
