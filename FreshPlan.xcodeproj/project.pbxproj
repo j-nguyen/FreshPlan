@@ -93,6 +93,7 @@
 		40D8B02A1FE819BB00CE2626 /* Other.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D8B0291FE819BB00CE2626 /* Other.swift */; };
 		40E1EE9C1FE805C00055CBF6 /* MeetupTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E1EE9B1FE805C00055CBF6 /* MeetupTitleCell.swift */; };
 		40E3BD071FEEF383004394AA /* UIDatePicker+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E3BD061FEEF383004394AA /* UIDatePicker+.swift */; };
+		40E3BD091FEF217C004394AA /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E3BD081FEF217C004394AA /* Date+.swift */; };
 		40F8C6D81FED5DE40040D334 /* AddMeetupTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6D71FED5DE40040D334 /* AddMeetupTextFieldCell.swift */; };
 		40F8C6DA1FED741C0040D334 /* AddMeetupTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6D91FED741C0040D334 /* AddMeetupTextViewCell.swift */; };
 		40F8C6DC1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6DB1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift */; };
@@ -189,6 +190,7 @@
 		40D8B0291FE819BB00CE2626 /* Other.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Other.swift; sourceTree = "<group>"; };
 		40E1EE9B1FE805C00055CBF6 /* MeetupTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupTitleCell.swift; sourceTree = "<group>"; };
 		40E3BD061FEEF383004394AA /* UIDatePicker+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDatePicker+.swift"; sourceTree = "<group>"; };
+		40E3BD081FEF217C004394AA /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		40F8C6D71FED5DE40040D334 /* AddMeetupTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupTextFieldCell.swift; sourceTree = "<group>"; };
 		40F8C6D91FED741C0040D334 /* AddMeetupTextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupTextViewCell.swift; sourceTree = "<group>"; };
 		40F8C6DB1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupGeocodeCell.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				4003B3A61FE3625E00BF682F /* String+.swift */,
 				400BEC221FEC860700D8BADE /* CLGeocoder+.swift */,
 				40E3BD061FEEF383004394AA /* UIDatePicker+.swift */,
+				40E3BD081FEF217C004394AA /* Date+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -809,6 +812,7 @@
 				40497D1F1F8CF3A500A4E046 /* UIColor+.swift in Sources */,
 				408D08341F8D274A006BCA8E /* RegisterAssembler.swift in Sources */,
 				40BE77901F9ED2310011C899 /* ResponseError.swift in Sources */,
+				40E3BD091FEF217C004394AA /* Date+.swift in Sources */,
 				4079B14A1FC47407007E9407 /* Token+.swift in Sources */,
 				40AD4A7F1FECD09900AC2AB3 /* AddMeetupViewModel.swift in Sources */,
 				4083BCD31FEE0D5F007D9B87 /* LocationViewController.swift in Sources */,

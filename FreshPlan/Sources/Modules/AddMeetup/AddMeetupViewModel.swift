@@ -17,54 +17,83 @@ public protocol AddMeetupViewModelProtocol {
   var meetup: Variable<[AddMeetupViewModel.Section]> { get }
   
   // we need form fields, to set up for our meeting as well
-  var name: Variable<String?> { get }
-  var description: Variable<String?> { get }
-  var meetupType: Variable<String?> { get }
+  var name: Variable<String> { get }
+  var description: Variable<String> { get }
+  var meetupType: Variable<String> { get }
   var startDate: Variable<Date?> { get }
   var endDate: Variable<Date?> { get }
-  var metadata: Variable<String?> { get }
+  var metadata: Variable<String> { get }
   var address: Variable<String?> { get }
   var addButtonEnabled: Observable<Bool> { get }
+  
+  // button test
+  var addButtonTap: Observable<Void>! { get set }
+  var addButtonSuccess: PublishSubject<Bool> { get set }
+  var reloadMeetup: PublishSubject<Void> { get }
+  
+  func bindButtons()
 }
 
 public class AddMeetupViewModel: AddMeetupViewModelProtocol {
   // MARK: Private Instances
   private var type: String
   private var provider: MoyaProvider<FreshPlan>
+  private var meetupViewModel: MeetupViewModel!
   
   public var meetup: Variable<[AddMeetupViewModel.Section]> = Variable([])
   
   // MARK: Form Fields
-  public var name: Variable<String?> = Variable(nil)
-  public var description: Variable<String?> = Variable(nil)
-  public var meetupType: Variable<String?> = Variable(nil)
+  public var name: Variable<String> = Variable("")
+  public var description: Variable<String> = Variable("")
+  public var meetupType: Variable<String> = Variable("")
   public var startDate: Variable<Date?> = Variable(nil)
   public var endDate: Variable<Date?> = Variable(nil)
-  public var metadata: Variable<String?> = Variable(nil)
+  public var metadata: Variable<String> = Variable("")
   public var address: Variable<String?> = Variable(nil)
   
   public var addButtonEnabled: Observable<Bool> {
     return Observable.combineLatest(name.asObservable(), description.asObservable(), meetupType.asObservable(), startDate.asObservable(), endDate.asObservable(), metadata.asObservable()) { name, desc, type, startDate, endDate, metadata in
       
-      print ("1: \(name)")
-      print ("2: \(desc)")
-      print ("3: \(type)")
-      print ("4: \(startDate)")
-      print ("5: \(endDate)")
-      print ("6: \(metadata)")
+      guard name.isNotEmpty else { return false }
+      guard desc.isNotEmpty else { return false }
+      guard startDate != nil, endDate != nil else { return false }
       
-      return name != nil && desc != nil && type != nil && startDate != nil && endDate != nil && metadata != nil
-      
+      if type == MeetupType.Options.location.rawValue && metadata.isNotEmpty {
+        return true
+      } else if type == MeetupType.Options.other.rawValue {
+        return true
+      } else {
+        return false
+      }
     }
   }
+  
+  public var addButtonTap: Observable<Void>!
+  public var addButtonSuccess: PublishSubject<Bool> = PublishSubject()
+  public var reloadMeetup: PublishSubject<Void> = PublishSubject()
   
   // MARK: Dispose
   private let disposeBag: DisposeBag = DisposeBag()
   
-  public init(type: String, provider: MoyaProvider<FreshPlan>) {
+  public init(meetupViewModel: MeetupViewModel, type: String, provider: MoyaProvider<FreshPlan>) {
+    self.meetupViewModel = meetupViewModel
     self.type = type
     self.provider = provider
     
+    // reload
+    reloadMeetup
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.meetupViewModel.refreshContent.on(.next(()))
+      })
+      .disposed(by: disposeBag)
+    
+    // set up table
+    setup()
+  }
+  
+  private func setup() {
     // conform the type right in
     let typeObservable = Observable.just(type).share()
     
@@ -89,7 +118,7 @@ public class AddMeetupViewModel: AddMeetupViewModelProtocol {
         } else {
           return SectionItem.other(order: 3, label: "Enter in additional information about your meetup!")
         }
-      }
+    }
     
     // Conform it into the section
     Observable.from([name, description, metadata, startDate, endDate])
@@ -99,6 +128,22 @@ public class AddMeetupViewModel: AddMeetupViewModelProtocol {
       .map { [Section(header: "", items: $0)] }
       .bind(to: meetup)
       .disposed(by: disposeBag)
+  }
+  
+  public func bindButtons() {
+    addButtonTap
+      .flatMap { [weak self] _ -> Observable<Response> in
+        guard let this = self else { fatalError() }
+        return this.requestAddMeetup(title: this.name.value, desc: this.description.value, type: this.meetupType.value, metadata: this.metadata.value, startDate: this.startDate.value!.dateString, endDate: this.endDate.value!.dateString)
+      }
+      .map { $0.statusCode >= 200 && $0.statusCode <= 299 }
+      .bind(to: addButtonSuccess)
+      .disposed(by: disposeBag)
+  }
+  
+  private func requestAddMeetup(title: String, desc: String, type: String, metadata: String, startDate: String, endDate: String) -> Observable<Response> {
+    return provider.rx.request(.addMeetup(title, desc, type, metadata, startDate, endDate))
+      .asObservable()
   }
 }
 

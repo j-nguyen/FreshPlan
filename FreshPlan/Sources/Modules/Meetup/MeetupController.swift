@@ -220,7 +220,7 @@ public final class MeetupController: UIViewController {
         try? this.router.route(
           from: this,
           to: MeetupRouter.Routes.addMeetupOption.rawValue,
-          parameters: nil
+          parameters: ["viewModel": this.viewModel]
         )
       })
       .disposed(by: disposeBag)

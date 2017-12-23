@@ -11,8 +11,8 @@ import Moya
 import UIKit
 
 public final class AddMeetupAssembler {
-  public static func make(type: String) -> UIViewController {
-    let viewModel = AddMeetupViewModel(type: type, provider: provider)
+  public static func make(meetupViewModel: MeetupViewModel, type: String) -> UIViewController {
+    let viewModel = AddMeetupViewModel(meetupViewModel: meetupViewModel, type: type, provider: provider)
     let router = AddMeetupRouter()
     let addViewController = AddMeetupViewController(viewModel: viewModel, router: router)
     return UINavigationController(rootViewController: addViewController)

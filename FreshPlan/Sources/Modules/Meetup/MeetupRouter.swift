@@ -33,13 +33,14 @@ extension MeetupRouter: RouterProtocol {
 			
       context.navigationController?.pushViewController(MeetupDetailAssembler.make(meetupId: meetupId), animated: true)
     case .addMeetupOption:
+      guard let params = parameters, let viewModel = params["viewModel"] as? MeetupViewModel else { return }
       let dialog = MDCAlertController(title: "Add Meetup", message: "Please select which meetup option you would like to create.")
       let locationHandler = MDCAlertAction(title: "Location", handler: { [weak self] _ in
         guard let this = self else { return }
         try? this.route(
           from: context,
           to: MeetupRouter.Routes.addMeetup.rawValue,
-          parameters: ["type": MeetupType.Options.location.rawValue]
+          parameters: ["type": MeetupType.Options.location.rawValue, "viewModel": viewModel]
         )
       })
       let otherHandler = MDCAlertAction(title: "Other", handler: { [weak self] _ in
@@ -47,7 +48,7 @@ extension MeetupRouter: RouterProtocol {
         try? this.route(
           from: context,
           to: MeetupRouter.Routes.addMeetup.rawValue,
-          parameters: ["type": MeetupType.Options.other.rawValue]
+          parameters: ["type": MeetupType.Options.other.rawValue, "viewModel": viewModel]
         )
       })
       let cancelHandler = MDCAlertAction(title: "Cancel", handler: nil)
@@ -59,9 +60,11 @@ extension MeetupRouter: RouterProtocol {
       
       break
     case .addMeetup:
-      guard let params = parameters, let type = params["type"] as? String else { return }
+      guard let params = parameters,
+        let type = params["type"] as? String,
+        let viewModel = params["viewModel"] as? MeetupViewModel else { return }
       
-      context.present(AddMeetupAssembler.make(type: type), animated: true, completion: nil)
+      context.present(AddMeetupAssembler.make(meetupViewModel: viewModel, type: type), animated: true, completion: nil)
       
       break
 		}

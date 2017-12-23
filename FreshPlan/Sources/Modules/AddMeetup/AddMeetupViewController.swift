@@ -100,6 +100,7 @@ public final class AddMeetupViewController: UIViewController {
           cell.title.on(.next(label))
           
           cell.textValue
+            .orEmpty
             .bind(to: this.viewModel.name)
             .disposed(by: this.disposeBag)
           
@@ -109,7 +110,6 @@ public final class AddMeetupViewController: UIViewController {
           cell.title.on(.next(label))
           
           cell.textValue
-            .asObservable()
             .bind(to: this.viewModel.description)
             .disposed(by: this.disposeBag)
           
@@ -157,6 +157,7 @@ public final class AddMeetupViewController: UIViewController {
               }
               return nil
             }
+            .filterNil()
             .bind(to: this.viewModel.metadata)
             .disposed(by: this.disposeBag)
           
@@ -174,7 +175,6 @@ public final class AddMeetupViewController: UIViewController {
           cell.didEndEditing
             .subscribe(onNext: { [weak self] in
               guard let this = self else { return }
-              print ("Test boiii")
               UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear], animations: {
                 // kinda crap, but we'll use a default inset to scroll up to fix this
                 let inset = CGPoint(x: 0, y: 0)
@@ -258,12 +258,18 @@ public final class AddMeetupViewController: UIViewController {
       .bind(to: addButton.rx.isEnabled)
       .disposed(by: disposeBag)
     
-    addButton.rx.tap
+    viewModel.addButtonTap = addButton.rx.tap.asObservable()
+
+    viewModel.addButtonSuccess
       .asObservable()
-      .subscribe(onNext: {
-        
+      .filter { $0 }
+      .subscribe(onNext: { [weak self] _ in
+        let message = MDCSnackbarMessage(text: "Successfully added meetup!")
+        MDCSnackbarManager.show(message)
       })
       .disposed(by: disposeBag)
+    
+    viewModel.bindButtons()
     
     navigationItem.rightBarButtonItem = addButton
   }
