@@ -11,6 +11,7 @@ import UIKit
 public class AddMeetupRouter {
   public enum Routes: String {
     case meetup
+    case location
   }
   
   fileprivate enum RouteError: Error {
@@ -29,6 +30,8 @@ extension AddMeetupRouter: RouterProtocol {
     case .meetup:
       context.dismiss(animated: true, completion: nil)
       break
+    case .location:
+      context.present(LocationAssembler.make(), animated: true, completion: nil)
     }
   }
 }

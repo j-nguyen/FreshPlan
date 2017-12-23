@@ -119,6 +119,22 @@ public final class AddMeetupViewController: UIViewController {
       .asObservable()
       .bind(to: tableView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
+    
+    tableView.rx.modelSelected(AddMeetupViewModel.SectionItem.self)
+      .subscribe(onNext: { [weak self] item in
+        guard let this = self else { return }
+        switch item {
+        case .location:
+          try? this.router.route(
+            from: this,
+            to: AddMeetupRouter.Routes.location.rawValue
+          )
+        default:
+          return
+        }
+      })
+      .disposed(by: disposeBag)
+    
   }
   
   private func prepareNavigationBar() {

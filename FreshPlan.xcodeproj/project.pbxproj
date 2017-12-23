@@ -49,6 +49,7 @@
 		4083BCD31FEE0D5F007D9B87 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCD21FEE0D5F007D9B87 /* LocationViewController.swift */; };
 		4083BCD51FEE0D9B007D9B87 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCD41FEE0D9B007D9B87 /* LocationViewModel.swift */; };
 		4083BCD71FEE0DB4007D9B87 /* LocationAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCD61FEE0DB4007D9B87 /* LocationAssembler.swift */; };
+		4083BCD91FEE125B007D9B87 /* UISearchBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCD81FEE125B007D9B87 /* UISearchBar+.swift */; };
 		408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082D1F8D267A006BCA8E /* RegisterViewController.swift */; };
 		408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082F1F8D2716006BCA8E /* RegisterRouter.swift */; };
 		408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D08311F8D271F006BCA8E /* RegisterViewModel.swift */; };
@@ -139,6 +140,7 @@
 		4083BCD21FEE0D5F007D9B87 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		4083BCD41FEE0D9B007D9B87 /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
 		4083BCD61FEE0DB4007D9B87 /* LocationAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAssembler.swift; sourceTree = "<group>"; };
+		4083BCD81FEE125B007D9B87 /* UISearchBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+.swift"; sourceTree = "<group>"; };
 		408D082D1F8D267A006BCA8E /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		408D082F1F8D2716006BCA8E /* RegisterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouter.swift; sourceTree = "<group>"; };
 		408D08311F8D271F006BCA8E /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -225,8 +227,8 @@
 				40426D051F86B7EE00875179 /* Modules */,
 				40426D0E1F86B8EC00875179 /* Protocols */,
 				40426D111F86BBA500875179 /* Extensions */,
+				4079B1521FC47E71007E9407 /* Utilities */,
 				400FC2141F897B5600B3098B /* Networking */,
-				4079B1521FC47E71007E9407 /* Utility */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -287,6 +289,7 @@
 		40426D111F86BBA500875179 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4083BCD81FEE125B007D9B87 /* UISearchBar+.swift */,
 				40497D1E1F8CF3A500A4E046 /* UIColor+.swift */,
 				4079B14D1FC4763B007E9407 /* UILabel+.swift */,
 				40934BFB1FE61E8F00AD7331 /* UIImageView+.swift */,
@@ -337,7 +340,6 @@
 			isa = PBXGroup;
 			children = (
 				4056A4F21FD4BDB4006415A7 /* EmptyView.swift */,
-				4056A4F41FD4C2DD006415A7 /* SearchBar.swift */,
 				40BF713C1FDC623200495B81 /* FriendCell.swift */,
 			);
 			path = Subviews;
@@ -384,12 +386,13 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
-		4079B1521FC47E71007E9407 /* Utility */ = {
+		4079B1521FC47E71007E9407 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				4056A4F41FD4C2DD006415A7 /* SearchBar.swift */,
 				4079B1531FC47E86007E9407 /* CacheStore.swift */,
 			);
-			path = Utility;
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		4083BCD11FEE0D54007D9B87 /* Location */ = {
@@ -729,6 +732,7 @@
 				40BF713D1FDC623200495B81 /* FriendCell.swift in Sources */,
 				40426D151F86BC9C00875179 /* RouterProtocol.swift in Sources */,
 				40AD4A7D1FECD08D00AC2AB3 /* AddMeetupViewController.swift in Sources */,
+				4083BCD91FEE125B007D9B87 /* UISearchBar+.swift in Sources */,
 				4045A2991FE603C00059482E /* MeetupCell.swift in Sources */,
 				40BD70141F910FFA005B3B9D /* MeetupRouter.swift in Sources */,
 				4071F94D1FDCAF430061C34E /* FriendProfileCell.swift in Sources */,

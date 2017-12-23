@@ -8,13 +8,14 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 import MaterialComponents
 
 /**
  * Our custom made search bar
  * We'll customize it here, so that it's much better and more orientated for us.
 **/
-public final class SearchBar: UISearchBar {
+public final class SearchBar: UISearchBar {  
   public required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
   }
@@ -31,7 +32,6 @@ public final class SearchBar: UISearchBar {
   
   private func prepareSearchBar() {
     searchBarStyle = .minimal
-    placeholder = "Search For Friends"
     showsBookmarkButton = false
     tintColor = .white
   }

@@ -99,6 +99,10 @@ public final class AddFriendViewController: UIViewController {
       .bind(to: viewModel.searchText)
       .disposed(by: disposeBag)
     
+    Observable.just("Search for friends")
+      .bind(to: searchBar.rx.placeholder)
+      .disposed(by: disposeBag)
+    
     searchBar.rx.searchButtonClicked
       .asObservable()
       .subscribe(onNext: { [weak self] in
