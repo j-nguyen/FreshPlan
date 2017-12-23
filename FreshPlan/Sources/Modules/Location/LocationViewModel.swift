@@ -17,6 +17,7 @@ public protocol LocationViewModelProtocol {
   var locations: Variable<[MKMapItem]> { get }
   
   var updateMeetup: PublishSubject<String> { get }
+  var updateAddress: PublishSubject<String> { get }
 }
 
 public class LocationViewModel: LocationViewModelProtocol {
@@ -29,6 +30,7 @@ public class LocationViewModel: LocationViewModelProtocol {
   
   // MARK: Publish Subjects
   public var updateMeetup: PublishSubject<String> = PublishSubject()
+  public var updateAddress: PublishSubject<String> = PublishSubject()
   
   private var meetupViewModel: AddMeetupViewModel!
   
@@ -38,6 +40,11 @@ public class LocationViewModel: LocationViewModelProtocol {
     updateMeetup
       .asObservable()
       .bind(to: meetupViewModel.metadata)
+      .disposed(by: disposeBag)
+    
+    updateAddress
+      .asObservable()
+      .bind(to: meetupViewModel.address)
       .disposed(by: disposeBag)
     
     searchText

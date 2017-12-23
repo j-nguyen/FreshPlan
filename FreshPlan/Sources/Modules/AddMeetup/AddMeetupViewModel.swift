@@ -23,6 +23,7 @@ public protocol AddMeetupViewModelProtocol {
   var startDate: Variable<Date?> { get }
   var endDate: Variable<Date?> { get }
   var metadata: Variable<String?> { get }
+  var address: Variable<String?> { get }
   var addButtonEnabled: Observable<Bool> { get }
 }
 
@@ -40,7 +41,7 @@ public class AddMeetupViewModel: AddMeetupViewModelProtocol {
   public var startDate: Variable<Date?> = Variable(nil)
   public var endDate: Variable<Date?> = Variable(nil)
   public var metadata: Variable<String?> = Variable(nil)
-  public var location: Variable<CLLocationCoordinate2D?> = Variable(nil)
+  public var address: Variable<String?> = Variable(nil)
   
   public var addButtonEnabled: Observable<Bool> {
     return Observable.combineLatest(name.asObservable(), description.asObservable(), meetupType.asObservable(), startDate.asObservable(), endDate.asObservable(), metadata.asObservable()) { name, desc, type, startDate, endDate, metadata in
@@ -56,15 +57,6 @@ public class AddMeetupViewModel: AddMeetupViewModelProtocol {
   public init(type: String, provider: MoyaProvider<FreshPlan>) {
     self.type = type
     self.provider = provider
-    
-    // test
-    self.metadata
-      .asObservable()
-      .filterNil()
-      .subscribe(onNext: { text in
-        print ("Ive passed!!! \(text)")
-      })
-      .disposed(by: disposeBag)
     
     // conform the type right in
     let typeObservable = Observable.just(type).share()

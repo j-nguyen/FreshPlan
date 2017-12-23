@@ -93,7 +93,9 @@ public final class AddMeetupViewController: UIViewController {
     }
     
     dataSource = RxTableViewSectionedReloadDataSource(
-      configureCell: { dataSource, tableView, index, model in
+      configureCell: { [weak self] dataSource, tableView, index, model in
+        guard let this = self else { fatalError() }
+        
         switch dataSource[index] {
         case let .name(_, label):
           let cell = tableView.dequeueCell(ofType: AddMeetupTextFieldCell.self, for: index)
@@ -106,6 +108,12 @@ public final class AddMeetupViewController: UIViewController {
         case let .location(_, label):
           let cell = tableView.dequeueCell(ofType: AddMeetupGeocodeCell.self, for: index)
           cell.title.on(.next(label))
+    
+          this.viewModel.address
+            .asObservable()
+            .bind(to: cell.textFieldText)
+            .disposed(by: this.disposeBag)
+          
           return cell
         default:
           return UITableViewCell()

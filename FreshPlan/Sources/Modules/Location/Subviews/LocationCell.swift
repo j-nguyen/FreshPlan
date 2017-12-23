@@ -24,6 +24,7 @@ public final class LocationCell: UITableViewCell {
   }
   
   private func prepareView() {
+    selectionStyle = .none
     inkViewController = MDCInkTouchController(view: self)
     inkViewController.delegate = self
     inkViewController.addInkView()

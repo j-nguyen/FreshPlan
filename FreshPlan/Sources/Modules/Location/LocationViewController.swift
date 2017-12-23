@@ -108,11 +108,13 @@ public final class LocationViewController: UIViewController {
       .asObservable()
       .subscribe(onNext: { [weak self] mapItem in
         guard let this = self else { return }
-        if let coordinate = mapItem.placemark.location?.coordinate {
+        if let coordinate = mapItem.placemark.location?.coordinate, let name = mapItem.placemark.name {
           let location = Location(latitude: coordinate.latitude, longitude: coordinate.longitude)
           guard let jsonData = try? JSONEncoder().encode(location) else { return }
           guard let jsonString = String(data: jsonData, encoding: .utf8) else { return }
           this.viewModel.updateMeetup.on(.next(jsonString))
+          this.viewModel.updateAddress.on(.next(name))
+          this.dismiss(animated: true, completion: nil)
         }
       })
       .disposed(by: disposeBag)

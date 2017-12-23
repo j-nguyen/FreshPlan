@@ -10,6 +10,7 @@ import Foundation
 import SnapKit
 import UIKit
 import RxSwift
+import RxCocoa
 import MaterialComponents
 
 public final class AddMeetupGeocodeCell: UITableViewCell {
@@ -20,6 +21,11 @@ public final class AddMeetupGeocodeCell: UITableViewCell {
   private var titleLabel: UILabel!
   private var textField: UITextField!
   private var inkViewController: MDCInkTouchController!
+  
+  //MARK: Events
+  public var textFieldText: ControlProperty<String?> {
+    return textField.rx.text
+  }
   
   //MARK: Dispose
   private let disposeBag: DisposeBag = DisposeBag()
@@ -61,6 +67,7 @@ public final class AddMeetupGeocodeCell: UITableViewCell {
     textField = UITextField()
     textField.placeholder = "Click me to enter in your location"
     textField.isEnabled = false
+    textField.textAlignment = .center
     textField.font = MDCTypography.body1Font()
     
     contentView.addSubview(textField)
