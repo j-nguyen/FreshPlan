@@ -27,6 +27,7 @@ public final class LocationViewController: UIViewController {
   
   // MARK: Views
   private var tableView: UITableView!
+  private var emptyView: EmptyLocationView!
   
   private let disposeBag: DisposeBag = DisposeBag()
   
@@ -73,6 +74,7 @@ public final class LocationViewController: UIViewController {
   
   private func prepareView() {
     prepareTableView()
+    prepareEmptyView()
     prepareSearchBar()
     prepareNavigationBar()
     prepareNavigationCloseButton()
@@ -117,6 +119,28 @@ public final class LocationViewController: UIViewController {
           this.dismiss(animated: true, completion: nil)
         }
       })
+      .disposed(by: disposeBag)
+  }
+  
+  private func prepareEmptyView() {
+    emptyView = EmptyLocationView()
+    
+    view.addSubview(emptyView)
+    
+    emptyView.snp.makeConstraints { make in
+      make.edges.equalTo(view)
+    }
+    
+    viewModel.locations
+      .asObservable()
+      .map { $0.count == 0 }
+      .bind(to: tableView.rx.isHidden)
+      .disposed(by: disposeBag)
+    
+    viewModel.locations
+      .asObservable()
+      .map { $0.count > 0 }
+      .bind(to: emptyView.rx.isHidden)
       .disposed(by: disposeBag)
   }
   

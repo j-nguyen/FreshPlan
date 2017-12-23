@@ -41,7 +41,7 @@ public final class AddMeetupDateCell: UITableViewCell {
   
   private func prepareTitleLabel() {
     titleLabel = UILabel()
-    titleLabel.font = MDCTypography.body1Font()
+    titleLabel.font = MDCTypography.boldFont(from: MDCTypography.subheadFont())
     
     contentView.addSubview(titleLabel)
     
@@ -57,11 +57,28 @@ public final class AddMeetupDateCell: UITableViewCell {
   }
   
   private func prepareTextField() {
+    textField = UITextField()
+    textField.font = MDCTypography.body1Font()
+    textField.isEnabled = false
+    textField.textAlignment = .center
     
+    contentView.addSubview(textField)
+    
+    textField.snp.makeConstraints { make in
+      make.left.equalTo(titleLabel.snp.right)
+      make.right.equalTo(contentView).offset(-10)
+      make.centerY.equalTo(contentView)
+    }
+    
+    title
+      .asObservable()
+      .map { "Click to enter your \($0.lowercased())" }
+      .bind(to: textField.rx.placeholder)
+      .disposed(by: disposeBag)
   }
   
   private func prepareInkView() {
-    inkViewController = MDCInkTouchController()
+    inkViewController = MDCInkTouchController(view: self)
     inkViewController.delegate = self
     inkViewController.addInkView()
   }

@@ -51,6 +51,8 @@
 		4083BCD71FEE0DB4007D9B87 /* LocationAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCD61FEE0DB4007D9B87 /* LocationAssembler.swift */; };
 		4083BCD91FEE125B007D9B87 /* UISearchBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCD81FEE125B007D9B87 /* UISearchBar+.swift */; };
 		4083BCDD1FEE1551007D9B87 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCDC1FEE1551007D9B87 /* LocationCell.swift */; };
+		4083BCE11FEE3859007D9B87 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCE01FEE3859007D9B87 /* UITextField+.swift */; };
+		4083BCE31FEE38FA007D9B87 /* EmptyLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCE21FEE38FA007D9B87 /* EmptyLocationView.swift */; };
 		408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082D1F8D267A006BCA8E /* RegisterViewController.swift */; };
 		408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082F1F8D2716006BCA8E /* RegisterRouter.swift */; };
 		408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D08311F8D271F006BCA8E /* RegisterViewModel.swift */; };
@@ -143,6 +145,8 @@
 		4083BCD61FEE0DB4007D9B87 /* LocationAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAssembler.swift; sourceTree = "<group>"; };
 		4083BCD81FEE125B007D9B87 /* UISearchBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+.swift"; sourceTree = "<group>"; };
 		4083BCDC1FEE1551007D9B87 /* LocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
+		4083BCE01FEE3859007D9B87 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
+		4083BCE21FEE38FA007D9B87 /* EmptyLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLocationView.swift; sourceTree = "<group>"; };
 		408D082D1F8D267A006BCA8E /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		408D082F1F8D2716006BCA8E /* RegisterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouter.swift; sourceTree = "<group>"; };
 		408D08311F8D271F006BCA8E /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -292,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				4083BCD81FEE125B007D9B87 /* UISearchBar+.swift */,
+				4083BCE01FEE3859007D9B87 /* UITextField+.swift */,
 				40497D1E1F8CF3A500A4E046 /* UIColor+.swift */,
 				4079B14D1FC4763B007E9407 /* UILabel+.swift */,
 				40934BFB1FE61E8F00AD7331 /* UIImageView+.swift */,
@@ -412,6 +417,7 @@
 			isa = PBXGroup;
 			children = (
 				4083BCDC1FEE1551007D9B87 /* LocationCell.swift */,
+				4083BCE21FEE38FA007D9B87 /* EmptyLocationView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -756,6 +762,7 @@
 				408D08371F8D2818006BCA8E /* VerifyViewController.swift in Sources */,
 				400BEC271FECA53900D8BADE /* MeetupInviteCell.swift in Sources */,
 				4056A4F01FD4B988006415A7 /* AddFriendAssembler.swift in Sources */,
+				4083BCE31FEE38FA007D9B87 /* EmptyLocationView.swift in Sources */,
 				409602AD1FE72775004D7606 /* MeetupDetailAssembler.swift in Sources */,
 				40426D091F86B85500875179 /* LoginViewController.swift in Sources */,
 				408D083B1F8D2865006BCA8E /* VerifyRouter.swift in Sources */,
@@ -793,6 +800,7 @@
 				40BD70161F911022005B3B9D /* MeetupAssembler.swift in Sources */,
 				400BEC251FEC914800D8BADE /* MeetupDirectionCell.swift in Sources */,
 				40F8C6E01FED7FF60040D334 /* AddMeetupDateCell.swift in Sources */,
+				4083BCE11FEE3859007D9B87 /* UITextField+.swift in Sources */,
 				405C5A9C1F8D950500AC8F9F /* HomeViewModel.swift in Sources */,
 				40426D0D1F86B86800875179 /* LoginAssembler.swift in Sources */,
 				409B2BF31FBE61F5000A7F16 /* ProfileRouter.swift in Sources */,

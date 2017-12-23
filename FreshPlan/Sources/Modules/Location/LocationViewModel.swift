@@ -53,16 +53,18 @@ public class LocationViewModel: LocationViewModelProtocol {
       .filter { [unowned self] _ in return self.coordinate.value != nil }
       .throttle(0.4, scheduler: MainScheduler.instance)
       .distinctUntilChanged()
-      .map { [unowned self] query -> MKLocalSearch in
-        let request = MKLocalSearchRequest()
-        request.naturalLanguageQuery = query
-        let span = MKCoordinateSpan(latitudeDelta: 100, longitudeDelta: 80)
-        let region = MKCoordinateRegion(center: self.coordinate.value!, span: span)
-        request.region = region
-        let search = MKLocalSearch(request: request)
-        return search
+      .flatMapLatest { [unowned self] query -> Observable<[MKMapItem]> in
+        if query.isNotEmpty {
+          let request = MKLocalSearchRequest()
+          request.naturalLanguageQuery = query
+          let span = MKCoordinateSpan(latitudeDelta: 100, longitudeDelta: 80)
+          let region = MKCoordinateRegion(center: self.coordinate.value!, span: span)
+          request.region = region
+          let search = MKLocalSearch(request: request)
+          return self.searchLocations(for: search)
+        }
+        return Observable.just([])
       }
-      .flatMapLatest { [unowned self] request -> Observable<[MKMapItem]> in return self.searchLocations(for: request) }
       .bind(to: locations)
       .disposed(by: disposeBag)
   }
