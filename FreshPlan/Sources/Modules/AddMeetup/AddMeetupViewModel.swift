@@ -46,6 +46,13 @@ public class AddMeetupViewModel: AddMeetupViewModelProtocol {
   public var addButtonEnabled: Observable<Bool> {
     return Observable.combineLatest(name.asObservable(), description.asObservable(), meetupType.asObservable(), startDate.asObservable(), endDate.asObservable(), metadata.asObservable()) { name, desc, type, startDate, endDate, metadata in
       
+      print ("1: \(name)")
+      print ("2: \(desc)")
+      print ("3: \(type)")
+      print ("4: \(startDate)")
+      print ("5: \(endDate)")
+      print ("6: \(metadata)")
+      
       return name != nil && desc != nil && type != nil && startDate != nil && endDate != nil && metadata != nil
       
     }
@@ -60,6 +67,10 @@ public class AddMeetupViewModel: AddMeetupViewModelProtocol {
     
     // conform the type right in
     let typeObservable = Observable.just(type).share()
+    
+    typeObservable
+      .bind(to: meetupType)
+      .disposed(by: disposeBag)
     
     // create the ones that we know are already there
     let name = Observable.just("Meetup Name").map { SectionItem.name(order: 0, label: $0) }

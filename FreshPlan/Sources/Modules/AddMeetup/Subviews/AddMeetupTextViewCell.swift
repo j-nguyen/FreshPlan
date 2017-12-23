@@ -21,6 +21,11 @@ public final class AddMeetupTextViewCell: UITableViewCell {
   //MARK: Views
   private var textView: UITextView!
   
+  //MARK: Events
+  public var textValue: ControlProperty<String?> {
+    return textView.rx.text
+  }
+  
   //MARK: DisposeBag
   private let disposeBag: DisposeBag = DisposeBag()
   

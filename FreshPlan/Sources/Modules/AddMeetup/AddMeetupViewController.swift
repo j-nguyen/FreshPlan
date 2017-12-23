@@ -101,10 +101,22 @@ public final class AddMeetupViewController: UIViewController {
         case let .name(_, label):
           let cell = tableView.dequeueCell(ofType: AddMeetupTextFieldCell.self, for: index)
           cell.title.on(.next(label))
+          
+          cell.textValue
+            .asObservable()
+            .bind(to: this.viewModel.name)
+            .disposed(by: this.disposeBag)
+          
           return cell
         case let .description(_, label):
           let cell = tableView.dequeueCell(ofType: AddMeetupTextViewCell.self, for: index)
           cell.title.on(.next(label))
+          
+          cell.textValue
+            .asObservable()
+            .bind(to: this.viewModel.description)
+            .disposed(by: this.disposeBag)
+          
           return cell
         case let .location(_, label):
           let cell = tableView.dequeueCell(ofType: AddMeetupGeocodeCell.self, for: index)
@@ -119,10 +131,36 @@ public final class AddMeetupViewController: UIViewController {
         case let .startDate(_, label):
           let cell = tableView.dequeueCell(ofType: AddMeetupDateCell.self, for: index)
           cell.title.on(.next(label))
+          
+          cell.date
+            .asObservable()
+            .bind(to: this.viewModel.startDate)
+            .disposed(by: this.disposeBag)
+          
+          cell.beginEditing
+            .subscribe(onNext: { [weak self] in
+              guard let this = self else { return }
+              this.textViewDidChange()
+            })
+            .disposed(by: this.disposeBag)
+          
           return cell
         case let .endDate(_, label):
           let cell = tableView.dequeueCell(ofType: AddMeetupDateCell.self, for: index)
           cell.title.on(.next(label))
+          
+          cell.date
+            .asObservable()
+            .bind(to: this.viewModel.endDate)
+            .disposed(by: this.disposeBag)
+          
+          cell.beginEditing
+            .subscribe(onNext: { [weak self] in
+              guard let this = self else { return }
+              this.textViewDidChange()
+            })
+            .disposed(by: this.disposeBag)
+          
           return cell
         default:
           return UITableViewCell()
