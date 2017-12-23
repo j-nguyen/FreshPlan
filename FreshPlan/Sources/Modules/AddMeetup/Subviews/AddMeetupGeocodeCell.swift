@@ -59,12 +59,15 @@ public final class AddMeetupGeocodeCell: UITableViewCell {
   
   private func prepareTextField() {
     textField = UITextField()
+    textField.placeholder = "Click me to enter in your location"
+    textField.isEnabled = false
     textField.font = MDCTypography.body1Font()
     
     contentView.addSubview(textField)
     
     textField.snp.makeConstraints { make in
-      make.center.equalTo(contentView)
+      make.left.equalTo(titleLabel.snp.right).offset(10)
+      make.centerY.equalTo(contentView)
     }
   }
   

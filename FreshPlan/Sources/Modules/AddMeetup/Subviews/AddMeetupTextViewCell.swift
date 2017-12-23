@@ -22,12 +22,7 @@ public final class AddMeetupTextViewCell: UITableViewCell {
   private var textView: UITextView!
   
   //MARK: DisposeBag
-  public let disposeBag: DisposeBag = DisposeBag()
-  
-  //MARK: Events
-  public var textChanged: ControlEvent<Void> {
-    return textView.rx.didChange
-  }
+  private let disposeBag: DisposeBag = DisposeBag()
   
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -46,7 +41,6 @@ public final class AddMeetupTextViewCell: UITableViewCell {
   private func prepareTextView() {
     textView = UITextView()
     textView.font = MDCTypography.body1Font()
-    textView.isScrollEnabled = false
     
     contentView.addSubview(textView)
     

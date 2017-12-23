@@ -14,6 +14,15 @@ import Moya
 
 public protocol AddMeetupViewModelProtocol {
   var meetup: Variable<[AddMeetupViewModel.Section]> { get }
+  
+  // we need form fields, to set up for our meeting as well
+  var name: Variable<String?> { get }
+  var description: Variable<String?> { get }
+  var meetupType: Variable<String?> { get }
+  var startDate: Variable<Date?> { get }
+  var endDate: Variable<Date?> { get }
+  var metadata: Variable<String?> { get }
+  var addButtonEnabled: Observable<Bool> { get }
 }
 
 public class AddMeetupViewModel: AddMeetupViewModelProtocol {
@@ -23,6 +32,23 @@ public class AddMeetupViewModel: AddMeetupViewModelProtocol {
   
   public var meetup: Variable<[AddMeetupViewModel.Section]> = Variable([])
   
+  // MARK: Form Fields
+  public var name: Variable<String?> = Variable(nil)
+  public var description: Variable<String?> = Variable(nil)
+  public var meetupType: Variable<String?> = Variable(nil)
+  public var startDate: Variable<Date?> = Variable(nil)
+  public var endDate: Variable<Date?> = Variable(nil)
+  public var metadata: Variable<String?> = Variable(nil)
+  
+  public var addButtonEnabled: Observable<Bool> {
+    return Observable.combineLatest(name.asObservable(), description.asObservable(), meetupType.asObservable(), startDate.asObservable(), endDate.asObservable(), metadata.asObservable()) { name, desc, type, startDate, endDate, metadata in
+      
+      return name != nil && desc != nil && type != nil && startDate != nil && endDate != nil && metadata != nil
+      
+    }
+  }
+  
+  // MARK: Dispose
   private let disposeBag: DisposeBag = DisposeBag()
   
   public init(type: String, provider: MoyaProvider<FreshPlan>) {

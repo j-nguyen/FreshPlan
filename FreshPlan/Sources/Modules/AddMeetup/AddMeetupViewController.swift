@@ -102,14 +102,6 @@ public final class AddMeetupViewController: UIViewController {
         case let .description(_, label):
           let cell = tableView.dequeueCell(ofType: AddMeetupTextViewCell.self, for: index)
           cell.title.on(.next(label))
-          
-          cell.textChanged
-            .subscribe(onNext: { [weak self] in
-              guard let this = self else { return }
-              this.textViewDidChange()
-            })
-            .disposed(by: cell.disposeBag)
-          
           return cell
         case let .location(_, label):
           let cell = tableView.dequeueCell(ofType: AddMeetupGeocodeCell.self, for: index)
@@ -169,6 +161,10 @@ public final class AddMeetupViewController: UIViewController {
       target: nil,
       action: nil
     )
+    
+    viewModel.addButtonEnabled
+      .bind(to: addButton.rx.isEnabled)
+      .disposed(by: disposeBag)
     
     addButton.rx.tap
       .asObservable()
