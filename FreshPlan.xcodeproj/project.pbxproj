@@ -96,7 +96,6 @@
 		40F8C6D81FED5DE40040D334 /* AddMeetupTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6D71FED5DE40040D334 /* AddMeetupTextFieldCell.swift */; };
 		40F8C6DA1FED741C0040D334 /* AddMeetupTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6D91FED741C0040D334 /* AddMeetupTextViewCell.swift */; };
 		40F8C6DC1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6DB1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift */; };
-		40F8C6DE1FED7FE80040D334 /* AddMeetupNotesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6DD1FED7FE80040D334 /* AddMeetupNotesCell.swift */; };
 		40F8C6E01FED7FF60040D334 /* AddMeetupDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6DF1FED7FF60040D334 /* AddMeetupDateCell.swift */; };
 		7BED1FB6487CD40A991B8614 /* Pods_FreshPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */; };
 /* End PBXBuildFile section */
@@ -193,7 +192,6 @@
 		40F8C6D71FED5DE40040D334 /* AddMeetupTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupTextFieldCell.swift; sourceTree = "<group>"; };
 		40F8C6D91FED741C0040D334 /* AddMeetupTextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupTextViewCell.swift; sourceTree = "<group>"; };
 		40F8C6DB1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupGeocodeCell.swift; sourceTree = "<group>"; };
-		40F8C6DD1FED7FE80040D334 /* AddMeetupNotesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupNotesCell.swift; sourceTree = "<group>"; };
 		40F8C6DF1FED7FF60040D334 /* AddMeetupDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupDateCell.swift; sourceTree = "<group>"; };
 		66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreshPlan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		961AF7C9502FB2E5362945B5 /* Pods-FreshPlan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.release.xcconfig"; sourceTree = "<group>"; };
@@ -419,8 +417,8 @@
 		4083BCDB1FEE1547007D9B87 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				4083BCDC1FEE1551007D9B87 /* LocationCell.swift */,
 				4083BCE21FEE38FA007D9B87 /* EmptyLocationView.swift */,
+				4083BCDC1FEE1551007D9B87 /* LocationCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -539,7 +537,6 @@
 				40F8C6D71FED5DE40040D334 /* AddMeetupTextFieldCell.swift */,
 				40F8C6D91FED741C0040D334 /* AddMeetupTextViewCell.swift */,
 				40F8C6DF1FED7FF60040D334 /* AddMeetupDateCell.swift */,
-				40F8C6DD1FED7FE80040D334 /* AddMeetupNotesCell.swift */,
 				40F8C6DB1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift */,
 			);
 			path = Subviews;
@@ -812,7 +809,6 @@
 				40497D1F1F8CF3A500A4E046 /* UIColor+.swift in Sources */,
 				408D08341F8D274A006BCA8E /* RegisterAssembler.swift in Sources */,
 				40BE77901F9ED2310011C899 /* ResponseError.swift in Sources */,
-				40F8C6DE1FED7FE80040D334 /* AddMeetupNotesCell.swift in Sources */,
 				4079B14A1FC47407007E9407 /* Token+.swift in Sources */,
 				40AD4A7F1FECD09900AC2AB3 /* AddMeetupViewModel.swift in Sources */,
 				4083BCD31FEE0D5F007D9B87 /* LocationViewController.swift in Sources */,

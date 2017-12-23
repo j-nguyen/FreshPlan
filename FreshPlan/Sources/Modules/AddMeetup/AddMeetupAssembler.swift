@@ -14,8 +14,8 @@ public final class AddMeetupAssembler {
   public static func make(type: String) -> UIViewController {
     let viewModel = AddMeetupViewModel(type: type, provider: provider)
     let router = AddMeetupRouter()
-    
-    return AddMeetupViewController(viewModel: viewModel, router: router)
+    let addViewController = AddMeetupViewController(viewModel: viewModel, router: router)
+    return UINavigationController(rootViewController: addViewController)
   }
   
   private static var provider: MoyaProvider<FreshPlan> {

@@ -76,11 +76,8 @@ public final class AddMeetupViewController: UIViewController {
     tableView.layoutMargins = .zero
     tableView.estimatedRowHeight = 70
     tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.tableFooterView = UIView(frame: .zero)
     tableView.rx.setDelegate(self).disposed(by: disposeBag)
-    
-    if #available(iOS 11.0, *) {
-      tableView.contentInsetAdjustmentBehavior = .never
-    }
     
     tableView.registerCell(AddMeetupTextFieldCell.self)
     tableView.registerCell(AddMeetupTextViewCell.self)
@@ -103,7 +100,6 @@ public final class AddMeetupViewController: UIViewController {
           cell.title.on(.next(label))
           
           cell.textValue
-            .asObservable()
             .bind(to: this.viewModel.name)
             .disposed(by: this.disposeBag)
           
@@ -137,13 +133,6 @@ public final class AddMeetupViewController: UIViewController {
             .bind(to: this.viewModel.startDate)
             .disposed(by: this.disposeBag)
           
-          cell.beginEditing
-            .subscribe(onNext: { [weak self] in
-              guard let this = self else { return }
-              this.textViewDidChange()
-            })
-            .disposed(by: this.disposeBag)
-          
           return cell
         case let .endDate(_, label):
           let cell = tableView.dequeueCell(ofType: AddMeetupDateCell.self, for: index)
@@ -154,16 +143,47 @@ public final class AddMeetupViewController: UIViewController {
             .bind(to: this.viewModel.endDate)
             .disposed(by: this.disposeBag)
           
-          cell.beginEditing
+          return cell
+        case let .other(_, label):
+          let cell = tableView.dequeueCell(ofType: AddMeetupTextViewCell.self, for: index)
+          cell.title.on(.next(label))
+          
+          cell.textValue
+            .map { text -> String? in
+              let other = Other(notes: text)
+              if let jsonData = try? JSONEncoder().encode(other) {
+                let jsonString = String(data: jsonData, encoding: .utf8)
+                return jsonString
+              }
+              return nil
+            }
+            .bind(to: this.viewModel.metadata)
+            .disposed(by: this.disposeBag)
+          
+          cell.didBeginEditing
             .subscribe(onNext: { [weak self] in
               guard let this = self else { return }
-              this.textViewDidChange()
+              UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear], animations: {
+                // kinda crap, but we'll use a default inset to scroll up to fix this
+                let inset = CGPoint(x: 0, y: 140)
+                this.tableView.setContentOffset(inset, animated: true)
+              })
+            })
+            .disposed(by: this.disposeBag)
+
+          cell.didEndEditing
+            .subscribe(onNext: { [weak self] in
+              guard let this = self else { return }
+              print ("Test boiii")
+              UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear], animations: {
+                // kinda crap, but we'll use a default inset to scroll up to fix this
+                let inset = CGPoint(x: 0, y: 0)
+                this.tableView.setContentOffset(inset, animated: true)
+              })
             })
             .disposed(by: this.disposeBag)
           
           return cell
-        default:
-          return UITableViewCell()
         }
       }
     )
@@ -248,18 +268,6 @@ public final class AddMeetupViewController: UIViewController {
     navigationItem.rightBarButtonItem = addButton
   }
   
-  /**
-   Fixes the offset issue of the thing
-  **/
-  private func textViewDidChange() {
-    let currentOffset = tableView.contentOffset
-    UIView.setAnimationsEnabled(false)
-    tableView.beginUpdates()
-    tableView.endUpdates()
-    UIView.setAnimationsEnabled(true)
-    tableView.setContentOffset(currentOffset, animated: false)
-  }
-  
   deinit {
     appBar.navigationBar.unobserveNavigationItem()
   }
@@ -271,7 +279,7 @@ extension AddMeetupViewController: UITableViewDelegate {
     switch dataSource[indexPath] {
     case .name:
       return 50
-    case .description:
+    case .description, .other:
       return 125
     default:
       return UITableViewAutomaticDimension

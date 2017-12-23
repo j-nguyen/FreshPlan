@@ -85,11 +85,9 @@ public final class LocationViewController: UIViewController {
     tableView = UITableView()
     tableView.separatorInset = .zero
     tableView.layoutMargins = .zero
+    tableView.estimatedRowHeight = 44
+    tableView.rowHeight = UITableViewAutomaticDimension
     tableView.registerCell(LocationCell.self)
-    
-    if #available(iOS 11.0, *) {
-      tableView.contentInsetAdjustmentBehavior = .never
-    }
     
     view.addSubview(tableView)
     
@@ -99,7 +97,7 @@ public final class LocationViewController: UIViewController {
     
     viewModel.locations
       .asObservable()
-      .bind(to: tableView.rx.items(cellIdentifier: String(describing: LocationCell.self), cellType: LocationCell.self)) { [weak self] (row, element, cell) in
+      .bind(to: tableView.rx.items(cellIdentifier: String(describing: LocationCell.self))) { [weak self] (row, element, cell) in
         guard let this = self else { fatalError() }
         cell.textLabel?.text = element.placemark.name
         cell.detailTextLabel?.text = this.parseAddress(element.placemark)

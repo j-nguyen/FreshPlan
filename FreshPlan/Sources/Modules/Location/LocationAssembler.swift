@@ -13,6 +13,6 @@ public final class LocationAssembler {
   public static func make(meetupViewModel: AddMeetupViewModel) -> UIViewController {
     let viewModel = LocationViewModel(meetupViewModel: meetupViewModel)
     
-    return LocationViewController(viewModel: viewModel)
+    return UINavigationController(rootViewController: LocationViewController(viewModel: viewModel))
   }
 }

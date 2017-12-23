@@ -19,11 +19,22 @@ public final class AddMeetupTextViewCell: UITableViewCell {
   private var placeholder: Variable<String> = Variable("")
   
   //MARK: Views
-  private var textView: UITextView!
+  fileprivate var textView: UITextView!
   
   //MARK: Events
-  public var textValue: ControlProperty<String?> {
+  public var textValue: Observable<String> {
     return textView.rx.text
+      .orEmpty
+      .asObservable()
+      .filter { [unowned self] _ in return self.textView.textColor != .lightGray }
+  }
+  
+  public var didBeginEditing: ControlEvent<Void> {
+    return textView.rx.didBeginEditing
+  }
+  
+  public var didEndEditing: ControlEvent<Void> {
+    return textView.rx.didEndEditing
   }
   
   //MARK: DisposeBag
@@ -45,6 +56,8 @@ public final class AddMeetupTextViewCell: UITableViewCell {
   
   private func prepareTextView() {
     textView = UITextView()
+    textView.delegate = self
+    textView.returnKeyType = .done
     textView.font = MDCTypography.body1Font()
     
     contentView.addSubview(textView)
@@ -83,5 +96,15 @@ public final class AddMeetupTextViewCell: UITableViewCell {
         }
       })
       .disposed(by: disposeBag)
+  }
+}
+
+extension AddMeetupTextViewCell: UITextViewDelegate {
+  public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    if text == "\n" {
+      textView.resignFirstResponder()
+      return false
+    }
+    return true
   }
 }

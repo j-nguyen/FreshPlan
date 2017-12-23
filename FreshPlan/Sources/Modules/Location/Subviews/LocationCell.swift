@@ -23,6 +23,10 @@ public final class LocationCell: UITableViewCell {
     super.init(coder: aDecoder)
   }
   
+  public override func prepareForReuse() {
+    super.prepareForReuse()
+  }
+  
   private func prepareView() {
     selectionStyle = .none
     inkViewController = MDCInkTouchController(view: self)

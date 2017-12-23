@@ -87,7 +87,7 @@ public class AddMeetupViewModel: AddMeetupViewModelProtocol {
         if type == MeetupType.Options.location.rawValue {
           return SectionItem.location(order: 3, label: "Location")
         } else {
-          return SectionItem.other(order: 3, label: "Additional Information")
+          return SectionItem.other(order: 3, label: "Enter in additional information about your meetup!")
         }
       }
     
