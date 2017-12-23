@@ -10,14 +10,23 @@ import Foundation
 import RxSwift
 import SnapKit
 import MaterialComponents
+import CoreLocation
+import MapKit
 
 public final class LocationViewController: UIViewController {
   // MARK: Required
   private var viewModel: LocationViewModelProtocol!
   
+  // MARK: Location
+  public let locationManager: CLLocationManager = CLLocationManager()
+  
   // MARK: AppBar
   fileprivate let appBar: MDCAppBar = MDCAppBar()
   private var searchBar: SearchBar!
+  private var closeButton: UIBarButtonItem!
+  
+  // MARK: Views
+  private var tableView: UITableView!
   
   private let disposeBag: DisposeBag = DisposeBag()
   
@@ -48,13 +57,65 @@ public final class LocationViewController: UIViewController {
   
   public override func viewDidLoad() {
     super.viewDidLoad()
+    prepareLocation()
     prepareView()
   }
   
+  private func prepareLocation() {
+    locationManager.requestWhenInUseAuthorization()
+    
+    if CLLocationManager.authorizationStatus() == .authorizedWhenInUse, let location = locationManager.location {
+      Observable.just(location.coordinate)
+        .bind(to: viewModel.coordinate)
+        .disposed(by: disposeBag)
+    }
+  }
+  
   private func prepareView() {
+    prepareTableView()
     prepareSearchBar()
     prepareNavigationBar()
+    prepareNavigationCloseButton()
     appBar.addSubviewsToParent()
+  }
+  
+  private func prepareTableView() {
+    tableView = UITableView()
+    tableView.separatorInset = .zero
+    tableView.layoutMargins = .zero
+    tableView.registerCell(LocationCell.self)
+    
+    if #available(iOS 11.0, *) {
+      tableView.contentInsetAdjustmentBehavior = .never
+    }
+    
+    view.addSubview(tableView)
+    
+    tableView.snp.makeConstraints { make in
+      make.edges.equalTo(view)
+    }
+    
+    viewModel.locations
+      .asObservable()
+      .bind(to: tableView.rx.items(cellIdentifier: String(describing: LocationCell.self), cellType: LocationCell.self)) { [weak self] (row, element, cell) in
+        guard let this = self else { fatalError() }
+        cell.textLabel?.text = element.placemark.name
+        cell.detailTextLabel?.text = this.parseAddress(element.placemark)
+      }
+      .disposed(by: disposeBag)
+    
+    tableView.rx.modelSelected(MKMapItem.self)
+      .asObservable()
+      .subscribe(onNext: { [weak self] mapItem in
+        guard let this = self else { return }
+        if let coordinate = mapItem.placemark.location?.coordinate {
+          let location = Location(latitude: coordinate.latitude, longitude: coordinate.longitude)
+          guard let jsonData = try? JSONEncoder().encode(location) else { return }
+          guard let jsonString = String(data: jsonData, encoding: .utf8) else { return }
+          this.viewModel.updateMeetup.on(.next(jsonString))
+        }
+      })
+      .disposed(by: disposeBag)
   }
   
   private func prepareSearchBar() {
@@ -62,12 +123,12 @@ public final class LocationViewController: UIViewController {
     searchBar = SearchBar()
     
     // we'll make a check for ios 11
-//    searchBar.rx.text
-//      .orEmpty
-//      .bind(to: viewModel.searchText)
-//      .disposed(by: disposeBag)
+    searchBar.rx.text
+      .orEmpty
+      .bind(to: viewModel.searchText)
+      .disposed(by: disposeBag)
     
-    Observable.just("Search for friends")
+    Observable.just("Search for a location")
       .bind(to: searchBar.rx.placeholder)
       .disposed(by: disposeBag)
     
@@ -82,15 +143,64 @@ public final class LocationViewController: UIViewController {
     appBar.headerStackView.bottomBar = searchBar
   }
   
+  private func prepareNavigationCloseButton() {
+    closeButton = UIBarButtonItem(
+      image: UIImage(named: "ic_close")?.withRenderingMode(.alwaysTemplate),
+      style: .plain,
+      target: nil,
+      action: nil
+    )
+    
+    closeButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.dismiss(animated: true, completion: nil)
+      })
+      .disposed(by: disposeBag)
+    
+    navigationItem.leftBarButtonItem = closeButton
+  }
+  
   private func prepareNavigationBar() {
     appBar.headerViewController.headerView.backgroundColor = MDCPalette.blue.tint700
     appBar.navigationBar.tintColor = UIColor.white
     appBar.headerViewController.headerView.maximumHeight = 120
     appBar.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor: UIColor.white ]
 
-//    appBar.headerViewController.headerView.trackingScrollView = tableView
+    appBar.headerViewController.headerView.trackingScrollView = tableView
+    
+    Observable.just("Search Place")
+      .bind(to: navigationItem.rx.title)
+      .disposed(by: disposeBag)
     
     appBar.navigationBar.observe(navigationItem)
+  }
+  
+  /**
+    Parses the address. This is actually really bad, I want to fix this at some point to be honest.
+   **/
+  fileprivate func parseAddress(_ mapItem: MKPlacemark) -> String {
+    // put a space between "4" and "Melrose Place"
+    let firstSpace = (mapItem.subThoroughfare != nil && mapItem.thoroughfare != nil) ? " " : ""
+    // put a comma between street and city/state
+    let comma = (mapItem.subThoroughfare != nil || mapItem.thoroughfare != nil) && (mapItem.subAdministrativeArea != nil || mapItem.administrativeArea != nil) ? ", " : ""
+    // put a space between "Washington" and "DC"
+    let secondSpace = (mapItem.subAdministrativeArea != nil && mapItem.administrativeArea != nil) ? " " : ""
+    let addressLine = String(
+      format:"%@%@%@%@%@%@%@",
+      // street number
+      mapItem.subThoroughfare ?? "",
+      firstSpace,
+      // street name
+      mapItem.thoroughfare ?? "",
+      comma,
+      // city
+      mapItem.locality ?? "",
+      secondSpace,
+      // state
+      mapItem.administrativeArea ?? ""
+    )
+    return addressLine
   }
   
   deinit {

@@ -8,6 +8,6 @@
 
 import Foundation
 
-public struct Other: Decodable {
+public struct Other: Codable {
   public let notes: String
 }

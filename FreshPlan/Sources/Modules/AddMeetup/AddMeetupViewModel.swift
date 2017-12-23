@@ -11,6 +11,7 @@ import RxSwift
 import RxOptional
 import RxDataSources
 import Moya
+import CoreLocation
 
 public protocol AddMeetupViewModelProtocol {
   var meetup: Variable<[AddMeetupViewModel.Section]> { get }
@@ -39,6 +40,7 @@ public class AddMeetupViewModel: AddMeetupViewModelProtocol {
   public var startDate: Variable<Date?> = Variable(nil)
   public var endDate: Variable<Date?> = Variable(nil)
   public var metadata: Variable<String?> = Variable(nil)
+  public var location: Variable<CLLocationCoordinate2D?> = Variable(nil)
   
   public var addButtonEnabled: Observable<Bool> {
     return Observable.combineLatest(name.asObservable(), description.asObservable(), meetupType.asObservable(), startDate.asObservable(), endDate.asObservable(), metadata.asObservable()) { name, desc, type, startDate, endDate, metadata in
@@ -54,6 +56,15 @@ public class AddMeetupViewModel: AddMeetupViewModelProtocol {
   public init(type: String, provider: MoyaProvider<FreshPlan>) {
     self.type = type
     self.provider = provider
+    
+    // test
+    self.metadata
+      .asObservable()
+      .filterNil()
+      .subscribe(onNext: { text in
+        print ("Ive passed!!! \(text)")
+      })
+      .disposed(by: disposeBag)
     
     // conform the type right in
     let typeObservable = Observable.just(type).share()
@@ -71,7 +82,7 @@ public class AddMeetupViewModel: AddMeetupViewModelProtocol {
         }
       }
     
-    // COnform it into the section
+    // Conform it into the section
     Observable.from([name, description, metadata])
       .flatMap { $0 }
       .toArray()

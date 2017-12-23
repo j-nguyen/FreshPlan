@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 public final class LocationAssembler {
-  public static func make() -> UIViewController {
-    let viewModel = LocationViewModel()
+  public static func make(meetupViewModel: AddMeetupViewModel) -> UIViewController {
+    let viewModel = LocationViewModel(meetupViewModel: meetupViewModel)
     
     return LocationViewController(viewModel: viewModel)
   }

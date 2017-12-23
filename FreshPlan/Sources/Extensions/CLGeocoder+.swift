@@ -16,27 +16,6 @@ public extension Reactive where Base == CLGeocoder {
       return Disposables.create { self.base.cancelGeocode() }
     }
   }
-  
-  func geocodeAddressDictionary(addressDictionary: [NSObject : AnyObject]) -> Observable<[CLPlacemark]> {
-    return Observable<[CLPlacemark]>.create { observer in
-      geocodeHandler(observer: observer, geocode: curry2(self.base.geocodeAddressDictionary, addressDictionary))
-      return Disposables.create { self.base.cancelGeocode() }
-    }
-  }
-  
-  func geocodeAddressString(addressString: String) -> Observable<[CLPlacemark]> {
-    return Observable<[CLPlacemark]>.create { observer in
-      geocodeHandler(observer: observer, geocode: curry2(self.base.geocodeAddressString, addressString))
-      return Disposables.create { self.base.cancelGeocode() }
-    }
-  }
-  
-  func geocodeAddressString(addressString: String, inRegion region: CLRegion?) -> Observable<[CLPlacemark]> {
-    return Observable<[CLPlacemark]>.create { observer in
-      geocodeHandler(observer: observer, geocode: curry3(self.base.geocodeAddressString, addressString, region))
-      return Disposables.create { self.base.cancelGeocode() }
-    }
-  }
 }
 
 private func curry2<A, B, C>(_ f: @escaping (A, B) -> C, _ a: A) -> (B) -> C {

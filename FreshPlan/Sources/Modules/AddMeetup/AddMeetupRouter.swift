@@ -31,7 +31,8 @@ extension AddMeetupRouter: RouterProtocol {
       context.dismiss(animated: true, completion: nil)
       break
     case .location:
-      context.present(LocationAssembler.make(), animated: true, completion: nil)
+      guard let params = parameters, let viewModel = params["viewModel"] as? AddMeetupViewModel else { return }
+      context.present(LocationAssembler.make(meetupViewModel: viewModel), animated: true, completion: nil)
     }
   }
 }

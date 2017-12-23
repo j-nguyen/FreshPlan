@@ -50,6 +50,7 @@
 		4083BCD51FEE0D9B007D9B87 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCD41FEE0D9B007D9B87 /* LocationViewModel.swift */; };
 		4083BCD71FEE0DB4007D9B87 /* LocationAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCD61FEE0DB4007D9B87 /* LocationAssembler.swift */; };
 		4083BCD91FEE125B007D9B87 /* UISearchBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCD81FEE125B007D9B87 /* UISearchBar+.swift */; };
+		4083BCDD1FEE1551007D9B87 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCDC1FEE1551007D9B87 /* LocationCell.swift */; };
 		408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082D1F8D267A006BCA8E /* RegisterViewController.swift */; };
 		408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082F1F8D2716006BCA8E /* RegisterRouter.swift */; };
 		408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D08311F8D271F006BCA8E /* RegisterViewModel.swift */; };
@@ -141,6 +142,7 @@
 		4083BCD41FEE0D9B007D9B87 /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
 		4083BCD61FEE0DB4007D9B87 /* LocationAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAssembler.swift; sourceTree = "<group>"; };
 		4083BCD81FEE125B007D9B87 /* UISearchBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+.swift"; sourceTree = "<group>"; };
+		4083BCDC1FEE1551007D9B87 /* LocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
 		408D082D1F8D267A006BCA8E /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		408D082F1F8D2716006BCA8E /* RegisterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouter.swift; sourceTree = "<group>"; };
 		408D08311F8D271F006BCA8E /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -401,8 +403,17 @@
 				4083BCD21FEE0D5F007D9B87 /* LocationViewController.swift */,
 				4083BCD41FEE0D9B007D9B87 /* LocationViewModel.swift */,
 				4083BCD61FEE0DB4007D9B87 /* LocationAssembler.swift */,
+				4083BCDB1FEE1547007D9B87 /* Subviews */,
 			);
 			path = Location;
+			sourceTree = "<group>";
+		};
+		4083BCDB1FEE1547007D9B87 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				4083BCDC1FEE1551007D9B87 /* LocationCell.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		408D082C1F8D266C006BCA8E /* Register */ = {
@@ -750,6 +761,7 @@
 				408D083B1F8D2865006BCA8E /* VerifyRouter.swift in Sources */,
 				40D8B02A1FE819BB00CE2626 /* Other.swift in Sources */,
 				40934BFC1FE61E8F00AD7331 /* UIImageView+.swift in Sources */,
+				4083BCDD1FEE1551007D9B87 /* LocationCell.swift in Sources */,
 				4079B1511FC4785F007E9407 /* ProfileUserHeaderCell.swift in Sources */,
 				4003B3A71FE3625E00BF682F /* String+.swift in Sources */,
 				40F8C6DA1FED741C0040D334 /* AddMeetupTextViewCell.swift in Sources */,

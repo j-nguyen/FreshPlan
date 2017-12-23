@@ -127,7 +127,8 @@ public final class AddMeetupViewController: UIViewController {
         case .location:
           try? this.router.route(
             from: this,
-            to: AddMeetupRouter.Routes.location.rawValue
+            to: AddMeetupRouter.Routes.location.rawValue,
+            parameters: ["viewModel": this.viewModel]
           )
         default:
           return
