@@ -44,7 +44,7 @@ public final class AddMeetupTextFieldCell: UITableViewCell {
     contentView.addSubview(titleLabel)
     
     titleLabel.snp.makeConstraints { make in
-      make.left.equalTo(contentView).offset(5)
+      make.left.equalTo(contentView).offset(10)
       make.centerY.equalTo(contentView)
     }
     

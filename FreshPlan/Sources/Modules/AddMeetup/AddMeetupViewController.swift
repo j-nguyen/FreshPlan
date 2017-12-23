@@ -85,6 +85,7 @@ public final class AddMeetupViewController: UIViewController {
     tableView.registerCell(AddMeetupTextFieldCell.self)
     tableView.registerCell(AddMeetupTextViewCell.self)
     tableView.registerCell(AddMeetupGeocodeCell.self)
+    tableView.registerCell(AddMeetupDateCell.self)
   
     view.addSubview(tableView)
     
@@ -114,6 +115,14 @@ public final class AddMeetupViewController: UIViewController {
             .bind(to: cell.textFieldText)
             .disposed(by: this.disposeBag)
           
+          return cell
+        case let .startDate(_, label):
+          let cell = tableView.dequeueCell(ofType: AddMeetupDateCell.self, for: index)
+          cell.title.on(.next(label))
+          return cell
+        case let .endDate(_, label):
+          let cell = tableView.dequeueCell(ofType: AddMeetupDateCell.self, for: index)
+          cell.title.on(.next(label))
           return cell
         default:
           return UITableViewCell()

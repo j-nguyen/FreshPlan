@@ -53,7 +53,7 @@ public final class AddMeetupGeocodeCell: UITableViewCell {
     contentView.addSubview(titleLabel)
     
     titleLabel.snp.makeConstraints { make in
-      make.left.equalTo(contentView).offset(5)
+      make.left.equalTo(contentView).offset(10)
       make.centerY.equalTo(contentView)
     }
     
@@ -74,6 +74,7 @@ public final class AddMeetupGeocodeCell: UITableViewCell {
     
     textField.snp.makeConstraints { make in
       make.left.equalTo(titleLabel.snp.right).offset(10)
+      make.right.equalTo(contentView).offset(-10)
       make.centerY.equalTo(contentView)
     }
   }

@@ -65,17 +65,23 @@ public class AddMeetupViewModel: AddMeetupViewModelProtocol {
     let name = Observable.just("Meetup Name").map { SectionItem.name(order: 0, label: $0) }
     let description = Observable.just("Enter in your description for your meetup name.").map { SectionItem.description(order: 1, label: $0) }
     
+    let startDate = Observable.just("Start Date")
+      .map { SectionItem.startDate(order: 1, label: $0) }
+    
+    let endDate = Observable.just("End Date")
+      .map { SectionItem.endDate(order: 2, label: $0) }
+    
     let metadata = typeObservable
       .map { type -> SectionItem in
         if type == MeetupType.Options.location.rawValue {
-          return SectionItem.location(order: 2, label: "Location")
+          return SectionItem.location(order: 3, label: "Location")
         } else {
           return SectionItem.other(order: 3, label: "Additional Information")
         }
       }
     
     // Conform it into the section
-    Observable.from([name, description, metadata])
+    Observable.from([name, description, metadata, startDate, endDate])
       .flatMap { $0 }
       .toArray()
       .map { $0.sorted(by: { $0.order < $1.order }) }

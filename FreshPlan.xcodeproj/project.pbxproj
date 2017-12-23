@@ -529,9 +529,9 @@
 			children = (
 				40F8C6D71FED5DE40040D334 /* AddMeetupTextFieldCell.swift */,
 				40F8C6D91FED741C0040D334 /* AddMeetupTextViewCell.swift */,
-				40F8C6DB1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift */,
-				40F8C6DD1FED7FE80040D334 /* AddMeetupNotesCell.swift */,
 				40F8C6DF1FED7FF60040D334 /* AddMeetupDateCell.swift */,
+				40F8C6DD1FED7FE80040D334 /* AddMeetupNotesCell.swift */,
+				40F8C6DB1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";

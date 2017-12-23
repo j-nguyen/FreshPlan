@@ -45,7 +45,7 @@ public final class AddMeetupTextViewCell: UITableViewCell {
     contentView.addSubview(textView)
     
     textView.snp.makeConstraints { make in
-      make.edges.equalTo(contentView)
+      make.edges.equalTo(contentView).inset(5)
     }
     
     // create an initial placetext
