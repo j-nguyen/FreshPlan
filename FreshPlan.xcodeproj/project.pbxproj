@@ -46,6 +46,9 @@
 		4079B1511FC4785F007E9407 /* ProfileUserHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B1501FC4785F007E9407 /* ProfileUserHeaderCell.swift */; };
 		4079B1541FC47E86007E9407 /* CacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B1531FC47E86007E9407 /* CacheStore.swift */; };
 		4079B1561FC49367007E9407 /* ProfileUserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079B1551FC49367007E9407 /* ProfileUserInfoCell.swift */; };
+		4083BCD31FEE0D5F007D9B87 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCD21FEE0D5F007D9B87 /* LocationViewController.swift */; };
+		4083BCD51FEE0D9B007D9B87 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCD41FEE0D9B007D9B87 /* LocationViewModel.swift */; };
+		4083BCD71FEE0DB4007D9B87 /* LocationAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCD61FEE0DB4007D9B87 /* LocationAssembler.swift */; };
 		408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082D1F8D267A006BCA8E /* RegisterViewController.swift */; };
 		408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D082F1F8D2716006BCA8E /* RegisterRouter.swift */; };
 		408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408D08311F8D271F006BCA8E /* RegisterViewModel.swift */; };
@@ -133,6 +136,9 @@
 		4079B1501FC4785F007E9407 /* ProfileUserHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserHeaderCell.swift; sourceTree = "<group>"; };
 		4079B1531FC47E86007E9407 /* CacheStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheStore.swift; sourceTree = "<group>"; };
 		4079B1551FC49367007E9407 /* ProfileUserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserInfoCell.swift; sourceTree = "<group>"; };
+		4083BCD21FEE0D5F007D9B87 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		4083BCD41FEE0D9B007D9B87 /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
+		4083BCD61FEE0DB4007D9B87 /* LocationAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAssembler.swift; sourceTree = "<group>"; };
 		408D082D1F8D267A006BCA8E /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		408D082F1F8D2716006BCA8E /* RegisterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouter.swift; sourceTree = "<group>"; };
 		408D08311F8D271F006BCA8E /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -228,6 +234,7 @@
 		40426D051F86B7EE00875179 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				4083BCD11FEE0D54007D9B87 /* Location */,
 				4071F8F51FDB00E4001B77A1 /* Friend */,
 				4056A4EA1FD4B6FE006415A7 /* AddFriend */,
 				409B2BED1FBE6129000A7F16 /* Profile */,
@@ -383,6 +390,16 @@
 				4079B1531FC47E86007E9407 /* CacheStore.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		4083BCD11FEE0D54007D9B87 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				4083BCD21FEE0D5F007D9B87 /* LocationViewController.swift */,
+				4083BCD41FEE0D9B007D9B87 /* LocationViewModel.swift */,
+				4083BCD61FEE0DB4007D9B87 /* LocationAssembler.swift */,
+			);
+			path = Location;
 			sourceTree = "<group>";
 		};
 		408D082C1F8D266C006BCA8E /* Register */ = {
@@ -753,6 +770,7 @@
 				408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */,
 				409A55351F86B0D200EB29A4 /* AppDelegate.swift in Sources */,
 				4055B0BA1FD079FE007C5CCC /* ProfileUserHeaderView.swift in Sources */,
+				4083BCD71FEE0DB4007D9B87 /* LocationAssembler.swift in Sources */,
 				408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */,
 				40426D1A1F86C12600875179 /* LoginRouter.swift in Sources */,
 				4045A2931FE601060059482E /* Meetup.swift in Sources */,
@@ -769,12 +787,14 @@
 				40F8C6DE1FED7FE80040D334 /* AddMeetupNotesCell.swift in Sources */,
 				4079B14A1FC47407007E9407 /* Token+.swift in Sources */,
 				40AD4A7F1FECD09900AC2AB3 /* AddMeetupViewModel.swift in Sources */,
+				4083BCD31FEE0D5F007D9B87 /* LocationViewController.swift in Sources */,
 				4056A4F51FD4C2DD006415A7 /* SearchBar.swift in Sources */,
 				4056A4EC1FD4B70B006415A7 /* AddFriendViewController.swift in Sources */,
 				405C5A9E1F8D953500AC8F9F /* HomeRouter.swift in Sources */,
 				4079B1541FC47E86007E9407 /* CacheStore.swift in Sources */,
 				40BD70101F910F53005B3B9D /* MeetupController.swift in Sources */,
 				409B2BFA1FBE65AF000A7F16 /* Friend.swift in Sources */,
+				4083BCD51FEE0D9B007D9B87 /* LocationViewModel.swift in Sources */,
 				40C429021FC3D08C004579A6 /* JSONDecoder+.swift in Sources */,
 				40F8C6DC1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift in Sources */,
 			);
