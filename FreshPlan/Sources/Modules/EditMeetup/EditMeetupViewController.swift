@@ -79,8 +79,8 @@ public final class EditMeetupViewController: UIViewController {
     tableView.tableFooterView = UIView(frame: .zero)
     tableView.rx.setDelegate(self).disposed(by: disposeBag)
     
-    tableView.registerCell(AddMeetupTextFieldCell.self)
-    tableView.registerCell(AddMeetupTextViewCell.self)
+    tableView.registerCell(EditMeetupTextFieldCell.self)
+    tableView.registerCell(EditMeetupTextViewCell.self)
     tableView.registerCell(AddMeetupGeocodeCell.self)
     tableView.registerCell(AddMeetupDateCell.self)
     
@@ -96,8 +96,9 @@ public final class EditMeetupViewController: UIViewController {
         
         switch dataSource[index] {
         case let .name(_, label, placeholder):
-          let cell = tableView.dequeueCell(ofType: AddMeetupTextFieldCell.self, for: index)
-          cell.title.on(.next(label))
+          let cell = tableView.dequeueCell(ofType: EditMeetupTextFieldCell.self, for: index)
+          cell.label.on(.next(label))
+          cell.placeholder.on(.next(placeholder))
           
           cell.textValue
             .orEmpty
@@ -106,8 +107,10 @@ public final class EditMeetupViewController: UIViewController {
           
           return cell
         case let .description(_, label, placeholder):
-          let cell = tableView.dequeueCell(ofType: AddMeetupTextViewCell.self, for: index)
+          let cell = tableView.dequeueCell(ofType: EditMeetupTextViewCell.self, for: index)
           cell.title.on(.next(label))
+          
+          Observable.just(placeholder).bind(to: cell.placeholder).disposed(by: this.disposeBag)
           
           cell.textValue
             .bind(to: this.viewModel.description)
