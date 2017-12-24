@@ -116,7 +116,7 @@ extension FreshPlan: TargetType {
         parameters: [
           "title": title,
           "description": desc,
-          "meetupType": type,
+          "meetup": type,
           "metadata": metadata,
           "startDate": startDate,
           "endDate": endDate

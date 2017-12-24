@@ -28,7 +28,8 @@ public protocol AddMeetupViewModelProtocol {
   
   // button test
   var addButtonTap: Observable<Void>! { get set }
-  var addButtonSuccess: PublishSubject<Bool> { get set }
+  var addButtonSuccess: PublishSubject<Bool> { get }
+  var addButtonFail: PublishSubject<ResponseError> { get }
   var reloadMeetup: PublishSubject<Void> { get }
   
   func bindButtons()
@@ -70,6 +71,7 @@ public class AddMeetupViewModel: AddMeetupViewModelProtocol {
   
   public var addButtonTap: Observable<Void>!
   public var addButtonSuccess: PublishSubject<Bool> = PublishSubject()
+  public var addButtonFail: PublishSubject<ResponseError> = PublishSubject()
   public var reloadMeetup: PublishSubject<Void> = PublishSubject()
   
   // MARK: Dispose
@@ -131,11 +133,21 @@ public class AddMeetupViewModel: AddMeetupViewModelProtocol {
   }
   
   public func bindButtons() {
-    addButtonTap
+    let btn = addButtonTap
       .flatMap { [weak self] _ -> Observable<Response> in
         guard let this = self else { fatalError() }
         return this.requestAddMeetup(title: this.name.value, desc: this.description.value, type: this.meetupType.value, metadata: this.metadata.value, startDate: this.startDate.value!.dateString, endDate: this.endDate.value!.dateString)
       }
+      .share()
+    
+    btn
+      .filter { $0.statusCode >= 299 }
+      .map(ResponseError.self)
+      .bind(to: addButtonFail)
+      .disposed(by: disposeBag)
+    
+    btn
+      .filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
       .map { $0.statusCode >= 200 && $0.statusCode <= 299 }
       .bind(to: addButtonSuccess)
       .disposed(by: disposeBag)

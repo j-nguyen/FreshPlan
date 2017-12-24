@@ -264,7 +264,18 @@ public final class AddMeetupViewController: UIViewController {
       .asObservable()
       .filter { $0 }
       .subscribe(onNext: { [weak self] _ in
+        guard let this = self else { return }
         let message = MDCSnackbarMessage(text: "Successfully added meetup!")
+        MDCSnackbarManager.show(message)
+        this.viewModel.reloadMeetup.on(.next(()))
+        this.dismiss(animated: true, completion: nil)
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel.addButtonFail
+      .asObservable()
+      .subscribe(onNext: { response in
+        let message = MDCSnackbarMessage(text: response.reason)
         MDCSnackbarManager.show(message)
       })
       .disposed(by: disposeBag)
