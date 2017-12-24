@@ -100,7 +100,7 @@ public final class MeetupLocationCell: UITableViewCell {
    **/
   fileprivate func centerLocation(location: CLLocation) {
     // some random constant
-    let regionRadius: CLLocationDistance = 10000
+    let regionRadius: CLLocationDistance = 1000
     let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius, regionRadius)
     mapView.setRegion(coordinateRegion, animated: true)
   }
