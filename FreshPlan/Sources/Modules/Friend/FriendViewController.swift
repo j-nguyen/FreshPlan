@@ -48,13 +48,13 @@ public class FriendViewController: UIViewController {
   
   public override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    setNeedsStatusBarAppearanceUpdate()
     
     navigationController?.setNavigationBarHidden(true, animated: animated)
   }
   
   public override func viewDidLoad() {
     super.viewDidLoad()
-    setNeedsStatusBarAppearanceUpdate()
     view.backgroundColor = .white
     prepareView()
   }

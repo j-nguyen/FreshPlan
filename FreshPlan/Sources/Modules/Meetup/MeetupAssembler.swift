@@ -8,12 +8,17 @@
 
 import Foundation
 import UIKit
+import Moya
 
 public final class MeetupAssembler {
 	public static func make() -> MeetupController {
-		let viewModel = MeetupViewModel()
+    let viewModel = MeetupViewModel(provider: provider)
 		let router = MeetupRouter()
 		
 		return MeetupController(viewModel: viewModel, router: router)
 	}
+  
+  private static var provider: MoyaProvider<FreshPlan> {
+    return MoyaProvider<FreshPlan>(plugins: [NetworkLoggerPlugin(verbose: true)])
+  }
 }

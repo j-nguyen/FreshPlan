@@ -11,6 +11,7 @@ target 'FreshPlan' do
   pod 'RxGesture'
   pod 'Moya/RxSwift'
   pod 'RxOptional'
+  pod 'RxMKMapView'
   pod 'MaterialComponents', '~> 42.0.0'
   pod 'Fabric'
   pod 'Crashlytics'
