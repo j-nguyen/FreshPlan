@@ -41,7 +41,8 @@ public class MeetupViewModel: MeetupViewModelProtocol {
     
     refreshContent
       .asObservable()
-      .flatMap { self.requestMeetups().map { $0.sorted(by: { $0.startDate < $1.startDate }) } }
+      .flatMap { self.requestMeetups() }
+      .map { $0.sorted(by: { $0.id < $1.id }) }
       .map { [Section(header: "", items: $0)] }
       .do(onNext: { [weak self] meetup in
         self?.refreshSuccess.on(.next(()))
@@ -50,7 +51,7 @@ public class MeetupViewModel: MeetupViewModelProtocol {
       .disposed(by: disposeBag)
     
     self.requestMeetups()
-      .map { $0.sorted(by: { $0.startDate < $1.startDate }) }
+      .map { $0.sorted(by: { $0.id < $1.id }) }
       .map { [Section(header: "", items: $0)] }
       .bind(to: meetups)
       .disposed(by: disposeBag)
