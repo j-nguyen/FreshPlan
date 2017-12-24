@@ -104,9 +104,15 @@ public final class VerifyViewController: UIViewController {
 				guard let this = self else { return }
 				if this.verifyTextField.becomeFirstResponder() { this.verifyTextField.resignFirstResponder() }
 				// create snackbar
-				let message = MDCSnackbarMessage()
-				message.text = reason
-				MDCSnackbarManager.show(message)
+        let message = MDCSnackbarMessage()
+        let action = MDCSnackbarMessageAction()
+        action.handler = {
+          this.viewModel.resendCode.on(.next(()))
+        }
+        action.title = "Resend"
+        message.action = action
+        message.text = reason
+        MDCSnackbarManager.show(message)
 			})
 			.disposed(by: disposeBag)
 	}
@@ -155,7 +161,6 @@ public final class VerifyViewController: UIViewController {
 		verifyTextField.rx.text
 			.orEmpty
 			.map { Int($0) }
-			.filterNil()
 			.bind(to: viewModel.verificationCode)
 			.disposed(by: disposeBag)
 	}
@@ -174,6 +179,12 @@ public final class VerifyViewController: UIViewController {
 		
 		viewModel.submitTap = submitButton.rx.tap.asObservable()
 		viewModel.bindButton()
+    
+    viewModel.verificationCode
+      .asObservable()
+      .map { $0 != nil }
+      .bind(to: submitButton.rx.isEnabled)
+      .disposed(by: disposeBag)
 		
 		viewModel.submitSuccess
 			.asObservable()
