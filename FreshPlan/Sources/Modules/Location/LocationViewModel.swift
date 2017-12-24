@@ -18,6 +18,8 @@ public protocol LocationViewModelProtocol {
   
   var updateMeetup: PublishSubject<String> { get }
   var updateAddress: PublishSubject<String> { get }
+  
+  var isEdit: Bool { get }
 }
 
 public class LocationViewModel: LocationViewModelProtocol {
@@ -31,12 +33,9 @@ public class LocationViewModel: LocationViewModelProtocol {
   // MARK: Publish Subjects
   public var updateMeetup: PublishSubject<String> = PublishSubject()
   public var updateAddress: PublishSubject<String> = PublishSubject()
-  
-  private var meetupViewModel: AddMeetupViewModel!
+  public var isEdit: Bool = false
   
   public init(meetupViewModel: AddMeetupViewModel) {
-    self.meetupViewModel = meetupViewModel
-    
     updateMeetup
       .asObservable()
       .bind(to: meetupViewModel.metadata)
@@ -47,6 +46,15 @@ public class LocationViewModel: LocationViewModelProtocol {
       .bind(to: meetupViewModel.address)
       .disposed(by: disposeBag)
     
+    setup()
+  }
+  
+  public init(editMeetupViewModel: EditMeetupViewModel) {
+    isEdit = true
+    setup()
+  }
+  
+  private func setup() {
     searchText
       .asObservable()
       .filterEmpty()
