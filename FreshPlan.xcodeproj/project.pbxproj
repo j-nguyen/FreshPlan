@@ -21,6 +21,7 @@
 		402D93251FEF8245008E268A /* EditMeetupTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402D93241FEF8245008E268A /* EditMeetupTextViewCell.swift */; };
 		402D93271FEF8421008E268A /* EditMeeupGeocodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402D93261FEF8421008E268A /* EditMeeupGeocodeCell.swift */; };
 		402D93291FEF842C008E268A /* EditMeetupDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402D93281FEF842C008E268A /* EditMeetupDateCell.swift */; };
+		402D932B1FEF8D0D008E268A /* MeetupNoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402D932A1FEF8D0D008E268A /* MeetupNoteCell.swift */; };
 		40426D091F86B85500875179 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D081F86B85500875179 /* LoginViewController.swift */; };
 		40426D0B1F86B85E00875179 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D0A1F86B85E00875179 /* LoginViewModel.swift */; };
 		40426D0D1F86B86800875179 /* LoginAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D0C1F86B86800875179 /* LoginAssembler.swift */; };
@@ -124,6 +125,7 @@
 		402D93241FEF8245008E268A /* EditMeetupTextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMeetupTextViewCell.swift; sourceTree = "<group>"; };
 		402D93261FEF8421008E268A /* EditMeeupGeocodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMeeupGeocodeCell.swift; sourceTree = "<group>"; };
 		402D93281FEF842C008E268A /* EditMeetupDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMeetupDateCell.swift; sourceTree = "<group>"; };
+		402D932A1FEF8D0D008E268A /* MeetupNoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupNoteCell.swift; sourceTree = "<group>"; };
 		40426D081F86B85500875179 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		40426D0A1F86B85E00875179 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		40426D0C1F86B86800875179 /* LoginAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAssembler.swift; sourceTree = "<group>"; };
@@ -568,6 +570,7 @@
 				40E1EE9B1FE805C00055CBF6 /* MeetupTitleCell.swift */,
 				40B4782D1FEC5CEA0033DFFF /* MeetupDescriptionCell.swift */,
 				40B4782B1FEC50B00033DFFF /* MeetupLocationCell.swift */,
+				402D932A1FEF8D0D008E268A /* MeetupNoteCell.swift */,
 				400BEC241FEC914800D8BADE /* MeetupDirectionCell.swift */,
 				400BEC261FECA53900D8BADE /* MeetupInviteCell.swift */,
 			);
@@ -787,6 +790,7 @@
 				4079B14C1FC475E9007E9407 /* UITableView+.swift in Sources */,
 				405C5A981F8D94E700AC8F9F /* HomeViewController.swift in Sources */,
 				40AD4A811FECD0A000AC2AB3 /* AddMeetupRouter.swift in Sources */,
+				402D932B1FEF8D0D008E268A /* MeetupNoteCell.swift in Sources */,
 				4045A2901FE5FE200059482E /* EmptyMeetupView.swift in Sources */,
 				409B2BF81FBE64F9000A7F16 /* User.swift in Sources */,
 				402D93271FEF8421008E268A /* EditMeeupGeocodeCell.swift in Sources */,

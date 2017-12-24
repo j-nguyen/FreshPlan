@@ -113,7 +113,7 @@ public final class LocationViewController: UIViewController {
           guard let jsonData = try? JSONEncoder().encode(location) else { return }
           guard let jsonString = String(data: jsonData, encoding: .utf8) else { return }
           this.viewModel.updateMeetup.on(.next(jsonString))
-          if !this.viewModel.isEdit { this.viewModel.updateAddress.on(.next(name)) }
+          this.viewModel.updateAddress.on(.next(name))
           this.dismiss(animated: true, completion: nil)
         }
       })

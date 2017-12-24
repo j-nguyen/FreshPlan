@@ -139,6 +139,15 @@ public final class EditMeetupDateCell: UITableViewCell {
       .bind(to: datePickerView.rx.date)
       .disposed(by: disposeBag)
     
+    dateSubject
+      .asObservable()
+      .map { date -> String? in
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, h:mm a"
+        return dateFormatter.string(from: date)
+      }
+      .bind(to: textField.rx.text)
+      .disposed(by: disposeBag)
     
     datePickerView.rx.date
       .asObservable()

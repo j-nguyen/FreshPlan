@@ -104,6 +104,7 @@ public class MeetupDetailViewController: UIViewController {
     tableView.registerCell(MeetupLocationCell.self)
     tableView.registerCell(MeetupDirectionCell.self)
     tableView.registerCell(MeetupInviteCell.self)
+    tableView.registerCell(MeetupNoteCell.self)
     
     view.addSubview(tableView)
     
@@ -140,8 +141,10 @@ public class MeetupDetailViewController: UIViewController {
         cell.email.on(.next(email))
         cell.accepted.on(.next(accepted))
         return cell
-      default:
-        return UITableViewCell()
+      case let .other(_, notes):
+        let cell = tableView.dequeueCell(ofType: MeetupNoteCell.self, for: index)
+        cell.note.on(.next(notes))
+        return cell
       }
     })
     
@@ -220,34 +223,21 @@ public class MeetupDetailViewController: UIViewController {
   }
   
   private func prepareNavigationDeleteButton() {
-    editButton = UIBarButtonItem(
-      image: UIImage(named: "ic_delete")?.withRenderingMode(.alwaysTemplate),
-      style: .plain,
-      target: nil,
-      action: nil
-    )
+    editButton = UIBarButtonItem(title: "Edit", style: .plain, target: nil, action: nil)
     
-    viewModel.editHandler = editButton.rx.tap.asObservable()
-    
-    viewModel.bindButtons()
-    
-    viewModel.editSuccess
-      .asObservable()
-      .filter { $0 }
-      .subscribe(onNext: { [weak self] _ in
-        guard let this = self else { return }
-        this.navigationController?.popViewController(animated: true)
-        let message = MDCSnackbarMessage(text: "Successfully edited meetup!")
-        MDCSnackbarManager.show(message)
-      })
+    viewModel.canEdit
+      .bind(to: editButton.rx.isEnabled)
       .disposed(by: disposeBag)
     
-    viewModel.editSuccess
+    editButton.rx.tap
       .asObservable()
-      .filter { !$0 }
-      .subscribe(onNext: { _ in
-        let message = MDCSnackbarMessage(text: "Cannot edit meetup. Are you sure you're the host?")
-        MDCSnackbarManager.show(message)
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        try? this.router.route(
+          from: this,
+          to: MeetupDetailRouter.Routes.editMeetup.rawValue,
+          parameters: ["meetupId": this.viewModel.meetupId, "viewModel": this.viewModel]
+        )
       })
       .disposed(by: disposeBag)
     

@@ -81,7 +81,7 @@ public final class EditMeetupViewController: UIViewController {
     
     tableView.registerCell(EditMeetupTextFieldCell.self)
     tableView.registerCell(EditMeetupTextViewCell.self)
-    tableView.registerCell(AddMeetupGeocodeCell.self)
+    tableView.registerCell(EditMeetupGeocodeCell.self)
     tableView.registerCell(EditMeetupDateCell.self)
     
     view.addSubview(tableView)
@@ -118,7 +118,7 @@ public final class EditMeetupViewController: UIViewController {
           
           return cell
         case let .location(_, label):
-          let cell = tableView.dequeueCell(ofType: AddMeetupGeocodeCell.self, for: index)
+          let cell = tableView.dequeueCell(ofType: EditMeetupGeocodeCell.self, for: index)
           cell.title.on(.next(label))
           
           this.viewModel.address
@@ -205,14 +205,14 @@ public final class EditMeetupViewController: UIViewController {
       .bind(to: tableView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
     
-    tableView.rx.modelSelected(AddMeetupViewModel.SectionItem.self)
+    tableView.rx.modelSelected(EditMeetupViewModel.SectionItem.self)
       .subscribe(onNext: { [weak self] item in
         guard let this = self else { return }
         switch item {
         case .location:
           try? this.router.route(
             from: this,
-            to: AddMeetupRouter.Routes.location.rawValue,
+            to: EditMeetupRouter.Routes.location.rawValue,
             parameters: ["viewModel": this.viewModel]
           )
         default:
@@ -249,7 +249,7 @@ public final class EditMeetupViewController: UIViewController {
       .asObservable()
       .subscribe(onNext: { [weak self] in
         guard let this = self else { return }
-        try? this.router.route(from: this, to: AddMeetupRouter.Routes.meetup.rawValue)
+        this.dismiss(animated: true, completion: nil)
       })
       .disposed(by: disposeBag)
     

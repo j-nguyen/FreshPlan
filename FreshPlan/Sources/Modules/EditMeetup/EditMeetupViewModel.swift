@@ -112,13 +112,16 @@ public class EditMeetupViewModel: EditMeetupViewModelProtocol {
     let startDate = meetup.map { SectionItem.startDate(order: 2, label: "Start Date", placeholder: $0.startDate) }
     let endDate = meetup.map { SectionItem.endDate(order: 3, label: "End Date", placeholder: $0.endDate) }
     let metadata = meetup.map { meetup -> SectionItem? in
-      if let data = meetup.metadata.data(using: .utf8) {
-        if meetup.meetupType.type == MeetupType.Options.location.rawValue {
-            return SectionItem.location(order: 4, label: "Location")
+      if meetup.meetupType.type == MeetupType.Options.location.rawValue {
+        return SectionItem.location(order: 4, label: "Location")
+      } else {
+        if meetup.metadata.isNotEmpty {
+          if let data = meetup.metadata.data(using: .utf8) {
+            let other = try JSONDecoder().decode(Other.self, from: data)
+            return SectionItem.other(order: 4, label: "Enter in additional Information", notes: other.notes)
+          }
         } else {
-          // weeeeee
-          let other = try JSONDecoder().decode(Other.self, from: data)
-          return SectionItem.other(order: 4, label: "Enter in additional Information", notes: other.notes)
+          return SectionItem.other(order: 4, label: "Enter in additional Information", notes: "")
         }
       }
       return nil
@@ -138,7 +141,7 @@ public class EditMeetupViewModel: EditMeetupViewModelProtocol {
     let btn = submitButtonTap
       .flatMap { [weak self] _ -> Observable<Response> in
         guard let this = self else { fatalError() }
-        return this.requestAddMeetup(title: this.name.value, desc: this.description.value, type: this.meetupType.value, metadata: this.metadata.value, startDate: this.startDate.value!.dateString, endDate: this.endDate.value!.dateString)
+        return this.requestEditMeetup(meetupId: this.meetupId, title: this.name.value, desc: this.description.value, type: this.meetupType.value, metadata: this.metadata.value, startDate: this.startDate.value!.dateString, endDate: this.endDate.value!.dateString)
       }
       .share()
     
@@ -155,8 +158,8 @@ public class EditMeetupViewModel: EditMeetupViewModelProtocol {
       .disposed(by: disposeBag)
   }
   
-  private func requestAddMeetup(title: String, desc: String, type: String, metadata: String, startDate: String, endDate: String) -> Observable<Response> {
-    return provider.rx.request(.addMeetup(title, desc, type, metadata, startDate, endDate))
+  private func requestEditMeetup(meetupId: Int, title: String, desc: String, type: String, metadata: String, startDate: String, endDate: String) -> Observable<Response> {
+    return provider.rx.request(.editMeetup(meetupId, title, desc, type, metadata, startDate, endDate))
       .asObservable()
   }
   

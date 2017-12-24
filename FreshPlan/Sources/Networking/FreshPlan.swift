@@ -148,7 +148,7 @@ extension FreshPlan: TargetType {
 		switch self {
 		case .login, .register, .verify, .resend:
 			return ["Content-Type": "application/json"]
-		case .user, .friends, .acceptFriend, .friendSearch, .sendFriendRequest, .friendRequest, .friendRequests, .meetup, .getMeetup, .deleteMeetup, .addMeetup:
+		case .user, .friends, .acceptFriend, .friendSearch, .sendFriendRequest, .friendRequest, .friendRequests, .meetup, .getMeetup, .deleteMeetup, .addMeetup, .editMeetup:
 			return ["Content-Type": "application/json", "Authorization": UserDefaults.standard.string(forKey: "token")!]
 		}
 	}

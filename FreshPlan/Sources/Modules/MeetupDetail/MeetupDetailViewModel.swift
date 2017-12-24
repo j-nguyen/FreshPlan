@@ -18,12 +18,10 @@ public protocol MeetupDetailViewModelProtocol {
   var refreshContent: PublishSubject<Void> { get }
   var refreshSuccess: PublishSubject<Void> { get }
   
+  var meetupId: Int { get }
+  
   // edit
   var canEdit: Observable<Bool> { get }
-  var editHandler: Observable<Void>! { get set }
-  var editSuccess: PublishSubject<Bool> { get set }
-  
-  func bindButtons()
 }
 
 public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
@@ -46,12 +44,9 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
     }
   }
   
-  public var editHandler: Observable<Void>!
-  public var editSuccess: PublishSubject<Bool> = PublishSubject()
-  
   private let disposeBag: DisposeBag = DisposeBag()
   
-  private var meetupId: Int
+  public var meetupId: Int
   
   public init(provider: MoyaProvider<FreshPlan>, meetupId: Int) {
     self.provider = provider
@@ -68,12 +63,7 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
     
     setup()
   }
-  
-  public func bindButtons() {
-    editHandler
-      .flatMap
-  }
-  
+
   private func setup() {
     let meetup = requestMeetup(meetupId: meetupId)
       .share()
@@ -146,11 +136,6 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
     return provider.rx.request(.getMeetup(meetupId))
       .asObservable()
       .map(Meetup.self, using: JSONDecoder.Decode)
-  }
-  
-  private func editMeetup(meetupId: Int, name: String, desc: String, type: String, metadata: String, startDate: String, endDate: String) -> Observable<Response> {
-    return provider.rx.request(.editMeetup(meetupId, name, desc, type, metadata, startDate, endDate))
-      .asObservable()
   }
 }
 
