@@ -15,13 +15,13 @@ import Moya
 public protocol MeetupDetailViewModelProtocol {
   var title: Variable<String> { get }
   var section: Variable<[MeetupDetailViewModel.Section]> { get }
-  var canDelete: Observable<Bool> { get }
   var refreshContent: PublishSubject<Void> { get }
   var refreshSuccess: PublishSubject<Void> { get }
   
-  // other
-  var deleteHandler: Observable<Void>! { get set }
-  var deleteSuccess: PublishSubject<Bool> { get }
+  // edit
+  var canEdit: Observable<Bool> { get }
+  var editHandler: Observable<Void>! { get set }
+  var editSuccess: PublishSubject<Bool> { get set }
   
   func bindButtons()
 }
@@ -35,8 +35,7 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
   public var refreshContent: PublishSubject<Void> = PublishSubject()
   public var refreshSuccess: PublishSubject<Void> = PublishSubject()
   
-  //MARK: OBservable
-  public var canDelete: Observable<Bool> {
+  public var canEdit: Observable<Bool> {
     return requestMeetup(meetupId: self.meetupId)
       .map { $0.user.id }
       .map { userId -> Bool in
@@ -44,11 +43,11 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
           return tokenId == userId
         }
         return false
-      }
+    }
   }
   
-  public var deleteHandler: Observable<Void>!
-  public var deleteSuccess: PublishSubject<Bool> = PublishSubject()
+  public var editHandler: Observable<Void>!
+  public var editSuccess: PublishSubject<Bool> = PublishSubject()
   
   private let disposeBag: DisposeBag = DisposeBag()
   
@@ -71,14 +70,8 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
   }
   
   public func bindButtons() {
-    deleteHandler
-      .flatMap { [weak self] _ -> Observable<Response> in
-        guard let this = self else { fatalError() }
-        return this.deleteMeetup(meetupId: this.meetupId)
-      }
-      .map { $0.statusCode >= 200 && $0.statusCode <= 299 }
-      .bind(to: deleteSuccess)
-      .disposed(by: disposeBag)
+    editHandler
+      .flatMap
   }
   
   private func setup() {
@@ -155,8 +148,8 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
       .map(Meetup.self, using: JSONDecoder.Decode)
   }
   
-  private func deleteMeetup(meetupId: Int) -> Observable<Response> {
-    return provider.rx.request(.deleteMeetup(meetupId))
+  private func editMeetup(meetupId: Int, name: String, desc: String, type: String, metadata: String, startDate: String, endDate: String) -> Observable<Response> {
+    return provider.rx.request(.editMeetup(meetupId, name, desc, type, metadata, startDate, endDate))
       .asObservable()
   }
 }

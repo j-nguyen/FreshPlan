@@ -11,6 +11,7 @@ import UIKit
 public class MeetupDetailRouter {
   public enum Routes: String {
     case meetup
+    case editMeetup
     case googlemaps
     case invitee
   }
@@ -29,6 +30,12 @@ extension MeetupDetailRouter: RouterProtocol {
     switch route {
     case .meetup:
       context.navigationController?.popViewController(animated: true)
+    case .editMeetup:
+      guard let params = parameters,
+        let meetupId = params["meetupId"] as? Int,
+        let viewModel = params["viewModel"] as? MeetupDetailViewModel else { return }
+      
+      context.present(EditMeetupAssembler.make(meetupId: meetupId, meetupDetailViewModel: viewModel), animated: true, completion: nil)
     case .googlemaps:
       guard let googleMapsURL = URL(string: "comgooglemaps://") else { return }
       guard let params = parameters, let latitude = params["latitude"] as? Double, let longitude = params["longitude"] as? Double else {

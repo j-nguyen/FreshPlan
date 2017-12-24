@@ -19,6 +19,8 @@
 		402D93201FEF7CBA008E268A /* EditMeetupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402D931F1FEF7CBA008E268A /* EditMeetupRouter.swift */; };
 		402D93231FEF7FF4008E268A /* EditMeetupTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402D93221FEF7FF4008E268A /* EditMeetupTextFieldCell.swift */; };
 		402D93251FEF8245008E268A /* EditMeetupTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402D93241FEF8245008E268A /* EditMeetupTextViewCell.swift */; };
+		402D93271FEF8421008E268A /* EditMeeupGeocodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402D93261FEF8421008E268A /* EditMeeupGeocodeCell.swift */; };
+		402D93291FEF842C008E268A /* EditMeetupDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402D93281FEF842C008E268A /* EditMeetupDateCell.swift */; };
 		40426D091F86B85500875179 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D081F86B85500875179 /* LoginViewController.swift */; };
 		40426D0B1F86B85E00875179 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D0A1F86B85E00875179 /* LoginViewModel.swift */; };
 		40426D0D1F86B86800875179 /* LoginAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D0C1F86B86800875179 /* LoginAssembler.swift */; };
@@ -120,6 +122,8 @@
 		402D931F1FEF7CBA008E268A /* EditMeetupRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMeetupRouter.swift; sourceTree = "<group>"; };
 		402D93221FEF7FF4008E268A /* EditMeetupTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMeetupTextFieldCell.swift; sourceTree = "<group>"; };
 		402D93241FEF8245008E268A /* EditMeetupTextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMeetupTextViewCell.swift; sourceTree = "<group>"; };
+		402D93261FEF8421008E268A /* EditMeeupGeocodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMeeupGeocodeCell.swift; sourceTree = "<group>"; };
+		402D93281FEF842C008E268A /* EditMeetupDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMeetupDateCell.swift; sourceTree = "<group>"; };
 		40426D081F86B85500875179 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		40426D0A1F86B85E00875179 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		40426D0C1F86B86800875179 /* LoginAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAssembler.swift; sourceTree = "<group>"; };
@@ -243,8 +247,8 @@
 		402D93181FEF6DFD008E268A /* EditMeetup */ = {
 			isa = PBXGroup;
 			children = (
-				402D93191FEF6E7A008E268A /* EditMeetupViewModel.swift */,
 				402D931B1FEF6F9D008E268A /* EditMeetupViewController.swift */,
+				402D93191FEF6E7A008E268A /* EditMeetupViewModel.swift */,
 				402D931F1FEF7CBA008E268A /* EditMeetupRouter.swift */,
 				402D931D1FEF6FA6008E268A /* EditMeetupAssembler.swift */,
 				402D93211FEF7FE4008E268A /* Subviews */,
@@ -257,6 +261,8 @@
 			children = (
 				402D93221FEF7FF4008E268A /* EditMeetupTextFieldCell.swift */,
 				402D93241FEF8245008E268A /* EditMeetupTextViewCell.swift */,
+				402D93281FEF842C008E268A /* EditMeetupDateCell.swift */,
+				402D93261FEF8421008E268A /* EditMeeupGeocodeCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -783,6 +789,7 @@
 				40AD4A811FECD0A000AC2AB3 /* AddMeetupRouter.swift in Sources */,
 				4045A2901FE5FE200059482E /* EmptyMeetupView.swift in Sources */,
 				409B2BF81FBE64F9000A7F16 /* User.swift in Sources */,
+				402D93271FEF8421008E268A /* EditMeeupGeocodeCell.swift in Sources */,
 				40BF713D1FDC623200495B81 /* FriendCell.swift in Sources */,
 				40426D151F86BC9C00875179 /* RouterProtocol.swift in Sources */,
 				402D93231FEF7FF4008E268A /* EditMeetupTextFieldCell.swift in Sources */,
@@ -833,6 +840,7 @@
 				402D93201FEF7CBA008E268A /* EditMeetupRouter.swift in Sources */,
 				4071F8F71FDB00F3001B77A1 /* FriendViewController.swift in Sources */,
 				402D931C1FEF6F9D008E268A /* EditMeetupViewController.swift in Sources */,
+				402D93291FEF842C008E268A /* EditMeetupDateCell.swift in Sources */,
 				408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */,
 				409A55351F86B0D200EB29A4 /* AppDelegate.swift in Sources */,
 				4055B0BA1FD079FE007C5CCC /* ProfileUserHeaderView.swift in Sources */,

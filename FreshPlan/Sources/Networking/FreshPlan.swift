@@ -26,6 +26,7 @@ public enum FreshPlan {
   case getMeetup(Int)
   case deleteMeetup(Int)
   case addMeetup(String, String, String, String, String, String)
+  case editMeetup(Int, String, String, String, String, String, String)
 }
 
 extension FreshPlan: TargetType {
@@ -56,7 +57,7 @@ extension FreshPlan: TargetType {
       return "/users/\(userId)/friends/\(friendId)"
     case .resend:
       return "/auth/resend"
-    case .getMeetup(let meetupId):
+    case .getMeetup(let meetupId), .editMeetup(let meetupId, _, _, _, _, _, _):
       return "/meetups/\(meetupId)"
     case .friendRequests(let userId):
       return "/users/\(userId)/friends/requests"
@@ -72,7 +73,7 @@ extension FreshPlan: TargetType {
 			return .post
 		case .user, .friends, .friendSearch, .friendRequests, .friendRequest, .meetup, .getMeetup:
 			return .get
-    case .acceptFriend:
+    case .acceptFriend, .editMeetup:
       return .patch
     case .deleteMeetup:
       return .delete
@@ -112,6 +113,18 @@ extension FreshPlan: TargetType {
         encoding: JSONEncoding.default
       )
     case let .addMeetup(title, desc, type, metadata, startDate, endDate):
+      return .requestParameters(
+        parameters: [
+          "title": title,
+          "description": desc,
+          "meetup": type,
+          "metadata": metadata,
+          "startDate": startDate,
+          "endDate": endDate
+        ],
+        encoding: JSONEncoding.default
+      )
+    case let .editMeetup(_, title, desc, type, metadata, startDate, endDate):
       return .requestParameters(
         parameters: [
           "title": title,

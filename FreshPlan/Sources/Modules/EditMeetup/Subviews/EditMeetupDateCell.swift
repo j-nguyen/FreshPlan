@@ -13,9 +13,10 @@ import SnapKit
 import UIKit
 import MaterialComponents
 
-public final class AddMeetupDateCell: UITableViewCell {
+public final class EditMeetupDateCell: UITableViewCell {
   //MARK: - Publish Subject
   public var title: PublishSubject<String> = PublishSubject()
+  public var dateSubject: PublishSubject<Date> = PublishSubject()
   
   //MARK: - Views
   private var titleLabel: UILabel!
@@ -66,7 +67,7 @@ public final class AddMeetupDateCell: UITableViewCell {
       })
       .disposed(by: disposeBag)
   }
-
+  
   private func prepareTitleLabel() {
     titleLabel = UILabel()
     titleLabel.font = MDCTypography.boldFont(from: MDCTypography.subheadFont())
@@ -133,6 +134,12 @@ public final class AddMeetupDateCell: UITableViewCell {
     datePickerView = UIDatePicker()
     datePickerView.datePickerMode = .dateAndTime
     
+    dateSubject
+      .asObservable()
+      .bind(to: datePickerView.rx.date)
+      .disposed(by: disposeBag)
+    
+    
     datePickerView.rx.date
       .asObservable()
       .map { date -> String? in
@@ -154,14 +161,15 @@ public final class AddMeetupDateCell: UITableViewCell {
 }
 
 // MARK: InkViewController
-extension AddMeetupDateCell: MDCInkTouchControllerDelegate {
+extension EditMeetupDateCell: MDCInkTouchControllerDelegate {
   public func inkTouchController(_ inkTouchController: MDCInkTouchController, shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
     return true
   }
 }
 
-extension AddMeetupDateCell: UITextFieldDelegate {
+extension EditMeetupDateCell: UITextFieldDelegate {
   public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
     return false
   }
 }
+

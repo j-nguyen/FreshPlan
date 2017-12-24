@@ -114,8 +114,7 @@ public class EditMeetupViewModel: EditMeetupViewModelProtocol {
     let metadata = meetup.map { meetup -> SectionItem? in
       if let data = meetup.metadata.data(using: .utf8) {
         if meetup.meetupType.type == MeetupType.Options.location.rawValue {
-            let location = try JSONDecoder().decode(Location.self, from: data)
-            return SectionItem.location(order: 4, label: "Location", latitude: location.latitude, longitude: location.longitude)
+            return SectionItem.location(order: 4, label: "Location")
         } else {
           // weeeeee
           let other = try JSONDecoder().decode(Other.self, from: data)
@@ -179,7 +178,7 @@ extension EditMeetupViewModel {
     case description(order: Int, label: String, placeholder: String)
     case startDate(order: Int, label: String, placeholder: Date)
     case endDate(order: Int, label: String, placeholder: Date)
-    case location(order: Int, label: String, latitude: Double, longitude: Double)
+    case location(order: Int, label: String)
     case other(order: Int, label: String, notes: String)
   }
 }
@@ -206,7 +205,7 @@ extension EditMeetupViewModel.SectionItem: Equatable {
       return order
     case .endDate(let order, _, _):
       return order
-    case .location(let order, _, _, _):
+    case .location(let order, _):
       return order
     case .other(let order, _, _):
       return order
@@ -223,7 +222,7 @@ extension EditMeetupViewModel.SectionItem: Equatable {
       return label
     case .endDate(_, let label, _):
       return label
-    case .location(_, let label, _, _):
+    case .location(_, let label):
       return label
     case .other(_, let label, _):
       return label

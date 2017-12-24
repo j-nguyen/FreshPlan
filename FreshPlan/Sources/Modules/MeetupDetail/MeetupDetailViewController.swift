@@ -21,7 +21,7 @@ public class MeetupDetailViewController: UIViewController {
   //MARK: AppBar
   private let appBar: MDCAppBar = MDCAppBar()
   private var backButton: UIBarButtonItem!
-  private var deleteButton: UIBarButtonItem!
+  private var editButton: UIBarButtonItem!
   
   //MARK: TableView
   private var tableView: UITableView!
@@ -220,42 +220,38 @@ public class MeetupDetailViewController: UIViewController {
   }
   
   private func prepareNavigationDeleteButton() {
-    deleteButton = UIBarButtonItem(
+    editButton = UIBarButtonItem(
       image: UIImage(named: "ic_delete")?.withRenderingMode(.alwaysTemplate),
       style: .plain,
       target: nil,
       action: nil
     )
     
-    viewModel.canDelete
-      .bind(to: deleteButton.rx.isEnabled)
-      .disposed(by: disposeBag)
-    
-    viewModel.deleteHandler = deleteButton.rx.tap.asObservable()
+    viewModel.editHandler = editButton.rx.tap.asObservable()
     
     viewModel.bindButtons()
     
-    viewModel.deleteSuccess
+    viewModel.editSuccess
       .asObservable()
       .filter { $0 }
       .subscribe(onNext: { [weak self] _ in
         guard let this = self else { return }
         this.navigationController?.popViewController(animated: true)
-        let message = MDCSnackbarMessage(text: "Successfully deleted meetup!")
+        let message = MDCSnackbarMessage(text: "Successfully edited meetup!")
         MDCSnackbarManager.show(message)
       })
       .disposed(by: disposeBag)
     
-    viewModel.deleteSuccess
+    viewModel.editSuccess
       .asObservable()
       .filter { !$0 }
       .subscribe(onNext: { _ in
-        let message = MDCSnackbarMessage(text: "Cannot delete meetup. Are you sure you're the host?")
+        let message = MDCSnackbarMessage(text: "Cannot edit meetup. Are you sure you're the host?")
         MDCSnackbarManager.show(message)
       })
       .disposed(by: disposeBag)
     
-    navigationItem.rightBarButtonItem = deleteButton
+    navigationItem.rightBarButtonItem = editButton
   }
   
   deinit {

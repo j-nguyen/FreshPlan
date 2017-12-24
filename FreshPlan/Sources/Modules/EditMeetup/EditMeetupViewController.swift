@@ -82,7 +82,7 @@ public final class EditMeetupViewController: UIViewController {
     tableView.registerCell(EditMeetupTextFieldCell.self)
     tableView.registerCell(EditMeetupTextViewCell.self)
     tableView.registerCell(AddMeetupGeocodeCell.self)
-    tableView.registerCell(AddMeetupDateCell.self)
+    tableView.registerCell(EditMeetupDateCell.self)
     
     view.addSubview(tableView)
     
@@ -108,16 +108,16 @@ public final class EditMeetupViewController: UIViewController {
           return cell
         case let .description(_, label, placeholder):
           let cell = tableView.dequeueCell(ofType: EditMeetupTextViewCell.self, for: index)
-          cell.title.on(.next(label))
+          cell.placeholder.on(.next(placeholder))
           
-          Observable.just(placeholder).bind(to: cell.placeholder).disposed(by: this.disposeBag)
+          Observable.just(label).bind(to: cell.title).disposed(by: this.disposeBag)
           
           cell.textValue
             .bind(to: this.viewModel.description)
             .disposed(by: this.disposeBag)
           
           return cell
-        case let .location(_, label, latitude, longitude):
+        case let .location(_, label):
           let cell = tableView.dequeueCell(ofType: AddMeetupGeocodeCell.self, for: index)
           cell.title.on(.next(label))
           
@@ -128,8 +128,9 @@ public final class EditMeetupViewController: UIViewController {
           
           return cell
         case let .startDate(_, label, startDate):
-          let cell = tableView.dequeueCell(ofType: AddMeetupDateCell.self, for: index)
+          let cell = tableView.dequeueCell(ofType: EditMeetupDateCell.self, for: index)
           cell.title.on(.next(label))
+          cell.dateSubject.on(.next(startDate))
           
           cell.date
             .asObservable()
@@ -138,8 +139,9 @@ public final class EditMeetupViewController: UIViewController {
           
           return cell
         case let .endDate(_, label, endDate):
-          let cell = tableView.dequeueCell(ofType: AddMeetupDateCell.self, for: index)
+          let cell = tableView.dequeueCell(ofType: EditMeetupDateCell.self, for: index)
           cell.title.on(.next(label))
+          cell.dateSubject.on(.next(endDate))
           
           cell.date
             .asObservable()
@@ -148,8 +150,13 @@ public final class EditMeetupViewController: UIViewController {
           
           return cell
         case let .other(_, label, notes):
-          let cell = tableView.dequeueCell(ofType: AddMeetupTextViewCell.self, for: index)
-          cell.title.on(.next(label))
+          let cell = tableView.dequeueCell(ofType: EditMeetupTextViewCell.self, for: index)
+          
+          cell.placeholder.on(.next(notes))
+          
+          Observable.just(label)
+            .bind(to: cell.title)
+            .disposed(by: this.disposeBag)
           
           cell.textValue
             .map { text -> String? in

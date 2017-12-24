@@ -15,8 +15,8 @@ import RxCocoa
 
 public final class EditMeetupTextViewCell: UITableViewCell {
   //MARK: Subjects
-  public var title: PublishSubject<String> = PublishSubject()
-  public var placeholder: Variable<String> = Variable("")
+  public var title: Variable<String> = Variable("")
+  public var placeholder: PublishSubject<String> = PublishSubject()
   
   //MARK: Views
   fileprivate var textView: UITextView!
@@ -66,7 +66,8 @@ public final class EditMeetupTextViewCell: UITableViewCell {
       make.edges.equalTo(contentView).inset(5)
     }
     
-    title.asObservable()
+    placeholder
+      .asObservable()
       .filter { [weak self] text in
         if text.isNotEmpty {
           self?.textView.textColor = .black
@@ -93,7 +94,7 @@ public final class EditMeetupTextViewCell: UITableViewCell {
         guard let this = self else { return }
         if this.textView.text.isEmpty {
           this.textView.textColor = .lightGray
-          this.textView.text = this.placeholder.value
+          this.textView.text = this.title.value
         }
       })
       .disposed(by: disposeBag)
