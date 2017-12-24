@@ -16,6 +16,7 @@
 		402D931A1FEF6E7A008E268A /* EditMeetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402D93191FEF6E7A008E268A /* EditMeetupViewModel.swift */; };
 		402D931C1FEF6F9D008E268A /* EditMeetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402D931B1FEF6F9D008E268A /* EditMeetupViewController.swift */; };
 		402D931E1FEF6FA6008E268A /* EditMeetupAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402D931D1FEF6FA6008E268A /* EditMeetupAssembler.swift */; };
+		402D93201FEF7CBA008E268A /* EditMeetupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402D931F1FEF7CBA008E268A /* EditMeetupRouter.swift */; };
 		40426D091F86B85500875179 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D081F86B85500875179 /* LoginViewController.swift */; };
 		40426D0B1F86B85E00875179 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D0A1F86B85E00875179 /* LoginViewModel.swift */; };
 		40426D0D1F86B86800875179 /* LoginAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40426D0C1F86B86800875179 /* LoginAssembler.swift */; };
@@ -114,6 +115,7 @@
 		402D93191FEF6E7A008E268A /* EditMeetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMeetupViewModel.swift; sourceTree = "<group>"; };
 		402D931B1FEF6F9D008E268A /* EditMeetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMeetupViewController.swift; sourceTree = "<group>"; };
 		402D931D1FEF6FA6008E268A /* EditMeetupAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMeetupAssembler.swift; sourceTree = "<group>"; };
+		402D931F1FEF7CBA008E268A /* EditMeetupRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMeetupRouter.swift; sourceTree = "<group>"; };
 		40426D081F86B85500875179 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		40426D0A1F86B85E00875179 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		40426D0C1F86B86800875179 /* LoginAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAssembler.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 			children = (
 				402D93191FEF6E7A008E268A /* EditMeetupViewModel.swift */,
 				402D931B1FEF6F9D008E268A /* EditMeetupViewController.swift */,
+				402D931F1FEF7CBA008E268A /* EditMeetupRouter.swift */,
 				402D931D1FEF6FA6008E268A /* EditMeetupAssembler.swift */,
 			);
 			path = EditMeetup;
@@ -811,6 +814,7 @@
 				40F8C6D81FED5DE40040D334 /* AddMeetupTextFieldCell.swift in Sources */,
 				4079B14E1FC4763B007E9407 /* UILabel+.swift in Sources */,
 				40AD4A7B1FECD08300AC2AB3 /* AddMeetupAssembler.swift in Sources */,
+				402D93201FEF7CBA008E268A /* EditMeetupRouter.swift in Sources */,
 				4071F8F71FDB00F3001B77A1 /* FriendViewController.swift in Sources */,
 				402D931C1FEF6F9D008E268A /* EditMeetupViewController.swift in Sources */,
 				408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */,

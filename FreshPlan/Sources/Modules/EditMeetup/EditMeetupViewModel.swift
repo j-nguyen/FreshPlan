@@ -14,7 +14,7 @@ import Moya
 import CoreLocation
 
 public protocol EditMeetupViewModelProtocol {
-  var meetup: Variable<[AddMeetupViewModel.Section]> { get }
+  var meetupList: Variable<[EditMeetupViewModel.Section]> { get }
   
   // we need form fields, to set up for our meeting as well
   var name: Variable<String> { get }
@@ -24,12 +24,12 @@ public protocol EditMeetupViewModelProtocol {
   var endDate: Variable<Date?> { get }
   var metadata: Variable<String> { get }
   var address: Variable<String?> { get }
-  var addButtonEnabled: Observable<Bool> { get }
+  var submitButtonEnabled: Observable<Bool> { get }
   
   // button test
-  var addButtonTap: Observable<Void>! { get set }
-  var addButtonSuccess: PublishSubject<Bool> { get }
-  var addButtonFail: PublishSubject<ResponseError> { get }
+  var submitButtonTap: Observable<Void>! { get set }
+  var submitButtonSuccess: PublishSubject<Bool> { get }
+  var submitButtonFail: PublishSubject<ResponseError> { get }
   var reloadMeetup: PublishSubject<Void> { get }
   
   func bindButtons()
@@ -37,11 +37,11 @@ public protocol EditMeetupViewModelProtocol {
 
 public class EditMeetupViewModel: EditMeetupViewModelProtocol {
   // MARK: Private Instances
-  private var type: String
-  private var provider: MoyaProvider<FreshPlan>
-  private var meetupViewModel: MeetupViewModel!
+  private let meetupId: Int!
+  private let provider: MoyaProvider<FreshPlan>
+  private let meetupDetailViewModel: MeetupDetailViewModel!
   
-  public var meetup: Variable<[AddMeetupViewModel.Section]> = Variable([])
+  public var meetupList: Variable<[EditMeetupViewModel.Section]> = Variable([])
   
   // MARK: Form Fields
   public var name: Variable<String> = Variable("")
@@ -52,7 +52,7 @@ public class EditMeetupViewModel: EditMeetupViewModelProtocol {
   public var metadata: Variable<String> = Variable("")
   public var address: Variable<String?> = Variable(nil)
   
-  public var addButtonEnabled: Observable<Bool> {
+  public var submitButtonEnabled: Observable<Bool> {
     return Observable.combineLatest(name.asObservable(), description.asObservable(), meetupType.asObservable(), startDate.asObservable(), endDate.asObservable(), metadata.asObservable()) { name, desc, type, startDate, endDate, metadata in
       
       guard name.isNotEmpty else { return false }
@@ -69,17 +69,17 @@ public class EditMeetupViewModel: EditMeetupViewModelProtocol {
     }
   }
   
-  public var addButtonTap: Observable<Void>!
-  public var addButtonSuccess: PublishSubject<Bool> = PublishSubject()
-  public var addButtonFail: PublishSubject<ResponseError> = PublishSubject()
+  public var submitButtonTap: Observable<Void>!
+  public var submitButtonSuccess: PublishSubject<Bool> = PublishSubject()
+  public var submitButtonFail: PublishSubject<ResponseError> = PublishSubject()
   public var reloadMeetup: PublishSubject<Void> = PublishSubject()
   
   // MARK: Dispose
   private let disposeBag: DisposeBag = DisposeBag()
   
-  public init(meetupViewModel: MeetupViewModel, type: String, provider: MoyaProvider<FreshPlan>) {
-    self.meetupViewModel = meetupViewModel
-    self.type = type
+  public init(meetupId: Int, meetupDetailViewModel: MeetupDetailViewModel, provider: MoyaProvider<FreshPlan>) {
+    self.meetupId = meetupId
+    self.meetupDetailViewModel = meetupDetailViewModel
     self.provider = provider
     
     // reload
@@ -87,40 +87,43 @@ public class EditMeetupViewModel: EditMeetupViewModelProtocol {
       .asObservable()
       .subscribe(onNext: { [weak self] in
         guard let this = self else { return }
-        this.meetupViewModel.refreshContent.on(.next(()))
+        this.meetupDetailViewModel.refreshContent.on(.next(()))
       })
       .disposed(by: disposeBag)
     
     // set up table
-    setup()
+    setup(meetupId)
   }
   
-  private func setup() {
-    // conform the type right in
-    let typeObservable = Observable.just(type).share()
+  private func setup(_ meetupId: Int) {
     
-    typeObservable
+    let meetup = Observable.just(meetupId)
+      .flatMap { [unowned self] id in return self.requestMeetup(meetupId: id) }
+      .share()
+    
+    meetup
+      .map { $0.meetupType.type }
       .bind(to: meetupType)
       .disposed(by: disposeBag)
     
     // create the ones that we know are already there
-    let name = Observable.just("Meetup Name").map { SectionItem.name(order: 0, label: $0) }
-    let description = Observable.just("Enter in your description for your meetup name.").map { SectionItem.description(order: 1, label: $0) }
-    
-    let startDate = Observable.just("Start Date")
-      .map { SectionItem.startDate(order: 1, label: $0) }
-    
-    let endDate = Observable.just("End Date")
-      .map { SectionItem.endDate(order: 2, label: $0) }
-    
-    let metadata = typeObservable
-      .map { type -> SectionItem in
-        if type == MeetupType.Options.location.rawValue {
-          return SectionItem.location(order: 3, label: "Location")
+    let name = meetup.map { SectionItem.name(order: 0, label: "Meetup Name", placeholder: $0.title) }
+    let description = meetup.map { SectionItem.description(order: 1, label: "Enter in your description for your meetup name.", placeholder: $0.description) }
+    let startDate = meetup.map { SectionItem.startDate(order: 2, label: "Start Date", placeholder: $0.startDate) }
+    let endDate = meetup.map { SectionItem.endDate(order: 3, label: "End Date", placeholder: $0.endDate) }
+    let metadata = meetup.map { meetup -> SectionItem? in
+      if let data = meetup.metadata.data(using: .utf8) {
+        if meetup.meetupType.type == MeetupType.Options.location.rawValue {
+            let location = try JSONDecoder().decode(Location.self, from: data)
+            return SectionItem.location(order: 4, label: "Location", latitude: location.latitude, longitude: location.longitude)
         } else {
-          return SectionItem.other(order: 3, label: "Enter in additional information about your meetup!")
+          // weeeeee
+          let other = try JSONDecoder().decode(Other.self, from: data)
+          return SectionItem.other(order: 4, label: "Enter in additional Information", notes: other.notes)
         }
-    }
+      }
+      return nil
+    }.filterNil()
     
     // Conform it into the section
     Observable.from([name, description, metadata, startDate, endDate])
@@ -128,12 +131,12 @@ public class EditMeetupViewModel: EditMeetupViewModelProtocol {
       .toArray()
       .map { $0.sorted(by: { $0.order < $1.order }) }
       .map { [Section(header: "", items: $0)] }
-      .bind(to: meetup)
+      .bind(to: meetupList)
       .disposed(by: disposeBag)
   }
   
   public func bindButtons() {
-    let btn = addButtonTap
+    let btn = submitButtonTap
       .flatMap { [weak self] _ -> Observable<Response> in
         guard let this = self else { fatalError() }
         return this.requestAddMeetup(title: this.name.value, desc: this.description.value, type: this.meetupType.value, metadata: this.metadata.value, startDate: this.startDate.value!.dateString, endDate: this.endDate.value!.dateString)
@@ -143,19 +146,25 @@ public class EditMeetupViewModel: EditMeetupViewModelProtocol {
     btn
       .filter { $0.statusCode >= 299 }
       .map(ResponseError.self)
-      .bind(to: addButtonFail)
+      .bind(to: submitButtonFail)
       .disposed(by: disposeBag)
     
     btn
       .filter { $0.statusCode >= 200 && $0.statusCode <= 299 }
       .map { $0.statusCode >= 200 && $0.statusCode <= 299 }
-      .bind(to: addButtonSuccess)
+      .bind(to: submitButtonSuccess)
       .disposed(by: disposeBag)
   }
   
   private func requestAddMeetup(title: String, desc: String, type: String, metadata: String, startDate: String, endDate: String) -> Observable<Response> {
     return provider.rx.request(.addMeetup(title, desc, type, metadata, startDate, endDate))
       .asObservable()
+  }
+  
+  private func requestMeetup(meetupId: Int) -> Observable<Meetup> {
+    return provider.rx.request(.getMeetup(meetupId))
+      .asObservable()
+      .map(Meetup.self, using: JSONDecoder.Decode)
   }
 }
 
@@ -166,12 +175,12 @@ extension EditMeetupViewModel {
   }
   
   public enum SectionItem {
-    case name(order: Int, label: String)
-    case description(order: Int, label: String)
-    case startDate(order: Int, label: String)
-    case endDate(order: Int, label: String)
-    case location(order: Int, label: String)
-    case other(order: Int, label: String)
+    case name(order: Int, label: String, placeholder: String)
+    case description(order: Int, label: String, placeholder: String)
+    case startDate(order: Int, label: String, placeholder: Date)
+    case endDate(order: Int, label: String, placeholder: Date)
+    case location(order: Int, label: String, latitude: Double, longitude: Double)
+    case other(order: Int, label: String, notes: String)
   }
 }
 
@@ -189,34 +198,34 @@ extension EditMeetupViewModel.Section: SectionModelType {
 extension EditMeetupViewModel.SectionItem: Equatable {
   public var order: Int {
     switch self {
-    case .name(let order, _):
+    case .name(let order, _, _):
       return order
-    case .description(let order, _):
+    case .description(let order, _, _):
       return order
-    case .startDate(let order, _):
+    case .startDate(let order, _, _):
       return order
-    case .endDate(let order, _):
+    case .endDate(let order, _, _):
       return order
-    case .location(let order, _):
+    case .location(let order, _, _, _):
       return order
-    case .other(let order, _):
+    case .other(let order, _, _):
       return order
     }
   }
   
   public var label: String {
     switch self {
-    case .name(_, let label):
+    case .name(_, let label, _):
       return label
-    case .description(_, let label):
+    case .description(_, let label, _):
       return label
-    case .startDate(_, let label):
+    case .startDate(_, let label, _):
       return label
-    case .endDate(_, let label):
+    case .endDate(_, let label, _):
       return label
-    case .location(_, let label):
+    case .location(_, let label, _, _):
       return label
-    case .other(_, let label):
+    case .other(_, let label, _):
       return label
     }
   }

@@ -11,8 +11,11 @@ import Moya
 import UIKit
 
 public final class EditMeetupAssembler {
-  public static func make() -> UIViewController {
+  public static func make(meetupId: Int, meetupDetailViewModel: MeetupDetailViewModel) -> UIViewController {
+    let viewModel = EditMeetupViewModel(meetupId: meetupId, meetupDetailViewModel: meetupDetailViewModel, provider: provider)
+    let router = EditMeetupRouter()
     
+    return UINavigationController(rootViewController: EditMeetupViewController(viewModel: viewModel, router: router))
   }
   
   private static var provider: MoyaProvider<FreshPlan> {
