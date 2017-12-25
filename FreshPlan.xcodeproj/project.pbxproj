@@ -322,8 +322,8 @@
 			children = (
 				40426D081F86B85500875179 /* LoginViewController.swift */,
 				40426D0A1F86B85E00875179 /* LoginViewModel.swift */,
-				40426D0C1F86B86800875179 /* LoginAssembler.swift */,
 				40426D191F86C12600875179 /* LoginRouter.swift */,
+				40426D0C1F86B86800875179 /* LoginAssembler.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";

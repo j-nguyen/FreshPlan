@@ -19,6 +19,9 @@ public class LoginViewController: UIViewController {
 	
 	// MARK: - Stack Views
 	private var stackView: UIStackView!
+  
+  // MARK: - ImageViews
+  private var imageView: UIImageView!
 	
 	// MARK: - Buttons
 	private var loginButton: MDCButton!
@@ -33,6 +36,9 @@ public class LoginViewController: UIViewController {
 	// MARK: - Floating Placeholder Input
 	private var emailFieldController: MDCTextInputController!
 	private var passwordFieldController: MDCTextInputController!
+  
+  // MARK: - Constraints
+  private var bottomConstraint: Constraint!
 	
 	// MARK - Disposable Bag
 	private let disposeBag = DisposeBag()
@@ -73,6 +79,7 @@ public class LoginViewController: UIViewController {
 	
 	fileprivate func prepareView() {
 		prepareStackView()
+    prepareImageView()
 		prepareEmailField()
 		preparePasswordField()
 		prepareLoginButton()
@@ -84,16 +91,38 @@ public class LoginViewController: UIViewController {
 	fileprivate func prepareStackView() {
 		stackView = UIStackView()
 		stackView.axis = .vertical
-		stackView.alignment = .center
+		stackView.alignment = .fill
 		stackView.distribution = .fill
-		stackView.spacing = 10
+		stackView.spacing = 8
 		
 		view.addSubview(stackView)
 		
 		stackView.snp.makeConstraints { make in
-			make.center.equalTo(view)
+			make.centerX.equalToSuperview()
+      bottomConstraint = make.centerY.equalToSuperview().constraint
 		}
 	}
+  
+  private func prepareImageView() {
+    imageView = UIImageView()
+    imageView.contentMode = .scaleAspectFit
+    imageView.image = UIImage(named: "logo")?.withRenderingMode(.alwaysOriginal)
+    imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+    imageView.layer.borderWidth = 0
+    
+    let stackImageView = UIStackView()
+    stackImageView.distribution = .fill
+    stackImageView.alignment = .center
+    
+    imageView.snp.makeConstraints { make in
+      make.width.equalTo(100).priority(750)
+      make.height.equalTo(100)
+    }
+    
+    stackImageView.addArrangedSubview(imageView)
+    stackView.addArrangedSubview(stackImageView)
+    
+  }
 	
 	fileprivate func prepareEmailField() {
 		emailField = MDCTextField()
@@ -106,9 +135,9 @@ public class LoginViewController: UIViewController {
 		
 		stackView.addArrangedSubview(emailField)
 		
-		emailField.snp.makeConstraints { make in
-			make.width.equalTo(view).inset(20)
-		}
+    emailField.snp.makeConstraints { make in
+      make.width.equalTo(view).inset(10)
+    }
 		
 		emailField.rx.controlEvent(.editingDidEndOnExit)
 			.subscribe(onNext: { [weak self] in
@@ -134,13 +163,34 @@ public class LoginViewController: UIViewController {
 		stackView.addArrangedSubview(passwordField)
 		
 		passwordField.snp.makeConstraints { make in
-			make.width.equalTo(view).inset(20)
+			make.width.equalTo(view).inset(10)
 		}
 		
 		passwordField.rx.text
 			.orEmpty
 			.bind(to: viewModel.password)
 			.disposed(by: disposeBag)
+    
+    NotificationCenter.default.rx.notification(Notification.Name.UIKeyboardWillShow)
+      .asObservable()
+      .filter { [unowned self] _ in return self.passwordField.isFirstResponder }
+      .subscribe(onNext: { [weak self] _ in
+        guard let this = self else { return }
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear], animations: { 
+          this.bottomConstraint.update(offset: -150)
+        })
+      })
+      .disposed(by: disposeBag)
+    
+    NotificationCenter.default.rx.notification(Notification.Name.UIKeyboardWillHide)
+      .asObservable()
+      .subscribe(onNext: { [weak self] _ in
+        guard let this = self else { return }
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear], animations: {
+          this.bottomConstraint.update(offset: 0)
+        })
+      })
+      .disposed(by: disposeBag)
 	}
 	
 	fileprivate func prepareLoginButton() {
@@ -151,7 +201,7 @@ public class LoginViewController: UIViewController {
 		stackView.addArrangedSubview(loginButton)
 		
 		loginButton.snp.makeConstraints { make in
-			make.width.equalTo(view).inset(20)
+			make.width.equalTo(view).inset(10)
 			make.height.equalTo(50)
 		}
 		

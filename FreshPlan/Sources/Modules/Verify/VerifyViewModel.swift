@@ -14,6 +14,7 @@ public protocol VerifyViewModelProtocol {
 	var verificationCode: Variable<Int?> { get }
 	var error: Variable<String> { get }
   var resendSuccess: Variable<Bool> { get }
+  var resendCode: PublishSubject<Void> { get }
 	
 	func bindButton()
 	var submitTap: Observable<Void>! { get set }
@@ -29,12 +30,23 @@ public class VerifyViewModel: VerifyViewModelProtocol {
 	public var verificationCode: Variable<Int?> = Variable(nil)
 	public var submitSuccess: Variable<Bool> = Variable(false)
   public var resendSuccess: Variable<Bool> = Variable(false)
+  
+  public var resendCode: PublishSubject<Void> = PublishSubject()
+  public var resendCodeSuccess: PublishSubject<Bool> = PublishSubject()
 	
 	public var submitTap: Observable<Void>!
 	
 	public init(provider: MoyaProvider<FreshPlan>, email: String) {
 		self.provider = provider
 		self.email = email
+    
+    resendCode
+      .asObservable()
+      .flatMap { [unowned self] _ in return self.resendVerification(email: self.email) }
+      .map { $0.statusCode >= 200 && $0.statusCode <= 299 }
+      .bind(to: resendSuccess)
+      .disposed(by: disposeBag)
+    
 	}
 	
 	public func bindButton() {
