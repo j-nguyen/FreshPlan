@@ -86,13 +86,14 @@ extension FreshPlan: TargetType {
 		case let .login(email, password):
 			return .requestParameters(parameters: ["email": email, "password": password], encoding: JSONEncoding.default)
 		case let .register(displayName, email, password, deviceToken):
+      var params: [String: Any] = [
+        "displayName": displayName,
+        "email": email,
+        "password": password
+      ]
+      if let deviceToken = deviceToken { params["deviceToken"] = deviceToken }
 			return .requestParameters(
-				parameters: [
-          "displayName": displayName,
-          "email": email,
-          "password": password,
-          "deviceToken": deviceToken
-        ],
+				parameters: params,
         encoding: JSONEncoding.default
       )
     case let .resend(email):
