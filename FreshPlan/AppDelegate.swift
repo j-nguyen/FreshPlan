@@ -73,6 +73,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       Fabric.with([Crashlytics.self])
     #endif
   }
+  
+  /**
+   Registers the push notification for us. We'll store this in our external database.
+  **/
+  func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    // uses a higher order function to reduce the hex values for us.
+    let token = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
+    // if it passes, then we have some steps to take care of
+    // let's just store this in UserDefaults so we can use it when the user registers. If the user
+    // doesn't accept push, that's their loss
+    UserDefaults.standard.set(token, forKey: "deviceToken")
+  }
 
 	func applicationWillResignActive(_ application: UIApplication) {
 		// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
