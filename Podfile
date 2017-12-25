@@ -11,10 +11,14 @@ target 'FreshPlan' do
   pod 'RxGesture'
   pod 'Moya/RxSwift'
   pod 'RxOptional'
-  pod 'RxMKMapView'
+  pod 'OneSignal', '>= 2.5.2', '< 3.0'
   pod 'MaterialComponents', '~> 42.0.0'
   pod 'Fabric'
   pod 'Crashlytics'
+end
+
+target 'OneSignalNotificationServiceExtension' do
+  pod 'OneSignal', '>= 2.5.2', '< 3.0'
 end
 
 post_install do |installer|

@@ -10,6 +10,7 @@ import UIKit
 import MaterialComponents
 import Fabric
 import Crashlytics
+import OneSignal
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		guard let window = self.window else { fatalError("no window") }
     // prepare fabric
     prepareFabric()
+    prepareOneSignal(launchOptions)
 		// setup window to make sure
 		// check to make sure if token exists or not
     window.makeKeyAndVisible()
@@ -44,6 +46,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		return true
 	}
+  
+  private func prepareOneSignal(_ launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+    let onesignalInitSettings = [kOSSettingsKeyAutoPrompt: false]
+    
+    // Replace 'YOUR_APP_ID' with your OneSignal App ID.
+    OneSignal.initWithLaunchOptions(launchOptions,
+                                    appId: "YOUR_APP_ID",
+                                    handleNotificationAction: nil,
+                                    settings: onesignalInitSettings)
+    
+    OneSignal.inFocusDisplayType = OSNotificationDisplayType.notification;
+    
+    // Recommend moving the below line to prompt for push after informing the user about
+    //   how your app will use them.
+    OneSignal.promptForPushNotifications(userResponse: { accepted in
+      print("User accepted notifications: \(accepted)")
+    })
+  }
   
   private func prepareFabric() {
     #if (arch(i386) || arch(x86_64)) && os(iOS)
