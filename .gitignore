@@ -69,3 +69,6 @@ fastlane/test_output
 fastlane/**
 
 *.DS_Store
+*.p12
+*.pem
+*.pkey
