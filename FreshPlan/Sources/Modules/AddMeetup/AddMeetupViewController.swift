@@ -12,6 +12,7 @@ import SnapKit
 import MaterialComponents
 import RxSwift
 import RxDataSources
+import CoreLocation
 
 public final class AddMeetupViewController: UIViewController {
   // MARK: Required
@@ -22,6 +23,9 @@ public final class AddMeetupViewController: UIViewController {
   private let appBar: MDCAppBar = MDCAppBar()
   private var closeButton: UIBarButtonItem!
   private var addButton: UIBarButtonItem!
+  
+  // MARK: Location
+  private var location: CLLocationManager = CLLocationManager()
   
   // MARK: TableView
   private var tableView: UITableView!
@@ -59,6 +63,7 @@ public final class AddMeetupViewController: UIViewController {
   public override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
+    locationManager.requestWhenInUseAuthorization()
     prepareView()
   }
   
