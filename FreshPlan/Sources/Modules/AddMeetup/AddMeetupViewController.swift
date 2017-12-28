@@ -25,7 +25,7 @@ public final class AddMeetupViewController: UIViewController {
   private var addButton: UIBarButtonItem!
   
   // MARK: Location
-  private var location: CLLocationManager = CLLocationManager()
+  private var locationManager: CLLocationManager = CLLocationManager()
   
   // MARK: TableView
   private var tableView: UITableView!

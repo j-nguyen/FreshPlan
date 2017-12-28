@@ -13,7 +13,7 @@ import Crashlytics
 import OneSignal
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, OSPermissionObserver, OSSubscriptionObserver {
 
 	var window: UIWindow?
 
@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
   
   private func prepareOneSignal(_ launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
-    let onesignalInitSettings = [kOSSettingsKeyAutoPrompt: false]
+    let onesignalInitSettings = [kOSSettingsKeyAutoPrompt: false, kOSSettingsKeyInAppLaunchURL: true]
     
     // Replace 'YOUR_APP_ID' with your OneSignal App ID.
     OneSignal.initWithLaunchOptions(launchOptions,
@@ -63,6 +63,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     OneSignal.promptForPushNotifications(userResponse: { accepted in
       print("User accepted notifications: \(accepted)")
     })
+    
+    // add for player id searching and notification
+    OneSignal.add(self as OSPermissionObserver)
+    OneSignal.add(self as OSSubscriptionObserver)
+  }
+  
+  // Add this new method
+  internal func onOSPermissionChanged(_ stateChanges: OSPermissionStateChanges!) {
+    // Example of detecting answering the permission prompt
+    if stateChanges.from.status == OSNotificationPermission.notDetermined {
+      if stateChanges.to.status == OSNotificationPermission.authorized {
+        print("Thanks for accepting notifications!")
+      } else if stateChanges.to.status == OSNotificationPermission.denied {
+        print("Notifications not accepted. You can turn them on later under your iOS settings.")
+      }
+    }
+    // prints out all properties
+    print("PermissionStateChanges: \n\(stateChanges)")
+  }
+  
+  // Add this new method
+  // sets up the notificatino for us
+  internal func onOSSubscriptionChanged(_ stateChanges: OSSubscriptionStateChanges!) {
+    if !stateChanges.from.subscribed && stateChanges.to.subscribed {
+      print("Subscribed for OneSignal push notifications!")
+      // get player ID
+      UserDefaults.standard.set(stateChanges.to.userId, forKey: "deviceToken")
+    }
   }
   
   private func prepareFabric() {
@@ -72,18 +100,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       print ("~~~~*** Starting Fabrics Crashalytics ***~~~~~")
       Fabric.with([Crashlytics.self])
     #endif
-  }
-  
-  /**
-   Registers the push notification for us. We'll store this in our external database.
-  **/
-  func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-    // uses a higher order function to reduce the hex values for us.
-    let token = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
-    // if it passes, then we have some steps to take care of
-    // let's just store this in UserDefaults so we can use it when the user registers. If the user
-    // doesn't accept push, that's their loss
-    UserDefaults.standard.set(token, forKey: "deviceToken")
   }
 
 	func applicationWillResignActive(_ application: UIApplication) {

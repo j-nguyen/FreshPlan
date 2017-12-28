@@ -9,6 +9,7 @@ target 'FreshPlan' do
   pod 'JWTDecode', '~> 2.1.1' 
   pod 'RxDataSources'
   pod 'RxGesture'
+  pod 'RxSwiftExt'
   pod 'Moya/RxSwift'
   pod 'RxOptional'
   pod 'OneSignal', '>= 2.5.2', '< 3.0'
