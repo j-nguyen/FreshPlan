@@ -10,9 +10,6 @@ import UIKit
 
 public final class HomeAssembler {
 	public static func make() -> UIViewController {
-		let viewModel = HomeViewModel()
-		let router = HomeRouter()
-		
-		return HomeViewController(viewModel: viewModel, router: router)
+		return HomeViewController()
 	}
 }
