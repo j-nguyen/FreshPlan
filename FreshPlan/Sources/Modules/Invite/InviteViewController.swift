@@ -17,8 +17,11 @@ public final class InviteViewController: UIViewController {
     private var viewModel: InviteViewModelProtocol!
     private var router: InviteRouter!
     
-    //MARK: AppBar
+    // MARK: AppBar
     fileprivate var appBar: MDCAppBar = MDCAppBar()
+  
+  // MARK: EmptyView
+  private var emptyInviteView: EmptyInvitationView!
     
     //MARK: TableView
     private var containerView: UIView!
@@ -60,6 +63,7 @@ public final class InviteViewController: UIViewController {
     
     public func prepareView() {
         prepareTableView()
+      prepareEmptyInviteView()
         prepareNavigationBar()
         appBar.addSubviewsToParent()
     }
@@ -83,6 +87,28 @@ public final class InviteViewController: UIViewController {
       }
       .disposed(by: disposeBag)
     }
+  
+  private func prepareEmptyInviteView() {
+    emptyInviteView = EmptyInvitationView()
+    
+    view.addSubview(emptyInviteView)
+    
+    emptyInviteView.snp.makeConstraints { make in
+      make.edges.equalTo(view)
+    }
+    
+    viewModel.invitations
+      .asObservable()
+      .map { $0.count == 0 }
+      .bind(to: tableView.rx.isHidden)
+      .disposed(by: disposeBag)
+    
+    viewModel.invitations
+      .asObservable()
+      .map { $0.count > 0 }
+      .bind(to: emptyInviteView.rx.isHidden)
+      .disposed(by: disposeBag)
+  }
     
     private func prepareNavigationBar() {
         appBar.headerViewController.headerView.backgroundColor = MDCPalette.blue.tint700

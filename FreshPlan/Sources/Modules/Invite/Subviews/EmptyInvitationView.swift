@@ -51,6 +51,7 @@ public class EmptyInvitationView: UIView {
   private func prepareStackView() {
     stackView = UIStackView()
     stackView.alignment = .center
+    stackView.axis = .vertical
     stackView.distribution = .fill
     stackView.spacing = 10
     
