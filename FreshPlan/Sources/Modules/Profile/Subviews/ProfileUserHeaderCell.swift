@@ -48,10 +48,10 @@ public final class ProfileUserHeaderCell: UITableViewCell {
 		contentView.addSubview(activityIndicator)
 		
 		activityIndicator.snp.makeConstraints { make in
+      make.width.equalTo(50)
+      make.height.equalTo(50)
 			make.centerY.equalTo(contentView)
 			make.left.equalTo(contentView).offset(10)
-			make.width.equalTo(50)
-			make.height.equalTo(50)
 		}
 	}
 	
@@ -59,9 +59,9 @@ public final class ProfileUserHeaderCell: UITableViewCell {
 		profileImageView = UIImageView()
 		profileImageView.isHidden = true
 		profileImageView.contentMode = .scaleAspectFit
-    profileImageView.clipsToBounds = true
 		profileImageView.layer.cornerRadius = 25
 		profileImageView.layer.masksToBounds = true
+    profileImageView.clipsToBounds = true
 		
 		contentView.addSubview(profileImageView)
 		

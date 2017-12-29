@@ -27,6 +27,7 @@ public final class HomeViewController: UITabBarController {
     // MARK:  View Controllers
     let meetupController = MeetupAssembler.make()
     let profileController = ProfileAssembler.make()
+    let settingsController = SettingsAssembler.make()
     
     meetupController.tabBarItem = UITabBarItem(
       title: "Home",
@@ -40,7 +41,13 @@ public final class HomeViewController: UITabBarController {
       tag: 1
     )
     
-    let viewControllers = [meetupController, profileController].flatMap { UINavigationController(rootViewController: $0) }
+    settingsController.tabBarItem = UITabBarItem(
+      title: "Settings",
+      image: UIImage(named: "ic_settings")?.withRenderingMode(.alwaysTemplate),
+      tag: 2
+    )
+    
+    let viewControllers = [meetupController, profileController, settingsController].flatMap { UINavigationController(rootViewController: $0) }
     
     setViewControllers(viewControllers, animated: false)
 	}

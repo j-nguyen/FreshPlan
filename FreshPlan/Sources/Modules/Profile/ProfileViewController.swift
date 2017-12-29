@@ -18,13 +18,13 @@ public final class ProfileViewController: UIViewController {
   private var router: ProfileRouter!
   
   // MARK: AppBar
-  fileprivate let appBar: MDCAppBar = MDCAppBar()
+  private let appBar: MDCAppBar = MDCAppBar()
   
   // MARK: DisposeBag
   private let disposeBag: DisposeBag = DisposeBag()
   
   // MARK: TableView
-  private var profileTableView: UITableView!
+  private var tableView: UITableView!
   private var refreshControl: UIRefreshControl!
   fileprivate var dataSource: RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>!
   
@@ -65,7 +65,7 @@ public final class ProfileViewController: UIViewController {
   
   private func prepareView() {
     prepareRefreshControl()
-    prepareProfileTableView()
+    prepareTableView()
     prepareNavigationBar()
     prepareNavigationSearchButton()
     prepareNavigationLogoutButton()
@@ -145,7 +145,7 @@ public final class ProfileViewController: UIViewController {
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor: UIColor.white ]
     
-    appBar.headerViewController.headerView.trackingScrollView = profileTableView
+    appBar.headerViewController.headerView.trackingScrollView = tableView
     
     Observable.just("Profile")
       .bind(to: navigationItem.rx.title)
@@ -154,21 +154,22 @@ public final class ProfileViewController: UIViewController {
     appBar.navigationBar.observe(navigationItem)
   }
   
-  private func prepareProfileTableView() {
-    profileTableView = UITableView()
-    profileTableView.estimatedRowHeight = 70
-    profileTableView.rowHeight = UITableViewAutomaticDimension
-    profileTableView.separatorStyle = .singleLine
-    profileTableView.separatorInset = .zero
-    profileTableView.layoutMargins = .zero
-    profileTableView.refreshControl = refreshControl
-    profileTableView.rx.setDelegate(self).disposed(by: disposeBag)
-    profileTableView.registerCell(ProfileUserHeaderCell.self)
-    profileTableView.registerCell(ProfileUserInfoCell.self)
+  private func prepareTableView() {
+    tableView = UITableView()
+    tableView.refreshControl = refreshControl
+    tableView.separatorInset = .zero
+    tableView.estimatedRowHeight = 44
+    tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.rx.setDelegate(self).disposed(by: disposeBag)
+    tableView.registerCell(ProfileUserHeaderCell.self)
+    tableView.registerCell(ProfileUserInfoCell.self)
+    tableView.registerCell(ProfileFriendCell.self)
     
-    view.addSubview(profileTableView)
+    view.addSubview(tableView)
     
-    profileTableView.snp.makeConstraints { $0.edges.equalTo(view) }
+    tableView.snp.makeConstraints { make in
+      make.edges.equalTo(view)
+    }
     
     // set up data sources
     dataSource = RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>(
@@ -189,14 +190,14 @@ public final class ProfileViewController: UIViewController {
           cell.title.on(.next(title))
           cell.info.on(.next(description))
           return cell
-        case let .friend(_, displayName):
-          let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
-          cell.textLabel?.text = displayName
-          return cell
         case let .joined(_, title, description):
           let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
           cell.title.on(.next(title))
           cell.info.on(.next(description))
+          return cell
+        case let .friend(_, displayName):
+          let cell = table.dequeueCell(ofType: ProfileFriendCell.self, for: index)
+          cell.title.on(.next(displayName))
           return cell
         }
     })
@@ -211,14 +212,14 @@ public final class ProfileViewController: UIViewController {
     }
     
     dataSource.titleForHeaderInSection = { dataSource, index in
-      return index > 0 ? dataSource[index].title : ""
+      return index == 0 ? "" : dataSource[index].title
     }
     
     dataSource.rowAnimation = .automatic
     
     viewModel.profileItems
       .asObservable()
-      .bind(to: profileTableView.rx.items(dataSource: dataSource))
+      .bind(to: tableView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
     
     viewModel.acceptedFriendSuccess
@@ -230,7 +231,7 @@ public final class ProfileViewController: UIViewController {
       })
       .disposed(by: disposeBag)
     
-    profileTableView.rx.itemSelected
+    tableView.rx.itemSelected
       .asObservable()
       .subscribe(onNext: { [weak self] index in
         if let this = self {

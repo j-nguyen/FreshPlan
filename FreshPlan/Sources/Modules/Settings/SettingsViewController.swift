@@ -46,6 +46,12 @@ public final class SettingsViewController: UIViewController {
     super.init(coder: aDecoder)
   }
   
+  public override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
+  
   public override func viewDidLoad() {
     super.viewDidLoad()
     prepareView()

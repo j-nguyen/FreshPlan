@@ -35,7 +35,6 @@
 		4045A2971FE601650059482E /* Invitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4045A2961FE601650059482E /* Invitation.swift */; };
 		4045A2991FE603C00059482E /* MeetupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4045A2981FE603C00059482E /* MeetupCell.swift */; };
 		40497D1F1F8CF3A500A4E046 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40497D1E1F8CF3A500A4E046 /* UIColor+.swift */; };
-		4055B0BA1FD079FE007C5CCC /* ProfileUserHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4055B0B91FD079FE007C5CCC /* ProfileUserHeaderView.swift */; };
 		4056A4EC1FD4B70B006415A7 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4EB1FD4B70B006415A7 /* AddFriendViewController.swift */; };
 		4056A4EE1FD4B7FE006415A7 /* AddFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4ED1FD4B7FE006415A7 /* AddFriendViewModel.swift */; };
 		4056A4F01FD4B988006415A7 /* AddFriendAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4EF1FD4B988006415A7 /* AddFriendAssembler.swift */; };
@@ -57,6 +56,7 @@
 		4081B6281FF5F73E00302315 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4081B6271FF5F73E00302315 /* SettingsViewModel.swift */; };
 		4081B62A1FF5F75800302315 /* SettingsAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4081B6291FF5F75800302315 /* SettingsAssembler.swift */; };
 		4081B62C1FF5F79100302315 /* SettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4081B62B1FF5F79100302315 /* SettingsRouter.swift */; };
+		4081B62E1FF6044300302315 /* ProfileFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4081B62D1FF6044300302315 /* ProfileFriendCell.swift */; };
 		4083BCD31FEE0D5F007D9B87 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCD21FEE0D5F007D9B87 /* LocationViewController.swift */; };
 		4083BCD51FEE0D9B007D9B87 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCD41FEE0D9B007D9B87 /* LocationViewModel.swift */; };
 		4083BCD71FEE0DB4007D9B87 /* LocationAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCD61FEE0DB4007D9B87 /* LocationAssembler.swift */; };
@@ -168,7 +168,6 @@
 		4045A2961FE601650059482E /* Invitation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invitation.swift; sourceTree = "<group>"; };
 		4045A2981FE603C00059482E /* MeetupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupCell.swift; sourceTree = "<group>"; };
 		40497D1E1F8CF3A500A4E046 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
-		4055B0B91FD079FE007C5CCC /* ProfileUserHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserHeaderView.swift; sourceTree = "<group>"; };
 		4056A4EB1FD4B70B006415A7 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
 		4056A4ED1FD4B7FE006415A7 /* AddFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewModel.swift; sourceTree = "<group>"; };
 		4056A4EF1FD4B988006415A7 /* AddFriendAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendAssembler.swift; sourceTree = "<group>"; };
@@ -190,6 +189,7 @@
 		4081B6271FF5F73E00302315 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewModel.swift; path = /Users/johnnynguyen/Documents/Projects/FreshPlan/FreshPlan/Sources/Modules/Settings/SettingsViewModel.swift; sourceTree = "<absolute>"; };
 		4081B6291FF5F75800302315 /* SettingsAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAssembler.swift; sourceTree = "<group>"; };
 		4081B62B1FF5F79100302315 /* SettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRouter.swift; sourceTree = "<group>"; };
+		4081B62D1FF6044300302315 /* ProfileFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFriendCell.swift; sourceTree = "<group>"; };
 		4083BCD21FEE0D5F007D9B87 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		4083BCD41FEE0D9B007D9B87 /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
 		4083BCD61FEE0DB4007D9B87 /* LocationAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAssembler.swift; sourceTree = "<group>"; };
@@ -480,7 +480,7 @@
 			children = (
 				4079B1501FC4785F007E9407 /* ProfileUserHeaderCell.swift */,
 				4079B1551FC49367007E9407 /* ProfileUserInfoCell.swift */,
-				4055B0B91FD079FE007C5CCC /* ProfileUserHeaderView.swift */,
+				4081B62D1FF6044300302315 /* ProfileFriendCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -965,6 +965,7 @@
 				408D083B1F8D2865006BCA8E /* VerifyRouter.swift in Sources */,
 				40D8B02A1FE819BB00CE2626 /* Other.swift in Sources */,
 				40934BFC1FE61E8F00AD7331 /* UIImageView+.swift in Sources */,
+				4081B62E1FF6044300302315 /* ProfileFriendCell.swift in Sources */,
 				4083BCDD1FEE1551007D9B87 /* LocationCell.swift in Sources */,
 				4079B1511FC4785F007E9407 /* ProfileUserHeaderCell.swift in Sources */,
 				4003B3A71FE3625E00BF682F /* String+.swift in Sources */,
@@ -994,7 +995,6 @@
 				4081B62C1FF5F79100302315 /* SettingsRouter.swift in Sources */,
 				408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */,
 				409A55351F86B0D200EB29A4 /* AppDelegate.swift in Sources */,
-				4055B0BA1FD079FE007C5CCC /* ProfileUserHeaderView.swift in Sources */,
 				4083BCD71FEE0DB4007D9B87 /* LocationAssembler.swift in Sources */,
 				408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */,
 				40426D1A1F86C12600875179 /* LoginRouter.swift in Sources */,
