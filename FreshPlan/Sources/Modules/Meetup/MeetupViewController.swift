@@ -12,7 +12,7 @@ import RxSwift
 import RxDataSources
 import SnapKit
 
-public final class MeetupController: UIViewController {
+public final class MeetupViewController: UIViewController {
 	private var viewModel: MeetupViewModelProtocol!
 	private var router: MeetupRouter!
   
