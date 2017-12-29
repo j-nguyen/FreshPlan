@@ -76,7 +76,7 @@ public final class ProfileUserHeaderCell: UITableViewCell {
       make.height.equalTo(50)
       make.centerY.equalTo(contentView)
 			make.left.equalTo(contentView).inset(10)
-      }
+    }
 		
 		// set up bindings
 		profileURL

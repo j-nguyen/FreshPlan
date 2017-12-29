@@ -103,7 +103,14 @@ public final class ProfileViewController: UIViewController {
       .asObservable()
       .subscribe(onNext: { [weak self] in
         guard let this = self else { return }
-        try? this.router.route(from: this, to: ProfileRouter.Routes.logout.rawValue)
+        // we can just create a modal in here and attempt to log out
+        let alertController = MDCAlertController(title: "Are you sure you want to log out?", message: "Hit confirm, if you would like to log out")
+        let confirm = MDCAlertAction(title: "Confirm") { _ in
+          try? this.router.route(from: this, to: ProfileRouter.Routes.logout.rawValue)
+        }
+        alertController.addAction(confirm)
+        alertController.addAction(MDCAlertAction(title: "Cancel"))
+        this.present(alertController, animated: true, completion: nil)
       })
     .disposed(by: disposeBag)
     
@@ -293,6 +300,18 @@ extension ProfileViewController: UITableViewDelegate {
       return 70
     default:
       return UITableViewAutomaticDimension
+    }
+  }
+  
+  public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollDidScroll()
+    }
+  }
+  
+  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
     }
   }
 }

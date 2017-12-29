@@ -10,9 +10,10 @@ import UIKit
 import MaterialComponents
 import Fabric
 import Crashlytics
+import OneSignal
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, OSPermissionObserver, OSSubscriptionObserver {
 
 	var window: UIWindow?
 
@@ -22,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		guard let window = self.window else { fatalError("no window") }
     // prepare fabric
     prepareFabric()
+    prepareOneSignal(launchOptions)
 		// setup window to make sure
 		// check to make sure if token exists or not
     window.makeKeyAndVisible()
@@ -44,6 +46,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		return true
 	}
+  
+  private func prepareOneSignal(_ launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+    let onesignalInitSettings = [kOSSettingsKeyAutoPrompt: false, kOSSettingsKeyInAppLaunchURL: true]
+    
+    // Replace 'YOUR_APP_ID' with your OneSignal App ID.
+    OneSignal.initWithLaunchOptions(launchOptions,
+                                    appId: "65c83147-8269-4f36-a255-d737806c465e",
+                                    handleNotificationAction: nil,
+                                    settings: onesignalInitSettings)
+    
+    OneSignal.inFocusDisplayType = OSNotificationDisplayType.notification;
+    
+    // Recommend moving the below line to prompt for push after informing the user about
+    //   how your app will use them.
+    OneSignal.promptForPushNotifications(userResponse: { accepted in
+      print("User accepted notifications: \(accepted)")
+    })
+    
+    // add for player id searching and notification
+    OneSignal.add(self as OSPermissionObserver)
+    OneSignal.add(self as OSSubscriptionObserver)
+  }
+  
+  // Add this new method
+  internal func onOSPermissionChanged(_ stateChanges: OSPermissionStateChanges!) {
+    // Example of detecting answering the permission prompt
+    if stateChanges.from.status == OSNotificationPermission.notDetermined {
+      if stateChanges.to.status == OSNotificationPermission.authorized {
+        print("Thanks for accepting notifications!")
+      } else if stateChanges.to.status == OSNotificationPermission.denied {
+        print("Notifications not accepted. You can turn them on later under your iOS settings.")
+      }
+    }
+    // prints out all properties
+    print("PermissionStateChanges: \n\(stateChanges)")
+  }
+  
+  // Add this new method
+  // sets up the notificatino for us
+  internal func onOSSubscriptionChanged(_ stateChanges: OSSubscriptionStateChanges!) {
+    if !stateChanges.from.subscribed && stateChanges.to.subscribed {
+      print("Subscribed for OneSignal push notifications!")
+      // get player ID
+      UserDefaults.standard.set(stateChanges.to.userId, forKey: "deviceToken")
+    }
+  }
   
   private func prepareFabric() {
     #if (arch(i386) || arch(x86_64)) && os(iOS)
