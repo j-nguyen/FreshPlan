@@ -43,8 +43,6 @@
 		4056A4F51FD4C2DD006415A7 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4056A4F41FD4C2DD006415A7 /* SearchBar.swift */; };
 		405C5A981F8D94E700AC8F9F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A971F8D94E700AC8F9F /* HomeViewController.swift */; };
 		405C5A9A1F8D94FA00AC8F9F /* HomeAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A991F8D94FA00AC8F9F /* HomeAssembler.swift */; };
-		405C5A9C1F8D950500AC8F9F /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A9B1F8D950500AC8F9F /* HomeViewModel.swift */; };
-		405C5A9E1F8D953500AC8F9F /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405C5A9D1F8D953500AC8F9F /* HomeRouter.swift */; };
 		4071F8F71FDB00F3001B77A1 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4071F8F61FDB00F3001B77A1 /* FriendViewController.swift */; };
 		4071F8F91FDB0143001B77A1 /* FriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4071F8F81FDB0143001B77A1 /* FriendViewModel.swift */; };
 		4071F94D1FDCAF430061C34E /* FriendProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4071F94C1FDCAF430061C34E /* FriendProfileCell.swift */; };
@@ -82,6 +80,8 @@
 		409B2BF51FBE6234000A7F16 /* ProfileAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BF41FBE6234000A7F16 /* ProfileAssembler.swift */; };
 		409B2BF81FBE64F9000A7F16 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BF71FBE64F9000A7F16 /* User.swift */; };
 		409B2BFA1FBE65AF000A7F16 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BF91FBE65AF000A7F16 /* Friend.swift */; };
+		40A0DB211FF0A8980059B020 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A0DB201FF0A8980059B020 /* NotificationService.swift */; };
+		40A0DB251FF0A8980059B020 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 40A0DB1E1FF0A8980059B020 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		40A311361F9EF503000FAFEB /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A311351F9EF503000FAFEB /* Token.swift */; };
 		40AD4A7B1FECD08300AC2AB3 /* AddMeetupAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD4A7A1FECD08300AC2AB3 /* AddMeetupAssembler.swift */; };
 		40AD4A7D1FECD08D00AC2AB3 /* AddMeetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD4A7C1FECD08D00AC2AB3 /* AddMeetupViewController.swift */; };
@@ -89,7 +89,7 @@
 		40AD4A811FECD0A000AC2AB3 /* AddMeetupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD4A801FECD0A000AC2AB3 /* AddMeetupRouter.swift */; };
 		40B4782C1FEC50B00033DFFF /* MeetupLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B4782B1FEC50B00033DFFF /* MeetupLocationCell.swift */; };
 		40B4782E1FEC5CEA0033DFFF /* MeetupDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B4782D1FEC5CEA0033DFFF /* MeetupDescriptionCell.swift */; };
-		40BD70101F910F53005B3B9D /* MeetupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD700F1F910F53005B3B9D /* MeetupController.swift */; };
+		40BD70101F910F53005B3B9D /* MeetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD700F1F910F53005B3B9D /* MeetupViewController.swift */; };
 		40BD70121F910FD6005B3B9D /* MeetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD70111F910FD6005B3B9D /* MeetupViewModel.swift */; };
 		40BD70141F910FFA005B3B9D /* MeetupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD70131F910FFA005B3B9D /* MeetupRouter.swift */; };
 		40BD70161F911022005B3B9D /* MeetupAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BD70151F911022005B3B9D /* MeetupAssembler.swift */; };
@@ -107,8 +107,33 @@
 		40F8C6DA1FED741C0040D334 /* AddMeetupTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6D91FED741C0040D334 /* AddMeetupTextViewCell.swift */; };
 		40F8C6DC1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6DB1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift */; };
 		40F8C6E01FED7FF60040D334 /* AddMeetupDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6DF1FED7FF60040D334 /* AddMeetupDateCell.swift */; };
+		7A829B1ABE926069F348D6A9 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FC7AE0B22C700F88B3060C9 /* Pods_OneSignalNotificationServiceExtension.framework */; };
 		7BED1FB6487CD40A991B8614 /* Pods_FreshPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		40A0DB231FF0A8980059B020 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 409A55291F86B0D200EB29A4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 40A0DB1D1FF0A8980059B020;
+			remoteInfo = OneSignalNotificationServiceExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		40A0DB291FF0A8980059B020 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				40A0DB251FF0A8980059B020 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4003B3A61FE3625E00BF682F /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
@@ -147,8 +172,6 @@
 		4056A4F41FD4C2DD006415A7 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		405C5A971F8D94E700AC8F9F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		405C5A991F8D94FA00AC8F9F /* HomeAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAssembler.swift; sourceTree = "<group>"; };
-		405C5A9B1F8D950500AC8F9F /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		405C5A9D1F8D953500AC8F9F /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		4071F8F61FDB00F3001B77A1 /* FriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
 		4071F8F81FDB0143001B77A1 /* FriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewModel.swift; sourceTree = "<group>"; };
 		4071F94C1FDCAF430061C34E /* FriendProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileCell.swift; sourceTree = "<group>"; };
@@ -188,6 +211,10 @@
 		409B2BF41FBE6234000A7F16 /* ProfileAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAssembler.swift; sourceTree = "<group>"; };
 		409B2BF71FBE64F9000A7F16 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		409B2BF91FBE65AF000A7F16 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		40A0DB191FF0A72D0059B020 /* FreshPlan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FreshPlan.entitlements; sourceTree = "<group>"; };
+		40A0DB1E1FF0A8980059B020 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		40A0DB201FF0A8980059B020 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		40A0DB221FF0A8980059B020 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		40A311351F9EF503000FAFEB /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		40AD4A7A1FECD08300AC2AB3 /* AddMeetupAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupAssembler.swift; sourceTree = "<group>"; };
 		40AD4A7C1FECD08D00AC2AB3 /* AddMeetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupViewController.swift; sourceTree = "<group>"; };
@@ -195,7 +222,7 @@
 		40AD4A801FECD0A000AC2AB3 /* AddMeetupRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupRouter.swift; sourceTree = "<group>"; };
 		40B4782B1FEC50B00033DFFF /* MeetupLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupLocationCell.swift; sourceTree = "<group>"; };
 		40B4782D1FEC5CEA0033DFFF /* MeetupDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupDescriptionCell.swift; sourceTree = "<group>"; };
-		40BD700F1F910F53005B3B9D /* MeetupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupController.swift; sourceTree = "<group>"; };
+		40BD700F1F910F53005B3B9D /* MeetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupViewController.swift; sourceTree = "<group>"; };
 		40BD70111F910FD6005B3B9D /* MeetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupViewModel.swift; sourceTree = "<group>"; };
 		40BD70131F910FFA005B3B9D /* MeetupRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupRouter.swift; sourceTree = "<group>"; };
 		40BD70151F911022005B3B9D /* MeetupAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupAssembler.swift; sourceTree = "<group>"; };
@@ -214,7 +241,10 @@
 		40F8C6DB1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupGeocodeCell.swift; sourceTree = "<group>"; };
 		40F8C6DF1FED7FF60040D334 /* AddMeetupDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupDateCell.swift; sourceTree = "<group>"; };
 		66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreshPlan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		699D5F19A2CE2F80446D02FF /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		961AF7C9502FB2E5362945B5 /* Pods-FreshPlan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.release.xcconfig"; sourceTree = "<group>"; };
+		9FC7AE0B22C700F88B3060C9 /* Pods_OneSignalNotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneSignalNotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A453EC14D4EAA50A7E0FD385 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		F2535B961F6CEAE83F9AC1E5 /* Pods-FreshPlan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -227,6 +257,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		40A0DB1B1FF0A8980059B020 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A829B1ABE926069F348D6A9 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -234,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */,
+				9FC7AE0B22C700F88B3060C9 /* Pods_OneSignalNotificationServiceExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -403,8 +442,6 @@
 			children = (
 				405C5A971F8D94E700AC8F9F /* HomeViewController.swift */,
 				405C5A991F8D94FA00AC8F9F /* HomeAssembler.swift */,
-				405C5A9B1F8D950500AC8F9F /* HomeViewModel.swift */,
-				405C5A9D1F8D953500AC8F9F /* HomeRouter.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -494,6 +531,7 @@
 			isa = PBXGroup;
 			children = (
 				409A55331F86B0D200EB29A4 /* FreshPlan */,
+				40A0DB1F1FF0A8980059B020 /* OneSignalNotificationServiceExtension */,
 				409A55321F86B0D200EB29A4 /* Products */,
 				63B037B023A8BC3303DFC20E /* Pods */,
 				0F3AB510D7DD34FCCFA2E3F4 /* Frameworks */,
@@ -504,6 +542,7 @@
 			isa = PBXGroup;
 			children = (
 				409A55311F86B0D200EB29A4 /* FreshPlan.app */,
+				40A0DB1E1FF0A8980059B020 /* OneSignalNotificationServiceExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -511,6 +550,7 @@
 		409A55331F86B0D200EB29A4 /* FreshPlan */ = {
 			isa = PBXGroup;
 			children = (
+				40A0DB191FF0A72D0059B020 /* FreshPlan.entitlements */,
 				409A55341F86B0D200EB29A4 /* AppDelegate.swift */,
 				409A553D1F86B0D200EB29A4 /* LaunchScreen.storyboard */,
 				40426D041F86B7E500875179 /* Sources */,
@@ -540,6 +580,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		40A0DB1F1FF0A8980059B020 /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				40A0DB201FF0A8980059B020 /* NotificationService.swift */,
+				40A0DB221FF0A8980059B020 /* Info.plist */,
+			);
+			path = OneSignalNotificationServiceExtension;
+			sourceTree = "<group>";
+		};
 		40AD4A791FECCB6D00AC2AB3 /* AddMeetup */ = {
 			isa = PBXGroup;
 			children = (
@@ -555,7 +604,7 @@
 		40BD700E1F910F41005B3B9D /* Meetup */ = {
 			isa = PBXGroup;
 			children = (
-				40BD700F1F910F53005B3B9D /* MeetupController.swift */,
+				40BD700F1F910F53005B3B9D /* MeetupViewController.swift */,
 				40BD70111F910FD6005B3B9D /* MeetupViewModel.swift */,
 				40BD70131F910FFA005B3B9D /* MeetupRouter.swift */,
 				40BD70151F911022005B3B9D /* MeetupAssembler.swift */,
@@ -593,6 +642,8 @@
 			children = (
 				F2535B961F6CEAE83F9AC1E5 /* Pods-FreshPlan.debug.xcconfig */,
 				961AF7C9502FB2E5362945B5 /* Pods-FreshPlan.release.xcconfig */,
+				A453EC14D4EAA50A7E0FD385 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */,
+				699D5F19A2CE2F80446D02FF /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -611,15 +662,36 @@
 				A8A041D2EFD4CDED71963FEE /* [CP] Embed Pods Frameworks */,
 				156DDCC05B4822F68A119370 /* [CP] Copy Pods Resources */,
 				40AD78C91FDDDAD30056EEEB /* Fabric */,
+				40A0DB291FF0A8980059B020 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				40A0DB241FF0A8980059B020 /* PBXTargetDependency */,
 			);
 			name = FreshPlan;
 			productName = FreshPlan;
 			productReference = 409A55311F86B0D200EB29A4 /* FreshPlan.app */;
 			productType = "com.apple.product-type.application";
+		};
+		40A0DB1D1FF0A8980059B020 /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 40A0DB281FF0A8980059B020 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */;
+			buildPhases = (
+				893FC1F501DF0FED32C60238 /* [CP] Check Pods Manifest.lock */,
+				40A0DB1A1FF0A8980059B020 /* Sources */,
+				40A0DB1B1FF0A8980059B020 /* Frameworks */,
+				40A0DB1C1FF0A8980059B020 /* Resources */,
+				D1C18CB47247D9D947BC40F0 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OneSignalNotificationServiceExtension;
+			productName = OneSignalNotificationServiceExtension;
+			productReference = 40A0DB1E1FF0A8980059B020 /* OneSignalNotificationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -627,7 +699,7 @@
 		409A55291F86B0D200EB29A4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0900;
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "St Clair College";
 				TargetAttributes = {
@@ -635,10 +707,20 @@
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.GameCenter = {
 								enabled = 0;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 						};
+					};
+					40A0DB1D1FF0A8980059B020 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -656,6 +738,7 @@
 			projectRoot = "";
 			targets = (
 				409A55301F86B0D200EB29A4 /* FreshPlan */,
+				40A0DB1D1FF0A8980059B020 /* OneSignalNotificationServiceExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -667,6 +750,13 @@
 			files = (
 				409A553F1F86B0D200EB29A4 /* LaunchScreen.storyboard in Resources */,
 				409A553C1F86B0D200EB29A4 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		40A0DB1C1FF0A8980059B020 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,6 +792,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" d220679d33f35aa69a60746c90a8cb2cce0109e7 58abe0509fc5f9d2a482aa72416bc3bf98563f324ff08c7012b79931dae22e71";
 		};
+		893FC1F501DF0FED32C60238 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OneSignalNotificationServiceExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A8A041D2EFD4CDED71963FEE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -723,9 +831,9 @@
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
-				"${BUILT_PRODUCTS_DIR}/RxMKMapView/RxMKMapView.framework",
 				"${BUILT_PRODUCTS_DIR}/RxOptional/RxOptional.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwiftExt/RxSwiftExt.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -744,9 +852,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxMKMapView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxOptional.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwiftExt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -770,6 +878,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D1C18CB47247D9D947BC40F0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -857,7 +980,6 @@
 				40F8C6E01FED7FF60040D334 /* AddMeetupDateCell.swift in Sources */,
 				402D931A1FEF6E7A008E268A /* EditMeetupViewModel.swift in Sources */,
 				4083BCE11FEE3859007D9B87 /* UITextField+.swift in Sources */,
-				405C5A9C1F8D950500AC8F9F /* HomeViewModel.swift in Sources */,
 				40426D0D1F86B86800875179 /* LoginAssembler.swift in Sources */,
 				409B2BF31FBE61F5000A7F16 /* ProfileRouter.swift in Sources */,
 				40426D0B1F86B85E00875179 /* LoginViewModel.swift in Sources */,
@@ -870,9 +992,8 @@
 				4083BCD31FEE0D5F007D9B87 /* LocationViewController.swift in Sources */,
 				4056A4F51FD4C2DD006415A7 /* SearchBar.swift in Sources */,
 				4056A4EC1FD4B70B006415A7 /* AddFriendViewController.swift in Sources */,
-				405C5A9E1F8D953500AC8F9F /* HomeRouter.swift in Sources */,
 				4079B1541FC47E86007E9407 /* CacheStore.swift in Sources */,
-				40BD70101F910F53005B3B9D /* MeetupController.swift in Sources */,
+				40BD70101F910F53005B3B9D /* MeetupViewController.swift in Sources */,
 				409B2BFA1FBE65AF000A7F16 /* Friend.swift in Sources */,
 				4083BCD51FEE0D9B007D9B87 /* LocationViewModel.swift in Sources */,
 				40C429021FC3D08C004579A6 /* JSONDecoder+.swift in Sources */,
@@ -880,7 +1001,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		40A0DB1A1FF0A8980059B020 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				40A0DB211FF0A8980059B020 /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		40A0DB241FF0A8980059B020 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 40A0DB1D1FF0A8980059B020 /* OneSignalNotificationServiceExtension */;
+			targetProxy = 40A0DB231FF0A8980059B020 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		409A553D1F86B0D200EB29A4 /* LaunchScreen.storyboard */ = {
@@ -1008,6 +1145,7 @@
 			baseConfigurationReference = F2535B961F6CEAE83F9AC1E5 /* Pods-FreshPlan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FreshPlan/FreshPlan.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -1022,7 +1160,7 @@
 				PROVISIONING_PROFILE = "f5b9d44d-8d4d-4a5e-870d-0dc963db2d9f";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development net.fractalpoint.freshplan";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1032,6 +1170,7 @@
 			baseConfigurationReference = 961AF7C9502FB2E5362945B5 /* Pods-FreshPlan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FreshPlan/FreshPlan.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -1040,15 +1179,53 @@
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/FreshPlan/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = net.fractalpoint.freshplan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "5282444f-e9b5-4b9f-bc0a-f89996be4d98";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore net.fractalpoint.freshplan";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		40A0DB261FF0A8980059B020 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A453EC14D4EAA50A7E0FD385 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 35PYRYEWH9;
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.fractalpoint.freshplan.OneSignalNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		40A0DB271FF0A8980059B020 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 699D5F19A2CE2F80446D02FF /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 35PYRYEWH9;
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.fractalpoint.freshplan.OneSignalNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1069,6 +1246,15 @@
 			buildConfigurations = (
 				409A555A1F86B0D200EB29A4 /* Debug */,
 				409A555B1F86B0D200EB29A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		40A0DB281FF0A8980059B020 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				40A0DB261FF0A8980059B020 /* Debug */,
+				40A0DB271FF0A8980059B020 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

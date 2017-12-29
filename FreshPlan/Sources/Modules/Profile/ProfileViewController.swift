@@ -302,4 +302,16 @@ extension ProfileViewController: UITableViewDelegate {
       return UITableViewAutomaticDimension
     }
   }
+  
+  public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollDidScroll()
+    }
+  }
+  
+  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
+      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
+    }
+  }
 }

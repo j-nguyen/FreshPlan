@@ -13,7 +13,7 @@ import UIKit
 	* CacheStore class to store cached data to make it easier on requests
 **/
 public class CacheStore {
-	lazy private var imageCache: NSCache<NSString, UIImage> = NSCache<NSString, UIImage>()
+	private lazy var imageCache: NSCache<NSString, UIImage> = NSCache<NSString, UIImage>()
 	
 	public func setImage(key: NSString, image: UIImage) {
 		imageCache.setObject(image, forKey: key)
