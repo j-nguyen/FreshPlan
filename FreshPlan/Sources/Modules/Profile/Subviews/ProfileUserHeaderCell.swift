@@ -17,7 +17,7 @@ public final class ProfileUserHeaderCell: UITableViewCell {
 	public var profileURL: PublishSubject<String> = PublishSubject()
 	
 	// MARK:  DisposeBag
-	private var disposeBag: DisposeBag = DisposeBag()
+	private let disposeBag: DisposeBag = DisposeBag()
 	
 	// MARK:  Views
 	private var activityIndicator: UIActivityIndicatorView!
@@ -42,7 +42,6 @@ public final class ProfileUserHeaderCell: UITableViewCell {
 	
 	private func prepareActivityIndicator() {
 		activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-		activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
 		activityIndicator.clipsToBounds = true
     activityIndicator.startAnimating()
 		

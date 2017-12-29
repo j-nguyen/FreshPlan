@@ -156,7 +156,7 @@ public final class ProfileViewController: UIViewController {
   
   private func prepareProfileTableView() {
     profileTableView = UITableView()
-    profileTableView.estimatedRowHeight = 44
+    profileTableView.estimatedRowHeight = 70
     profileTableView.rowHeight = UITableViewAutomaticDimension
     profileTableView.separatorStyle = .singleLine
     profileTableView.separatorInset = .zero
@@ -210,6 +210,10 @@ public final class ProfileViewController: UIViewController {
       }
     }
     
+    dataSource.titleForHeaderInSection = { dataSource, index in
+      return index > 0 ? dataSource[index].title : ""
+    }
+    
     dataSource.rowAnimation = .automatic
     
     viewModel.profileItems
@@ -252,22 +256,6 @@ public final class ProfileViewController: UIViewController {
 
 // MARK:  UIScrollViewDelegate
 extension ProfileViewController: UITableViewDelegate {
-  
-  public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    switch dataSource.sectionModels[section] {
-    case let .friends(_, title, _):
-      let friendView = ProfileUserHeaderView()
-      friendView.title.on(.next(title))
-      return friendView
-    case let .friendRequests(_, title, _):
-      let friendView = ProfileUserHeaderView()
-      friendView.title.on(.next(title))
-      return friendView
-    default:
-      return nil
-    }
-  }
-  
   public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
     switch dataSource.sectionModels[indexPath.section] {
     case .friendRequests:
@@ -283,15 +271,6 @@ extension ProfileViewController: UITableViewDelegate {
       return [friendSwipeAccept]
     default:
       return nil
-    }
-  }
-  
-  public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    switch dataSource.sectionModels[section] {
-    case .friends, .friendRequests:
-      return 40
-    default:
-      return 0
     }
   }
   
