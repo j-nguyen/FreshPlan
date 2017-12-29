@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/johnnynguyen/Documents/Projects/FreshPlan/FreshPlan/Sources/Modules/Settings/SettingsViewModel.swift">
+   </FileRef>
+   <FileRef
       location = "group:FreshPlan.xcodeproj">
    </FileRef>
    <FileRef
