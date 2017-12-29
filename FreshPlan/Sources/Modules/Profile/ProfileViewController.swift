@@ -157,9 +157,10 @@ public final class ProfileViewController: UIViewController {
   private func prepareTableView() {
     tableView = UITableView()
     tableView.refreshControl = refreshControl
-    tableView.separatorInset = .zero
     tableView.estimatedRowHeight = 44
-    tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.separatorStyle = .singleLine
+    tableView.separatorInset = .zero
+    tableView.layoutMargins = .zero
     tableView.rx.setDelegate(self).disposed(by: disposeBag)
     tableView.registerCell(ProfileUserHeaderCell.self)
     tableView.registerCell(ProfileUserInfoCell.self)

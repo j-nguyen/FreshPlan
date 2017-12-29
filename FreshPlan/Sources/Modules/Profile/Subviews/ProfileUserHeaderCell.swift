@@ -42,6 +42,7 @@ public final class ProfileUserHeaderCell: UITableViewCell {
 	
 	private func prepareActivityIndicator() {
 		activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
 		activityIndicator.clipsToBounds = true
     activityIndicator.startAnimating()
 		
@@ -50,13 +51,13 @@ public final class ProfileUserHeaderCell: UITableViewCell {
 		activityIndicator.snp.makeConstraints { make in
       make.width.equalTo(50)
       make.height.equalTo(50)
-			make.centerY.equalTo(contentView)
-			make.left.equalTo(contentView).offset(10)
+      make.centerY.equalTo(contentView)
+      make.left.equalTo(contentView).offset(10)
 		}
 	}
 	
 	private func prepareProfileImage() {
-		profileImageView = UIImageView()
+		profileImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
 		profileImageView.isHidden = true
 		profileImageView.contentMode = .scaleAspectFit
 		profileImageView.layer.cornerRadius = 25
@@ -69,7 +70,7 @@ public final class ProfileUserHeaderCell: UITableViewCell {
       make.width.equalTo(50)
       make.height.equalTo(50)
       make.centerY.equalTo(contentView)
-			make.left.equalTo(contentView).inset(10)
+      make.left.equalTo(contentView).offset(10)
     }
 		
 		// set up bindings
