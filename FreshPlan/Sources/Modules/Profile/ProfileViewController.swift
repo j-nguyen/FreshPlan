@@ -157,6 +157,7 @@ public final class ProfileViewController: UIViewController {
   private func prepareProfileTableView() {
     profileTableView = UITableView()
     profileTableView.estimatedRowHeight = 44
+    profileTableView.rowHeight = UITableViewAutomaticDimension
     profileTableView.separatorStyle = .singleLine
     profileTableView.separatorInset = .zero
     profileTableView.layoutMargins = .zero
@@ -300,18 +301,6 @@ extension ProfileViewController: UITableViewDelegate {
       return 70
     default:
       return UITableViewAutomaticDimension
-    }
-  }
-  
-  public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidScroll()
-    }
-  }
-  
-  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
     }
   }
 }

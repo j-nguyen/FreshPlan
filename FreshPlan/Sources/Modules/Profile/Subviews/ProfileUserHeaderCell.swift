@@ -33,10 +33,6 @@ public final class ProfileUserHeaderCell: UITableViewCell {
 		super.init(coder: aDecoder)
 	}
 	
-	public override func prepareForReuse() {
-		super.prepareForReuse()
-	}
-	
 	private func prepareView() {
 		selectionStyle = .none
 		prepareActivityIndicator()
@@ -63,7 +59,6 @@ public final class ProfileUserHeaderCell: UITableViewCell {
 	private func prepareProfileImage() {
 		profileImageView = UIImageView()
 		profileImageView.isHidden = true
-		profileImageView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
 		profileImageView.contentMode = .scaleAspectFit
     profileImageView.clipsToBounds = true
 		profileImageView.layer.cornerRadius = 25
