@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 import RxSwift
+import RxCocoa
 import MaterialComponents
 
 public final class SettingsSwitchCell: UITableViewCell {
@@ -20,6 +21,11 @@ public final class SettingsSwitchCell: UITableViewCell {
   // MARK: Views
   private var titleLabel: UILabel!
   private var switchView: UISwitch!
+  
+  // MARK: Conveinece operators
+  public var isSwitchOn: ControlProperty<Bool> {
+    return switchView.rx.isOn
+  }
   
   private let disposeBag = DisposeBag()
   
@@ -33,15 +39,41 @@ public final class SettingsSwitchCell: UITableViewCell {
   }
   
   private func prepareView() {
+    selectionStyle = .none
     prepareTitleLabel()
     prepareSwitchView()
   }
   
   private func prepareTitleLabel() {
+    titleLabel = UILabel()
+    titleLabel.font = MDCTypography.subheadFont()
     
+    contentView.addSubview(titleLabel)
+    
+    titleLabel.snp.makeConstraints { make in
+      make.left.equalTo(contentView).inset(10)
+      make.centerY.equalTo(contentView)
+    }
+    
+    title
+      .asObservable()
+      .bind(to: titleLabel.rx.text)
+      .disposed(by: disposeBag)
   }
   
   private func prepareSwitchView() {
+    switchView = UISwitch()
     
+    contentView.addSubview(switchView)
+    
+    switchView.snp.makeConstraints { make in
+      make.right.equalTo(contentView).inset(10)
+      make.centerY.equalTo(contentView)
+    }
+    
+    enabled
+      .asObservable()
+      .bind(to: switchView.rx.isOn)
+      .disposed(by: disposeBag)
   }
 }

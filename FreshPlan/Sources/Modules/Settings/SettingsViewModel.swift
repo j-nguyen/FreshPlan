@@ -68,7 +68,7 @@ public class SettingsViewModel: SettingsViewModelProtocol {
       .filterNil()
       .map { SectionItem.build(order: 1, title: "Build Number", build: $0) }
     
-    let licenses = Observable.just("Licenses we use")
+    let licenses = Observable.just("Licenses We Use")
       .map { SectionItem.license(order: 2, title: $0) }
     
     let about = Observable.from([version, build, licenses])
