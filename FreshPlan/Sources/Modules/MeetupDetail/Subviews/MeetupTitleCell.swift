@@ -14,10 +14,12 @@ import MaterialComponents
 
 public final class MeetupTitleCell: UITableViewCell {
   //MARK: PublishSubject
+  public var title: PublishSubject<String> = PublishSubject()
   public var startDate: PublishSubject<Date> = PublishSubject()
   public var endDate: PublishSubject<Date> = PublishSubject()
   
   //MARK: Views
+  public var titleLabel: UILabel!
   public var startDateLabel: UILabel!
   public var endDateLabel: UILabel!
   private var inkViewController: MDCInkTouchController!
@@ -36,8 +38,26 @@ public final class MeetupTitleCell: UITableViewCell {
   
   private func prepareView() {
     selectionStyle = .none
+    prepareTitleLabel()
     prepareStartDateLabel()
     prepareEndDateLabel()
+  }
+  
+  private func prepareTitleLabel() {
+    titleLabel = UILabel()
+    titleLabel.font = MDCTypography.body1Font()
+    
+    contentView.addSubview(titleLabel)
+    
+    titleLabel.snp.makeConstraints { make in
+      make.centerY.equalTo(contentView)
+      make.left.equalTo(contentView).inset(5)
+    }
+    
+    title
+      .asObservable()
+      .bind(to: titleLabel.rx.text)
+      .disposed(by: disposeBag)
   }
   
   private func prepareStartDateLabel() {
@@ -48,7 +68,7 @@ public final class MeetupTitleCell: UITableViewCell {
     
     startDateLabel.snp.makeConstraints { make in
       make.top.equalTo(contentView.snp.top).offset(5)
-      make.centerX.equalTo(contentView)
+      make.right.equalTo(contentView).inset(5)
     }
     
     startDate
@@ -73,7 +93,7 @@ public final class MeetupTitleCell: UITableViewCell {
     
     endDateLabel.snp.makeConstraints { make in
       make.top.equalTo(startDateLabel.snp.bottom).offset(5)
-      make.centerX.equalTo(contentView)
+      make.right.equalTo(contentView).inset(5)
     }
     
     endDate

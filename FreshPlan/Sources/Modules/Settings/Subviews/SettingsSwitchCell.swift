@@ -25,6 +25,7 @@ public final class SettingsSwitchCell: UITableViewCell {
   // MARK: Conveinece operators
   public var isSwitchOn: Observable<Bool> {
     return switchView.rx.isOn
+      .changed
       .asObservable()
   }
   

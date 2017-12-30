@@ -128,6 +128,33 @@ public final class SettingsViewController: UIViewController {
     viewModel.modelSelected = tableView.rx.modelSelected(SettingsViewModel.SectionItem.self).asObservable()
     viewModel.bindButtons()
     
+    viewModel.switchSuccessAdd
+      .asObservable()
+      .filter { $0 }
+      .subscribe(onNext: { _ in
+        let message = MDCSnackbarMessage(text: "Linked Push Notifications to this account")
+        MDCSnackbarManager.show(message)
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel.switchSuccessAdd
+      .asObservable()
+      .filter { !$0 }
+      .subscribe(onNext: { _ in
+        let message = MDCSnackbarMessage(text: "There may be an existing account linked to this device for push notifications.")
+        MDCSnackbarManager.show(message)
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel.switchRemoveSuccess
+      .asObservable()
+      .filter { $0 }
+      .subscribe(onNext: { _ in
+        let message = MDCSnackbarMessage(text: "Removed Push Notifications")
+        MDCSnackbarManager.show(message)
+      })
+      .disposed(by: disposeBag)
+    
     viewModel.sendEmail
       .asObservable()
       .subscribe(onNext: { [weak self] email in

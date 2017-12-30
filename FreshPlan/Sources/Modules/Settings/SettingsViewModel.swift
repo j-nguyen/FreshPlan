@@ -19,6 +19,10 @@ public protocol SettingsViewModelProtocol {
   var switchSelected: Observable<Bool>! { get set }
   var canSendMail: PublishSubject<Void> { get }
   var sendEmail: PublishSubject<SettingsViewModel.Email> { get }
+  var switchSuccess: PublishSubject<Void> { get }
+  var switchRemove: PublishSubject<Void> { get }
+  var switchRemoveSuccess: PublishSubject<Bool> { get }
+  var switchSuccessAdd: PublishSubject<Bool> { get }
   
   func bindButtons()
   func bindCell()
@@ -31,6 +35,10 @@ public class SettingsViewModel: SettingsViewModelProtocol {
   
   public var canSendMail: PublishSubject<Void> = PublishSubject()
   public var sendEmail: PublishSubject<SettingsViewModel.Email> = PublishSubject()
+  public var switchSuccess: PublishSubject<Void> = PublishSubject()
+  public var switchRemove: PublishSubject<Void> = PublishSubject()
+  public var switchRemoveSuccess: PublishSubject<Bool> = PublishSubject()
+  public var switchSuccessAdd: PublishSubject<Bool> = PublishSubject()
   
   public var modelSelected: Observable<SettingsViewModel.SectionItem>!
   public var switchSelected: Observable<Bool>!
@@ -132,9 +140,36 @@ public class SettingsViewModel: SettingsViewModelProtocol {
   
   public func bindCell() {
     switchSelected
-      .subscribe(onNext: { isOn in
-        print(isOn)
+      .subscribe(onNext: { [weak self] isOn in
+        guard let this = self else { return }
+        if isOn {
+          OneSignal.promptForPushNotifications(userResponse: { accepted in
+            if accepted {
+              this.switchSuccess.on(.next(()))
+            }
+          })
+        } else {
+          // attempt to remove
+          this.switchRemove.on(.next(()))
+        }
       })
+      .disposed(by: disposeBag)
+    
+    switchSuccess
+      .asObservable()
+      .flatMap { _ in return Token.getJWT() }
+      .flatMap { [unowned self] id in return self.requestUpdateUser(userId: id, deviceToken: UserDefaults.standard.string(forKey: "deviceToken") ?? "") }
+      .map { $0.statusCode >= 200 && $0.statusCode <= 299 }
+      .ifEmpty(default: false)
+      .bind(to: switchSuccessAdd)
+      .disposed(by: disposeBag)
+    
+    switchRemove
+      .asObservable()
+      .flatMap { _ in return Token.getJWT() }
+      .flatMap { [unowned self] id in return self.requestUpdateUser(userId: id, deviceToken: "") }
+      .map { $0.statusCode >= 200 && $0.statusCode <= 299 }
+      .bind(to: switchRemoveSuccess)
       .disposed(by: disposeBag)
   }
   
