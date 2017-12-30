@@ -82,11 +82,12 @@ public final class ProfileUserHeaderCell: UITableViewCell {
 				if let image = cache.getImage(key: urlString as NSString) {
 					return image
 				} else {
-					let url = URL(string: urlString)!
-					let data = try? Data(contentsOf: url)
-					return UIImage(data: data!)
+					let url = URL(string: urlString)
+					let data = try? Data(contentsOf: url!)
+          return UIImage(data: data!)
 				}
 			}
+      .catchErrorJustComplete()
 			.observeOn(MainScheduler.instance)
 			.subscribe(onNext: { [weak self] image in
 				guard let this = self else { return }

@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxDataSources
+import RxSwiftExt
 import Moya
 import JWTDecode
 import UIKit
@@ -105,6 +106,7 @@ public class ProfileViewModel: ProfileViewModelProtocol {
       .flatMap { $0 }
       .toArray()
       .map { $0.sorted(by: { $0.order < $1.order }) }
+      .catchErrorJustReturn([])
       .bind(to: profileItems)
       .disposed(by: disposeBag)
   }
@@ -138,6 +140,7 @@ public class ProfileViewModel: ProfileViewModelProtocol {
           return nil
         }
       }
+      .catchErrorJustReturn(nil)
       .bind(to: acceptedFriendSuccess)
       .disposed(by: disposeBag)
   }

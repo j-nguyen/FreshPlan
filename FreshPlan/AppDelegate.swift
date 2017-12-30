@@ -23,31 +23,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSPermissionObserver, OSS
 		// set up the window size
 		window = UIWindow(frame: UIScreen.main.bounds)
 		guard let window = self.window else { fatalError("no window") }
-    // prepare fabric
-    prepareReachability()
     prepareFabric()
     prepareOneSignal(launchOptions)
 		// setup window to make sure
 		// check to make sure if token exists or not
     window.makeKeyAndVisible()
     window.backgroundColor = .white
-    window.rootViewController = OfflineViewController()
-//    if let _ = UserDefaults.standard.string(forKey: "token"), let jwt = Token.decodeJWT {
-//      if jwt.expired {
-//        let alertController = MDCAlertController(title: "Login Expired", message: "Your login credentials have expired. Please log back in.")
-//        let action = MDCAlertAction(title: "OK", handler: { _ in
-//          UserDefaults.standard.removeObject(forKey: "token")
-//        })
-//        alertController.addAction(action)
-//        window.rootViewController = LoginAssembler.make()
-//        window.rootViewController?.present(alertController, animated: true)
-//      } else {
-//        window.rootViewController = HomeAssembler.make()
-//      }
-//    } else {
-//      window.rootViewController = LoginAssembler.make()
-//    }
-		
+    if let _ = UserDefaults.standard.string(forKey: "token"), let jwt = Token.decodeJWT {
+      if jwt.expired {
+        let alertController = MDCAlertController(title: "Login Expired", message: "Your login credentials have expired. Please log back in.")
+        let action = MDCAlertAction(title: "OK", handler: { _ in
+          UserDefaults.standard.removeObject(forKey: "token")
+        })
+        alertController.addAction(action)
+        window.rootViewController = LoginAssembler.make()
+        window.rootViewController?.present(alertController, animated: true)
+      } else {
+        window.rootViewController = HomeAssembler.make()
+      }
+    } else {
+      window.rootViewController = LoginAssembler.make()
+    }
+    // check connection here
+    prepareReachability()
 		return true
 	}
   
@@ -120,8 +118,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSPermissionObserver, OSS
     
     if reachability.connection == .none {
       print("Network not reachable")
-    } else {
-      print ("Network is reachable")
+      // present the window
+      let alert = UIAlertController(
+        title: "No Network Connection",
+        message: "Please check in your settings to make sure you're connected to the internet",
+        preferredStyle: .alert
+      )
+      
+      let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+      
+      alert.addAction(action)
+      
+      window?.rootViewController?.present(alert, animated: true, completion: nil)
     }
   }
 
