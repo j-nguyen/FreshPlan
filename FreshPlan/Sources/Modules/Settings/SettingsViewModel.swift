@@ -9,24 +9,52 @@ import Foundation
 import RxSwift
 import RxDataSources
 import UIKit
+import Moya
+import OneSignal
 
 public protocol SettingsViewModelProtocol {
   var settings: Variable<[SettingsViewModel.Section]> { get }
+  var modelSelected: Observable<SettingsViewModel.SectionItem>! { get set }
   var canSendMail: PublishSubject<Void> { get }
 }
 
 public class SettingsViewModel: SettingsViewModelProtocol {
+  private let provider: MoyaProvider<FreshPlan>
+  
   public var settings: Variable<[SettingsViewModel.Section]> = Variable([])
+  
   public var canSendMail: PublishSubject<Void> = PublishSubject()
+  
+  public var modelSelected: Observable<SettingsViewModel.SectionItem>!
   
   private let disposeBag = DisposeBag()
   
-  public init() {
+  public init(provider: MoyaProvider<FreshPlan>) {
+    self.provider = provider
     setup()
   }
   
   private func setup() {
+    // MARK: User
+    let user = Token.getJWT()
+      .flatMap { [unowned self] id in return self.requestUser(userId: id) }
+      .share()
+    
+    let userSettings = user
+      .map { SectionItem.notifications(order: 0, title: "Push Notifications", enabled: $0.deviceToken != nil ? true : false) }
+      .map { Section.user(order: 0, title: "User Settings", items: [$0]) }
+    
     // MARK: Feedback
+    let report = Observable.just("Report a bug").map { SectionItem.report(order: 0, title: $0) }
+    let featureRequest = Observable.just("Suggestion & feature request").map { SectionItem.featureRequest(order: 1, title: $0) }
+    
+    let feedback = Observable.from([report, featureRequest])
+      .flatMap { $0 }
+      .toArray()
+      .map { $0.sorted(by: { $0.order < $1.order }) }
+      .map { Section.feedback(order: 1, title: "Feedback", items: $0) }
+    
+    // MARK: About
     let version = Observable.just(Bundle.main.releaseVersion)
       .filterNil()
       .map { SectionItem.version(order: 0, title: "Version", version: $0) }
@@ -42,24 +70,26 @@ public class SettingsViewModel: SettingsViewModelProtocol {
       .flatMap { $0 }
       .toArray()
       .map { $0.sorted(by: { $0.order < $1.order }) }
-      .map { Section.about(order: 0, title: "About", items: $0) }
+      .map { Section.about(order: 2, title: "About", items: $0) }
     
-    // MARK: About
-    let report = Observable.just("Report a bug").map { SectionItem.report(order: 0, title: $0) }
-    let featureRequest = Observable.just("Suggestion & feature request").map { SectionItem.featureRequest(order: 1, title: $0) }
+    // MARK: Setup Table
     
-    let feedback = Observable.from([report, featureRequest])
-      .flatMap { $0 }
-      .toArray()
-      .map { $0.sorted(by: { $0.order < $1.order }) }
-      .map { Section.feedback(order: 1, title: "Feedback", items: $0) }
-    
-    Observable.from([about, feedback])
+    Observable.from([userSettings, about, feedback])
       .flatMap { $0 }
       .toArray()
       .map { $0.sorted(by: { $0.order < $1.order }) }
       .bind(to: settings)
       .disposed(by: disposeBag)
+  }
+  
+  private func requestUser(userId id: Int) -> Observable<User> {
+    return provider.rx.request(.user(id))
+      .asObservable()
+      .map(User.self, using: JSONDecoder.Decode)
+  }
+  
+  private func requestUpdateUser(userId id: Int) -> Observable<Response> {
+    return provider.rx.request(.u)
   }
 }
 

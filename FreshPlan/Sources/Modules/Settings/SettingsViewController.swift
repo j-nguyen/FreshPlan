@@ -105,6 +105,8 @@ public final class SettingsViewController: UIViewController {
     }
     
     // only use this for mail calls
+    tableView.rx.modelSelected(SettingsViewModel.SectionItem.self).asObservable()
+    
     tableView.rx.modelSelected(SettingsViewModel.SectionItem.self)
       .asObservable()
       .subscribe(onNext: { [weak self] item in

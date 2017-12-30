@@ -13,6 +13,7 @@ public struct User: Decodable {
 	public let email: String
 	public let verified: Bool
 	public let displayName: String
+  public let deviceToken: String?
 	public let updatedAt: Date
 	public let profileURL: String
 	public let createdAt: Date
