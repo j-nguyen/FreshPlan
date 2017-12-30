@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxDataSources
+import UIKit
 
 public protocol SettingsViewModelProtocol {
   var settings: Variable<[SettingsViewModel.Section]> { get }
@@ -33,8 +34,11 @@ public class SettingsViewModel: SettingsViewModelProtocol {
     let build = Observable.just(Bundle.main.buildVersion)
       .filterNil()
       .map { SectionItem.build(order: 1, title: "Build Number", build: $0) }
-
-     let about = Observable.from([version, build])
+    
+    let licenses = Observable.just("Licenses we use")
+      .map { SectionItem.license(order: 2, title: $0) }
+    
+    let about = Observable.from([version, build, licenses])
       .flatMap { $0 }
       .toArray()
       .map { $0.sorted(by: { $0.order < $1.order }) }
@@ -70,6 +74,7 @@ extension SettingsViewModel {
     case build(order: Int, title: String, build: String)
     case report(order: Int, title: String)
     case featureRequest(order: Int, title: String)
+    case license(order: Int, title: String)
   }
 }
 
@@ -131,6 +136,8 @@ extension SettingsViewModel.SectionItem: Equatable {
       return order
     case let .version(order, _, _):
       return order
+    case let .license(order, _):
+      return order
     }
   }
   
@@ -143,6 +150,8 @@ extension SettingsViewModel.SectionItem: Equatable {
     case let .report(_, title):
       return title
     case let .version(_, title, _):
+      return title
+    case let .license(_, title):
       return title
     }
   }

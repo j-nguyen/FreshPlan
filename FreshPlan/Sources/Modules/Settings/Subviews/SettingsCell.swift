@@ -39,7 +39,7 @@ public final class SettingsCell: UITableViewCell {
   }
   
   private func prepareTitleLabel() {
-    textLabel?.font = MDCTypography.body1Font()
+    textLabel?.font = MDCTypography.titleFont()
     
     title
       .asObservable()

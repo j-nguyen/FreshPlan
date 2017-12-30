@@ -90,6 +90,9 @@ public final class SettingsViewController: UIViewController {
         case let .version(_, title, version):
           cell.title.on(.next(title))
           cell.subtitle.on(.next(version))
+        case let .license(_, title):
+          cell.title.on(.next(title))
+          cell.accessoryType = .disclosureIndicator
         case let .report(_, title):
           cell.title.on(.next(title))
         case let .featureRequest(_, title):
@@ -108,28 +111,37 @@ public final class SettingsViewController: UIViewController {
       .asObservable()
       .subscribe(onNext: { [weak self] item in
         guard let this = self else { return }
-        guard MFMailComposeViewController.canSendMail() else {
-          this.viewModel.canSendMail.on(.next(()))
-          return
-        }
         // check
         switch item {
         case .report:
-          let composeVC = MFMailComposeViewController()
-          composeVC.mailComposeDelegate = this
-          composeVC.setToRecipients(["johnny.nguyen39@stclairconnect.ca"])
-          composeVC.setCcRecipients(["allan.lin15@stclairconnect.ca"])
-          composeVC.setSubject("FreshPlan - Bug Report")
-          
-          this.present(composeVC, animated: true, completion: nil)
+          if !MFMailComposeViewController.canSendMail() {
+            this.viewModel.canSendMail.on(.next(()))
+          } else {
+            let composeVC = MFMailComposeViewController()
+            composeVC.mailComposeDelegate = this
+            composeVC.setToRecipients(["johnny.nguyen39@stclairconnect.ca"])
+            composeVC.setCcRecipients(["allan.lin15@stclairconnect.ca"])
+            composeVC.setSubject("FreshPlan - Bug Report")
+            
+            this.present(composeVC, animated: true, completion: nil)
+          }
         case .featureRequest:
-          let composeVC = MFMailComposeViewController()
-          composeVC.mailComposeDelegate = this
-          composeVC.setToRecipients(["johnny.nguyen39@stclairconnect.ca"])
-          composeVC.setCcRecipients(["allan.lin15@stclairconnect.ca"])
-          composeVC.setSubject("FreshPlan - Bug Report")
-          
-          this.present(composeVC, animated: true, completion: nil)
+          if !MFMailComposeViewController.canSendMail() {
+            this.viewModel.canSendMail.on(.next(()))
+          } else {
+            let composeVC = MFMailComposeViewController()
+            composeVC.mailComposeDelegate = this
+            composeVC.setToRecipients(["johnny.nguyen39@stclairconnect.ca"])
+            composeVC.setCcRecipients(["allan.lin15@stclairconnect.ca"])
+            composeVC.setSubject("FreshPlan - Bug Report")
+            
+            this.present(composeVC, animated: true, completion: nil)
+          }
+        case .license:
+          let url = URL(string: UIApplicationOpenSettingsURLString)
+          if UIApplication.shared.canOpenURL(url!) {
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+          }
         default:
           return
         }
