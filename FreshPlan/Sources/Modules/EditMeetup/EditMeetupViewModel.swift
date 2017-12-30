@@ -99,24 +99,27 @@ public class EditMeetupViewModel: EditMeetupViewModelProtocol {
     
     let meetup = Observable.just(meetupId)
       .flatMap { [unowned self] id in return self.requestMeetup(meetupId: id) }
+      .materialize()
       .share()
     
     meetup
+      .elements()
       .map { $0.meetupType.type }
       .bind(to: meetupType)
       .disposed(by: disposeBag)
     
     meetup
+      .elements()
       .map { $0.metadata }
       .bind(to: self.metadata)
       .disposed(by: disposeBag)
     
     // create the ones that we know are already there
-    let name = meetup.map { SectionItem.name(order: 0, label: "Meetup Name", placeholder: $0.title) }
-    let description = meetup.map { SectionItem.description(order: 1, label: "Enter in your description for your meetup name.", placeholder: $0.description) }
-    let startDate = meetup.map { SectionItem.startDate(order: 2, label: "Start Date", placeholder: $0.startDate) }
-    let endDate = meetup.map { SectionItem.endDate(order: 3, label: "End Date", placeholder: $0.endDate) }
-    let metadata = meetup.map { meetup -> SectionItem? in
+    let name = meetup.elements().map { SectionItem.name(order: 0, label: "Meetup Name", placeholder: $0.title) }
+    let description = meetup.elements().map { SectionItem.description(order: 1, label: "Enter in your description for your meetup name.", placeholder: $0.description) }
+    let startDate = meetup.elements().map { SectionItem.startDate(order: 2, label: "Start Date", placeholder: $0.startDate) }
+    let endDate = meetup.elements().map { SectionItem.endDate(order: 3, label: "End Date", placeholder: $0.endDate) }
+    let metadata = meetup.elements().map { meetup -> SectionItem? in
       if meetup.meetupType.type == MeetupType.Options.location.rawValue {
         return SectionItem.location(order: 4, label: "Location")
       } else {
@@ -138,6 +141,7 @@ public class EditMeetupViewModel: EditMeetupViewModelProtocol {
       .toArray()
       .map { $0.sorted(by: { $0.order < $1.order }) }
       .map { [Section(header: "", items: $0)] }
+      .catchErrorJustReturn([])
       .bind(to: meetupList)
       .disposed(by: disposeBag)
   }
