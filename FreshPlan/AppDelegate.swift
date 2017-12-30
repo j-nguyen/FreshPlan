@@ -17,7 +17,7 @@ import Reachability
 class AppDelegate: UIResponder, UIApplicationDelegate, OSPermissionObserver, OSSubscriptionObserver {
 
 	var window: UIWindow?
-  var reachability: Reachability?
+  let reachability = Reachability()!
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		// set up the window size
@@ -106,22 +106,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSPermissionObserver, OSS
   }
   
   private func prepareReachability() {
-    reachability = Reachability()
-    
-    // if it's reachable, don't show the Controller
-    reachability?.whenReachable = { reachability in
-      
+    NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged), name: .reachabilityChanged, object: reachability)
+    do{
+      try reachability.startNotifier()
+    }catch{
+      print("could not start reachability notifier")
     }
+  }
+  
+  @objc func reachabilityChanged(note: Notification) {
+    let reachability = note.object as! Reachability
     
-    // if unreachable, show the disconnect controller
-    reachability?.whenUnreachable = { _ in
-      print("Not reachable")
-    }
-    
-    do {
-      try reachability?.startNotifier()
-    } catch {
-      print("Unable to start notifier")
+    if reachability.connection == .none {
+      print("Network not reachable")
+    } else {
+      print ("Network is reachable")
     }
   }
 
