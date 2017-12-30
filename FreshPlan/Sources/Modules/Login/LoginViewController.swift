@@ -171,13 +171,13 @@ public class LoginViewController: UIViewController {
 			.bind(to: viewModel.password)
 			.disposed(by: disposeBag)
     
-    NotificationCenter.default.rx.notification(Notification.Name.UIKeyboardWillShow)
+    passwordField.rx.controlEvent(.editingDidBegin)
       .asObservable()
-      .filter { [unowned self] _ in return self.passwordField.isFirstResponder }
       .subscribe(onNext: { [weak self] _ in
         guard let this = self else { return }
-        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear], animations: { 
+        UIView.animate(withDuration: 0.2, delay: 0, options: [.curveLinear], animations: {
           this.bottomConstraint.update(offset: -150)
+          this.view.layoutIfNeeded()
         })
       })
       .disposed(by: disposeBag)
@@ -186,8 +186,9 @@ public class LoginViewController: UIViewController {
       .asObservable()
       .subscribe(onNext: { [weak self] _ in
         guard let this = self else { return }
-        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear], animations: {
+        UIView.animate(withDuration: 0.2, delay: 0, options: [.curveLinear], animations: {
           this.bottomConstraint.update(offset: 0)
+          this.view.layoutIfNeeded()
         })
       })
       .disposed(by: disposeBag)

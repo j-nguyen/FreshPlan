@@ -116,8 +116,9 @@ public class MeetupDetailViewController: UIViewController {
     dataSource = RxTableViewSectionedReloadDataSource<MeetupDetailViewModel.Section>(
       configureCell: { (dataSource, tableView, index, section) in
       switch dataSource[index] {
-      case let .title(_, startDate, endDate):
+      case let .title(_, host, startDate, endDate):
         let cell = tableView.dequeueCell(ofType: MeetupTitleCell.self, for: index)
+        cell.title.on(.next(host))
         cell.startDate.on(.next(startDate))
         cell.endDate.on(.next(endDate))
         return cell

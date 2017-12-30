@@ -35,10 +35,6 @@ public final class ProfileUserInfoCell: UITableViewCell {
 	public required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
-  
-  public override func prepareForReuse() {
-    super.prepareForReuse()
-  }
 	
 	private func prepareView() {
 		// set up the ink here

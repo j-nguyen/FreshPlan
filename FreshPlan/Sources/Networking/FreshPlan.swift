@@ -15,6 +15,7 @@ public enum FreshPlan {
 	case register(String, String, String, String?)
 	case verify(String, Int)
 	case user(Int)
+  case updateUserPushNotification(Int, String)
   case friends(Int)
   case friendSearch(String)
   case acceptFriend(Int, Int)
@@ -63,6 +64,8 @@ extension FreshPlan: TargetType {
       return "/users/\(userId)/friends/requests"
     case .friendRequest(let userId, let friendId):
       return "/users/\(userId)/friends/\(friendId)/requests"
+    case .updateUserPushNotification(let userId, _):
+      return "/users/\(userId)"
 		}
 	}
 	
@@ -73,7 +76,7 @@ extension FreshPlan: TargetType {
 			return .post
 		case .user, .friends, .friendSearch, .friendRequests, .friendRequest, .meetup, .getMeetup:
 			return .get
-    case .acceptFriend, .editMeetup:
+    case .acceptFriend, .editMeetup, .updateUserPushNotification:
       return .patch
     case .deleteMeetup:
       return .delete
@@ -141,6 +144,12 @@ extension FreshPlan: TargetType {
         ],
         encoding: JSONEncoding.default
       )
+    case let .updateUserPushNotification(_, deviceToken):
+      return .requestParameters(parameters: [
+          "deviceToken": deviceToken
+        ],
+        encoding: JSONEncoding.default
+      )
 		}
 	}
 	
@@ -153,7 +162,9 @@ extension FreshPlan: TargetType {
 		switch self {
 		case .login, .register, .verify, .resend:
 			return ["Content-Type": "application/json"]
-		case .user, .friends, .acceptFriend, .friendSearch, .sendFriendRequest, .friendRequest, .friendRequests, .meetup, .getMeetup, .deleteMeetup, .addMeetup, .editMeetup:
+		case .user, .friends, .acceptFriend, .friendSearch,
+         .sendFriendRequest, .friendRequest, .friendRequests,
+         .meetup, .getMeetup, .deleteMeetup, .addMeetup, .editMeetup, .updateUserPushNotification:
 			return ["Content-Type": "application/json", "Authorization": UserDefaults.standard.string(forKey: "token")!]
 		}
 	}

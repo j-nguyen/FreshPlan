@@ -74,7 +74,7 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
       .disposed(by: disposeBag)
     
     //MARK: Table Creation
-    let title = meetup.map { SectionItem.title(order: 0, startDate: $0.startDate, endDate: $0.endDate) }
+    let title = meetup.map { SectionItem.title(order: 0, host: "Host: \($0.user.displayName)", startDate: $0.startDate, endDate: $0.endDate) }
     let desc = meetup.map { SectionItem.desc(order: 1, description: $0.description) }
     
     // we're checking the type so we can dislpay accordingly on the SectionItem
@@ -146,7 +146,7 @@ extension MeetupDetailViewModel {
   }
   
   public enum SectionItem {
-    case title(order: Int, startDate: Date, endDate: Date)
+    case title(order: Int, host: String, startDate: Date, endDate: Date)
     case desc(order: Int, description: String)
     case location(order: Int, title: String, latitude: Double, longitude: Double)
     case directions(order: Int, text: String, latitude: Double, longitude: Double)
@@ -198,7 +198,7 @@ extension MeetupDetailViewModel.Section: SectionModelType {
 extension MeetupDetailViewModel.SectionItem: Equatable {
   public var order: Int {
     switch self {
-    case .title(let order, _, _):
+    case .title(let order, _, _, _):
       return order
     case .desc(let order, _):
       return order
