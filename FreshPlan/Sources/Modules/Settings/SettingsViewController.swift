@@ -70,6 +70,7 @@ public final class SettingsViewController: UIViewController {
     tableView.layoutMargins = UIEdgeInsets.zero
     tableView.separatorInset = UIEdgeInsets.zero
     tableView.registerCell(SettingsCell.self)
+    tableView.registerCell(SettingsSwitchCell.self)
     
     view.addSubview(tableView)
     
@@ -80,23 +81,36 @@ public final class SettingsViewController: UIViewController {
     // set up the data Soruce
     dataSource = RxTableViewSectionedReloadDataSource<SettingsViewModel.Section>(
       configureCell: { (dataSource, tableView, index, _) in
-        let cell = tableView.dequeueCell(ofType: SettingsCell.self, for: index)
         switch dataSource[index] {
         case let .build(_, title, build):
+          let cell = tableView.dequeueCell(ofType: SettingsCell.self, for: index)
           cell.title.on(.next(title))
           cell.subtitle.on(.next(build))
+          return cell
         case let .version(_, title, version):
+          let cell = tableView.dequeueCell(ofType: SettingsCell.self, for: index)
           cell.title.on(.next(title))
           cell.subtitle.on(.next(version))
+          return cell
         case let .license(_, title):
+          let cell = tableView.dequeueCell(ofType: SettingsCell.self, for: index)
           cell.title.on(.next(title))
           cell.accessoryType = .disclosureIndicator
+          return cell
         case let .report(_, title):
+          let cell = tableView.dequeueCell(ofType: SettingsCell.self, for: index)
           cell.title.on(.next(title))
+          return cell
         case let .featureRequest(_, title):
+          let cell = tableView.dequeueCell(ofType: SettingsCell.self, for: index)
           cell.title.on(.next(title))
+          return cell
+        case let .notifications(_, title, enabled):
+          let cell = tableView.dequeueCell(ofType: SettingsSwitchCell.self, for: index)
+          cell.title.on(.next(title))
+          cell.enabled.on(.next(enabled))
+          return cell
         }
-        return cell
       }
     )
     
@@ -104,47 +118,21 @@ public final class SettingsViewController: UIViewController {
       return dataSource[index].title
     }
     
-    // only use this for mail calls
-    tableView.rx.modelSelected(SettingsViewModel.SectionItem.self).asObservable()
+    // Bind the calls
+    viewModel.modelSelected = tableView.rx.modelSelected(SettingsViewModel.SectionItem.self).asObservable()
+    viewModel.bindButtons()
     
-    tableView.rx.modelSelected(SettingsViewModel.SectionItem.self)
+    viewModel.sendEmail
       .asObservable()
-      .subscribe(onNext: { [weak self] item in
+      .subscribe(onNext: { [weak self] email in
         guard let this = self else { return }
-        // check
-        switch item {
-        case .report:
-          if !MFMailComposeViewController.canSendMail() {
-            this.viewModel.canSendMail.on(.next(()))
-          } else {
-            let composeVC = MFMailComposeViewController()
-            composeVC.mailComposeDelegate = this
-            composeVC.setToRecipients(["johnny.nguyen39@stclairconnect.ca"])
-            composeVC.setCcRecipients(["allan.lin15@stclairconnect.ca"])
-            composeVC.setSubject("FreshPlan - Bug Report")
-            
-            this.present(composeVC, animated: true, completion: nil)
-          }
-        case .featureRequest:
-          if !MFMailComposeViewController.canSendMail() {
-            this.viewModel.canSendMail.on(.next(()))
-          } else {
-            let composeVC = MFMailComposeViewController()
-            composeVC.mailComposeDelegate = this
-            composeVC.setToRecipients(["johnny.nguyen39@stclairconnect.ca"])
-            composeVC.setCcRecipients(["allan.lin15@stclairconnect.ca"])
-            composeVC.setSubject("FreshPlan - Bug Report")
-            
-            this.present(composeVC, animated: true, completion: nil)
-          }
-        case .license:
-          let url = URL(string: UIApplicationOpenSettingsURLString)
-          if UIApplication.shared.canOpenURL(url!) {
-            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
-          }
-        default:
-          return
-        }
+        let composeVC = MFMailComposeViewController()
+        composeVC.mailComposeDelegate = this
+        composeVC.setToRecipients([email.recipient])
+        composeVC.setCcRecipients([email.cc])
+        composeVC.setSubject(email.subject)
+
+        this.present(composeVC, animated: true, completion: nil)
       })
       .disposed(by: disposeBag)
     

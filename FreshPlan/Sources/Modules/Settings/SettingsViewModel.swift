@@ -11,11 +11,15 @@ import RxDataSources
 import UIKit
 import Moya
 import OneSignal
+import MessageUI
 
 public protocol SettingsViewModelProtocol {
   var settings: Variable<[SettingsViewModel.Section]> { get }
   var modelSelected: Observable<SettingsViewModel.SectionItem>! { get set }
   var canSendMail: PublishSubject<Void> { get }
+  var sendEmail: PublishSubject<SettingsViewModel.Email> { get }
+  
+  func bindButtons()
 }
 
 public class SettingsViewModel: SettingsViewModelProtocol {
@@ -24,6 +28,7 @@ public class SettingsViewModel: SettingsViewModelProtocol {
   public var settings: Variable<[SettingsViewModel.Section]> = Variable([])
   
   public var canSendMail: PublishSubject<Void> = PublishSubject()
+  public var sendEmail: PublishSubject<SettingsViewModel.Email> = PublishSubject()
   
   public var modelSelected: Observable<SettingsViewModel.SectionItem>!
   
@@ -82,14 +87,55 @@ public class SettingsViewModel: SettingsViewModelProtocol {
       .disposed(by: disposeBag)
   }
   
+  public func bindButtons() {
+    modelSelected
+      .subscribe(onNext: { [weak self] item in
+        guard let this = self else { return }
+        // check
+        switch item {
+        case .report:
+          if !MFMailComposeViewController.canSendMail() {
+            this.canSendMail.on(.next(()))
+          } else {
+            let email = Email(
+              recipient: "johnny.nguyen39@stclairconnect.ca",
+              cc: "allan.lin15@stclairconnect.ca",
+              subject: "FreshPlan - Bug Report"
+            )
+            this.sendEmail.on(.next(email))
+          }
+        case .featureRequest:
+          if !MFMailComposeViewController.canSendMail() {
+            this.canSendMail.on(.next(()))
+          } else {
+            let email = Email(
+              recipient: "johnny.nguyen39@stclairconnect.ca",
+              cc: "allan.lin15@stclairconnect.ca",
+              subject: "FreshPlan - Feature Request"
+            )
+            this.sendEmail.on(.next(email))
+          }
+        case .license:
+          let url = URL(string: UIApplicationOpenSettingsURLString)
+          if UIApplication.shared.canOpenURL(url!) {
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+          }
+        default:
+          return
+        }
+      })
+      .disposed(by: disposeBag)
+  }
+  
   private func requestUser(userId id: Int) -> Observable<User> {
     return provider.rx.request(.user(id))
       .asObservable()
       .map(User.self, using: JSONDecoder.Decode)
   }
   
-  private func requestUpdateUser(userId id: Int) -> Observable<Response> {
-    return provider.rx.request(.u)
+  private func requestUpdateUser(userId id: Int, deviceToken: String) -> Observable<Response> {
+    return provider.rx.request(.updateUserPushNotification(id, deviceToken))
+      .asObservable()
   }
 }
 
@@ -107,6 +153,12 @@ extension SettingsViewModel {
     case featureRequest(order: Int, title: String)
     case license(order: Int, title: String)
     case notifications(order: Int, title: String, enabled: Bool)
+  }
+  
+  public struct Email {
+    public let recipient: String
+    public let cc: String
+    public let subject: String
   }
 }
 
