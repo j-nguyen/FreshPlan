@@ -89,11 +89,30 @@ public final class MeetupInviteCell: UITableViewCell {
       make.centerY.equalTo(contentView)
     }
     
-    accepted
-      .asObservable()
+    let sharedAccepted = accepted.asObservable().share()
+    
+    sharedAccepted
       .filter { $0 }
-      .map { _ -> UIImage? in return UIImage(named: "ic_done")?.withRenderingMode(.alwaysTemplate) }
+      .map { _ -> UIImage? in return UIImage(named: "ic_thumb_up")?.withRenderingMode(.alwaysTemplate) }
       .bind(to: acceptedImageView.rx.image)
+      .disposed(by: disposeBag)
+    
+    sharedAccepted
+      .filter { $0 }
+      .map { _ -> UIColor in return MDCPalette.green.tint400 }
+      .bind(to: acceptedImageView.rx.tintColor)
+      .disposed(by: disposeBag)
+    
+    sharedAccepted
+      .filter { !$0 }
+      .map { _ -> UIImage? in return UIImage(named: "ic_thumb_down")?.withRenderingMode(.alwaysTemplate) }
+      .bind(to: acceptedImageView.rx.image)
+      .disposed(by: disposeBag)
+    
+    sharedAccepted
+      .filter { !$0 }
+      .map { _ -> UIColor in return MDCPalette.red.tint400 }
+      .bind(to: acceptedImageView.rx.tintColor)
       .disposed(by: disposeBag)
   }
   

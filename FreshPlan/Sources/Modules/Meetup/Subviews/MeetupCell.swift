@@ -41,6 +41,7 @@ public final class MeetupCell: UITableViewCell {
   
   private func prepareView() {
     selectionStyle = .none
+    accessoryType = .disclosureIndicator
     prepareImageView()
     prepareNameLabel()
     prepareDateLabel()

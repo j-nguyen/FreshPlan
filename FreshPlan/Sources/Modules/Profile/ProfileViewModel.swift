@@ -38,10 +38,14 @@ public class ProfileViewModel: ProfileViewModelProtocol {
     
     refreshContent
       .asObservable()
+      .do(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.refreshSuccess.on(.next(true))
+      })
       .subscribe(onNext: { [weak self] in
         guard let this = self else { return }
         this.setupFriends()
-        this.refreshSuccess.on(.next(true))
+        this.setupFriendRequest()
       })
       .disposed(by: disposeBag)
     

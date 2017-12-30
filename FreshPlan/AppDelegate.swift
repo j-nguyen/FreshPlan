@@ -94,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSPermissionObserver, OSS
   }
   
   private func prepareFabric() {
-    #if (arch(i386) || arch(x86_64)) && os(iOS)
+    #if DEBUG
       print ("Skipping Crashalytics")
     #else
       print ("~~~~*** Starting Fabrics Crashalytics ***~~~~~")

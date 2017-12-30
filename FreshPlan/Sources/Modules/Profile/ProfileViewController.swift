@@ -18,13 +18,13 @@ public final class ProfileViewController: UIViewController {
   private var router: ProfileRouter!
   
   // MARK: AppBar
-  fileprivate let appBar: MDCAppBar = MDCAppBar()
+  private let appBar: MDCAppBar = MDCAppBar()
   
   // MARK: DisposeBag
   private let disposeBag: DisposeBag = DisposeBag()
   
   // MARK: TableView
-  private var profileTableView: UITableView!
+  private var tableView: UITableView!
   private var refreshControl: UIRefreshControl!
   fileprivate var dataSource: RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>!
   
@@ -65,7 +65,7 @@ public final class ProfileViewController: UIViewController {
   
   private func prepareView() {
     prepareRefreshControl()
-    prepareProfileTableView()
+    prepareTableView()
     prepareNavigationBar()
     prepareNavigationSearchButton()
     prepareNavigationLogoutButton()
@@ -145,7 +145,7 @@ public final class ProfileViewController: UIViewController {
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor: UIColor.white ]
     
-    appBar.headerViewController.headerView.trackingScrollView = profileTableView
+    appBar.headerViewController.headerView.trackingScrollView = tableView
     
     Observable.just("Profile")
       .bind(to: navigationItem.rx.title)
@@ -154,20 +154,23 @@ public final class ProfileViewController: UIViewController {
     appBar.navigationBar.observe(navigationItem)
   }
   
-  private func prepareProfileTableView() {
-    profileTableView = UITableView()
-    profileTableView.estimatedRowHeight = 44
-    profileTableView.separatorStyle = .singleLine
-    profileTableView.separatorInset = .zero
-    profileTableView.layoutMargins = .zero
-    profileTableView.refreshControl = refreshControl
-    profileTableView.rx.setDelegate(self).disposed(by: disposeBag)
-    profileTableView.registerCell(ProfileUserHeaderCell.self)
-    profileTableView.registerCell(ProfileUserInfoCell.self)
+  private func prepareTableView() {
+    tableView = UITableView()
+    tableView.refreshControl = refreshControl
+    tableView.estimatedRowHeight = 44
+    tableView.separatorStyle = .singleLine
+    tableView.separatorInset = .zero
+    tableView.layoutMargins = .zero
+    tableView.rx.setDelegate(self).disposed(by: disposeBag)
+    tableView.registerCell(ProfileUserHeaderCell.self)
+    tableView.registerCell(ProfileUserInfoCell.self)
+    tableView.registerCell(ProfileFriendCell.self)
     
-    view.addSubview(profileTableView)
+    view.addSubview(tableView)
     
-    profileTableView.snp.makeConstraints { $0.edges.equalTo(view) }
+    tableView.snp.makeConstraints { make in
+      make.edges.equalTo(view)
+    }
     
     // set up data sources
     dataSource = RxTableViewSectionedReloadDataSource<ProfileViewModel.SectionModel>(
@@ -188,14 +191,14 @@ public final class ProfileViewController: UIViewController {
           cell.title.on(.next(title))
           cell.info.on(.next(description))
           return cell
-        case let .friend(_, displayName):
-          let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
-          cell.textLabel?.text = displayName
-          return cell
         case let .joined(_, title, description):
           let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
           cell.title.on(.next(title))
           cell.info.on(.next(description))
+          return cell
+        case let .friend(_, displayName):
+          let cell = table.dequeueCell(ofType: ProfileFriendCell.self, for: index)
+          cell.title.on(.next(displayName))
           return cell
         }
     })
@@ -209,11 +212,15 @@ public final class ProfileViewController: UIViewController {
       }
     }
     
+    dataSource.titleForHeaderInSection = { dataSource, index in
+      return index == 0 ? "" : dataSource[index].title
+    }
+    
     dataSource.rowAnimation = .automatic
     
     viewModel.profileItems
       .asObservable()
-      .bind(to: profileTableView.rx.items(dataSource: dataSource))
+      .bind(to: tableView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
     
     viewModel.acceptedFriendSuccess
@@ -225,7 +232,7 @@ public final class ProfileViewController: UIViewController {
       })
       .disposed(by: disposeBag)
     
-    profileTableView.rx.itemSelected
+    tableView.rx.itemSelected
       .asObservable()
       .subscribe(onNext: { [weak self] index in
         if let this = self {
@@ -251,22 +258,6 @@ public final class ProfileViewController: UIViewController {
 
 // MARK:  UIScrollViewDelegate
 extension ProfileViewController: UITableViewDelegate {
-  
-  public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    switch dataSource.sectionModels[section] {
-    case let .friends(_, title, _):
-      let friendView = ProfileUserHeaderView()
-      friendView.title.on(.next(title))
-      return friendView
-    case let .friendRequests(_, title, _):
-      let friendView = ProfileUserHeaderView()
-      friendView.title.on(.next(title))
-      return friendView
-    default:
-      return nil
-    }
-  }
-  
   public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
     switch dataSource.sectionModels[indexPath.section] {
     case .friendRequests:
@@ -285,33 +276,12 @@ extension ProfileViewController: UITableViewDelegate {
     }
   }
   
-  public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    switch dataSource.sectionModels[section] {
-    case .friends, .friendRequests:
-      return 40
-    default:
-      return 0
-    }
-  }
-  
   public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     switch dataSource[indexPath] {
     case .profile:
       return 70
     default:
       return UITableViewAutomaticDimension
-    }
-  }
-  
-  public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidScroll()
-    }
-  }
-  
-  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    if scrollView == appBar.headerViewController.headerView.trackingScrollView {
-      appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
     }
   }
 }
