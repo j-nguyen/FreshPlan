@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MessageUI
 import RxSwift
 import SnapKit
 import RxDataSources
@@ -102,6 +103,46 @@ public final class SettingsViewController: UIViewController {
       return dataSource[index].title
     }
     
+    // only use this for mail calls
+    tableView.rx.modelSelected(SettingsViewModel.SectionItem.self)
+      .asObservable()
+      .subscribe(onNext: { [weak self] item in
+        guard let this = self else { return }
+        guard MFMailComposeViewController.canSendMail() else {
+          this.viewModel.canSendMail.on(.next(()))
+          return
+        }
+        // check
+        switch item {
+        case .report:
+          let composeVC = MFMailComposeViewController()
+          composeVC.mailComposeDelegate = this
+          composeVC.setToRecipients(["johnny.nguyen39@stclairconnect.ca"])
+          composeVC.setCcRecipients(["allan.lin15@stclairconnect.ca"])
+          composeVC.setSubject("FreshPlan - Bug Report")
+          
+          this.present(composeVC, animated: true, completion: nil)
+        case .featureRequest:
+          let composeVC = MFMailComposeViewController()
+          composeVC.mailComposeDelegate = this
+          composeVC.setToRecipients(["johnny.nguyen39@stclairconnect.ca"])
+          composeVC.setCcRecipients(["allan.lin15@stclairconnect.ca"])
+          composeVC.setSubject("FreshPlan - Bug Report")
+          
+          this.present(composeVC, animated: true, completion: nil)
+        default:
+          return
+        }
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel.canSendMail
+      .subscribe(onNext: {
+        let message = MDCSnackbarMessage(text: "Can't open mail!")
+        MDCSnackbarManager.show(message)
+      })
+      .disposed(by: disposeBag)
+    
     viewModel.settings
       .asObservable()
       .bind(to: tableView.rx.items(dataSource: dataSource))
@@ -125,5 +166,20 @@ public final class SettingsViewController: UIViewController {
   
   deinit {
     appBar.navigationBar.unobserveNavigationItem()
+  }
+}
+
+extension SettingsViewController: MFMailComposeViewControllerDelegate {
+  public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+    // let's check our result
+    if result == .sent {
+      let message = MDCSnackbarMessage(text: "Successfully sent email message to the developers!")
+      MDCSnackbarManager.show(message)
+    } else if result == .failed || result == .cancelled {
+      let message = MDCSnackbarMessage(text: "Could not send mail! Are you connected to the internet?")
+      MDCSnackbarManager.show(message)
+    }
+    
+    controller.dismiss(animated: true, completion: nil)
   }
 }

@@ -11,10 +11,12 @@ import RxDataSources
 
 public protocol SettingsViewModelProtocol {
   var settings: Variable<[SettingsViewModel.Section]> { get }
+  var canSendMail: PublishSubject<Void> { get }
 }
 
 public class SettingsViewModel: SettingsViewModelProtocol {
   public var settings: Variable<[SettingsViewModel.Section]> = Variable([])
+  public var canSendMail: PublishSubject<Void> = PublishSubject()
   
   private let disposeBag = DisposeBag()
   
