@@ -23,8 +23,9 @@ public final class SettingsSwitchCell: UITableViewCell {
   private var switchView: UISwitch!
   
   // MARK: Conveinece operators
-  public var isSwitchOn: ControlProperty<Bool> {
+  public var isSwitchOn: Observable<Bool> {
     return switchView.rx.isOn
+      .asObservable()
   }
   
   private let disposeBag = DisposeBag()

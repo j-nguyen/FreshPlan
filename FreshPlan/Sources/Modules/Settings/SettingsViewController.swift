@@ -80,7 +80,9 @@ public final class SettingsViewController: UIViewController {
     
     // set up the data Soruce
     dataSource = RxTableViewSectionedReloadDataSource<SettingsViewModel.Section>(
-      configureCell: { (dataSource, tableView, index, _) in
+      configureCell: { [weak self] (dataSource, tableView, index, _) in
+        guard let this = self else { fatalError() }
+        
         switch dataSource[index] {
         case let .build(_, title, build):
           let cell = tableView.dequeueCell(ofType: SettingsCell.self, for: index)
@@ -109,6 +111,10 @@ public final class SettingsViewController: UIViewController {
           let cell = tableView.dequeueCell(ofType: SettingsSwitchCell.self, for: index)
           cell.title.on(.next(title))
           cell.enabled.on(.next(enabled))
+          
+          this.viewModel.switchSelected = cell.isSwitchOn
+          this.viewModel.bindCell()
+          
           return cell
         }
       }

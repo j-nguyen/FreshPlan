@@ -16,10 +16,12 @@ import MessageUI
 public protocol SettingsViewModelProtocol {
   var settings: Variable<[SettingsViewModel.Section]> { get }
   var modelSelected: Observable<SettingsViewModel.SectionItem>! { get set }
+  var switchSelected: Observable<Bool>! { get set }
   var canSendMail: PublishSubject<Void> { get }
   var sendEmail: PublishSubject<SettingsViewModel.Email> { get }
   
   func bindButtons()
+  func bindCell()
 }
 
 public class SettingsViewModel: SettingsViewModelProtocol {
@@ -31,6 +33,7 @@ public class SettingsViewModel: SettingsViewModelProtocol {
   public var sendEmail: PublishSubject<SettingsViewModel.Email> = PublishSubject()
   
   public var modelSelected: Observable<SettingsViewModel.SectionItem>!
+  public var switchSelected: Observable<Bool>!
   
   private let disposeBag = DisposeBag()
   
@@ -123,6 +126,14 @@ public class SettingsViewModel: SettingsViewModelProtocol {
         default:
           return
         }
+      })
+      .disposed(by: disposeBag)
+  }
+  
+  public func bindCell() {
+    switchSelected
+      .subscribe(onNext: { isOn in
+        print(isOn)
       })
       .disposed(by: disposeBag)
   }
