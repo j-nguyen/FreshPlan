@@ -70,6 +70,7 @@ public final class SettingsViewController: UIViewController {
     tableView = UITableView(frame: .zero, style: .grouped)
     tableView.layoutMargins = UIEdgeInsets.zero
     tableView.separatorInset = UIEdgeInsets.zero
+    tableView.registerCell(SettingsCell.self)
     
     view.addSubview(tableView)
     
@@ -80,11 +81,31 @@ public final class SettingsViewController: UIViewController {
     // set up the data Soruce
     dataSource = RxTableViewSectionedReloadDataSource<SettingsViewModel.Section>(
       configureCell: { (dataSource, tableView, index, _) in
+        let cell = tableView.dequeueCell(ofType: SettingsCell.self, for: index)
         switch dataSource[index] {
-//          case .
+        case let .build(_, title, build):
+          cell.title.on(.next(title))
+          cell.subtitle.on(.next(build))
+        case let .version(_, title, version):
+          cell.title.on(.next(title))
+          cell.subtitle.on(.next(version))
+        case let .report(_, title):
+          cell.title.on(.next(title))
+        case let .featureRequest(_, title):
+          cell.title.on(.next(title))
         }
+        return cell
       }
     )
+    
+    dataSource.titleForHeaderInSection = { dataSource, index in
+      return dataSource[index].title
+    }
+    
+    viewModel.settings
+      .asObservable()
+      .bind(to: tableView.rx.items(dataSource: dataSource))
+      .disposed(by: disposeBag)
   }
   
   private func prepareNavigationBar() {
