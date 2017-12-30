@@ -160,7 +160,6 @@ public class SettingsViewModel: SettingsViewModelProtocol {
       .flatMap { _ in return Token.getJWT() }
       .flatMap { [unowned self] id in return self.requestUpdateUser(userId: id, deviceToken: UserDefaults.standard.string(forKey: "deviceToken") ?? "") }
       .map { $0.statusCode >= 200 && $0.statusCode <= 299 }
-      .ifEmpty(default: false)
       .bind(to: switchSuccessAdd)
       .disposed(by: disposeBag)
     

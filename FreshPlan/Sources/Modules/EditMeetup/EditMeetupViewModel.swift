@@ -106,6 +106,11 @@ public class EditMeetupViewModel: EditMeetupViewModelProtocol {
       .bind(to: meetupType)
       .disposed(by: disposeBag)
     
+    meetup
+      .map { $0.metadata }
+      .bind(to: self.metadata)
+      .disposed(by: disposeBag)
+    
     // create the ones that we know are already there
     let name = meetup.map { SectionItem.name(order: 0, label: "Meetup Name", placeholder: $0.title) }
     let description = meetup.map { SectionItem.description(order: 1, label: "Enter in your description for your meetup name.", placeholder: $0.description) }
