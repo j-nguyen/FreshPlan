@@ -31,21 +31,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSPermissionObserver, OSS
 		// check to make sure if token exists or not
     window.makeKeyAndVisible()
     window.backgroundColor = .white
-		if let _ = UserDefaults.standard.string(forKey: "token"), let jwt = Token.decodeJWT {
-      if jwt.expired {
-        let alertController = MDCAlertController(title: "Login Expired", message: "Your login credentials have expired. Please log back in.")
-        let action = MDCAlertAction(title: "OK", handler: { _ in
-          UserDefaults.standard.removeObject(forKey: "token")
-        })
-        alertController.addAction(action)
-        window.rootViewController = LoginAssembler.make()
-        window.rootViewController?.present(alertController, animated: true)
-      } else {
-        window.rootViewController = HomeAssembler.make()
-      }
-		} else {
-			window.rootViewController = LoginAssembler.make()
-		}
+    window.rootViewController = OfflineViewController()
+//    if let _ = UserDefaults.standard.string(forKey: "token"), let jwt = Token.decodeJWT {
+//      if jwt.expired {
+//        let alertController = MDCAlertController(title: "Login Expired", message: "Your login credentials have expired. Please log back in.")
+//        let action = MDCAlertAction(title: "OK", handler: { _ in
+//          UserDefaults.standard.removeObject(forKey: "token")
+//        })
+//        alertController.addAction(action)
+//        window.rootViewController = LoginAssembler.make()
+//        window.rootViewController?.present(alertController, animated: true)
+//      } else {
+//        window.rootViewController = HomeAssembler.make()
+//      }
+//    } else {
+//      window.rootViewController = LoginAssembler.make()
+//    }
 		
 		return true
 	}

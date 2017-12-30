@@ -77,6 +77,7 @@
 		409A55351F86B0D200EB29A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409A55341F86B0D200EB29A4 /* AppDelegate.swift */; };
 		409A553C1F86B0D200EB29A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 409A553B1F86B0D200EB29A4 /* Assets.xcassets */; };
 		409A553F1F86B0D200EB29A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 409A553D1F86B0D200EB29A4 /* LaunchScreen.storyboard */; };
+		409AFEB31FF8108600AB6C9E /* OfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409AFEB21FF8108600AB6C9E /* OfflineViewController.swift */; };
 		409B2BEF1FBE6192000A7F16 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BEE1FBE6192000A7F16 /* ProfileViewController.swift */; };
 		409B2BF11FBE619B000A7F16 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BF01FBE619B000A7F16 /* ProfileViewModel.swift */; };
 		409B2BF31FBE61F5000A7F16 /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 409B2BF21FBE61F5000A7F16 /* ProfileRouter.swift */; };
@@ -215,6 +216,7 @@
 		409A553B1F86B0D200EB29A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		409A553E1F86B0D200EB29A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		409A55401F86B0D200EB29A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		409AFEB21FF8108600AB6C9E /* OfflineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineViewController.swift; sourceTree = "<group>"; };
 		409B2BEE1FBE6192000A7F16 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		409B2BF01FBE619B000A7F16 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		409B2BF21FBE61F5000A7F16 /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 		40426D051F86B7EE00875179 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				409AFEB11FF8107A00AB6C9E /* Offline */,
 				4081B6241FF5F70F00302315 /* Settings */,
 				4083BCD11FEE0D54007D9B87 /* Location */,
 				4071F8F51FDB00E4001B77A1 /* Friend */,
@@ -585,6 +588,14 @@
 				409B2BF61FBE63DF000A7F16 /* Resources */,
 			);
 			path = FreshPlan;
+			sourceTree = "<group>";
+		};
+		409AFEB11FF8107A00AB6C9E /* Offline */ = {
+			isa = PBXGroup;
+			children = (
+				409AFEB21FF8108600AB6C9E /* OfflineViewController.swift */,
+			);
+			path = Offline;
 			sourceTree = "<group>";
 		};
 		409B2BED1FBE6129000A7F16 /* Profile */ = {
@@ -944,6 +955,7 @@
 			files = (
 				40B4782C1FEC50B00033DFFF /* MeetupLocationCell.swift in Sources */,
 				405C5A9A1F8D94FA00AC8F9F /* HomeAssembler.swift in Sources */,
+				409AFEB31FF8108600AB6C9E /* OfflineViewController.swift in Sources */,
 				4056A4F31FD4BDB4006415A7 /* EmptyView.swift in Sources */,
 				408D082E1F8D267A006BCA8E /* RegisterViewController.swift in Sources */,
 				4081B6261FF5F71B00302315 /* SettingsViewController.swift in Sources */,
