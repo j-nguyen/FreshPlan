@@ -12,8 +12,7 @@ import UIKit
 public final class SettingsAssembler {
   public static func make() -> UIViewController {
     let viewModel = SettingsViewModel()
-    let router = SettingsRouter()
     
-    return SettingsViewController(viewModel: viewModel, router: router)
+    return SettingsViewController(viewModel: viewModel)
   }
 }

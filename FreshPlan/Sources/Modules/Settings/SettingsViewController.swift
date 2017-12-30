@@ -17,7 +17,6 @@ import MaterialComponents
 public final class SettingsViewController: UIViewController {
   // MARK: Properties
   private var viewModel: SettingsViewModelProtocol!
-  private var router: SettingsRouter!
   
   // MARK: Views
   private var tableView: UITableView!
@@ -29,10 +28,9 @@ public final class SettingsViewController: UIViewController {
   
   private let disposeBag: DisposeBag = DisposeBag()
   
-  public convenience init(viewModel: SettingsViewModel, router: SettingsRouter) {
+  public convenience init(viewModel: SettingsViewModel) {
     self.init(nibName: nil, bundle: nil)
     self.viewModel = viewModel
-    self.router = router
     
     addChildViewController(appBar.headerViewController)
   }

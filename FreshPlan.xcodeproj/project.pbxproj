@@ -55,7 +55,6 @@
 		4081B6261FF5F71B00302315 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4081B6251FF5F71B00302315 /* SettingsViewController.swift */; };
 		4081B6281FF5F73E00302315 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4081B6271FF5F73E00302315 /* SettingsViewModel.swift */; };
 		4081B62A1FF5F75800302315 /* SettingsAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4081B6291FF5F75800302315 /* SettingsAssembler.swift */; };
-		4081B62C1FF5F79100302315 /* SettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4081B62B1FF5F79100302315 /* SettingsRouter.swift */; };
 		4081B62E1FF6044300302315 /* ProfileFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4081B62D1FF6044300302315 /* ProfileFriendCell.swift */; };
 		4083BCD31FEE0D5F007D9B87 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCD21FEE0D5F007D9B87 /* LocationViewController.swift */; };
 		4083BCD51FEE0D9B007D9B87 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4083BCD41FEE0D9B007D9B87 /* LocationViewModel.swift */; };
@@ -192,7 +191,6 @@
 		4081B6251FF5F71B00302315 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		4081B6271FF5F73E00302315 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewModel.swift; path = /Users/johnnynguyen/Documents/Projects/FreshPlan/FreshPlan/Sources/Modules/Settings/SettingsViewModel.swift; sourceTree = "<absolute>"; };
 		4081B6291FF5F75800302315 /* SettingsAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAssembler.swift; sourceTree = "<group>"; };
-		4081B62B1FF5F79100302315 /* SettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRouter.swift; sourceTree = "<group>"; };
 		4081B62D1FF6044300302315 /* ProfileFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFriendCell.swift; sourceTree = "<group>"; };
 		4083BCD21FEE0D5F007D9B87 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		4083BCD41FEE0D9B007D9B87 /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
@@ -508,7 +506,6 @@
 			children = (
 				4081B6251FF5F71B00302315 /* SettingsViewController.swift */,
 				4081B6271FF5F73E00302315 /* SettingsViewModel.swift */,
-				4081B62B1FF5F79100302315 /* SettingsRouter.swift */,
 				4081B6291FF5F75800302315 /* SettingsAssembler.swift */,
 				40A48B741FF75FA9002FEB28 /* Subviews */,
 			);
@@ -1016,7 +1013,6 @@
 				4071F8F71FDB00F3001B77A1 /* FriendViewController.swift in Sources */,
 				402D931C1FEF6F9D008E268A /* EditMeetupViewController.swift in Sources */,
 				402D93291FEF842C008E268A /* EditMeetupDateCell.swift in Sources */,
-				4081B62C1FF5F79100302315 /* SettingsRouter.swift in Sources */,
 				408D08301F8D2716006BCA8E /* RegisterRouter.swift in Sources */,
 				409A55351F86B0D200EB29A4 /* AppDelegate.swift in Sources */,
 				4083BCD71FEE0DB4007D9B87 /* LocationAssembler.swift in Sources */,

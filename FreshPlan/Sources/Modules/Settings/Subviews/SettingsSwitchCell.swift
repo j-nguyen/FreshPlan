@@ -13,7 +13,8 @@ import RxSwift
 import MaterialComponents
 
 public final class SettingsSwitchCell: UITableViewCell {
-  // MARK: Subject
+  // MARK: Subjects
+  public var title: PublishSubject<String> = PublishSubject()
   public var enabled: PublishSubject<Bool> = PublishSubject()
   
   // MARK: Views
@@ -32,6 +33,15 @@ public final class SettingsSwitchCell: UITableViewCell {
   }
   
   private func prepareView() {
+    prepareTitleLabel()
+    prepareSwitchView()
+  }
+  
+  private func prepareTitleLabel() {
+    
+  }
+  
+  private func prepareSwitchView() {
     
   }
 }

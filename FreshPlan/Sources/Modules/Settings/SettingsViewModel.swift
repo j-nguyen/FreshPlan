@@ -67,6 +67,7 @@ extension SettingsViewModel {
   public enum Section {
     case about(order: Int, title: String, items: [SectionItem])
     case feedback(order: Int, title: String, items: [SectionItem])
+    case user(order: Int, title: String, items: [SectionItem])
   }
   
   public enum SectionItem {
@@ -75,6 +76,7 @@ extension SettingsViewModel {
     case report(order: Int, title: String)
     case featureRequest(order: Int, title: String)
     case license(order: Int, title: String)
+    case notifications(order: Int, title: String, enabled: Bool)
   }
 }
 
@@ -87,6 +89,8 @@ extension SettingsViewModel.Section: SectionModelType {
       return order
     case let .feedback(order, _, _):
       return order
+    case let .user(order, _, _):
+      return order
     }
   }
   
@@ -95,6 +99,8 @@ extension SettingsViewModel.Section: SectionModelType {
     case let .about(_, title, _):
       return title
     case let .feedback(_, title, _):
+      return title
+    case let .user(_, title, _):
       return title
     }
   }
@@ -105,6 +111,8 @@ extension SettingsViewModel.Section: SectionModelType {
       return items.map { $0 }
     case let .feedback(_, _, items):
       return items.map { $0 }
+    case let .user(_, _, items):
+      return items.map { $0 }
     }
   }
   
@@ -114,6 +122,8 @@ extension SettingsViewModel.Section: SectionModelType {
       self = .about(order: order, title: title, items: items)
     case let .feedback(order, title, _):
       self = .feedback(order: order, title: title, items: items)
+    case let .user(order, title, _):
+      self = .user(order: order, title: title, items: items)
     }
   }
 }
@@ -138,6 +148,8 @@ extension SettingsViewModel.SectionItem: Equatable {
       return order
     case let .license(order, _):
       return order
+    case let .notifications(order, _, _):
+      return order
     }
   }
   
@@ -152,6 +164,8 @@ extension SettingsViewModel.SectionItem: Equatable {
     case let .version(_, title, _):
       return title
     case let .license(_, title):
+      return title
+    case let .notifications(_, title, _):
       return title
     }
   }
