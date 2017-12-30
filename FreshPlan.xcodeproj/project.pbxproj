@@ -90,6 +90,7 @@
 		40A48B761FF75FBB002FEB28 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A48B751FF75FBB002FEB28 /* SettingsCell.swift */; };
 		40A48B781FF76198002FEB28 /* Bundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A48B771FF76198002FEB28 /* Bundle+.swift */; };
 		40A48B7A1FF768EA002FEB28 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 40A48B791FF768EA002FEB28 /* Settings.bundle */; };
+		40A48B7E1FF77026002FEB28 /* SettingsSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A48B7D1FF77026002FEB28 /* SettingsSwitchCell.swift */; };
 		40AD4A7B1FECD08300AC2AB3 /* AddMeetupAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD4A7A1FECD08300AC2AB3 /* AddMeetupAssembler.swift */; };
 		40AD4A7D1FECD08D00AC2AB3 /* AddMeetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD4A7C1FECD08D00AC2AB3 /* AddMeetupViewController.swift */; };
 		40AD4A7F1FECD09900AC2AB3 /* AddMeetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD4A7E1FECD09900AC2AB3 /* AddMeetupViewModel.swift */; };
@@ -230,6 +231,7 @@
 		40A48B751FF75FBB002FEB28 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		40A48B771FF76198002FEB28 /* Bundle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+.swift"; sourceTree = "<group>"; };
 		40A48B791FF768EA002FEB28 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = FreshPlan/Settings.bundle; sourceTree = SOURCE_ROOT; };
+		40A48B7D1FF77026002FEB28 /* SettingsSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSwitchCell.swift; sourceTree = "<group>"; };
 		40AD4A7A1FECD08300AC2AB3 /* AddMeetupAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupAssembler.swift; sourceTree = "<group>"; };
 		40AD4A7C1FECD08D00AC2AB3 /* AddMeetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupViewController.swift; sourceTree = "<group>"; };
 		40AD4A7E1FECD09900AC2AB3 /* AddMeetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupViewModel.swift; sourceTree = "<group>"; };
@@ -622,6 +624,7 @@
 			isa = PBXGroup;
 			children = (
 				40A48B751FF75FBB002FEB28 /* SettingsCell.swift */,
+				40A48B7D1FF77026002FEB28 /* SettingsSwitchCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -1008,6 +1011,7 @@
 				40F8C6D81FED5DE40040D334 /* AddMeetupTextFieldCell.swift in Sources */,
 				4079B14E1FC4763B007E9407 /* UILabel+.swift in Sources */,
 				40AD4A7B1FECD08300AC2AB3 /* AddMeetupAssembler.swift in Sources */,
+				40A48B7E1FF77026002FEB28 /* SettingsSwitchCell.swift in Sources */,
 				402D93201FEF7CBA008E268A /* EditMeetupRouter.swift in Sources */,
 				4071F8F71FDB00F3001B77A1 /* FriendViewController.swift in Sources */,
 				402D931C1FEF6F9D008E268A /* EditMeetupViewController.swift in Sources */,
