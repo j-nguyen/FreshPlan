@@ -89,6 +89,7 @@
 		40A311361F9EF503000FAFEB /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A311351F9EF503000FAFEB /* Token.swift */; };
 		40A48B761FF75FBB002FEB28 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A48B751FF75FBB002FEB28 /* SettingsCell.swift */; };
 		40A48B781FF76198002FEB28 /* Bundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A48B771FF76198002FEB28 /* Bundle+.swift */; };
+		40A48B7A1FF768EA002FEB28 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 40A48B791FF768EA002FEB28 /* Settings.bundle */; };
 		40AD4A7B1FECD08300AC2AB3 /* AddMeetupAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD4A7A1FECD08300AC2AB3 /* AddMeetupAssembler.swift */; };
 		40AD4A7D1FECD08D00AC2AB3 /* AddMeetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD4A7C1FECD08D00AC2AB3 /* AddMeetupViewController.swift */; };
 		40AD4A7F1FECD09900AC2AB3 /* AddMeetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD4A7E1FECD09900AC2AB3 /* AddMeetupViewModel.swift */; };
@@ -228,6 +229,7 @@
 		40A311351F9EF503000FAFEB /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		40A48B751FF75FBB002FEB28 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		40A48B771FF76198002FEB28 /* Bundle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+.swift"; sourceTree = "<group>"; };
+		40A48B791FF768EA002FEB28 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = FreshPlan/Settings.bundle; sourceTree = SOURCE_ROOT; };
 		40AD4A7A1FECD08300AC2AB3 /* AddMeetupAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupAssembler.swift; sourceTree = "<group>"; };
 		40AD4A7C1FECD08D00AC2AB3 /* AddMeetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupViewController.swift; sourceTree = "<group>"; };
 		40AD4A7E1FECD09900AC2AB3 /* AddMeetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupViewModel.swift; sourceTree = "<group>"; };
@@ -576,6 +578,7 @@
 		409A55331F86B0D200EB29A4 /* FreshPlan */ = {
 			isa = PBXGroup;
 			children = (
+				40A48B791FF768EA002FEB28 /* Settings.bundle */,
 				40A0DB191FF0A72D0059B020 /* FreshPlan.entitlements */,
 				409A55341F86B0D200EB29A4 /* AppDelegate.swift */,
 				409A553D1F86B0D200EB29A4 /* LaunchScreen.storyboard */,
@@ -783,6 +786,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				409A553F1F86B0D200EB29A4 /* LaunchScreen.storyboard in Resources */,
+				40A48B7A1FF768EA002FEB28 /* Settings.bundle in Resources */,
 				409A553C1F86B0D200EB29A4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
