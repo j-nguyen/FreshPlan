@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import RxSwift
 import SnapKit
+import RxDataSources
 import MaterialComponents
 
 public final class SettingsViewController: UIViewController {
@@ -19,6 +20,7 @@ public final class SettingsViewController: UIViewController {
   
   // MARK: Views
   private var tableView: UITableView!
+  private var dataSource: RxTableViewSectionedReloadDataSource<SettingsViewModel.Section>!
   
   //MARK: AppBar
   private let appBar: MDCAppBar = MDCAppBar()
@@ -74,6 +76,15 @@ public final class SettingsViewController: UIViewController {
     tableView.snp.makeConstraints { make in
       make.edges.equalTo(view)
     }
+    
+    // set up the data Soruce
+    dataSource = RxTableViewSectionedReloadDataSource<SettingsViewModel.Section>(
+      configureCell: { (dataSource, tableView, index, _) in
+        switch dataSource[index] {
+          
+        }
+      }
+    )
   }
   
   private func prepareNavigationBar() {

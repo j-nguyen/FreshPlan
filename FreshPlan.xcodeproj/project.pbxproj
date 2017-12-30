@@ -87,6 +87,7 @@
 		40A0DB211FF0A8980059B020 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A0DB201FF0A8980059B020 /* NotificationService.swift */; };
 		40A0DB251FF0A8980059B020 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 40A0DB1E1FF0A8980059B020 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		40A311361F9EF503000FAFEB /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A311351F9EF503000FAFEB /* Token.swift */; };
+		40A48B761FF75FBB002FEB28 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A48B751FF75FBB002FEB28 /* SettingsCell.swift */; };
 		40AD4A7B1FECD08300AC2AB3 /* AddMeetupAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD4A7A1FECD08300AC2AB3 /* AddMeetupAssembler.swift */; };
 		40AD4A7D1FECD08D00AC2AB3 /* AddMeetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD4A7C1FECD08D00AC2AB3 /* AddMeetupViewController.swift */; };
 		40AD4A7F1FECD09900AC2AB3 /* AddMeetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AD4A7E1FECD09900AC2AB3 /* AddMeetupViewModel.swift */; };
@@ -224,6 +225,7 @@
 		40A0DB201FF0A8980059B020 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		40A0DB221FF0A8980059B020 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		40A311351F9EF503000FAFEB /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		40A48B751FF75FBB002FEB28 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		40AD4A7A1FECD08300AC2AB3 /* AddMeetupAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupAssembler.swift; sourceTree = "<group>"; };
 		40AD4A7C1FECD08D00AC2AB3 /* AddMeetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupViewController.swift; sourceTree = "<group>"; };
 		40AD4A7E1FECD09900AC2AB3 /* AddMeetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupViewModel.swift; sourceTree = "<group>"; };
@@ -501,6 +503,7 @@
 				4081B6271FF5F73E00302315 /* SettingsViewModel.swift */,
 				4081B62B1FF5F79100302315 /* SettingsRouter.swift */,
 				4081B6291FF5F75800302315 /* SettingsAssembler.swift */,
+				40A48B741FF75FA9002FEB28 /* Subviews */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -607,6 +610,14 @@
 				40A0DB221FF0A8980059B020 /* Info.plist */,
 			);
 			path = OneSignalNotificationServiceExtension;
+			sourceTree = "<group>";
+		};
+		40A48B741FF75FA9002FEB28 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				40A48B751FF75FBB002FEB28 /* SettingsCell.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		40AD4A791FECCB6D00AC2AB3 /* AddMeetup */ = {
@@ -946,6 +957,7 @@
 				4045A2991FE603C00059482E /* MeetupCell.swift in Sources */,
 				40BD70141F910FFA005B3B9D /* MeetupRouter.swift in Sources */,
 				4071F94D1FDCAF430061C34E /* FriendProfileCell.swift in Sources */,
+				40A48B761FF75FBB002FEB28 /* SettingsCell.swift in Sources */,
 				402D931E1FEF6FA6008E268A /* EditMeetupAssembler.swift in Sources */,
 				40BF713F1FDC73DC00495B81 /* AddFriendRouter.swift in Sources */,
 				409B2BF11FBE619B000A7F16 /* ProfileViewModel.swift in Sources */,

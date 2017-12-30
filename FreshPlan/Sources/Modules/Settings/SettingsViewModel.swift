@@ -10,11 +10,15 @@ import RxSwift
 import RxDataSources
 
 public protocol SettingsViewModelProtocol {
-  
+  var settings: Variable<[SettingsViewModel.Section]> { get }
 }
 
 public class SettingsViewModel: SettingsViewModelProtocol {
+  public var settings: Variable<[SettingsViewModel.Section]> = Variable([])
   
+  public init() {
+    
+  }
 }
 
 extension SettingsViewModel {
