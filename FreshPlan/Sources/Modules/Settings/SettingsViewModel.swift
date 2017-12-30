@@ -16,8 +16,44 @@ public protocol SettingsViewModelProtocol {
 public class SettingsViewModel: SettingsViewModelProtocol {
   public var settings: Variable<[SettingsViewModel.Section]> = Variable([])
   
+  private let disposeBag = DisposeBag()
+  
   public init() {
+    setup()
+  }
+  
+  private func setup() {
+    // MARK: Feedback
+    let version = Observable.just(Bundle.main.releaseVersion)
+      .filterNil()
+      .map { SectionItem.version(order: 0, title: "Version", version: $0) }
     
+    let build = Observable.just(Bundle.main.buildVersion)
+      .filterNil()
+      .map { SectionItem.build(order: 1, title: "Build Number", build: $0) }
+
+     let about = Observable.from([version, build])
+      .flatMap { $0 }
+      .toArray()
+      .map { $0.sorted(by: { $0.order < $1.order }) }
+      .map { Section.about(order: 0, title: "About", items: $0) }
+    
+    // MARK: About
+    let report = Observable.just("Report a bug").map { SectionItem.report(order: 0, title: $0) }
+    let featureRequest = Observable.just("Suggestion & feature request").map { SectionItem.featureRequest(order: 1, title: $0) }
+    
+    let feedback = Observable.from([report, featureRequest])
+      .flatMap { $0 }
+      .toArray()
+      .map { $0.sorted(by: { $0.order < $1.order }) }
+      .map { Section.feedback(order: 1, title: "Feedback", items: $0) }
+    
+    Observable.from([about, feedback])
+      .flatMap { $0 }
+      .toArray()
+      .map { $0.sorted(by: { $0.order < $1.order }) }
+      .bind(to: settings)
+      .disposed(by: disposeBag)
   }
 }
 

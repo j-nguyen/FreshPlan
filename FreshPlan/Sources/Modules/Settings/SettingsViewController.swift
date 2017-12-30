@@ -81,7 +81,7 @@ public final class SettingsViewController: UIViewController {
     dataSource = RxTableViewSectionedReloadDataSource<SettingsViewModel.Section>(
       configureCell: { (dataSource, tableView, index, _) in
         switch dataSource[index] {
-          
+//          case .
         }
       }
     )
