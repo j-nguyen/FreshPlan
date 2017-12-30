@@ -117,7 +117,7 @@ public class RegisterViewModel: RegisterViewModelProtocol {
   }
   
   private func registerRequest(displayName: String, email: String, password: String) -> Observable<Response> {
-    return self.provider.rx.request(.register(displayName, email, password))
+    return self.provider.rx.request(.register(displayName, email, password, UserDefaults.standard.string(forKey: "deviceToken")))
       .asObservable()
   }
 }

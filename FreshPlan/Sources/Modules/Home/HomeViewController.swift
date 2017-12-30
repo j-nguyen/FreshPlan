@@ -9,13 +9,8 @@
 import UIKit
 
 public final class HomeViewController: UITabBarController {
-	public var viewModel: HomeViewModelProtocol!
-	public var router: HomeRouter!
-	
-	public convenience init(viewModel: HomeViewModel, router: HomeRouter) {
+	public convenience init() {
 		self.init(nibName: nil, bundle: nil)
-		self.viewModel = viewModel
-		self.router = router
 	}
 	
 	public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

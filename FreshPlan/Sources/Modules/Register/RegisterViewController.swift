@@ -112,7 +112,7 @@ public final class RegisterViewController: UIViewController {
     )
     
     loginInLabel.attributedText = mutableString
-    loginInLabel.font = MDCTypography.titleFont()
+    loginInLabel.font = MDCTypography.subheadFont()
     loginInLabel.isUserInteractionEnabled = true
     
     view.addSubview(loginInLabel)
@@ -246,17 +246,17 @@ public final class RegisterViewController: UIViewController {
       .asObservable()
       .subscribe(onNext: { [weak self] in
         guard let this = self else { return }
-        UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseOut], animations: {
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear], animations: {
           this.bottomConstraint.update(offset: -100)
         })
       })
       .disposed(by: disposeBag)
     
-    NotificationCenter.default.rx.notification(Notification.Name.UIKeyboardDidHide)
+    NotificationCenter.default.rx.notification(Notification.Name.UIKeyboardWillHide)
       .asObservable()
       .subscribe(onNext: { [weak self] _ in
         guard let this = self else { return }
-        UIView.animate(withDuration: 0.2, delay: 0, options: [.curveLinear], animations: {
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear], animations: {
           this.bottomConstraint.update(offset: 0)
         })
       })

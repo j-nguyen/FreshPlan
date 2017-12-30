@@ -6,16 +6,19 @@
 //  Copyright © 2017 St Clair College. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import MaterialComponents
 import RxSwift
+import RxDataSources
 import SnapKit
 
 public final class InviteViewController: UIViewController {
     // MARK: ViewModel
     private var viewModel: InviteViewModelProtocol!
     private var router: InviteRouter!
+  
+  // MARKa: dataSource
+  fileprivate var dataSource: RxTableViewSectionedAnimatedDataSource<InviteViewModel.Section>!
     
     // MARK: AppBar
     fileprivate var appBar: MDCAppBar = MDCAppBar()
@@ -62,21 +65,33 @@ public final class InviteViewController: UIViewController {
     }
     
     public func prepareView() {
-        prepareTableView()
+      prepareTableView()
       prepareEmptyInviteView()
-        prepareNavigationBar()
-        appBar.addSubviewsToParent()
+      prepareNavigationBar()
+      appBar.addSubviewsToParent()
+      
+      dataSource = RxTableViewSectionedAnimatedDataSource(
+        configureCell: { dataSource, tableView, index, model in
+          let cell = tableView.dequeueCell(ofType: InviteCell.self, for: index)
+          return cell
+      }
+      )
+      
+      dataSource.canEditRowAtIndexPath = { _, _ in
+        return true
+      }
     }
-    
+  
+  // TableView
     private func prepareTableView() {
-        tableView = UITableView()
-        tableView.estimatedRowHeight = 44
-        tableView.rowHeight = UITableViewAutomaticDimension
+      tableView = UITableView()
+      tableView.estimatedRowHeight = 44
+      tableView.rowHeight = UITableViewAutomaticDimension
       tableView.rx.setDelegate(self).disposed(by: disposeBag)
       tableView.registerCell(InviteCell.self)
         
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints{ $0.edges.equalTo(view) }
+      view.addSubview(tableView)
+      tableView.snp.makeConstraints{ $0.edges.equalTo(view) }
       
       viewModel.invitations
         .asObservable()
@@ -88,6 +103,7 @@ public final class InviteViewController: UIViewController {
       .disposed(by: disposeBag)
     }
   
+  // EmptyInviteView
   private func prepareEmptyInviteView() {
     emptyInviteView = EmptyInvitationView()
     
@@ -140,5 +156,6 @@ extension InviteViewController: UITableViewDelegate {
             appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
         }
     }
+
 }
 
