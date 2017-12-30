@@ -39,7 +39,7 @@ public final class ProfileFriendCell: UITableViewCell {
   
   private func prepareTitleLabel() {
     titleLabel = UILabel()
-    titleLabel.font = MDCTypography.body1Font()
+    titleLabel.font = MDCTypography.subheadFont()
     
     contentView.addSubview(titleLabel)
     
