@@ -235,7 +235,7 @@ public final class EditMeetupViewController: UIViewController {
     
     appBar.headerViewController.headerView.trackingScrollView = tableView
     
-    Observable.just("Add Meetup")
+    Observable.just("Edit Meetup")
       .bind(to: navigationItem.rx.title)
       .disposed(by: disposeBag)
     
