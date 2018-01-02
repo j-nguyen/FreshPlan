@@ -97,7 +97,7 @@ public final class EditMeetupViewController: UIViewController {
     
     dataSource = RxTableViewSectionedReloadDataSource(
       configureCell: { [weak self] dataSource, tableView, index, model in
-        guard let this = self else { fatalError() }
+        guard let this = self else { return UITableViewCell() }
         
         switch dataSource[index] {
         case let .name(_, label, placeholder):
@@ -235,7 +235,7 @@ public final class EditMeetupViewController: UIViewController {
     
     appBar.headerViewController.headerView.trackingScrollView = tableView
     
-    Observable.just("Add Meetup")
+    Observable.just("Edit Meetup")
       .bind(to: navigationItem.rx.title)
       .disposed(by: disposeBag)
     

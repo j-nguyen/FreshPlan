@@ -11,24 +11,25 @@ import MaterialComponents
 import Fabric
 import Crashlytics
 import OneSignal
+import Reachability
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, OSPermissionObserver, OSSubscriptionObserver {
 
 	var window: UIWindow?
+  let reachability = Reachability()!
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		// set up the window size
 		window = UIWindow(frame: UIScreen.main.bounds)
 		guard let window = self.window else { fatalError("no window") }
-    // prepare fabric
     prepareFabric()
     prepareOneSignal(launchOptions)
 		// setup window to make sure
 		// check to make sure if token exists or not
     window.makeKeyAndVisible()
     window.backgroundColor = .white
-		if let _ = UserDefaults.standard.string(forKey: "token"), let jwt = Token.decodeJWT {
+    if let _ = UserDefaults.standard.string(forKey: "token"), let jwt = Token.decodeJWT {
       if jwt.expired {
         let alertController = MDCAlertController(title: "Login Expired", message: "Your login credentials have expired. Please log back in.")
         let action = MDCAlertAction(title: "OK", handler: { _ in
@@ -40,10 +41,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSPermissionObserver, OSS
       } else {
         window.rootViewController = HomeAssembler.make()
       }
-		} else {
-			window.rootViewController = LoginAssembler.make()
-		}
-		
+    } else {
+      window.rootViewController = LoginAssembler.make()
+    }
+    // check connection here
+    prepareReachability()
 		return true
 	}
   
@@ -70,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSPermissionObserver, OSS
   }
   
   // Add this new method
-  internal func onOSPermissionChanged(_ stateChanges: OSPermissionStateChanges!) {
+  public func onOSPermissionChanged(_ stateChanges: OSPermissionStateChanges!) {
     // Example of detecting answering the permission prompt
     if stateChanges.from.status == OSNotificationPermission.notDetermined {
       if stateChanges.to.status == OSNotificationPermission.authorized {
@@ -85,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSPermissionObserver, OSS
   
   // Add this new method
   // sets up the notificatino for us
-  internal func onOSSubscriptionChanged(_ stateChanges: OSSubscriptionStateChanges!) {
+  public func onOSSubscriptionChanged(_ stateChanges: OSSubscriptionStateChanges!) {
     if !stateChanges.from.subscribed && stateChanges.to.subscribed {
       print("Subscribed for OneSignal push notifications!")
       // get player ID
@@ -100,6 +102,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate, OSPermissionObserver, OSS
       print ("~~~~*** Starting Fabrics Crashalytics ***~~~~~")
       Fabric.with([Crashlytics.self])
     #endif
+  }
+  
+  private func prepareReachability() {
+    NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged), name: .reachabilityChanged, object: reachability)
+    do{
+      try reachability.startNotifier()
+    }catch{
+      print("could not start reachability notifier")
+    }
+  }
+  
+  @objc func reachabilityChanged(note: Notification) {
+    let reachability = note.object as! Reachability
+    
+    if reachability.connection == .none {
+      print("Network not reachable")
+      // present the window
+      let alert = UIAlertController(
+        title: "No Network Connection",
+        message: "Please check in your settings to make sure you're connected to the internet",
+        preferredStyle: .alert
+      )
+      
+      let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+      
+      alert.addAction(action)
+      
+      window?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
   }
 
 	func applicationWillResignActive(_ application: UIApplication) {

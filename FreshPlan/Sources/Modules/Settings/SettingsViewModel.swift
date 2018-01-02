@@ -54,9 +54,11 @@ public class SettingsViewModel: SettingsViewModelProtocol {
     // MARK: User
     let user = Token.getJWT()
       .flatMap { [unowned self] id in return self.requestUser(userId: id) }
+      .materialize()
       .share()
     
     let userSettings = user
+      .elements()
       .map { SectionItem.notifications(order: 0, title: "Push Notifications", enabled: $0.deviceToken != nil ? true : false) }
       .map { Section.user(order: 0, title: "User Settings", items: [$0]) }
     
