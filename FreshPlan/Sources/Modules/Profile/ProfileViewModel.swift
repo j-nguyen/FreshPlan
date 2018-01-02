@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxDataSources
+import RxSwiftExt
 import Moya
 import JWTDecode
 import UIKit
@@ -59,52 +60,55 @@ public class ProfileViewModel: ProfileViewModelProtocol {
     let user = token
       .flatMap { self.requestUser(userId: $0) }
       .map(User.self, using: JSONDecoder.Decode)
+      .materialize()
       .share()
     
-    let profile = user.map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: $0.displayName) }
-    let email = user.map { SectionItem.email(order: 1, title: "Email:", description: $0.email) }
+    let profile = user.elements().map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: $0.displayName) }
+    let email = user.elements().map { SectionItem.email(order: 1, title: "Email:", description: $0.email) }
     let createdAt = user
+      .elements()
       .map { user -> SectionItem in
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd hh:mm:ss"
         let date = df.string(from: user.createdAt)
         return SectionItem.joined(order: 2, title: "Last Joined:", description: date)
     }
-    
+
     let profileSection = Observable.from([profile, email, createdAt])
       .flatMap { $0 }
       .toArray()
       .map { $0.sorted(by: { $0.order < $1.order }) }
       .map { SectionModel.profile(order: 0, title: "My Profile", items: $0) }
-    
+
     // MARK: Friends Setup
     let friendsList = token
       .flatMap { self.requestFriends(userId: $0) }
       .map([User].self, using: JSONDecoder.Decode)
       .catchErrorJustReturn([])
-    
+
     let friendRequests = token
       .flatMap { self.requestFriendRequests(userId: $0) }
       .map([Friend].self, using: JSONDecoder.Decode)
       .catchErrorJustReturn([])
       .map { $0.filter { !$0.accepted } }
-    
+
     let friendsSection = friendsList
       .map { friends -> [SectionItem] in
         return friends.map { SectionItem.friend(id: $0.id, displayName: $0.displayName) }
       }
       .map { SectionModel.friends(order: 1, title: "My Friends", items: $0) }
-    
+
     let friendRequestsSection = friendRequests
       .map { friends -> [SectionItem] in
         return friends.map { SectionItem.friend(id: $0.id, displayName: $0.displayName) }
       }
       .map { SectionModel.friendRequests(order: 2, title: "My Friend Requests", items: $0) }
-    
+
     Observable.from([profileSection, friendsSection, friendRequestsSection])
       .flatMap { $0 }
       .toArray()
       .map { $0.sorted(by: { $0.order < $1.order }) }
+      .catchErrorJustReturn([])
       .bind(to: profileItems)
       .disposed(by: disposeBag)
   }

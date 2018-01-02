@@ -16,6 +16,7 @@ target 'FreshPlan' do
   pod 'MaterialComponents', '~> 42.0.0'
   pod 'Fabric'
   pod 'Crashlytics'
+  pod 'ReachabilitySwift'
 end
 
 target 'OneSignalNotificationServiceExtension' do

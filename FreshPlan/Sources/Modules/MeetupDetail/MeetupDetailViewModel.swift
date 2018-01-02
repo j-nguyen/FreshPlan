@@ -66,19 +66,21 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
 
   private func setup() {
     let meetup = requestMeetup(meetupId: meetupId)
+      .materialize()
       .share()
     
     meetup
+      .elements()
       .map { $0.title }
       .bind(to: self.title)
       .disposed(by: disposeBag)
     
     //MARK: Table Creation
-    let title = meetup.map { SectionItem.title(order: 0, host: "Host: \($0.user.displayName)", startDate: $0.startDate, endDate: $0.endDate) }
-    let desc = meetup.map { SectionItem.desc(order: 1, description: $0.description) }
+    let title = meetup.elements().map { SectionItem.title(order: 0, host: "Host: \($0.user.displayName)", startDate: $0.startDate, endDate: $0.endDate) }
+    let desc = meetup.elements().map { SectionItem.desc(order: 1, description: $0.description) }
     
     // we're checking the type so we can dislpay accordingly on the SectionItem
-    let type = meetup.map { meetup -> SectionItem? in
+    let type = meetup.elements().map { meetup -> SectionItem? in
       // convert to a json data format
       if meetup.metadata.isNotEmpty, let data = meetup.metadata.data(using: .utf8) {
         if meetup.meetupType.type == MeetupType.Options.location.rawValue {
@@ -94,7 +96,7 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
       .filterNil()
     
     // this is bad and kind of rushed but it's ok
-    let directions = Observable.zip(Observable.just("Get Directions"), meetup)
+    let directions = Observable.zip(Observable.just("Get Directions"), meetup.elements())
       .map { content -> SectionItem? in
         if content.1.metadata.isNotEmpty, content.1.meetupType.type == MeetupType.Options.location.rawValue, let data = content.1.metadata.data(using: .utf8) {
           let metadata = try JSONDecoder().decode(Location.self, from: data)
@@ -114,6 +116,7 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
     
     //MARK: Invitations
     let invitationSection = meetup
+      .elements()
       .map { $0.invitations }
       .map { invitations -> [SectionItem] in
         return invitations.enumerated().map { (index, invite) -> SectionItem in
