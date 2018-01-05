@@ -73,34 +73,48 @@ public final class InviteViewController: UIViewController {
       dataSource = RxTableViewSectionedAnimatedDataSource(
         configureCell: { dataSource, tableView, index, model in
           let cell = tableView.dequeueCell(ofType: InviteCell.self, for: index)
+          cell.meetupName.on(.next(dataSource[index].meetupName))
+          cell.inviter.on(.next(dataSource[index].inviter.displayName))
+          cell.startDate.on(.next(dataSource[index].meetupStartDate))
+          cell.endDate.on(.next(dataSource[index].meetupEndDate))
           return cell
-      }
+        }
       )
+      
+      dataSource.animationConfiguration = AnimationConfiguration(insertAnimation: .automatic, reloadAnimation: .automatic, deleteAnimation: .automatic)
       
       dataSource.canEditRowAtIndexPath = { _, _ in
         return true
       }
+      
+      
+      
+      viewModel.invitations
+        .asObservable()
+        .bind(to: tableView.rx.items(dataSource: dataSource))
+        .disposed(by: disposeBag)
+      
     }
   
   // TableView
     private func prepareTableView() {
       tableView = UITableView()
       tableView.estimatedRowHeight = 44
-      tableView.rowHeight = UITableViewAutomaticDimension
+      tableView.rowHeight = 80
       tableView.rx.setDelegate(self).disposed(by: disposeBag)
       tableView.registerCell(InviteCell.self)
         
       view.addSubview(tableView)
       tableView.snp.makeConstraints{ $0.edges.equalTo(view) }
       
-      viewModel.invitations
-        .asObservable()
-        .bind(to: tableView.rx.items(cellIdentifier: String(describing: InviteCell.self))) { (index, invite, cell) in
-        cell.textLabel?.text = invite.inviter.displayName
-          cell.detailTextLabel?.text = invite.inviter.email
-          
-      }
-      .disposed(by: disposeBag)
+//      viewModel.invitations
+//        .asObservable()
+//        .bind(to: tableView.rx.items(cellIdentifier: String(describing: InviteCell.self))) { (index, invite, cell) in
+//        cell.textLabel?.text = invite.inviter.displayName
+//          cell.detailTextLabel?.text = invite.inviter.email
+//
+//      }
+//      .disposed(by: disposeBag)
     }
   
   // EmptyInviteView

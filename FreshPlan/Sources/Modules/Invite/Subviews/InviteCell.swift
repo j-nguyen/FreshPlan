@@ -18,7 +18,7 @@ public class InviteCell: UITableViewCell {
   
   // MARK: PublishSubject
   public var inviter: PublishSubject<String> = PublishSubject()
-  public var meetupName: PublishSubject<Date> = PublishSubject()
+  public var meetupName: PublishSubject<String> = PublishSubject()
   public var startDate: PublishSubject<Date> = PublishSubject()
   public var endDate: PublishSubject<Date> = PublishSubject()
   
@@ -52,6 +52,10 @@ public class InviteCell: UITableViewCell {
   private func prepareView() {
     // remove the selection style
     selectionStyle = .none
+    prepareInviteImageView()
+    prepareMeetupNameLabel()
+    prepareInviterLabel()
+    prepapreDateLabel()
     prepareInkView()
     
   }
@@ -95,20 +99,20 @@ public class InviteCell: UITableViewCell {
   }
   
   //
-  public func prepareMeetUpNameLabel() {
+  public func prepareMeetupNameLabel() {
     meetUpNameLabel = UILabel()
     meetUpNameLabel.font = MDCTypography.subheadFont()
     
     contentView.addSubview(meetUpNameLabel)
     
-    inviterLabel.snp.makeConstraints { make in
-      make.left.equalTo(inviteImageView.snp.right).offset(20)
-      make.top.equalTo(contentView).offset(40)
+    meetUpNameLabel.snp.makeConstraints { make in
+      make.left.equalTo(inviteImageView.snp.right).offset(10)
+      make.top.equalTo(contentView).offset(20)
     }
     
-    inviter
+    meetupName
       .asObserver()
-      .bind(to: inviterLabel.rx.text)
+      .bind(to: meetUpNameLabel.rx.text)
       .disposed(by: disposeBag)
   }
   
@@ -120,7 +124,7 @@ public class InviteCell: UITableViewCell {
     contentView.addSubview(inviterLabel)
     
     inviterLabel.snp.makeConstraints { make in
-      make.left.equalTo(inviteImageView.snp.right).offset(10)
+      make.left.equalTo(inviteImageView.snp.right).offset(200)
       make.top.equalTo(contentView).offset(20)
     }
     
