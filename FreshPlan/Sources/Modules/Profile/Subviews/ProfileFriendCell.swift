@@ -33,6 +33,7 @@ public final class ProfileFriendCell: UITableViewCell {
   
   private func prepareView() {
     selectionStyle = .none
+    accessoryType = .disclosureIndicator
     prepareInkView()
     prepareTitleLabel()
   }
