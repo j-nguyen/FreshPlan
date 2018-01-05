@@ -36,15 +36,15 @@ public final class HomeViewController: UITabBarController {
       tag: 0
     )
     
-    profileController.tabBarItem = UITabBarItem(
-      title: "Profile",
-      image: UIImage(named: "ic_account_circle")?.withRenderingMode(.alwaysTemplate),
-      tag: 1
-    )
-    
     inviteController.tabBarItem = UITabBarItem(
       title: "Invitions",
       image: UIImage(named: "ic_markunread_mailbox")?.withRenderingMode(.alwaysTemplate),
+      tag: 1
+    )
+    
+    profileController.tabBarItem = UITabBarItem(
+      title: "Profile",
+      image: UIImage(named: "ic_account_circle")?.withRenderingMode(.alwaysTemplate),
       tag: 2
     )
     
@@ -54,7 +54,7 @@ public final class HomeViewController: UITabBarController {
       tag: 3
     )
     
-    let viewControllers = [meetupController, profileController, inviteController, settingsController].flatMap { UINavigationController(rootViewController: $0) }
+    let viewControllers = [meetupController, inviteController, profileController, settingsController].flatMap { UINavigationController(rootViewController: $0) }
     
     setViewControllers(viewControllers, animated: false)
 	}

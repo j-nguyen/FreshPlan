@@ -205,7 +205,7 @@ public final class ProfileViewController: UIViewController {
     
     dataSource.canEditRowAtIndexPath = { dataSource, index in
       switch dataSource.sectionModels[index.section] {
-      case .friendRequests:
+      case .friendRequests, .friends:
         return true
       default:
         return false
@@ -271,6 +271,16 @@ extension ProfileViewController: UITableViewDelegate {
       )
       friendSwipeAccept.backgroundColor = MDCPalette.green.tint400
       return [friendSwipeAccept]
+    case .friends:
+      let friendDelete = UITableViewRowAction(
+        style: .destructive,
+        title: "Remove Friend",
+        handler: { [weak self] _, index in
+          guard let this = self else { return }
+          
+        }
+      )
+      return [friendDelete]
     default:
       return nil
     }
