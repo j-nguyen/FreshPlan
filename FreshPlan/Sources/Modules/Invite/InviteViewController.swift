@@ -87,8 +87,6 @@ public final class InviteViewController: UIViewController {
         return true
       }
       
-      
-      
       viewModel.invitations
         .asObservable()
         .bind(to: tableView.rx.items(dataSource: dataSource))
@@ -106,15 +104,7 @@ public final class InviteViewController: UIViewController {
         
       view.addSubview(tableView)
       tableView.snp.makeConstraints{ $0.edges.equalTo(view) }
-      
-//      viewModel.invitations
-//        .asObservable()
-//        .bind(to: tableView.rx.items(cellIdentifier: String(describing: InviteCell.self))) { (index, invite, cell) in
-//        cell.textLabel?.text = invite.inviter.displayName
-//          cell.detailTextLabel?.text = invite.inviter.email
-//
-//      }
-//      .disposed(by: disposeBag)
+    
     }
   
   // EmptyInviteView
