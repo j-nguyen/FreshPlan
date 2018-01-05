@@ -15,22 +15,23 @@ import JWTDecode
 import UIKit
 
 public protocol ProfileViewModelProtocol {
-	var profileItems: Variable<[ProfileViewModel.SectionModel]> { get }
-  var acceptFriend: PublishSubject<IndexPath> { get }
-  var refreshContent: PublishSubject<Void> { get }
-  var refreshSuccess: PublishSubject<Bool> { get }
-  var acceptedFriendSuccess: Variable<String?> { get }
+    
+    var profileItems: Variable<[ProfileViewModel.SectionModel]> { get }
+    var acceptFriend: PublishSubject<IndexPath> { get }
+    var refreshContent: PublishSubject<Void> { get }
+    var refreshSuccess: PublishSubject<Bool> { get }
+    var acceptedFriendSuccess: Variable<String?> { get }
 }
 
 public class ProfileViewModel: ProfileViewModelProtocol {
 	private let provider: MoyaProvider<FreshPlan>!
 
 	public var profileItems: Variable<[ProfileViewModel.SectionModel]> = Variable([])
-  public var acceptFriend: PublishSubject<IndexPath> = PublishSubject()
-  public var acceptedFriendSuccess: Variable<String?> = Variable(nil)
+    public var acceptFriend: PublishSubject<IndexPath> = PublishSubject()
+    public var acceptedFriendSuccess: Variable<String?> = Variable(nil)
   
-  public var refreshContent: PublishSubject<Void> = PublishSubject()
-  public var refreshSuccess: PublishSubject<Bool> = PublishSubject()
+    public var refreshContent: PublishSubject<Void> = PublishSubject()
+    public var refreshSuccess: PublishSubject<Bool> = PublishSubject()
 	
 	private let disposeBag: DisposeBag = DisposeBag()
 	

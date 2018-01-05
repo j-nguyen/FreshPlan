@@ -24,8 +24,10 @@ public enum FreshPlan {
   case friendRequests(Int)
   case friendRequest(Int, Int)
   case meetup
+  case invitations
   case getMeetup(Int)
   case deleteMeetup(Int)
+  case deleteInvitation(Int)
   case addMeetup(String, String, String, String, String, String)
   case editMeetup(Int, String, String, String, String, String, String)
 }
@@ -66,7 +68,11 @@ extension FreshPlan: TargetType {
       return "/users/\(userId)/friends/\(friendId)/requests"
     case .updateUserPushNotification(let userId, _):
       return "/users/\(userId)"
-		}
+    case .invitations:
+      return "/invites"
+    case .deleteInvitation(let inviteId):
+      return "/invites/\(inviteId)"
+    }
 	}
 	
 	// type of method (POST/GET/PATCH/DELETE)
@@ -74,11 +80,11 @@ extension FreshPlan: TargetType {
 		switch self {
 		case .login, .register, .verify, .resend, .sendFriendRequest, .addMeetup:
 			return .post
-		case .user, .friends, .friendSearch, .friendRequests, .friendRequest, .meetup, .getMeetup:
+		case .user, .friends, .friendSearch, .friendRequests, .friendRequest, .meetup, .getMeetup, .invitations:
 			return .get
     case .acceptFriend, .editMeetup, .updateUserPushNotification:
       return .patch
-    case .deleteMeetup:
+    case .deleteMeetup, .deleteInvitation:
       return .delete
 		}
 	}
@@ -108,7 +114,7 @@ extension FreshPlan: TargetType {
 			return .requestParameters(parameters: ["email": email, "code": code], encoding: JSONEncoding.default)
     case let .friendSearch(query):
       return .requestParameters(parameters: ["search": query], encoding: URLEncoding.default)
-    case .user, .friends, .friendRequests, .friendRequest, .meetup, .getMeetup, .deleteMeetup:
+    case .user, .friends, .friendRequests, .friendRequest, .meetup, .getMeetup, .deleteMeetup, .invitations, .deleteInvitation:
 			return .requestPlain
     case .acceptFriend:
       return .requestParameters(
@@ -161,10 +167,8 @@ extension FreshPlan: TargetType {
 	public var headers: [String: String]? {
 		switch self {
 		case .login, .register, .verify, .resend:
-			return ["Content-Type": "application/json"]
-		case .user, .friends, .acceptFriend, .friendSearch,
-         .sendFriendRequest, .friendRequest, .friendRequests,
-         .meetup, .getMeetup, .deleteMeetup, .addMeetup, .editMeetup, .updateUserPushNotification:
+			return ["Content-Type": "application/json"]		
+    case .user, .friends, .acceptFriend, .friendSearch, .sendFriendRequest, .friendRequest, .friendRequests, .meetup, .getMeetup, .deleteMeetup, .addMeetup, .editMeetup, .invitations, .deleteInvitation, .updateUserPushNotification:
 			return ["Content-Type": "application/json", "Authorization": UserDefaults.standard.string(forKey: "token")!]
 		}
 	}

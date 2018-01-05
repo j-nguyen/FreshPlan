@@ -10,7 +10,6 @@ import Foundation
 
 public struct Invitation: Decodable {
   public let id: Int
-  public let meetupId: Int
   public let inviter: User
   public let invitee: User
   public let accepted: Bool
