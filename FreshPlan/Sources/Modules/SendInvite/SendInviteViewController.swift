@@ -18,7 +18,7 @@ public final class SendInviteViewController: UIViewController {
   
   // MARK: App Bar
   fileprivate let appBar = MDCAppBar()
-  private var closeButton: UIBarButtonItem
+  private var closeButton: UIBarButtonItem!
   
   // MARK: Views
   private var tableView: UITableView!
@@ -38,6 +38,16 @@ public final class SendInviteViewController: UIViewController {
   
   public required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
+  }
+  
+  public override var childViewControllerForStatusBarStyle: UIViewController? {
+    return appBar.headerViewController
+  }
+  
+  public override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    navigationController?.setNavigationBarHidden(true, animated: animated)
   }
   
   public override func viewDidLoad() {
