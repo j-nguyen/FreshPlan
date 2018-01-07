@@ -114,6 +114,7 @@
 		40F8C6DA1FED741C0040D334 /* AddMeetupTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6D91FED741C0040D334 /* AddMeetupTextViewCell.swift */; };
 		40F8C6DC1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6DB1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift */; };
 		40F8C6E01FED7FF60040D334 /* AddMeetupDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6DF1FED7FF60040D334 /* AddMeetupDateCell.swift */; };
+		40FCE5732002CB7A004511D0 /* SendInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FCE5722002CB7A004511D0 /* SendInviteViewController.swift */; };
 		7A829B1ABE926069F348D6A9 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FC7AE0B22C700F88B3060C9 /* Pods_OneSignalNotificationServiceExtension.framework */; };
 		7BED1FB6487CD40A991B8614 /* Pods_FreshPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */; };
 		E14D1FEA1FDDCC0400E1BB0D /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D1FE91FDDCC0400E1BB0D /* InviteViewController.swift */; };
@@ -261,6 +262,7 @@
 		40F8C6D91FED741C0040D334 /* AddMeetupTextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupTextViewCell.swift; sourceTree = "<group>"; };
 		40F8C6DB1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupGeocodeCell.swift; sourceTree = "<group>"; };
 		40F8C6DF1FED7FF60040D334 /* AddMeetupDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupDateCell.swift; sourceTree = "<group>"; };
+		40FCE5722002CB7A004511D0 /* SendInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInviteViewController.swift; sourceTree = "<group>"; };
 		66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreshPlan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		699D5F19A2CE2F80446D02FF /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		961AF7C9502FB2E5362945B5 /* Pods-FreshPlan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.release.xcconfig"; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 			children = (
 				4081B6241FF5F70F00302315 /* Settings */,
 				E14D1FE81FDDCBCF00E1BB0D /* Invite */,
+				40FCE5712002CB59004511D0 /* SendInvite */,
 				4083BCD11FEE0D54007D9B87 /* Location */,
 				4071F8F51FDB00E4001B77A1 /* Friend */,
 				4056A4EA1FD4B6FE006415A7 /* AddFriend */,
@@ -688,6 +691,14 @@
 				40F8C6DB1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		40FCE5712002CB59004511D0 /* SendInvite */ = {
+			isa = PBXGroup;
+			children = (
+				40FCE5722002CB7A004511D0 /* SendInviteViewController.swift */,
+			);
+			path = SendInvite;
 			sourceTree = "<group>";
 		};
 		63B037B023A8BC3303DFC20E /* Pods */ = {
@@ -1035,6 +1046,7 @@
 				E1B8538A1FE72F2400AB10A1 /* InviteCell.swift in Sources */,
 				4071F8F91FDB0143001B77A1 /* FriendViewModel.swift in Sources */,
 				40D8B0281FE8199E00CE2626 /* Location.swift in Sources */,
+				40FCE5732002CB7A004511D0 /* SendInviteViewController.swift in Sources */,
 				4079B1561FC49367007E9407 /* ProfileUserInfoCell.swift in Sources */,
 				40BF71411FDC750400495B81 /* FriendAssembler.swift in Sources */,
 				4044C47A1FE7266A00C0C244 /* MeetupDetailViewController.swift in Sources */,
