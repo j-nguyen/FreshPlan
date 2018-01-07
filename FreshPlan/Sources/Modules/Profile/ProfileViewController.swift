@@ -232,6 +232,15 @@ public final class ProfileViewController: UIViewController {
       })
       .disposed(by: disposeBag)
     
+    viewModel.removeFriendSuccess
+      .asObservable()
+      .filterNil()
+      .subscribe(onNext: { displayName in
+        let message = MDCSnackbarMessage(text: "Successfully removed \(displayName)")
+        MDCSnackbarManager.show(message)
+      })
+      .disposed(by: disposeBag)
+    
     tableView.rx.itemSelected
       .asObservable()
       .subscribe(onNext: { [weak self] index in
