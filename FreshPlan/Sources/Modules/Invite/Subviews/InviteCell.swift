@@ -39,6 +39,7 @@ public class InviteCell: UITableViewCell {
     super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
     prepareView()
   }
+  
   public required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
   }

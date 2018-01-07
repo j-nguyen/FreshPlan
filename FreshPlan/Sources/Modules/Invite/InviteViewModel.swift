@@ -19,12 +19,11 @@ public protocol InviteViewModelProtocol {
 }
 
 public class InviteViewModel: InviteViewModelProtocol {
+  private let provider: MoyaProvider<FreshPlan>!
   
   public var acceptInvitation: PublishSubject<IndexPath> = PublishSubject()
   public var declineInvitation: PublishSubject<IndexPath> = PublishSubject()
   
-  
-  private let provider: MoyaProvider<FreshPlan>!
   public var invitations: Variable<[InviteViewModel.Section]> = Variable([])
   
   // MARK: disposeBag
@@ -66,8 +65,6 @@ extension InviteViewModel {
     public var items:[MeetupInvite]
   }
 }
-
-
 
 // MARK: Identity
 extension MeetupInvite: IdentifiableType {

@@ -75,9 +75,9 @@ public final class InviteViewController: UIViewController {
   // TableView
   private func prepareTableView() {
     tableView = UITableView()
+    tableView.separatorStyle = .singleLine
     tableView.separatorInset = .zero
     tableView.layoutMargins = .zero
-    tableView.estimatedRowHeight = 44
     tableView.rowHeight = 80
     tableView.registerCell(InviteCell.self)
     
@@ -93,8 +93,10 @@ public final class InviteViewController: UIViewController {
         cell.startDate.on(.next(dataSource[index].meetupStartDate))
         cell.endDate.on(.next(dataSource[index].meetupEndDate))
         return cell
-    }
+      }
     )
+    
+    dataSource.titleForHeaderInSection = { _, _ in return "" }
     
     dataSource.animationConfiguration = AnimationConfiguration(insertAnimation: .automatic, reloadAnimation: .automatic, deleteAnimation: .automatic)
     
@@ -112,7 +114,7 @@ public final class InviteViewController: UIViewController {
   private func prepareEmptyInviteView() {
     emptyInviteView = EmptyInvitationView()
     
-    view.addSubview(emptyInviteView)
+    tableView.backgroundView = emptyInviteView
     
     emptyInviteView.snp.makeConstraints { make in
       make.edges.equalTo(view)
@@ -120,14 +122,22 @@ public final class InviteViewController: UIViewController {
     
     viewModel.invitations
       .asObservable()
-      .map { $0.count == 0 }
-      .bind(to: tableView.rx.isHidden)
+      .filter { $0.isNotEmpty && $0[0].items.isEmpty }
+      .subscribe(onNext: { [weak self] _ in
+        guard let this = self else { return }
+        this.tableView.separatorStyle = .none
+        this.tableView.backgroundView?.isHidden = false
+      })
       .disposed(by: disposeBag)
     
     viewModel.invitations
       .asObservable()
-      .map { $0.count > 0 }
-      .bind(to: emptyInviteView.rx.isHidden)
+      .filter { $0.isNotEmpty && $0[0].items.isNotEmpty }
+      .subscribe(onNext: { [weak self] _ in
+        guard let this = self else { return }
+        this.tableView.separatorStyle = .singleLine
+        this.tableView.backgroundView?.isHidden = true
+      })
       .disposed(by: disposeBag)
   }
   
