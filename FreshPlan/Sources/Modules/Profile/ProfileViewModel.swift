@@ -162,11 +162,13 @@ public class ProfileViewModel: ProfileViewModelProtocol {
       }
       .filter { $1.statusCode >= 200 && $1.statusCode <= 299 }
       .map { [unowned self] (index, response) -> String? in
-        let deletedItem = self.profileItems.value[index.section].delete(at: index.row)
-        self.profileItems.value[index.section] = deletedItem
-        switch deletedItem.items[index.row] {
+        let result: String?
+        switch self.profileItems.value[index.section].items[index.row] {
         case .friend(_, let displayName):
-          return displayName
+          result = displayName
+          let deletedItem = self.profileItems.value[index.section].delete(at: index.row)
+          self.profileItems.value[index.section] = deletedItem
+          return result
         default: return nil
         }
       }
@@ -270,28 +272,28 @@ extension ProfileViewModel.SectionModel: AnimatableSectionModelType {
   }
   
   public func delete(at index: Int) -> ProfileViewModel.SectionModel {
+    var newItems = items
+    newItems.remove(at: index)
     switch self {
-    case let .friendRequests(order, title, items):
-      var newItems = items
-      newItems.remove(at: index)
+    case let .friendRequests(order, title, _):
       return ProfileViewModel.SectionModel.friendRequests(order: order, title: title, items: newItems)
-    case let .friends(order, title, items):
-      return ProfileViewModel.SectionModel.friends(order: order, title: title, items: items)
-    case let .profile(order, title, items):
-      return ProfileViewModel.SectionModel.profile(order: order, title: title, items: items)
+    case let .friends(order, title, _):
+      return ProfileViewModel.SectionModel.friends(order: order, title: title, items: newItems)
+    case let .profile(order, title, _):
+      return ProfileViewModel.SectionModel.profile(order: order, title: title, items: newItems)
     }
   }
   
   public func add(item: ProfileViewModel.SectionItem) -> ProfileViewModel.SectionModel {
+    var newItems = items
+    newItems.append(item)
     switch self {
-    case let .friendRequests(order, title, items):
-      return ProfileViewModel.SectionModel.friendRequests(order: order, title: title, items: items)
-    case let .friends(order, title, items):
-      var newItems = items
-      newItems.append(item)
+    case let .friendRequests(order, title, _):
+      return ProfileViewModel.SectionModel.friendRequests(order: order, title: title, items: newItems)
+    case let .friends(order, title, _):
       return ProfileViewModel.SectionModel.friends(order: order, title: title, items: newItems)
-    case let .profile(order, title, items):
-      return ProfileViewModel.SectionModel.profile(order: order, title: title, items: items)
+    case let .profile(order, title, _):
+      return ProfileViewModel.SectionModel.profile(order: order, title: title, items: newItems)
     }
   }
 }
