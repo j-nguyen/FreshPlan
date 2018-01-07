@@ -277,7 +277,7 @@ extension ProfileViewController: UITableViewDelegate {
         title: "Remove Friend",
         handler: { [weak self] _, index in
           guard let this = self else { return }
-          
+          this.viewModel.removeFriend.on(.next(index))
         }
       )
       return [friendDelete]
