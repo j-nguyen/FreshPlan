@@ -703,8 +703,16 @@
 				40FCE5722002CB7A004511D0 /* SendInviteViewController.swift */,
 				40FCE5742002CBE9004511D0 /* SendInviteViewModel.swift */,
 				40FCE5762002CC0B004511D0 /* SendInviteAssembler.swift */,
+				40FCE5782002CD9A004511D0 /* Subviews */,
 			);
 			path = SendInvite;
+			sourceTree = "<group>";
+		};
+		40FCE5782002CD9A004511D0 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		63B037B023A8BC3303DFC20E /* Pods */ = {

@@ -22,6 +22,8 @@ public final class SendInviteViewController: UIViewController {
   // MARK: Views
   private var tableView: UITableView!
   
+  private let disposeBag = DisposeBag()
+  
   public convenience init(viewModel: SendInviteViewModel) {
     self.init(nibName: nil, bundle: nil)
     self.viewModel = viewModel
@@ -74,5 +76,9 @@ public final class SendInviteViewController: UIViewController {
     tableView.separatorInset = .zero
     
     appBar.navigationBar.observe(navigationItem)
+  }
+  
+  deinit {
+    appBar.navigationBar.unobserveNavigationItem()
   }
 }

@@ -10,23 +10,23 @@ import Foundation
 import UIKit
 
 public class InviteRouter {
-    public enum Routes: String {
-        case meetup
-    }
-    
-    fileprivate enum RouteError: Error {
-        case invalidRoute(String)
-    }
+  public enum Routes: String {
+    case sendInvite
+  }
+  
+  fileprivate enum RouteError: Error {
+    case invalidRoute(String)
+  }
 }
 
 extension InviteRouter: RouterProtocol {
-    public func route(from context: UIViewController, to route: String, parameters: [String : Any]?) throws {
-        
-        guard let route = Routes(rawValue: route) else { throw RouteError.invalidRoute("Invalid route!") }
-        
-        switch route {
-        case .meetup:
-            break
-        }
+  public func route(from context: UIViewController, to route: String, parameters: [String : Any]?) throws {
+    
+    guard let route = Routes(rawValue: route) else { throw RouteError.invalidRoute("Invalid route!") }
+    
+    switch route {
+    case .sendInvite:
+      break
     }
+  }
 }
