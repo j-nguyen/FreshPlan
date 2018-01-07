@@ -115,6 +115,8 @@
 		40F8C6DC1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6DB1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift */; };
 		40F8C6E01FED7FF60040D334 /* AddMeetupDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6DF1FED7FF60040D334 /* AddMeetupDateCell.swift */; };
 		40FCE5732002CB7A004511D0 /* SendInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FCE5722002CB7A004511D0 /* SendInviteViewController.swift */; };
+		40FCE5752002CBE9004511D0 /* SendInviteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FCE5742002CBE9004511D0 /* SendInviteViewModel.swift */; };
+		40FCE5772002CC0B004511D0 /* SendInviteAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FCE5762002CC0B004511D0 /* SendInviteAssembler.swift */; };
 		7A829B1ABE926069F348D6A9 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FC7AE0B22C700F88B3060C9 /* Pods_OneSignalNotificationServiceExtension.framework */; };
 		7BED1FB6487CD40A991B8614 /* Pods_FreshPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */; };
 		E14D1FEA1FDDCC0400E1BB0D /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D1FE91FDDCC0400E1BB0D /* InviteViewController.swift */; };
@@ -263,6 +265,8 @@
 		40F8C6DB1FED7FDE0040D334 /* AddMeetupGeocodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupGeocodeCell.swift; sourceTree = "<group>"; };
 		40F8C6DF1FED7FF60040D334 /* AddMeetupDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetupDateCell.swift; sourceTree = "<group>"; };
 		40FCE5722002CB7A004511D0 /* SendInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInviteViewController.swift; sourceTree = "<group>"; };
+		40FCE5742002CBE9004511D0 /* SendInviteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInviteViewModel.swift; sourceTree = "<group>"; };
+		40FCE5762002CC0B004511D0 /* SendInviteAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInviteAssembler.swift; sourceTree = "<group>"; };
 		66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreshPlan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		699D5F19A2CE2F80446D02FF /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		961AF7C9502FB2E5362945B5 /* Pods-FreshPlan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.release.xcconfig"; sourceTree = "<group>"; };
@@ -697,6 +701,8 @@
 			isa = PBXGroup;
 			children = (
 				40FCE5722002CB7A004511D0 /* SendInviteViewController.swift */,
+				40FCE5742002CBE9004511D0 /* SendInviteViewModel.swift */,
+				40FCE5762002CC0B004511D0 /* SendInviteAssembler.swift */,
 			);
 			path = SendInvite;
 			sourceTree = "<group>";
@@ -1049,6 +1055,7 @@
 				40FCE5732002CB7A004511D0 /* SendInviteViewController.swift in Sources */,
 				4079B1561FC49367007E9407 /* ProfileUserInfoCell.swift in Sources */,
 				40BF71411FDC750400495B81 /* FriendAssembler.swift in Sources */,
+				40FCE5772002CC0B004511D0 /* SendInviteAssembler.swift in Sources */,
 				4044C47A1FE7266A00C0C244 /* MeetupDetailViewController.swift in Sources */,
 				40A48B781FF76198002FEB28 /* Bundle+.swift in Sources */,
 				40B4782E1FEC5CEA0033DFFF /* MeetupDescriptionCell.swift in Sources */,
@@ -1086,6 +1093,7 @@
 				40426D0B1F86B85E00875179 /* LoginViewModel.swift in Sources */,
 				40497D1F1F8CF3A500A4E046 /* UIColor+.swift in Sources */,
 				408D08341F8D274A006BCA8E /* RegisterAssembler.swift in Sources */,
+				40FCE5752002CBE9004511D0 /* SendInviteViewModel.swift in Sources */,
 				40BE77901F9ED2310011C899 /* ResponseError.swift in Sources */,
 				40E3BD091FEF217C004394AA /* Date+.swift in Sources */,
 				4079B14A1FC47407007E9407 /* Token+.swift in Sources */,
