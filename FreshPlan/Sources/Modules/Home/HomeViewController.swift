@@ -28,6 +28,7 @@ public final class HomeViewController: UITabBarController {
     let meetupController = MeetupAssembler.make()
     let profileController = ProfileAssembler.make()
     let settingsController = SettingsAssembler.make()
+    let inviteController = InviteAssembler.make()
     
     meetupController.tabBarItem = UITabBarItem(
       title: "Home",
@@ -35,24 +36,26 @@ public final class HomeViewController: UITabBarController {
       tag: 0
     )
     
+    inviteController.tabBarItem = UITabBarItem(
+      title: "Invitions",
+      image: UIImage(named: "ic_markunread_mailbox")?.withRenderingMode(.alwaysTemplate),
+      tag: 1
+    )
+    
     profileController.tabBarItem = UITabBarItem(
       title: "Profile",
       image: UIImage(named: "ic_account_circle")?.withRenderingMode(.alwaysTemplate),
-      tag: 1
+      tag: 2
     )
     
     settingsController.tabBarItem = UITabBarItem(
       title: "Settings",
       image: UIImage(named: "ic_settings")?.withRenderingMode(.alwaysTemplate),
-      tag: 2
+      tag: 3
     )
     
-    let viewControllers = [meetupController, profileController, settingsController].flatMap { UINavigationController(rootViewController: $0) }
+    let viewControllers = [meetupController, inviteController, profileController, settingsController].flatMap { UINavigationController(rootViewController: $0) }
     
     setViewControllers(viewControllers, animated: false)
-	}
-	
-	public override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
 	}
 }

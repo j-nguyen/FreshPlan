@@ -24,6 +24,9 @@ public class FriendViewController: UIViewController {
   private var tableView: UITableView!
   fileprivate var dataSource: RxTableViewSectionedReloadDataSource<FriendViewModel.Section>!
   
+  // MARK: TapDelegate
+  private var existingInteractivePopGestureRecognizerDelegate: UIGestureRecognizerDelegate?
+  
   // MARK: DisposeBag
   private let disposeBag: DisposeBag = DisposeBag()
   
@@ -50,7 +53,28 @@ public class FriendViewController: UIViewController {
     super.viewWillAppear(animated)
     setNeedsStatusBarAppearanceUpdate()
     
+    // Hold reference to current interactivePopGestureRecognizer delegate
+    if let delegate = navigationController?.interactivePopGestureRecognizer?.delegate {
+      existingInteractivePopGestureRecognizerDelegate = delegate
+    }
+    
     navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
+  
+  public override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    // Set interactivePopGestureRecognizer delegate to nil
+    navigationController?.interactivePopGestureRecognizer?.delegate = nil
+  }
+  
+  public override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    
+    // Return interactivePopGestureRecognizer delegate to previously held object
+    if let delegate = existingInteractivePopGestureRecognizerDelegate {
+      navigationController?.interactivePopGestureRecognizer?.delegate = delegate
+    }
   }
   
   public override func viewDidLoad() {

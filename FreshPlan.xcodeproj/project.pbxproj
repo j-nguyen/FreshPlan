@@ -116,6 +116,13 @@
 		40F8C6E01FED7FF60040D334 /* AddMeetupDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8C6DF1FED7FF60040D334 /* AddMeetupDateCell.swift */; };
 		7A829B1ABE926069F348D6A9 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FC7AE0B22C700F88B3060C9 /* Pods_OneSignalNotificationServiceExtension.framework */; };
 		7BED1FB6487CD40A991B8614 /* Pods_FreshPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */; };
+		E14D1FEA1FDDCC0400E1BB0D /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D1FE91FDDCC0400E1BB0D /* InviteViewController.swift */; };
+		E14D1FEC1FDDCC3A00E1BB0D /* InviteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D1FEB1FDDCC3A00E1BB0D /* InviteViewModel.swift */; };
+		E14D1FEE1FDDCC5100E1BB0D /* InviteRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D1FED1FDDCC5100E1BB0D /* InviteRouter.swift */; };
+		E14D1FF01FDDCC6500E1BB0D /* InviteAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D1FEF1FDDCC6500E1BB0D /* InviteAssembler.swift */; };
+		E173C75B1FFEBFCD00FCBEFE /* MeetupInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = E173C75A1FFEBFCD00FCBEFE /* MeetupInvite.swift */; };
+		E1B8538A1FE72F2400AB10A1 /* InviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B853891FE72F2400AB10A1 /* InviteCell.swift */; };
+		E1B8538C1FE73D6000AB10A1 /* EmptyInvitationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B8538B1FE73D6000AB10A1 /* EmptyInvitationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -259,6 +266,13 @@
 		961AF7C9502FB2E5362945B5 /* Pods-FreshPlan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.release.xcconfig"; sourceTree = "<group>"; };
 		9FC7AE0B22C700F88B3060C9 /* Pods_OneSignalNotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneSignalNotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A453EC14D4EAA50A7E0FD385 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		E14D1FE91FDDCC0400E1BB0D /* InviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
+		E14D1FEB1FDDCC3A00E1BB0D /* InviteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteViewModel.swift; sourceTree = "<group>"; };
+		E14D1FED1FDDCC5100E1BB0D /* InviteRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteRouter.swift; sourceTree = "<group>"; };
+		E14D1FEF1FDDCC6500E1BB0D /* InviteAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteAssembler.swift; sourceTree = "<group>"; };
+		E173C75A1FFEBFCD00FCBEFE /* MeetupInvite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupInvite.swift; sourceTree = "<group>"; };
+		E1B853891FE72F2400AB10A1 /* InviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCell.swift; sourceTree = "<group>"; };
+		E1B8538B1FE73D6000AB10A1 /* EmptyInvitationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyInvitationView.swift; sourceTree = "<group>"; };
 		F2535B961F6CEAE83F9AC1E5 /* Pods-FreshPlan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -339,6 +353,7 @@
 			isa = PBXGroup;
 			children = (
 				4081B6241FF5F70F00302315 /* Settings */,
+				E14D1FE81FDDCBCF00E1BB0D /* Invite */,
 				4083BCD11FEE0D54007D9B87 /* Location */,
 				4071F8F51FDB00E4001B77A1 /* Friend */,
 				4056A4EA1FD4B6FE006415A7 /* AddFriend */,
@@ -367,6 +382,7 @@
 				4045A2961FE601650059482E /* Invitation.swift */,
 				40D8B0271FE8199E00CE2626 /* Location.swift */,
 				40D8B0291FE819BB00CE2626 /* Other.swift */,
+				E173C75A1FFEBFCD00FCBEFE /* MeetupInvite.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -685,6 +701,27 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		E14D1FE81FDDCBCF00E1BB0D /* Invite */ = {
+			isa = PBXGroup;
+			children = (
+				E14D1FE91FDDCC0400E1BB0D /* InviteViewController.swift */,
+				E14D1FEB1FDDCC3A00E1BB0D /* InviteViewModel.swift */,
+				E14D1FED1FDDCC5100E1BB0D /* InviteRouter.swift */,
+				E14D1FEF1FDDCC6500E1BB0D /* InviteAssembler.swift */,
+				E1B853881FE72E0800AB10A1 /* Subviews */,
+			);
+			path = Invite;
+			sourceTree = "<group>";
+		};
+		E1B853881FE72E0800AB10A1 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				E1B853891FE72F2400AB10A1 /* InviteCell.swift */,
+				E1B8538B1FE73D6000AB10A1 /* EmptyInvitationView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -949,6 +986,7 @@
 				4081B6261FF5F71B00302315 /* SettingsViewController.swift in Sources */,
 				40E1EE9C1FE805C00055CBF6 /* MeetupTitleCell.swift in Sources */,
 				40BD70121F910FD6005B3B9D /* MeetupViewModel.swift in Sources */,
+				E14D1FEA1FDDCC0400E1BB0D /* InviteViewController.swift in Sources */,
 				409602AB1FE7276D004D7606 /* MeetupDetailRouter.swift in Sources */,
 				4045A2951FE601490059482E /* MeetupType.swift in Sources */,
 				4079B14C1FC475E9007E9407 /* UITableView+.swift in Sources */,
@@ -994,6 +1032,7 @@
 				4056A4EE1FD4B7FE006415A7 /* AddFriendViewModel.swift in Sources */,
 				408D083D1F8D286D006BCA8E /* VerifyViewModel.swift in Sources */,
 				4003B3A91FE368C300BF682F /* MDCTextInputControllerDefault+.swift in Sources */,
+				E1B8538A1FE72F2400AB10A1 /* InviteCell.swift in Sources */,
 				4071F8F91FDB0143001B77A1 /* FriendViewModel.swift in Sources */,
 				40D8B0281FE8199E00CE2626 /* Location.swift in Sources */,
 				4079B1561FC49367007E9407 /* ProfileUserInfoCell.swift in Sources */,
@@ -1003,9 +1042,12 @@
 				40B4782E1FEC5CEA0033DFFF /* MeetupDescriptionCell.swift in Sources */,
 				4044C47C1FE726DB00C0C244 /* MeetupDetailViewModel.swift in Sources */,
 				40A311361F9EF503000FAFEB /* Token.swift in Sources */,
+				E14D1FEE1FDDCC5100E1BB0D /* InviteRouter.swift in Sources */,
+				E14D1FF01FDDCC6500E1BB0D /* InviteAssembler.swift in Sources */,
 				400BEC231FEC860700D8BADE /* CLGeocoder+.swift in Sources */,
 				409B2BF51FBE6234000A7F16 /* ProfileAssembler.swift in Sources */,
 				400FC2161F897BA200B3098B /* FreshPlan.swift in Sources */,
+				E173C75B1FFEBFCD00FCBEFE /* MeetupInvite.swift in Sources */,
 				40E3BD071FEEF383004394AA /* UIDatePicker+.swift in Sources */,
 				40F8C6D81FED5DE40040D334 /* AddMeetupTextFieldCell.swift in Sources */,
 				4079B14E1FC4763B007E9407 /* UILabel+.swift in Sources */,
@@ -1019,6 +1061,7 @@
 				409A55351F86B0D200EB29A4 /* AppDelegate.swift in Sources */,
 				4083BCD71FEE0DB4007D9B87 /* LocationAssembler.swift in Sources */,
 				408D08321F8D271F006BCA8E /* RegisterViewModel.swift in Sources */,
+				E1B8538C1FE73D6000AB10A1 /* EmptyInvitationView.swift in Sources */,
 				40426D1A1F86C12600875179 /* LoginRouter.swift in Sources */,
 				4045A2931FE601060059482E /* Meetup.swift in Sources */,
 				40BD70161F911022005B3B9D /* MeetupAssembler.swift in Sources */,
@@ -1038,6 +1081,7 @@
 				4083BCD31FEE0D5F007D9B87 /* LocationViewController.swift in Sources */,
 				4056A4F51FD4C2DD006415A7 /* SearchBar.swift in Sources */,
 				4056A4EC1FD4B70B006415A7 /* AddFriendViewController.swift in Sources */,
+				E14D1FEC1FDDCC3A00E1BB0D /* InviteViewModel.swift in Sources */,
 				4079B1541FC47E86007E9407 /* CacheStore.swift in Sources */,
 				40BD70101F910F53005B3B9D /* MeetupViewController.swift in Sources */,
 				409B2BFA1FBE65AF000A7F16 /* Friend.swift in Sources */,
