@@ -18,6 +18,7 @@ public final class SendInviteViewController: UIViewController {
   
   // MARK: App Bar
   fileprivate let appBar = MDCAppBar()
+  private var closeButton: UIBarButtonItem
   
   // MARK: Views
   private var tableView: UITableView!
@@ -47,6 +48,7 @@ public final class SendInviteViewController: UIViewController {
   private func prepareView() {
     prepareTableView()
     prepareNavigationBar()
+    prepareNavigationCloseButton()
     appBar.addSubviewsToParent()
   }
   
@@ -68,7 +70,7 @@ public final class SendInviteViewController: UIViewController {
     appBar.headerViewController.headerView.trackingScrollView = tableView
     
     // set the nav bar title
-    Observable.just("My Invitations")
+    Observable.just("Send Invites")
       .bind(to: navigationItem.rx.title)
       .disposed(by: disposeBag)
     
@@ -76,6 +78,24 @@ public final class SendInviteViewController: UIViewController {
     tableView.separatorInset = .zero
     
     appBar.navigationBar.observe(navigationItem)
+  }
+  
+  private func prepareNavigationCloseButton() {
+    closeButton = UIBarButtonItem(
+      image: UIImage(named: "ic_close")?.withRenderingMode(.alwaysTemplate),
+      style: .plain,
+      target: nil,
+      action: nil
+    )
+    closeButton.tintColor = .white
+    
+    closeButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        self?.dismiss(animated: true, completion: nil)
+      })
+      .disposed(by: disposeBag)
+    
+    navigationItem.leftBarButtonItem = closeButton
   }
   
   deinit {

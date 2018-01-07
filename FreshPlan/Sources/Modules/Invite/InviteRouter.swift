@@ -26,6 +26,7 @@ extension InviteRouter: RouterProtocol {
     
     switch route {
     case .sendInvite:
+      context.present(SendInviteAssembler.make(), animated: true, completion: nil)
       break
     }
   }

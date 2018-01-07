@@ -28,7 +28,6 @@ public final class InviteViewController: UIViewController {
   private var emptyInviteView: EmptyInvitationView!
   
   //MARK: TableView
-  private var containerView: UIView!
   private var tableView: UITableView!
   
   // MARK:  DisposeBag
@@ -76,11 +75,14 @@ public final class InviteViewController: UIViewController {
   // TableView
   private func prepareTableView() {
     tableView = UITableView()
+    tableView.separatorInset = .zero
+    tableView.layoutMargins = .zero
     tableView.estimatedRowHeight = 44
     tableView.rowHeight = 80
     tableView.registerCell(InviteCell.self)
     
     view.addSubview(tableView)
+    
     tableView.snp.makeConstraints{ $0.edges.equalTo(view) }
     
     dataSource = RxTableViewSectionedAnimatedDataSource(
@@ -104,15 +106,6 @@ public final class InviteViewController: UIViewController {
       .asObservable()
       .bind(to: tableView.rx.items(dataSource: dataSource))
       .disposed(by: disposeBag)
-    
-    //      viewModel.invitations
-    //        .asObservable()
-    //        .bind(to: tableView.rx.items(cellIdentifier: String(describing: InviteCell.self))) { (index, invite, cell) in
-    //        cell.textLabel?.text = invite.inviter.displayName
-    //          cell.detailTextLabel?.text = invite.inviter.email
-    //
-    //      }
-    //      .disposed(by: disposeBag)
   }
   
   // EmptyInviteView
@@ -142,6 +135,7 @@ public final class InviteViewController: UIViewController {
     appBar.headerViewController.headerView.backgroundColor = MDCPalette.blue.tint700
     appBar.navigationBar.tintColor = UIColor.white
     appBar.navigationBar.titleTextAttributes = [ NSAttributedStringKey.foregroundColor: UIColor.white ]
+    
     appBar.headerViewController.headerView.trackingScrollView = tableView
     
     // set the nav bar title
@@ -149,25 +143,23 @@ public final class InviteViewController: UIViewController {
       .bind(to: navigationItem.rx.title)
       .disposed(by: disposeBag)
     
-    tableView.layoutMargins = UIEdgeInsets.zero
-    tableView.separatorInset = UIEdgeInsets.zero
-    
     appBar.navigationBar.observe(navigationItem)
     
   }
   
   private func prepareNavigationAddButton() {
     addButton = UIBarButtonItem(
-      image: UIImage(named: "ic_add"),
+      image: UIImage(named: "ic_add")?.withRenderingMode(.alwaysTemplate),
       style: .plain,
       target: nil,
       action: nil
     )
+    addButton.tintColor = .white
     
     addButton.rx.tap
       .subscribe(onNext: { [weak self] in
         guard let this = self else { return }
-        this.router.route(
+        try? this.router.route(
           from: this,
           to: InviteRouter.Routes.sendInvite.rawValue,
           parameters: nil
@@ -175,7 +167,7 @@ public final class InviteViewController: UIViewController {
       })
       .disposed(by: disposeBag)
     
-    navigationItem.leftBarButtonItem = addButton
+    navigationItem.rightBarButtonItem = addButton
   }
   
   deinit {
