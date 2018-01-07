@@ -205,7 +205,7 @@ public final class ProfileViewController: UIViewController {
     
     dataSource.canEditRowAtIndexPath = { dataSource, index in
       switch dataSource.sectionModels[index.section] {
-      case .friendRequests:
+      case .friendRequests, .friends:
         return true
       default:
         return false
@@ -228,6 +228,15 @@ public final class ProfileViewController: UIViewController {
       .filterNil()
       .subscribe(onNext: { displayName in
         let message = MDCSnackbarMessage(text: "Successfully added \(displayName) as a friend.")
+        MDCSnackbarManager.show(message)
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel.removeFriendSuccess
+      .asObservable()
+      .filterNil()
+      .subscribe(onNext: { displayName in
+        let message = MDCSnackbarMessage(text: "Successfully removed \(displayName)")
         MDCSnackbarManager.show(message)
       })
       .disposed(by: disposeBag)
@@ -271,6 +280,16 @@ extension ProfileViewController: UITableViewDelegate {
       )
       friendSwipeAccept.backgroundColor = MDCPalette.green.tint400
       return [friendSwipeAccept]
+    case .friends:
+      let friendDelete = UITableViewRowAction(
+        style: .destructive,
+        title: "Remove Friend",
+        handler: { [weak self] _, index in
+          guard let this = self else { return }
+          this.viewModel.removeFriend.on(.next(index))
+        }
+      )
+      return [friendDelete]
     default:
       return nil
     }
