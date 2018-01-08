@@ -33,6 +33,8 @@ public final class InviteViewController: UIViewController {
   // MARK:  DisposeBag
   private var disposeBag: DisposeBag = DisposeBag()
   
+  private var refreshControl: UIRefreshControl!
+  
   public convenience init(viewModel: InviteViewModel, router: InviteRouter) {
     self.init(nibName: nil, bundle: nil)
     self.viewModel = viewModel
@@ -65,6 +67,7 @@ public final class InviteViewController: UIViewController {
   }
   
   public func prepareView() {
+    prepareRefreshControl()
     prepareTableView()
     prepareEmptyInviteView()
     prepareNavigationBar()
@@ -75,6 +78,7 @@ public final class InviteViewController: UIViewController {
   // TableView
   private func prepareTableView() {
     tableView = UITableView()
+    tableView.refreshControl = refreshControl
     tableView.separatorStyle = .singleLine
     tableView.separatorInset = .zero
     tableView.layoutMargins = .zero
@@ -126,6 +130,26 @@ public final class InviteViewController: UIViewController {
     viewModel.invitations
       .asObservable()
       .bind(to: tableView.rx.items(dataSource: dataSource))
+      .disposed(by: disposeBag)
+  }
+  
+  private func prepareRefreshControl() {
+    refreshControl = UIRefreshControl()
+    
+    refreshControl.rx.controlEvent(.valueChanged)
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.viewModel.refreshContent.on(.next(()))
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel.refreshSuccess
+      .asObservable()
+      .subscribe(onNext: { [weak self] in
+        guard let this = self else { return }
+        this.refreshControl.endRefreshing()
+      })
       .disposed(by: disposeBag)
   }
   

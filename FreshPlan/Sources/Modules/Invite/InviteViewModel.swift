@@ -16,6 +16,8 @@ public protocol InviteViewModelProtocol {
   var acceptInvitaionSuccess: PublishSubject<String?> { get }
   var declineInvitation: PublishSubject<IndexPath> { get }
   var declineInvitationSuccess: PublishSubject<String?> { get }
+  var refreshContent: PublishSubject<Void> { get }
+  var refreshSuccess: PublishSubject<Void> { get }
   
   //func bindButtons()
 }
@@ -27,6 +29,8 @@ public class InviteViewModel: InviteViewModelProtocol {
   public var declineInvitationSuccess: PublishSubject<String?> = PublishSubject()
   public var acceptInvitation: PublishSubject<IndexPath> = PublishSubject()
   public var declineInvitation: PublishSubject<IndexPath> = PublishSubject()
+  public var refreshContent: PublishSubject<Void> = PublishSubject()
+  public var refreshSuccess: PublishSubject<Void> = PublishSubject()
   
   public var invitations: Variable<[InviteViewModel.Section]> = Variable([])
   
@@ -35,6 +39,18 @@ public class InviteViewModel: InviteViewModelProtocol {
   
   public init(provider: MoyaProvider<FreshPlan>) {
     self.provider = provider
+    
+    refreshContent
+      .asObservable()
+      .flatMap { self.requestInvitation() }
+      .map { $0.sorted(by: { $0.id < $1.id }) }
+      .map { [Section(header: "", items: $0)] }
+      .do(onNext: { [weak self] meetup in
+        self?.refreshSuccess.on(.next(()))
+      })
+      .catchErrorJustReturn([])
+      .bind(to: invitations)
+      .disposed(by: disposeBag)
     
     requestInvitation()
       .map { Section(header: "", items: $0) }
