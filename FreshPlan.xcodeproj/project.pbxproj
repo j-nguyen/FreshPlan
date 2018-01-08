@@ -125,6 +125,7 @@
 		E14D1FEE1FDDCC5100E1BB0D /* InviteRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D1FED1FDDCC5100E1BB0D /* InviteRouter.swift */; };
 		E14D1FF01FDDCC6500E1BB0D /* InviteAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D1FEF1FDDCC6500E1BB0D /* InviteAssembler.swift */; };
 		E173C75B1FFEBFCD00FCBEFE /* MeetupInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = E173C75A1FFEBFCD00FCBEFE /* MeetupInvite.swift */; };
+		E173C75D2003065700FCBEFE /* SendInviteFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E173C75C2003065700FCBEFE /* SendInviteFriendCell.swift */; };
 		E1B8538A1FE72F2400AB10A1 /* InviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B853891FE72F2400AB10A1 /* InviteCell.swift */; };
 		E1B8538C1FE73D6000AB10A1 /* EmptyInvitationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B8538B1FE73D6000AB10A1 /* EmptyInvitationView.swift */; };
 /* End PBXBuildFile section */
@@ -279,6 +280,7 @@
 		E14D1FED1FDDCC5100E1BB0D /* InviteRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteRouter.swift; sourceTree = "<group>"; };
 		E14D1FEF1FDDCC6500E1BB0D /* InviteAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteAssembler.swift; sourceTree = "<group>"; };
 		E173C75A1FFEBFCD00FCBEFE /* MeetupInvite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetupInvite.swift; sourceTree = "<group>"; };
+		E173C75C2003065700FCBEFE /* SendInviteFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInviteFriendCell.swift; sourceTree = "<group>"; };
 		E1B853891FE72F2400AB10A1 /* InviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCell.swift; sourceTree = "<group>"; };
 		E1B8538B1FE73D6000AB10A1 /* EmptyInvitationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyInvitationView.swift; sourceTree = "<group>"; };
 		F2535B961F6CEAE83F9AC1E5 /* Pods-FreshPlan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.debug.xcconfig"; sourceTree = "<group>"; };
@@ -714,6 +716,7 @@
 			isa = PBXGroup;
 			children = (
 				40FCE5792002FDEE004511D0 /* SendInviteMeetupCell.swift */,
+				E173C75C2003065700FCBEFE /* SendInviteFriendCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -1033,6 +1036,7 @@
 				40BD70141F910FFA005B3B9D /* MeetupRouter.swift in Sources */,
 				4071F94D1FDCAF430061C34E /* FriendProfileCell.swift in Sources */,
 				40A48B761FF75FBB002FEB28 /* SettingsCell.swift in Sources */,
+				E173C75D2003065700FCBEFE /* SendInviteFriendCell.swift in Sources */,
 				402D931E1FEF6FA6008E268A /* EditMeetupAssembler.swift in Sources */,
 				40BF713F1FDC73DC00495B81 /* AddFriendRouter.swift in Sources */,
 				409B2BF11FBE619B000A7F16 /* ProfileViewModel.swift in Sources */,
