@@ -117,6 +117,7 @@
 		40FCE5732002CB7A004511D0 /* SendInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FCE5722002CB7A004511D0 /* SendInviteViewController.swift */; };
 		40FCE5752002CBE9004511D0 /* SendInviteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FCE5742002CBE9004511D0 /* SendInviteViewModel.swift */; };
 		40FCE5772002CC0B004511D0 /* SendInviteAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FCE5762002CC0B004511D0 /* SendInviteAssembler.swift */; };
+		40FCE57A2002FDEE004511D0 /* SendInviteMeetupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FCE5792002FDEE004511D0 /* SendInviteMeetupCell.swift */; };
 		7A829B1ABE926069F348D6A9 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FC7AE0B22C700F88B3060C9 /* Pods_OneSignalNotificationServiceExtension.framework */; };
 		7BED1FB6487CD40A991B8614 /* Pods_FreshPlan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */; };
 		E14D1FEA1FDDCC0400E1BB0D /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14D1FE91FDDCC0400E1BB0D /* InviteViewController.swift */; };
@@ -267,6 +268,7 @@
 		40FCE5722002CB7A004511D0 /* SendInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInviteViewController.swift; sourceTree = "<group>"; };
 		40FCE5742002CBE9004511D0 /* SendInviteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInviteViewModel.swift; sourceTree = "<group>"; };
 		40FCE5762002CC0B004511D0 /* SendInviteAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInviteAssembler.swift; sourceTree = "<group>"; };
+		40FCE5792002FDEE004511D0 /* SendInviteMeetupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInviteMeetupCell.swift; sourceTree = "<group>"; };
 		66A7C6AA0E7580B232CBDCD6 /* Pods_FreshPlan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FreshPlan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		699D5F19A2CE2F80446D02FF /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		961AF7C9502FB2E5362945B5 /* Pods-FreshPlan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FreshPlan.release.xcconfig"; path = "Pods/Target Support Files/Pods-FreshPlan/Pods-FreshPlan.release.xcconfig"; sourceTree = "<group>"; };
@@ -711,6 +713,7 @@
 		40FCE5782002CD9A004511D0 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				40FCE5792002FDEE004511D0 /* SendInviteMeetupCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -1112,6 +1115,7 @@
 				E14D1FEC1FDDCC3A00E1BB0D /* InviteViewModel.swift in Sources */,
 				4079B1541FC47E86007E9407 /* CacheStore.swift in Sources */,
 				40BD70101F910F53005B3B9D /* MeetupViewController.swift in Sources */,
+				40FCE57A2002FDEE004511D0 /* SendInviteMeetupCell.swift in Sources */,
 				409B2BFA1FBE65AF000A7F16 /* Friend.swift in Sources */,
 				4083BCD51FEE0D9B007D9B87 /* LocationViewModel.swift in Sources */,
 				40C429021FC3D08C004579A6 /* JSONDecoder+.swift in Sources */,
