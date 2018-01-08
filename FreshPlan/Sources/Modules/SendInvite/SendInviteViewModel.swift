@@ -70,19 +70,22 @@ public class SendInviteViewModel: SendInviteViewModelProtocol {
     meetup
       .asObservable()
       .filterNil()
-      .map { meetup -> Observable<[User]> in
+      .map { meetup -> Observable<([User], [User])> in
         if let jwt = Token.decodeJWT, let userId = jwt.body["userId"] as? Int {
           let users = meetup.invitations.map { $0.invitee }
           let requests = self.requestUsers(userId: userId)
-          return requests.map { reqUsers in
-            return reqUsers.filter { filteredUsers in
-              return !users.contains(where: { $0.id != filteredUsers.id })
-            }
-          }
+          return requests.map { ($0, users) }
         }
         return Observable.empty()
       }
       .flatMap { $0 }
+      .map { user -> [User] in
+        if user.0.count > user.1.count {
+          return Array(Set(user.0).subtracting(user.1))
+        } else {
+          return Array(Set(user.1).subtracting(user.0))
+        }
+      }
       .map { users in
         return users.map { user in
           return SectionItem.friend(id: user.id, displayName: user.displayName, email: user.email, checked: false)
