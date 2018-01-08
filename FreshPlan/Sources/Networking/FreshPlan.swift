@@ -32,6 +32,7 @@ public enum FreshPlan {
   case addMeetup(String, String, String, String, String, String)
   case editMeetup(Int, String, String, String, String, String, String)
   case acceptInvite(Int)
+  case sendInvite(Int, Int)
 }
 
 extension FreshPlan: TargetType {
@@ -78,13 +79,15 @@ extension FreshPlan: TargetType {
       return "/invites/\(inviteId)"
     case .acceptInvite(let inviteId):
       return "/invites/\(inviteId)"
+    case .sendInvite(_, _):
+      return "/invites/"
     }
 	}
 	
 	// type of method (POST/GET/PATCH/DELETE)
 	public var method: Moya.Method {
 		switch self {
-		case .login, .register, .verify, .resend, .sendFriendRequest, .addMeetup:
+		case .login, .register, .verify, .resend, .sendFriendRequest, .addMeetup, .sendInvite:
 			return .post
 		case .user, .friends, .friendSearch, .friendRequests, .friendRequest, .meetup, .getMeetup, .invitations:
 			return .get
@@ -167,6 +170,13 @@ extension FreshPlan: TargetType {
         ],
         encoding: JSONEncoding.default
       )
+    case .sendInvite(let inviteId, let meetupId):
+      return .requestParameters(parameters: [
+        "userId": inviteId,
+        "meetupId": meetupId
+      ],
+      encoding: JSONEncoding.default
+      )
     }
 	}
 	
@@ -181,7 +191,7 @@ extension FreshPlan: TargetType {
 			return ["Content-Type": "application/json"]		
     case .user, .friends, .acceptFriend, .friendSearch, .sendFriendRequest, .friendRequest, .friendRequests, .meetup,
          .getMeetup, .deleteMeetup, .addMeetup, .editMeetup, .invitations, .deleteInvitation, .updateUserPushNotification,
-         .deleteFriend, .acceptInvite:
+         .deleteFriend, .acceptInvite, .sendInvite:
 			return ["Content-Type": "application/json", "Authorization": UserDefaults.standard.string(forKey: "token")!]
 		}
 	}

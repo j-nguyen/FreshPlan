@@ -200,7 +200,7 @@
 		4079B1531FC47E86007E9407 /* CacheStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheStore.swift; sourceTree = "<group>"; };
 		4079B1551FC49367007E9407 /* ProfileUserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserInfoCell.swift; sourceTree = "<group>"; };
 		4081B6251FF5F71B00302315 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		4081B6271FF5F73E00302315 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewModel.swift; path = /Users/allanlin/Desktop/FreshPlan/FreshPlan/Sources/Modules/Settings/SettingsViewModel.swift; sourceTree = "<absolute>"; };
+		4081B6271FF5F73E00302315 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewModel.swift; path = /Users/johnnynguyen/Documents/Projects/FreshPlan/FreshPlan/Sources/Modules/Settings/SettingsViewModel.swift; sourceTree = "<absolute>"; };
 		4081B6291FF5F75800302315 /* SettingsAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAssembler.swift; sourceTree = "<group>"; };
 		4081B62D1FF6044300302315 /* ProfileFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFriendCell.swift; sourceTree = "<group>"; };
 		4083BCD21FEE0D5F007D9B87 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };

@@ -12,14 +12,121 @@ import Moya
 import RxDataSources
 
 public protocol SendInviteViewModelProtocol {
+  var invites: Variable<[SendInviteViewModel.Section]> { get }
+  var meetup: PublishSubject<Meetup> { get }
+  var friends: PublishSubject<[User]> { get }
   
+  var addedInvites: Variable<[Int]> { get }
+  var sendInvite: PublishSubject<Void> { get }
+  var sendInviteSuccess: PublishSubject<Void> { get }
 }
 
 public class SendInviteViewModel: SendInviteViewModelProtocol {
   private let provider: MoyaProvider<FreshPlan>
   
+  public var invites: Variable<[SendInviteViewModel.Section]> = Variable([])
+  public var addedInvites: Variable<[Int]> = Variable([])
+  public var sendInvite: PublishSubject<Void> = PublishSubject()
+  public var sendInviteSuccess: PublishSubject<Void> = PublishSubject()
+  
+  public var meetup: PublishSubject<Meetup> = PublishSubject()
+  public var friends: PublishSubject<[User]> = PublishSubject()
+  
+  private let disposeBag = DisposeBag()
+  
   public init(provider: MoyaProvider<FreshPlan>) {
     self.provider = provider
+    // set up the initial
+    setup()
+    // set up the observables here
+    let obsMeetup = meetup.asObservable().share()
+    // set up updated
+    setupUpdatedMeetup(obsMeetup)
+    // send invite
+    setupInvites(obsMeetup)
+  }
+  
+  private func setup() {
+    let initMeetup = Observable.just("Select your meetup").map { SectionItem.meetup(id: -1, title: $0) }
+    let sectionMeetup = initMeetup.map { Section.meetups(order: 0, title: "Meetup", items: [$0]) }
+    // set up the initial friends
+    let sectionFriends = Observable.just(Section.friends(order: 1, title: "Friends", items: []))
+    // Setup the from
+    Observable.from([sectionMeetup, sectionFriends])
+      .flatMap { $0 }
+      .toArray()
+      .map { $0.sorted(by: { $0.order < $1.order }) }
+      .bind(to: invites)
+      .disposed(by: disposeBag)
+  }
+  
+  private func setupUpdatedMeetup(_ meetup: Observable<Meetup>) {
+    // if a meetup has been presented, we'll show the new one
+    let newMeetup = meetup
+      .map { SectionItem.meetup(id: $0.id, title: $0.title) }
+      .map { Section.meetups(order: 0, title: "Meetup", items: [$0]) }
+    
+    let friends = meetup
+      .map { meetup -> Observable<[User]> in
+        if let jwt = Token.decodeJWT, let userId = jwt.body["userId"] as? Int {
+          let users = meetup.invitations.map { $0.invitee }
+          let requests = self.requestUsers(userId: userId)
+          return requests.map { reqUsers in
+            return reqUsers.filter { filteredUsers in
+              return !users.contains(where: { $0.id != filteredUsers.id })
+            }
+          }
+        }
+        return Observable.empty()
+      }
+      .flatMap { $0 }
+      .map { users in
+        return users.map { user in
+          return SectionItem.friend(id: user.id, displayName: user.displayName, email: user.email, checked: false)
+        }
+      }
+      .map { Section.friends(order: 1, title: "Friends", items: $0) }
+    
+    Observable.from([newMeetup, friends])
+      .flatMap { $0 }
+      .toArray()
+      .map { $0.sorted(by: { $0.order < $1.order }) }
+      .bind(to: invites)
+      .disposed(by: disposeBag)
+  }
+  
+  private func setupInvites(_ meetup: Observable<Meetup>) {
+    // check for an invite being sent
+    let addedInvites = Observable.from(self.addedInvites.value)
+    
+    sendInvite
+      .asObservable()
+      .flatMap { meetup }
+      .map { meetup -> Observable<(Meetup, Int)> in return addedInvites.map { (meetup, $0) } }
+      .flatMap { $0 }
+      .flatMap { [unowned self] invite in return self.requestSendInvite(userId: invite.1, meetupId: invite.0.id).catchErrorJustComplete() }
+      .subscribe({ [weak self] event in
+        guard let this = self else { return }
+        switch event {
+        case .completed:
+          this.sendInviteSuccess.onNext(())
+        default:
+          return
+        }
+      })
+      .disposed(by: disposeBag)
+  }
+  
+  private func requestUsers(userId id: Int) -> Observable<[User]> {
+    return provider.rx.request(.friends(id))
+      .asObservable()
+      .map([User].self, using: JSONDecoder.Decode)
+      .catchErrorJustReturn([])
+  }
+  
+  private func requestSendInvite(userId: Int, meetupId id: Int) -> Observable<Response> {
+    return provider.rx.request(.sendInvite(userId, id))
+      .asObservable()
   }
 }
 
