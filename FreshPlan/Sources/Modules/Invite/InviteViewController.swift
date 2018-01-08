@@ -93,7 +93,7 @@ public final class InviteViewController: UIViewController {
         cell.startDate.on(.next(dataSource[index].meetupStartDate))
         cell.endDate.on(.next(dataSource[index].meetupEndDate))
         return cell
-      }
+    }
     )
     
     dataSource.titleForHeaderInSection = { _, _ in return "" }
@@ -103,6 +103,24 @@ public final class InviteViewController: UIViewController {
     dataSource.canEditRowAtIndexPath = { _, _ in
       return true
     }
+    
+    viewModel.acceptInvitaionSuccess
+      .asObservable()
+      .filterNil()
+      .subscribe(onNext: { displayName in
+        let message = MDCSnackbarMessage(text: "Successfully accepted Invitation for \(displayName).")
+        MDCSnackbarManager.show(message)
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel.declineInvitationSuccess
+      .asObservable()
+      .filterNil()
+      .subscribe(onNext: { displayName in
+        let message = MDCSnackbarMessage(text: "Successfully declined Invitation for \(displayName).")
+        MDCSnackbarManager.show(message)
+      })
+      .disposed(by: disposeBag)
     
     viewModel.invitations
       .asObservable()
@@ -182,5 +200,30 @@ public final class InviteViewController: UIViewController {
   
   deinit {
     appBar.navigationBar.unobserveNavigationItem()
+  }
+}
+
+// MARK:  TableViewDelegate
+extension InviteViewController: UITableViewDelegate {
+  public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    let acceptInvite = UITableViewRowAction(
+      style: .normal,
+      title: "Accept",
+      handler: { [weak self] _, index in
+        guard let this = self else { return }
+        this.viewModel.acceptInvitation.on(.next(index))
+      }
+    )
+    let declineInvite = UITableViewRowAction(
+      style: .normal,
+      title: "Decline",
+      handler: { [weak self] _, index in
+        guard let this = self else { return }
+        this.viewModel.declineInvitation.on(.next(indexPath))
+      }
+    )
+    acceptInvite.backgroundColor = MDCPalette.green.tint400
+    declineInvite.backgroundColor = MDCPalette.red.tint400
+    return [declineInvite, acceptInvite]
   }
 }
