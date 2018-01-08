@@ -61,7 +61,6 @@ public final class AddMeetupDateCell: UITableViewCell {
       .when(.recognized)
       .subscribe(onNext: { [weak self] _ in
         guard let this = self else { return }
-        print ("heyy")
         this.textField.becomeFirstResponder()
       })
       .disposed(by: disposeBag)
