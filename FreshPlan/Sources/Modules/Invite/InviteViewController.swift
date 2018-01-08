@@ -87,8 +87,6 @@ public final class InviteViewController: UIViewController {
         return true
       }
       
-      
-      
       viewModel.invitations
         .asObservable()
         .bind(to: tableView.rx.items(dataSource: dataSource))
@@ -107,14 +105,24 @@ public final class InviteViewController: UIViewController {
       view.addSubview(tableView)
       tableView.snp.makeConstraints{ $0.edges.equalTo(view) }
       
-//      viewModel.invitations
-//        .asObservable()
-//        .bind(to: tableView.rx.items(cellIdentifier: String(describing: InviteCell.self))) { (index, invite, cell) in
-//        cell.textLabel?.text = invite.inviter.displayName
-//          cell.detailTextLabel?.text = invite.inviter.email
-//
-//      }
-//      .disposed(by: disposeBag)
+      viewModel.acceptInvitaionSuccess
+        .asObservable()
+        .filterNil()
+        .subscribe(onNext: { displayName in
+          let message = MDCSnackbarMessage(text: "Successfully accepted Invitation for \(displayName).")
+          MDCSnackbarManager.show(message)
+        })
+        .disposed(by: disposeBag)
+      
+      viewModel.declineInvitationSuccess
+        .asObservable()
+        .filterNil()
+        .subscribe(onNext: { displayName in
+          let message = MDCSnackbarMessage(text: "Successfully declined Invitation for \(displayName).")
+          MDCSnackbarManager.show(message)
+        })
+        .disposed(by: disposeBag)
+
     }
   
   // EmptyInviteView
@@ -170,6 +178,28 @@ extension InviteViewController: UITableViewDelegate {
             appBar.headerViewController.headerView.trackingScrollDidEndDecelerating()
         }
     }
+  
+  public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    let acceptInvite = UITableViewRowAction(
+      style: .normal,
+      title: "Accept",
+      handler: { [weak self] _, index in
+        guard let this = self else { return }
+        this.viewModel.acceptInvitation.on(.next(index))
+      }
+    )
+    let declineInvite = UITableViewRowAction(
+      style: .normal,
+      title: "Decline",
+      handler: { [weak self] _, index in
+        guard let this = self else { return }
+        this.viewModel.declineInvitation.on(.next(indexPath))
+      }
+    )
+    acceptInvite.backgroundColor = MDCPalette.green.tint400
+    declineInvite.backgroundColor = MDCPalette.red.tint400
+    return [declineInvite, acceptInvite]
+  }
 
 }
 
