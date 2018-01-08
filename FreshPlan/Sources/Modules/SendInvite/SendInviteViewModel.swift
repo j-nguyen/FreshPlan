@@ -10,12 +10,15 @@ import Foundation
 import RxSwift
 import Moya
 import RxDataSources
+import UIKit
 
 public protocol SendInviteViewModelProtocol {
   var invites: Variable<[SendInviteViewModel.Section]> { get }
   var meetup: PublishSubject<Meetup> { get }
   var friends: PublishSubject<[User]> { get }
   
+  // set up the invites
+  var inviteClicked: PublishSubject<IndexPath> { get }
   var addedInvites: Variable<[Int]> { get }
   var sendInvite: PublishSubject<Void> { get }
   var sendInviteSuccess: PublishSubject<Void> { get }
@@ -28,6 +31,7 @@ public class SendInviteViewModel: SendInviteViewModelProtocol {
   public var addedInvites: Variable<[Int]> = Variable([])
   public var sendInvite: PublishSubject<Void> = PublishSubject()
   public var sendInviteSuccess: PublishSubject<Void> = PublishSubject()
+  public var inviteClicked: PublishSubject<IndexPath> = PublishSubject()
   
   public var meetup: PublishSubject<Meetup> = PublishSubject()
   public var friends: PublishSubject<[User]> = PublishSubject()
@@ -115,6 +119,16 @@ public class SendInviteViewModel: SendInviteViewModelProtocol {
         }
       })
       .disposed(by: disposeBag)
+    
+    inviteClicked
+      .asObservable()
+      .subscribe(onNext: { [weak self] index in
+        guard let this = self else { return }
+        // fixed it up
+        let newChecked = this.invites.value[index.section].check(at: index.row)
+        this.invites.value[index.section] = newChecked
+      })
+      .disposed(by: disposeBag)
   }
   
   private func requestUsers(userId id: Int) -> Observable<[User]> {
@@ -169,6 +183,23 @@ extension SendInviteViewModel.Section {
       return items.map { $0 }
     }
   }
+  
+  /**
+   Unchecks or checks the mark based on what's given
+   */
+  public func check(at index: Int) -> SendInviteViewModel.Section {
+    switch self {
+    case .friends(order, title, _):
+      var newItems = items
+      switch newItems[index] {
+      case let .friend(id, displayName, email, checked):
+        newItems[index] = .friend(id: id, displayName: displayName, email: email, checked: !checked)
+      default: break
+      }
+      return SendInviteViewModel.Section.friends(order: order, title: title, items: newItems)
+    default: return self
+    }
+  }
 }
 
 extension SendInviteViewModel.SectionItem {
@@ -212,5 +243,11 @@ extension SendInviteViewModel.SectionItem: IdentifiableType {
 extension SendInviteViewModel.SectionItem: Equatable {
   public static func ==(lhs: SendInviteViewModel.SectionItem, rhs: SendInviteViewModel.SectionItem) -> Bool {
     return lhs.id == rhs.id
+  }
+}
+
+extension SendInviteViewModel.Section: Equatable {
+  public static func ==(lhs: SendInviteViewModel.Section, rhs: SendInviteViewModel.Section) -> Bool {
+    return lhs.identity == rhs.identity
   }
 }
