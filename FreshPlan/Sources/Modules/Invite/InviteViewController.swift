@@ -94,7 +94,7 @@ public final class InviteViewController: UIViewController {
         cell.startDate.on(.next(dataSource[index].meetupStartDate))
         cell.endDate.on(.next(dataSource[index].meetupEndDate))
         return cell
-    }
+      }
     )
     
     dataSource.titleForHeaderInSection = { _, _ in return "" }

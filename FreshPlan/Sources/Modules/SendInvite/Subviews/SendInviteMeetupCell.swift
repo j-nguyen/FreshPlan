@@ -40,7 +40,7 @@ public final class SendInviteMeetupCell: UITableViewCell{
   // initializer require for tableview cell
   // set the indentifier
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-    super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
     prepareView()
   }
   
@@ -51,7 +51,6 @@ public final class SendInviteMeetupCell: UITableViewCell{
   private func prepareView() {
     selectionStyle = .none
     prepareMeetupLabel()
-
   }
   
   private func prepareMeetupLabel() {
@@ -59,6 +58,11 @@ public final class SendInviteMeetupCell: UITableViewCell{
     meetupLabel.font = MDCTypography.body1Font()
     
     contentView.addSubview(meetupLabel)
+    
+    meetupLabel.snp.makeConstraints { make in
+      make.left.equalTo(contentView).inset(10)
+      make.centerY.equalTo(contentView)
+    }
   }
   
   private func prepareTextField() {
@@ -69,6 +73,11 @@ public final class SendInviteMeetupCell: UITableViewCell{
     textField.placeholder = "Click to chose Meetup"
     
     contentView.addSubview(textField)
+    
+    textField.snp.makeConstraints { make in
+      make.left.equalTo(meetupLabel.snp.right).offset(5)
+      make.right.equalTo(contentView)
+    }
     
     placeholder
       .asObservable()

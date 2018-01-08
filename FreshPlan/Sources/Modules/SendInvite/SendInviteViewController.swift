@@ -99,6 +99,8 @@ public final class SendInviteViewController: UIViewController {
     
     dataSource.titleForHeaderInSection = { _, _ in  return "" }
     
+    dataSource.animationConfiguration = AnimationConfiguration(insertAnimation: .automatic, reloadAnimation: .automatic, deleteAnimation: .automatic)
+    
     dataSource.canEditRowAtIndexPath = { dataSource, index in
       switch dataSource[index] {
       case .friend:

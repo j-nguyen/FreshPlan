@@ -27,7 +27,7 @@ public final class SendInviteFriendCell: UITableViewCell {
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
     prepareView()
-    prepareImageView()
+    
   }
   
   public required init?(coder aDecoder: NSCoder) {
@@ -47,6 +47,8 @@ public final class SendInviteFriendCell: UITableViewCell {
       .asObservable()
       .bind(to: detailTextLabel!.rx.text)
       .disposed(by: disposeBag)
+    
+    prepareImageView()
   }
   
 public func prepareImageView() {
