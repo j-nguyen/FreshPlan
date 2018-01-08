@@ -43,7 +43,7 @@ public class InviteViewModel: InviteViewModelProtocol {
     refreshContent
       .asObservable()
       .flatMap { self.requestInvitation() }
-      .map { $0.sorted(by: { $0.id < $1.id }) }
+      .map { $0.filter { !$0.accepted } }
       .map { [Section(header: "", items: $0)] }
       .do(onNext: { [weak self] meetup in
         self?.refreshSuccess.on(.next(()))
@@ -53,6 +53,7 @@ public class InviteViewModel: InviteViewModelProtocol {
       .disposed(by: disposeBag)
     
     requestInvitation()
+      .map { $0.filter { !$0.accepted } }
       .map { Section(header: "", items: $0) }
       .toArray()
       .bind(to: invitations)

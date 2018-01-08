@@ -20,6 +20,7 @@ public final class SendInviteViewController: UIViewController {
   // MARK: App Bar
   fileprivate let appBar = MDCAppBar()
   private var closeButton: UIBarButtonItem!
+  private var sendButton: UIBarButtonItem!
   
   // MARK: Views
   private var tableView: UITableView!
@@ -61,6 +62,7 @@ public final class SendInviteViewController: UIViewController {
     prepareTableView()
     prepareNavigationBar()
     prepareNavigationCloseButton()
+    prepareNavigationSendButton()
     appBar.addSubviewsToParent()
   }
   
@@ -97,9 +99,8 @@ public final class SendInviteViewController: UIViewController {
           cell.meetups.value = meetups
           
           cell.modelSelected
-            .subscribe(onNext: { meetup in
-              this.viewModel.meetup.onNext(meetup)
-            })
+            .asObservable()
+            .bind(to: this.viewModel.meetup)
             .disposed(by: this.disposeBag)
           
           return cell
@@ -165,6 +166,39 @@ public final class SendInviteViewController: UIViewController {
       .disposed(by: disposeBag)
     
     navigationItem.leftBarButtonItem = closeButton
+  }
+  
+  private func prepareNavigationSendButton() {
+    sendButton = UIBarButtonItem(
+      image: UIImage(named: "ic_send")?.withRenderingMode(.alwaysTemplate),
+      style: .plain,
+      target: nil,
+      action: nil
+    )
+    sendButton.tintColor = .white
+    
+    viewModel.addedInvites
+      .asObservable()
+      .map { $0.isNotEmpty }
+      .bind(to: sendButton.rx.isEnabled)
+      .disposed(by: disposeBag)
+    
+    sendButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        self?.viewModel.sendInvite.onNext(())
+      }).disposed(by: disposeBag)
+    
+    viewModel.sendInviteSuccess
+      .asObservable()
+      .take(1)
+      .subscribe(onNext: { [weak self] count in
+        self?.dismiss(animated: true, completion: {
+          let message = MDCSnackbarMessage(text: "Sent out \(count) invites!")
+          MDCSnackbarManager.show(message)
+        })
+      }).disposed(by: disposeBag)
+    
+    navigationItem.rightBarButtonItem = sendButton
   }
   
   deinit {

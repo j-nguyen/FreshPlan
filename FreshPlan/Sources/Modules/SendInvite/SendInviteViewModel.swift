@@ -14,14 +14,14 @@ import UIKit
 
 public protocol SendInviteViewModelProtocol {
   var invites: Variable<[SendInviteViewModel.Section]> { get }
-  var meetup: PublishSubject<Meetup> { get }
+  var meetup: Variable<Meetup?> { get }
   var friends: PublishSubject<[User]> { get }
   
   // set up the invites
   var inviteClicked: PublishSubject<IndexPath> { get }
   var addedInvites: Variable<[Int]> { get }
   var sendInvite: PublishSubject<Void> { get }
-  var sendInviteSuccess: PublishSubject<Void> { get }
+  var sendInviteSuccess: PublishSubject<Int> { get }
 }
 
 public class SendInviteViewModel: SendInviteViewModelProtocol {
@@ -30,11 +30,14 @@ public class SendInviteViewModel: SendInviteViewModelProtocol {
   public var invites: Variable<[SendInviteViewModel.Section]> = Variable([])
   public var addedInvites: Variable<[Int]> = Variable([])
   public var sendInvite: PublishSubject<Void> = PublishSubject()
-  public var sendInviteSuccess: PublishSubject<Void> = PublishSubject()
+  public var sendInviteSuccess: PublishSubject<Int> = PublishSubject()
   public var inviteClicked: PublishSubject<IndexPath> = PublishSubject()
   
-  public var meetup: PublishSubject<Meetup> = PublishSubject()
+  public var meetup: Variable<Meetup?> = Variable(nil)
   public var friends: PublishSubject<[User]> = PublishSubject()
+  
+  public var sendTap: Observable<Void>!
+  public var sendSuccess: PublishSubject<Void> = PublishSubject()
   
   private let disposeBag = DisposeBag()
   
@@ -66,6 +69,7 @@ public class SendInviteViewModel: SendInviteViewModelProtocol {
     // if a meetup has been presented, we'll show the new one
     meetup
       .asObservable()
+      .filterNil()
       .map { meetup -> Observable<[User]> in
         if let jwt = Token.decodeJWT, let userId = jwt.body["userId"] as? Int {
           let users = meetup.invitations.map { $0.invitee }
@@ -97,23 +101,22 @@ public class SendInviteViewModel: SendInviteViewModelProtocol {
   
   private func setupInvites() {
     // check for an invite being sent
-    let addedInvites = Observable.from(self.addedInvites.value)
     
     sendInvite
       .asObservable()
-      .flatMap { [unowned self] in return self.meetup }
-      .map { meetup -> Observable<(Meetup, Int)> in return addedInvites.map { (meetup, $0) } }
-      .flatMap { $0 }
-      .flatMap { [unowned self] invite in return self.requestSendInvite(userId: invite.1, meetupId: invite.0.id).catchErrorJustComplete() }
-      .subscribe({ [weak self] event in
+      .flatMap { [unowned self] in return Observable.from(self.addedInvites.value) }
+      .flatMap { [unowned self] invite -> Observable<Response> in
+        return self.requestSendInvite(userId: invite, meetupId: self.meetup.value!.id)
+      }
+      .subscribe { [weak self] event in
         guard let this = self else { return }
+        
         switch event {
-        case .completed:
-          this.sendInviteSuccess.onNext(())
-        default:
-          return
+        case .next(_):
+          this.sendInviteSuccess.onNext(this.addedInvites.value.count)
+        default: break
         }
-      })
+      }
       .disposed(by: disposeBag)
     
     inviteClicked
@@ -121,6 +124,15 @@ public class SendInviteViewModel: SendInviteViewModelProtocol {
       .subscribe(onNext: { [weak self] index in
         guard let this = self else { return }
         // fixed it up
+        let invite = this.invites.value[index.section].items[index.row]
+        if !invite.checked {
+          this.addedInvites.value.append(invite.id)
+        } else {
+          if let index = this.addedInvites.value.index(of: invite.id) {
+            this.addedInvites.value.remove(at: index)
+          }
+        }
+        // set up the changes
         let newChecked = this.invites.value[index.section].check(at: index.row)
         this.invites.value[index.section] = newChecked
       })
@@ -135,8 +147,10 @@ public class SendInviteViewModel: SendInviteViewModelProtocol {
   }
   
   private func requestSendInvite(userId: Int, meetupId id: Int) -> Observable<Response> {
-    return provider.rx.request(.sendInvite(userId, id))
+    return self.provider.rx.request(.sendInvite(userId, id))
+      .filter(statusCodes: 200...299)
       .asObservable()
+      .catchErrorJustComplete()
   }
   
   private func requestMeetup() -> Observable<[Meetup]> {
