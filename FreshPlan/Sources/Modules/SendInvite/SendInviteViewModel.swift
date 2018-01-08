@@ -42,12 +42,10 @@ public class SendInviteViewModel: SendInviteViewModelProtocol {
     self.provider = provider
     // set up the initial
     setup()
-    // set up the observables here
-    let obsMeetup = meetup.asObservable().share()
     // set up updated
-    setupUpdatedMeetup(obsMeetup)
+    setupUpdatedMeetup()
     // send invite
-    setupInvites(obsMeetup)
+    setupInvites()
   }
   
   private func setup() {
@@ -62,13 +60,12 @@ public class SendInviteViewModel: SendInviteViewModelProtocol {
       .map { $0.sorted(by: { $0.order < $1.order }) }
       .bind(to: invites)
       .disposed(by: disposeBag)
-    
-    print (invites.value)
   }
   
-  private func setupUpdatedMeetup(_ meetup: Observable<Meetup>) {
+  private func setupUpdatedMeetup() {
     // if a meetup has been presented, we'll show the new one
     let newMeetup = meetup
+      .asObservable()
       .map { [unowned self] meetup -> Observable<(Meetup, [Meetup])> in
         return self.requestMeetup().map { (meetup, $0) }
       }
@@ -77,6 +74,7 @@ public class SendInviteViewModel: SendInviteViewModelProtocol {
       .map { Section.meetups(order: 0, title: "Meetup", items: [$0]) }
     
     let friends = meetup
+      .asObservable()
       .map { meetup -> Observable<[User]> in
         if let jwt = Token.decodeJWT, let userId = jwt.body["userId"] as? Int {
           let users = meetup.invitations.map { $0.invitee }
@@ -105,13 +103,13 @@ public class SendInviteViewModel: SendInviteViewModelProtocol {
       .disposed(by: disposeBag)
   }
   
-  private func setupInvites(_ meetup: Observable<Meetup>) {
+  private func setupInvites() {
     // check for an invite being sent
     let addedInvites = Observable.from(self.addedInvites.value)
     
     sendInvite
       .asObservable()
-      .flatMap { meetup }
+      .flatMap { [unowned self] in return self.meetup }
       .map { meetup -> Observable<(Meetup, Int)> in return addedInvites.map { (meetup, $0) } }
       .flatMap { $0 }
       .flatMap { [unowned self] invite in return self.requestSendInvite(userId: invite.1, meetupId: invite.0.id).catchErrorJustComplete() }

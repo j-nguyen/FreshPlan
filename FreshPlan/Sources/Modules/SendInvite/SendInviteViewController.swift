@@ -81,7 +81,8 @@ public final class SendInviteViewController: UIViewController {
     }
     
     dataSource = RxTableViewSectionedAnimatedDataSource<SendInviteViewModel.Section>(
-      configureCell: { dataSource, tableView, index, _ in
+      configureCell: { [weak self] dataSource, tableView, index, _ in
+        guard let this = self else { fatalError() }
         switch dataSource[index] {
         case let .friend(_, displayName, email, checked):
           let cell = tableView.dequeueCell(ofType: SendInviteFriendCell.self, for: index)
@@ -92,7 +93,14 @@ public final class SendInviteViewController: UIViewController {
         case let .meetup(_, title, meetups):
           let cell = tableView.dequeueCell(ofType: SendInviteMeetupCell.self, for: index)
           cell.placeholder.onNext(title)
-          cell.meetups.onNext(meetups)
+          cell.meetups.value = meetups
+          
+          cell.modelSelected
+            .subscribe(onNext: { meetup in
+              this.viewModel.meetup.onNext(meetup)
+            })
+            .disposed(by: this.disposeBag)
+          
           return cell
         }
       }

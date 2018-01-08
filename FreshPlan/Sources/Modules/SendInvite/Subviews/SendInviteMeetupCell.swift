@@ -19,7 +19,7 @@ public final class SendInviteMeetupCell: UITableViewCell{
   
   // MARK: Publish Subject
   public var placeholder: PublishSubject<String> = PublishSubject()
-  public var meetups: PublishSubject<[Meetup]> = PublishSubject()
+  public var meetups: Variable<[Meetup]> = Variable([])
   
   // MARK: Label
   private var meetupLabel: UILabel!
@@ -39,6 +39,13 @@ public final class SendInviteMeetupCell: UITableViewCell{
   private let disposeBag: DisposeBag = DisposeBag()
   
   private var inkViewController: MDCInkTouchController!
+  
+  // convenience operators
+  public var modelSelected: Observable<Meetup> {
+    return meetupPicker.rx.itemSelected
+      .asObservable()
+      .map { self.meetups.value[$0.row] }
+  }
   
   // initializer require for tableview cell
   // set the indentifier
@@ -120,6 +127,13 @@ public final class SendInviteMeetupCell: UITableViewCell{
     meetups
       .asObservable()
       .bind(to: meetupPicker.rx.items(adapter: adapter))
+      .disposed(by: disposeBag)
+    
+    meetupPicker.rx.itemSelected
+      .asObservable()
+      .map { [unowned self] (component, row) in return self.meetups.value[row] }
+      .map { $0.title }
+      .bind(to: textField.rx.text)
       .disposed(by: disposeBag)
     
     textField.inputView = meetupPicker
