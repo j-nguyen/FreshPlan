@@ -64,16 +64,7 @@ public class SendInviteViewModel: SendInviteViewModelProtocol {
   
   private func setupUpdatedMeetup() {
     // if a meetup has been presented, we'll show the new one
-    let newMeetup = meetup
-      .asObservable()
-      .map { [unowned self] meetup -> Observable<(Meetup, [Meetup])> in
-        return self.requestMeetup().map { (meetup, $0) }
-      }
-      .flatMap { $0 }
-      .map { SectionItem.meetup(id: $0.0.id, title: $0.0.title, meetups: $0.1) }
-      .map { Section.meetups(order: 0, title: "Meetup", items: [$0]) }
-    
-    let friends = meetup
+    meetup
       .asObservable()
       .map { meetup -> Observable<[User]> in
         if let jwt = Token.decodeJWT, let userId = jwt.body["userId"] as? Int {
@@ -94,13 +85,14 @@ public class SendInviteViewModel: SendInviteViewModelProtocol {
         }
       }
       .map { Section.friends(order: 1, title: "Friends", items: $0) }
-    
-    Observable.from([newMeetup, friends])
-      .flatMap { $0 }
-      .toArray()
-      .map { $0.sorted(by: { $0.order < $1.order }) }
-      .bind(to: invites)
+      .subscribe(onNext: { [weak self] section in
+        guard let this = self else { return }
+        // we'll attempt to remove the last one, and add a new one
+        this.invites.value.removeLast()
+        this.invites.value.append(section)
+      })
       .disposed(by: disposeBag)
+    
   }
   
   private func setupInvites() {
@@ -200,11 +192,12 @@ extension SendInviteViewModel.Section {
    */
   public func check(at index: Int) -> SendInviteViewModel.Section {
     switch self {
-    case .friends(order, title, _):
+    case let .friends(order, title, _):
       var newItems = items
       switch newItems[index] {
       case let .friend(id, displayName, email, checked):
-        newItems[index] = .friend(id: id, displayName: displayName, email: email, checked: !checked)
+        let newVal = (checked) ? false : true
+        newItems[index] = .friend(id: id, displayName: displayName, email: email, checked: newVal)
       default: break
       }
       return SendInviteViewModel.Section.friends(order: order, title: title, items: newItems)
@@ -220,6 +213,14 @@ extension SendInviteViewModel.SectionItem {
     return id
   case let .friend(id, _, _, _):
     return id
+    }
+  }
+  
+  public var checked: Bool {
+    switch self {
+    case let .friend(_, _, _, checked):
+      return checked
+    default: return false
     }
   }
 }
@@ -253,7 +254,7 @@ extension SendInviteViewModel.SectionItem: IdentifiableType {
 
 extension SendInviteViewModel.SectionItem: Equatable {
   public static func ==(lhs: SendInviteViewModel.SectionItem, rhs: SendInviteViewModel.SectionItem) -> Bool {
-    return lhs.id == rhs.id
+    return lhs.id == rhs.id && lhs.checked == rhs.checked
   }
 }
 

@@ -44,7 +44,7 @@ public final class SendInviteMeetupCell: UITableViewCell{
   public var modelSelected: Observable<Meetup> {
     return meetupPicker.rx.itemSelected
       .asObservable()
-      .map { self.meetups.value[$0.row] }
+      .map { self.meetups.value[$0.component] }
   }
   
   // initializer require for tableview cell
@@ -115,23 +115,18 @@ public final class SendInviteMeetupCell: UITableViewCell{
   private func prepareMeetupPicker() {
     meetupPicker = UIPickerView()
     
-    adapter = RxPickerViewStringAdapter<[Meetup]>(
-      components: [],
-      numberOfComponents: { (_, _, _) in return 1 },
-      numberOfRowsInComponent: { (_, _, items, _) in return items.count },
-      titleForRow: { _, _, items, row, _ in
-        return items[row].title
-      }
-    )
-    
     meetups
       .asObservable()
-      .bind(to: meetupPicker.rx.items(adapter: adapter))
+      .bind(to: meetupPicker.rx.itemTitles) { _, item in
+        return item.title
+      }
       .disposed(by: disposeBag)
     
     meetupPicker.rx.itemSelected
       .asObservable()
-      .map { [unowned self] (component, row) in return self.meetups.value[row] }
+      .map { [unowned self] (component, row) -> Meetup in
+        return self.meetups.value[component]
+      }
       .map { $0.title }
       .bind(to: textField.rx.text)
       .disposed(by: disposeBag)

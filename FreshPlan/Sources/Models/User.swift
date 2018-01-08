@@ -18,3 +18,13 @@ public struct User: Decodable {
 	public let profileURL: String
 	public let createdAt: Date
 }
+
+extension User: Hashable, Equatable {
+  public var hashValue: Int {
+    return id
+  }
+  
+  public static func ==(lhs: User, rhs: User) -> Bool {
+    return lhs.id == rhs.id
+  }
+}

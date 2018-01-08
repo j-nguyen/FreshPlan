@@ -89,6 +89,7 @@ public final class SendInviteViewController: UIViewController {
           cell.displayName.onNext(displayName)
           cell.email.onNext(email)
           cell.checked.onNext(checked)
+                    
           return cell
         case let .meetup(_, title, meetups):
           let cell = tableView.dequeueCell(ofType: SendInviteMeetupCell.self, for: index)
@@ -124,6 +125,12 @@ public final class SendInviteViewController: UIViewController {
     viewModel.invites
       .asObservable()
       .bind(to: tableView.rx.items(dataSource: dataSource))
+      .disposed(by: disposeBag)
+    
+    tableView.rx.itemSelected
+      .asObservable()
+      .filter { $0.section > 0 }
+      .bind(to: viewModel.inviteClicked)
       .disposed(by: disposeBag)
   }
   
