@@ -71,8 +71,9 @@ public final class SendInviteMeetupCell: UITableViewCell{
     contentView.addSubview(textField)
     
     placeholder
-    .asObservable()
-    .bind(to: textField.rx.text)
+      .asObservable()
+      .bind(to: textField.rx.text)
+      .disposed(by: disposeBag)
   }
   
   private func prepareMeetupPicker() {

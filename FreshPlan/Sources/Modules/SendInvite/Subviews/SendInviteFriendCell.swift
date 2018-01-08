@@ -16,9 +16,10 @@ public final class SendInviteFriendCell: UITableViewCell {
   //MARK: Publish Subjects
   public var displayName: PublishSubject<String> = PublishSubject()
   public var email: PublishSubject<String> = PublishSubject()
+  public var checked: PublishSubject<Bool> = PublishSubject()
   
   //MARK: ImageView
-  private var imageView: UIImageView!
+  private var inviterImageView: UIImageView!
   
   //MARK: disposeBag
   public let disposeBag: DisposeBag = DisposeBag()
@@ -37,8 +38,15 @@ public final class SendInviteFriendCell: UITableViewCell {
     selectionStyle = .none
     separatorInset = .zero
     
-    textLabel!.rx.text
-    detailTextLabel!.rx.text
+    displayName
+      .asObservable()
+      .bind(to: textLabel!.rx.text)
+      .disposed(by: disposeBag)
+    
+    email
+      .asObservable()
+      .bind(to: detailTextLabel!.rx.text)
+      .disposed(by: disposeBag)
   }
   
 public func prepareImageView() {
@@ -49,9 +57,8 @@ public func prepareImageView() {
     contentView.addSubview(inviterImageView)
     
     inviterImageView.snp.makeConstraints { (make) in
-      make.centerY.equalTo(textLabel)
-      make.left.equalTo(inviterLabel.snp.left).offset(25)
-      
+      make.centerY.equalTo(contentView)
+      make.right.equalTo(contentView).offset(30)
     }
   }
   
