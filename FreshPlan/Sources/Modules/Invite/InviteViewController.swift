@@ -79,6 +79,7 @@ public final class InviteViewController: UIViewController {
     tableView.separatorInset = .zero
     tableView.layoutMargins = .zero
     tableView.rowHeight = 80
+    tableView.rx.setDelegate(self).disposed(by: disposeBag)
     tableView.registerCell(InviteCell.self)
     
     view.addSubview(tableView)
