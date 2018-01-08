@@ -109,7 +109,7 @@ public final class InviteViewController: UIViewController {
         .asObservable()
         .filterNil()
         .subscribe(onNext: { displayName in
-          let message = MDCSnackbarMessage(text: "Successfully accepted Invitation.")
+          let message = MDCSnackbarMessage(text: "Successfully accepted Invitation for \(displayName).")
           MDCSnackbarManager.show(message)
         })
         .disposed(by: disposeBag)
@@ -118,7 +118,7 @@ public final class InviteViewController: UIViewController {
         .asObservable()
         .filterNil()
         .subscribe(onNext: { displayName in
-          let message = MDCSnackbarMessage(text: "Successfully declined Invitation.")
+          let message = MDCSnackbarMessage(text: "Successfully declined Invitation for \(displayName).")
           MDCSnackbarManager.show(message)
         })
         .disposed(by: disposeBag)
