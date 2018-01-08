@@ -15,7 +15,9 @@ public enum FreshPlan {
 	case register(String, String, String, String?)
 	case verify(String, Int)
 	case user(Int)
+  case updateUserPushNotification(Int, String)
   case friends(Int)
+  case deleteFriend(Int, Int)
   case friendSearch(String)
   case acceptFriend(Int, Int)
   case resend(String)
@@ -66,6 +68,10 @@ extension FreshPlan: TargetType {
       return "/users/\(userId)/friends/requests"
     case .friendRequest(let userId, let friendId):
       return "/users/\(userId)/friends/\(friendId)/requests"
+    case .deleteFriend(let userId, let friendId):
+      return "/users/\(userId)/friends/\(friendId)"
+    case .updateUserPushNotification(let userId, _):
+      return "/users/\(userId)"
     case .invitations:
       return "/invites"
     case .deleteInvitation(let inviteId):
@@ -82,9 +88,9 @@ extension FreshPlan: TargetType {
 			return .post
 		case .user, .friends, .friendSearch, .friendRequests, .friendRequest, .meetup, .getMeetup, .invitations:
 			return .get
-    case .acceptFriend, .editMeetup, .acceptInvite:
+    case .acceptFriend, .editMeetup, .acceptInvite, .updateUserPushNotification:
       return .patch
-    case .deleteMeetup, .deleteInvitation:
+    case .deleteMeetup, .deleteInvitation, .deleteFriend:
       return .delete
 		}
 	}
@@ -114,7 +120,7 @@ extension FreshPlan: TargetType {
 			return .requestParameters(parameters: ["email": email, "code": code], encoding: JSONEncoding.default)
     case let .friendSearch(query):
       return .requestParameters(parameters: ["search": query], encoding: URLEncoding.default)
-    case .user, .friends, .friendRequests, .friendRequest, .meetup, .getMeetup, .deleteMeetup, .invitations, .deleteInvitation:
+    case .user, .friends, .friendRequests, .friendRequest, .meetup, .getMeetup, .deleteMeetup, .invitations, .deleteInvitation, .deleteFriend:
 			return .requestPlain
     case .acceptFriend:
       return .requestParameters(
@@ -155,6 +161,12 @@ extension FreshPlan: TargetType {
         parameters: ["accepted": true],
         encoding: JSONEncoding.default
       )
+    case let .updateUserPushNotification(_, deviceToken):
+      return .requestParameters(parameters: [
+          "deviceToken": deviceToken
+        ],
+        encoding: JSONEncoding.default
+      )
     }
 	}
 	
@@ -166,7 +178,10 @@ extension FreshPlan: TargetType {
 	public var headers: [String: String]? {
 		switch self {
 		case .login, .register, .verify, .resend:
-			return ["Content-Type": "application/json"]		case .user, .friends, .acceptFriend, .friendSearch, .sendFriendRequest, .friendRequest, .friendRequests, .meetup, .getMeetup, .deleteMeetup, .addMeetup, .editMeetup, .invitations, .deleteInvitation, .acceptInvite:
+			return ["Content-Type": "application/json"]		
+    case .user, .friends, .acceptFriend, .friendSearch, .sendFriendRequest, .friendRequest, .friendRequests, .meetup,
+         .getMeetup, .deleteMeetup, .addMeetup, .editMeetup, .invitations, .deleteInvitation, .updateUserPushNotification,
+         .deleteFriend, .acceptInvite:
 			return ["Content-Type": "application/json", "Authorization": UserDefaults.standard.string(forKey: "token")!]
 		}
 	}

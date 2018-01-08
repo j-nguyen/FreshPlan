@@ -28,6 +28,9 @@ public class MeetupDetailViewController: UIViewController {
   private var dataSource: RxTableViewSectionedReloadDataSource<MeetupDetailViewModel.Section>!
   private var refreshControl: UIRefreshControl!
   
+  // MARK: Gesture
+  private var existingInteractivePopGestureRecognizerDelegate: UIGestureRecognizerDelegate?
+  
   private let disposeBag: DisposeBag = DisposeBag()
   
   public convenience init(viewModel: MeetupDetailViewModel, router: MeetupDetailRouter) {
@@ -50,7 +53,28 @@ public class MeetupDetailViewController: UIViewController {
     super.viewWillAppear(animated)
     setNeedsStatusBarAppearanceUpdate()
     
+    // Hold reference to current interactivePopGestureRecognizer delegate
+    if let delegate = navigationController?.interactivePopGestureRecognizer?.delegate {
+      existingInteractivePopGestureRecognizerDelegate = delegate
+    }
+    
     navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
+  
+  public override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    // Set interactivePopGestureRecognizer delegate to nil
+    navigationController?.interactivePopGestureRecognizer?.delegate = nil
+  }
+  
+  public override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    
+    // Return interactivePopGestureRecognizer delegate to previously held object
+    if let delegate = existingInteractivePopGestureRecognizerDelegate {
+      navigationController?.interactivePopGestureRecognizer?.delegate = delegate
+    }
   }
   
   public override var childViewControllerForStatusBarStyle: UIViewController? {
@@ -116,8 +140,9 @@ public class MeetupDetailViewController: UIViewController {
     dataSource = RxTableViewSectionedReloadDataSource<MeetupDetailViewModel.Section>(
       configureCell: { (dataSource, tableView, index, section) in
       switch dataSource[index] {
-      case let .title(_, startDate, endDate):
+      case let .title(_, host, startDate, endDate):
         let cell = tableView.dequeueCell(ofType: MeetupTitleCell.self, for: index)
+        cell.title.on(.next(host))
         cell.startDate.on(.next(startDate))
         cell.endDate.on(.next(endDate))
         return cell

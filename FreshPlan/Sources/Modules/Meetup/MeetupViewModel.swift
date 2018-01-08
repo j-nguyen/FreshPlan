@@ -47,12 +47,14 @@ public class MeetupViewModel: MeetupViewModelProtocol {
       .do(onNext: { [weak self] meetup in
         self?.refreshSuccess.on(.next(()))
       })
+      .catchErrorJustReturn([])
       .bind(to: meetups)
       .disposed(by: disposeBag)
     
     self.requestMeetups()
       .map { $0.sorted(by: { $0.id < $1.id }) }
       .map { [Section(header: "", items: $0)] }
+      .catchErrorJustReturn([])
       .bind(to: meetups)
       .disposed(by: disposeBag)
   }
