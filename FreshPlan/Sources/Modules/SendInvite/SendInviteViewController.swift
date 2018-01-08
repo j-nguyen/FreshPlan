@@ -66,11 +66,11 @@ public final class SendInviteViewController: UIViewController {
   
   private func prepareTableView() {
     tableView = UITableView()
-    tableView.estimatedRowHeight = 44
-    tableView.rowHeight = 44
+    tableView.estimatedRowHeight = 70
     tableView.layoutMargins = .zero
     tableView.separatorInset = .zero
     tableView.separatorStyle = .singleLine
+    tableView.rx.setDelegate(self).disposed(by: disposeBag)
     tableView.registerCell(SendInviteMeetupCell.self)
     tableView.registerCell(SendInviteFriendCell.self)
     
@@ -81,7 +81,7 @@ public final class SendInviteViewController: UIViewController {
     }
     
     dataSource = RxTableViewSectionedAnimatedDataSource<SendInviteViewModel.Section>(
-      configureCell: { dataSource, tableView, index, model in
+      configureCell: { dataSource, tableView, index, _ in
         switch dataSource[index] {
         case let .friend(_, displayName, email, checked):
           let cell = tableView.dequeueCell(ofType: SendInviteFriendCell.self, for: index)
@@ -89,15 +89,18 @@ public final class SendInviteViewController: UIViewController {
           cell.email.onNext(email)
           cell.checked.onNext(checked)
           return cell
-        case let .meetup(_, title):
+        case let .meetup(_, title, meetups):
           let cell = tableView.dequeueCell(ofType: SendInviteMeetupCell.self, for: index)
           cell.placeholder.onNext(title)
+          cell.meetups.onNext(meetups)
           return cell
         }
       }
     )
     
-    dataSource.titleForHeaderInSection = { _, _ in  return "" }
+    dataSource.titleForHeaderInSection = { dataSource, index in
+      return index == 0 ? "" : dataSource[index].title
+    }
     
     dataSource.animationConfiguration = AnimationConfiguration(insertAnimation: .automatic, reloadAnimation: .automatic, deleteAnimation: .automatic)
     
@@ -105,7 +108,8 @@ public final class SendInviteViewController: UIViewController {
       switch dataSource[index] {
       case .friend:
         return true
-      default: return false
+      default:
+        return false
       }
     }
     
@@ -150,5 +154,16 @@ public final class SendInviteViewController: UIViewController {
   
   deinit {
     appBar.navigationBar.unobserveNavigationItem()
+  }
+}
+
+extension SendInviteViewController: UITableViewDelegate {
+  public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    switch dataSource[indexPath] {
+    case .friend:
+      return UITableViewAutomaticDimension
+    default:
+      return 50
+    }
   }
 }

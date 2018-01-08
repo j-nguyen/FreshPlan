@@ -13,11 +13,13 @@ import SnapKit
 import RxCocoa
 import UIKit
 import Moya
+import RxDataSources
 
 public final class SendInviteMeetupCell: UITableViewCell{
   
   // MARK: Publish Subject
   public var placeholder: PublishSubject<String> = PublishSubject()
+  public var meetups: PublishSubject<[Meetup]> = PublishSubject()
   
   // MARK: Label
   private var meetupLabel: UILabel!
@@ -27,6 +29,7 @@ public final class SendInviteMeetupCell: UITableViewCell{
   
   // MARK: PickerView
   private var meetupPicker: UIPickerView!
+  private var adapter: RxPickerViewStringAdapter<[Meetup]>!
   
   // MARK: Tool Bar
   private var doneButton: UIBarButtonItem!
@@ -51,16 +54,30 @@ public final class SendInviteMeetupCell: UITableViewCell{
   private func prepareView() {
     selectionStyle = .none
     prepareMeetupLabel()
+    prepareTextField()
+    prepareMeetupPicker()
+    prepareToolBar()
+    prepareInkView()
+    
+    contentView.rx.tapGesture()
+      .asObservable()
+      .when(.recognized)
+      .subscribe(onNext: { [weak self] _ in
+        guard let this = self else { return }
+        this.textField.becomeFirstResponder()
+      })
+      .disposed(by: disposeBag)
   }
   
   private func prepareMeetupLabel() {
     meetupLabel = UILabel()
-    meetupLabel.font = MDCTypography.body1Font()
+    meetupLabel.text = "Meetup"
+    meetupLabel.font = MDCTypography.boldFont(from: MDCTypography.subheadFont())
     
     contentView.addSubview(meetupLabel)
     
     meetupLabel.snp.makeConstraints { make in
-      make.left.equalTo(contentView).inset(10)
+      make.left.equalTo(contentView).offset(10)
       make.centerY.equalTo(contentView)
     }
   }
@@ -70,17 +87,20 @@ public final class SendInviteMeetupCell: UITableViewCell{
     textField.font = MDCTypography.body1Font()
     textField.tintColor = .clear
     textField.textAlignment = .center
-    textField.placeholder = "Click to chose Meetup"
+    textField.delegate = self
+    textField.placeholder = "Click to choose Meetup"
     
     contentView.addSubview(textField)
     
     textField.snp.makeConstraints { make in
-      make.left.equalTo(meetupLabel.snp.right).offset(5)
-      make.right.equalTo(contentView)
+      make.left.equalTo(meetupLabel.snp.right)
+      make.right.equalTo(contentView).offset(-10)
+      make.centerY.equalTo(contentView)
     }
     
     placeholder
       .asObservable()
+      .filterEmpty()
       .bind(to: textField.rx.text)
       .disposed(by: disposeBag)
   }
@@ -88,6 +108,21 @@ public final class SendInviteMeetupCell: UITableViewCell{
   private func prepareMeetupPicker() {
     meetupPicker = UIPickerView()
     
+    adapter = RxPickerViewStringAdapter<[Meetup]>(
+      components: [],
+      numberOfComponents: { (_, _, _) in return 1 },
+      numberOfRowsInComponent: { (_, _, items, _) in return items.count },
+      titleForRow: { _, _, items, row, _ in
+        return items[row].title
+      }
+    )
+    
+    meetups
+      .asObservable()
+      .bind(to: meetupPicker.rx.items(adapter: adapter))
+      .disposed(by: disposeBag)
+    
+    textField.inputView = meetupPicker
   }
   
   private func prepareToolBar() {

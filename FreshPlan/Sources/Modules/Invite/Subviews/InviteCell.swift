@@ -85,9 +85,8 @@ public class InviteCell: UITableViewCell {
       make.left.equalTo(contentView).inset(10)
       
     }
+    
     inviteImageView.tintColor = MDCPalette.red.tint400
-    
-    
     
   }
   

@@ -51,7 +51,7 @@ public class SendInviteViewModel: SendInviteViewModelProtocol {
   }
   
   private func setup() {
-    let initMeetup = Observable.just("Select your meetup").map { SectionItem.meetup(id: -1, title: $0) }
+    let initMeetup = requestMeetup().map { SectionItem.meetup(id: -1, title: "", meetups: $0) }
     let sectionMeetup = initMeetup.map { Section.meetups(order: 0, title: "Meetup", items: [$0]) }
     // set up the initial friends
     let sectionFriends = Observable.just(Section.friends(order: 1, title: "Friends", items: []))
@@ -62,12 +62,18 @@ public class SendInviteViewModel: SendInviteViewModelProtocol {
       .map { $0.sorted(by: { $0.order < $1.order }) }
       .bind(to: invites)
       .disposed(by: disposeBag)
+    
+    print (invites.value)
   }
   
   private func setupUpdatedMeetup(_ meetup: Observable<Meetup>) {
     // if a meetup has been presented, we'll show the new one
     let newMeetup = meetup
-      .map { SectionItem.meetup(id: $0.id, title: $0.title) }
+      .map { [unowned self] meetup -> Observable<(Meetup, [Meetup])> in
+        return self.requestMeetup().map { (meetup, $0) }
+      }
+      .flatMap { $0 }
+      .map { SectionItem.meetup(id: $0.0.id, title: $0.0.title, meetups: $0.1) }
       .map { Section.meetups(order: 0, title: "Meetup", items: [$0]) }
     
     let friends = meetup
@@ -142,6 +148,13 @@ public class SendInviteViewModel: SendInviteViewModelProtocol {
     return provider.rx.request(.sendInvite(userId, id))
       .asObservable()
   }
+  
+  private func requestMeetup() -> Observable<[Meetup]> {
+    return provider.rx.request(.meetup)
+      .asObservable()
+      .map([Meetup].self, using: JSONDecoder.Decode)
+      .catchErrorJustReturn([])
+  }
 }
 
 extension SendInviteViewModel {
@@ -151,7 +164,7 @@ extension SendInviteViewModel {
   }
   
   public enum SectionItem {
-    case meetup(id: Int, title: String)
+    case meetup(id: Int, title: String, meetups: [Meetup])
     case friend(id: Int, displayName: String, email: String, checked: Bool)
   }
 }
@@ -205,7 +218,7 @@ extension SendInviteViewModel.Section {
 extension SendInviteViewModel.SectionItem {
   public var id: Int {
   switch self {
-  case let .meetup(id, _):
+  case let .meetup(id, _, _):
     return id
   case let .friend(id, _, _, _):
     return id
