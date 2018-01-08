@@ -117,8 +117,6 @@ public class ProfileViewModel: ProfileViewModelProtocol {
   }
   
   private func setupActions() {
-    let token = Token.getJWT().filter { $0 != -1 }.share()
-    
     acceptFriend
       .asObservable()
       .map { index -> Observable<(IndexPath, Response)> in

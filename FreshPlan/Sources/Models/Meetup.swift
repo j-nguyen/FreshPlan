@@ -33,6 +33,8 @@ extension Meetup: IdentifiableType {
 // MARK: Equatable
 extension Meetup: Equatable {
   public static func ==(lhs: Meetup, rhs: Meetup) -> Bool {
-    return lhs.id == rhs.id
+    return lhs.id == rhs.id && lhs.title == rhs.title && lhs.description == rhs.description &&
+           lhs.startDate == rhs.startDate && lhs.endDate == rhs.endDate && lhs.invitations.count == rhs.invitations.count &&
+           lhs.metadata == rhs.metadata
   }
 }

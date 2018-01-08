@@ -41,7 +41,7 @@ public class MeetupViewModel: MeetupViewModelProtocol {
     
     refreshContent
       .asObservable()
-      .flatMap { self.requestMeetups() }
+      .flatMap { [unowned self] in return self.requestMeetups() }
       .map { $0.sorted(by: { $0.id < $1.id }) }
       .map { [Section(header: "", items: $0)] }
       .do(onNext: { [weak self] meetup in

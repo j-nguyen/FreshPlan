@@ -1,43 +1,54 @@
 //
-//  AddMeetupDateCell.swift
+//  SendInviteMeetupCell.swift
 //  FreshPlan
 //
-//  Created by Johnny Nguyen on 2017-12-22.
-//  Copyright © 2017 St Clair College. All rights reserved.
+//  Created by Johnny Nguyen on 2018-01-07.
+//  Copyright © 2018 St Clair College. All rights reserved.
 //
 
 import Foundation
-import RxSwift
-import RxCocoa
-import SnapKit
-import UIKit
 import MaterialComponents
+import RxSwift
+import SnapKit
+import RxCocoa
+import UIKit
+import Moya
+import RxDataSources
 
-public final class AddMeetupDateCell: UITableViewCell {
-  //MARK: - Publish Subject
-  public var title: PublishSubject<String> = PublishSubject()
+public final class SendInviteMeetupCell: UITableViewCell{
   
-  //MARK: - Views
-  private var titleLabel: UILabel!
+  // MARK: Publish Subject
+  public var placeholder: PublishSubject<String> = PublishSubject()
+  public var meetups: Variable<[Meetup]> = Variable([])
+  
+  // MARK: Label
+  private var meetupLabel: UILabel!
+  
+  // MARK: TextField
   private var textField: UITextField!
-  private var inkViewController: MDCInkTouchController!
   
-  //MARK: Tool Bar
+  // MARK: PickerView
+  private var meetupPicker: UIPickerView!
+  private var adapter: RxPickerViewStringAdapter<[Meetup]>!
+  
+  // MARK: Tool Bar
   private var doneButton: UIBarButtonItem!
   private var toolBar: UIToolbar!
-  private var datePickerView: UIDatePicker!
   
-  // MARK: Events
-  public var date: ControlProperty<Date> {
-    return datePickerView.rx.date
-  }
-  
-  public var beginEditing: ControlEvent<Void> {
-    return textField.rx.controlEvent(.editingDidBegin)
-  }
-  
+  // MARK: Bag
   private let disposeBag: DisposeBag = DisposeBag()
   
+  private var inkViewController: MDCInkTouchController!
+  
+  // convenience operators
+  public var modelSelected: Observable<Meetup> {
+    return meetupPicker.rx.itemSelected
+      .asObservable()
+      .map { self.meetups.value[$0.component] }
+  }
+  
+  // initializer require for tableview cell
+  // set the indentifier
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     prepareView()
@@ -49,13 +60,12 @@ public final class AddMeetupDateCell: UITableViewCell {
   
   private func prepareView() {
     selectionStyle = .none
-    prepareTitleLabel()
+    prepareMeetupLabel()
     prepareTextField()
+    prepareMeetupPicker()
     prepareToolBar()
-    prepareDatePicker()
     prepareInkView()
     
-    //TODO: I'm not sure if this is efficient, but it's fine right now
     contentView.rx.tapGesture()
       .asObservable()
       .when(.recognized)
@@ -65,22 +75,18 @@ public final class AddMeetupDateCell: UITableViewCell {
       })
       .disposed(by: disposeBag)
   }
-
-  private func prepareTitleLabel() {
-    titleLabel = UILabel()
-    titleLabel.font = MDCTypography.boldFont(from: MDCTypography.subheadFont())
+  
+  private func prepareMeetupLabel() {
+    meetupLabel = UILabel()
+    meetupLabel.text = "Meetup"
+    meetupLabel.font = MDCTypography.boldFont(from: MDCTypography.subheadFont())
     
-    contentView.addSubview(titleLabel)
+    contentView.addSubview(meetupLabel)
     
-    titleLabel.snp.makeConstraints { make in
+    meetupLabel.snp.makeConstraints { make in
       make.left.equalTo(contentView).offset(10)
       make.centerY.equalTo(contentView)
     }
-    
-    title
-      .asObservable()
-      .bind(to: titleLabel.rx.text)
-      .disposed(by: disposeBag)
   }
   
   private func prepareTextField() {
@@ -89,20 +95,43 @@ public final class AddMeetupDateCell: UITableViewCell {
     textField.tintColor = .clear
     textField.textAlignment = .center
     textField.delegate = self
+    textField.placeholder = "Click to choose Meetup"
     
     contentView.addSubview(textField)
     
     textField.snp.makeConstraints { make in
-      make.left.equalTo(titleLabel.snp.right)
+      make.left.equalTo(meetupLabel.snp.right)
       make.right.equalTo(contentView).offset(-10)
       make.centerY.equalTo(contentView)
     }
     
-    title
+    placeholder
       .asObservable()
-      .map { "Click to enter your \($0.lowercased())" }
-      .bind(to: textField.rx.placeholder)
+      .filterEmpty()
+      .bind(to: textField.rx.text)
       .disposed(by: disposeBag)
+  }
+  
+  private func prepareMeetupPicker() {
+    meetupPicker = UIPickerView()
+    
+    meetups
+      .asObservable()
+      .bind(to: meetupPicker.rx.itemTitles) { _, item in
+        return item.title
+      }
+      .disposed(by: disposeBag)
+    
+    meetupPicker.rx.itemSelected
+      .asObservable()
+      .map { [unowned self] (component, row) -> Meetup in
+        return self.meetups.value[component]
+      }
+      .map { $0.title }
+      .bind(to: textField.rx.text)
+      .disposed(by: disposeBag)
+    
+    textField.inputView = meetupPicker
   }
   
   private func prepareToolBar() {
@@ -127,24 +156,7 @@ public final class AddMeetupDateCell: UITableViewCell {
     
     textField.inputAccessoryView = toolBar
   }
-  
-  private func prepareDatePicker() {
-    datePickerView = UIDatePicker()
-    datePickerView.datePickerMode = .dateAndTime
-    
-    datePickerView.rx.date
-      .asObservable()
-      .map { date -> String? in
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM d, h:mm a"
-        return dateFormatter.string(from: date)
-      }
-      .bind(to: textField.rx.text)
-      .disposed(by: disposeBag)
-    
-    textField.inputView = datePickerView
-  }
-  
+
   private func prepareInkView() {
     inkViewController = MDCInkTouchController(view: self)
     inkViewController.delegate = self
@@ -153,13 +165,13 @@ public final class AddMeetupDateCell: UITableViewCell {
 }
 
 // MARK: InkViewController
-extension AddMeetupDateCell: MDCInkTouchControllerDelegate {
+extension SendInviteMeetupCell: MDCInkTouchControllerDelegate {
   public func inkTouchController(_ inkTouchController: MDCInkTouchController, shouldProcessInkTouchesAtTouchLocation location: CGPoint) -> Bool {
     return true
   }
 }
 
-extension AddMeetupDateCell: UITextFieldDelegate {
+extension SendInviteMeetupCell: UITextFieldDelegate {
   public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
     return false
   }

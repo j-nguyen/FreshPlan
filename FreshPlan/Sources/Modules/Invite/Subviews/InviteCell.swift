@@ -24,6 +24,7 @@ public class InviteCell: UITableViewCell {
   
   // Mark: ImageView
   private var inviteImageView: UIImageView!
+  private var inviterImageView: UIImageView!
   
   // Mark: Label
   private var inviterLabel: UILabel!
@@ -39,6 +40,7 @@ public class InviteCell: UITableViewCell {
     super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
     prepareView()
   }
+  
   public required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
   }
@@ -53,8 +55,9 @@ public class InviteCell: UITableViewCell {
     // remove the selection style
     selectionStyle = .none
     prepareInviteImageView()
-    prepareMeetupNameLabel()
     prepareInviterLabel()
+    prepareInviterImageView()
+    prepareMeetupNameLabel()
     prepapreDateLabel()
     prepareInkView()
     
@@ -80,21 +83,10 @@ public class InviteCell: UITableViewCell {
       make.height.equalTo(40)
       make.centerY.equalTo(contentView)
       make.left.equalTo(contentView).inset(10)
+      
     }
     
-    endDate
-      .asObservable()
-      .filter { $0 < Date() }
-      .map { _ in MDCPalette.red.tint400 }
-      .bind(to: inviteImageView.rx.tintColor)
-      .disposed(by: disposeBag)
-    
-    endDate
-      .asObservable()
-      .filter { $0 > Date() }
-      .map { _ in MDCPalette.green.tint400 }
-      .bind(to: inviteImageView.rx.tintColor)
-      .disposed(by: disposeBag)
+    inviteImageView.tintColor = MDCPalette.red.tint400
     
   }
   
@@ -116,15 +108,29 @@ public class InviteCell: UITableViewCell {
       .disposed(by: disposeBag)
   }
   
+  public func prepareInviterImageView() {
+    inviterImageView = UIImageView()
+    inviterImageView.contentMode = .scaleAspectFit
+    inviterImageView.image = UIImage(named: "ic_account_circle")?.withRenderingMode(.alwaysTemplate)
+    
+    contentView.addSubview(inviterImageView)
+    
+    inviterImageView.snp.makeConstraints { (make) in
+      make.centerY.equalTo(inviterLabel)
+      make.left.equalTo(inviterLabel.snp.left).offset(-25)
+      
+    }
+  }
+  
   // inviter name label for cell
   public func prepareInviterLabel() {
     inviterLabel = UILabel()
     inviterLabel.font = MDCTypography.subheadFont()
     
     contentView.addSubview(inviterLabel)
-    
+
     inviterLabel.snp.makeConstraints { make in
-      make.left.equalTo(inviteImageView.snp.right).offset(200)
+      make.right.equalTo(contentView.snp.right).offset(-20)
       make.top.equalTo(contentView).offset(20)
     }
     
