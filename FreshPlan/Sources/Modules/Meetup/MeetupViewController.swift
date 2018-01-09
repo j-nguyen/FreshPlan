@@ -125,7 +125,7 @@ public final class MeetupViewController: UIViewController {
     viewModel.authCheck
       .filter { !$0 }
       .subscribe(onNext: { _ in
-        let message = MDCSnackbarMessage(text: "You are not the host of this meetup!")
+        let message = MDCSnackbarMessage(text: "Unable to delete meetup!")
         MDCSnackbarManager.show(message)
       })
       .disposed(by: disposeBag)
