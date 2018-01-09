@@ -62,20 +62,31 @@ public class MeetupViewModel: MeetupViewModelProtocol {
   public func bindButtons() {
     itemDeleted
       .asObservable()
-      .map { [weak self] index -> Meetup? in
-        guard let this = self, index.section < this.meetups.value.count, index.row < this.meetups.value[index.section].items.count else { return nil }
+      .map { [weak self] index -> Observable<(Response, Meetup)> in
+        guard let this = self else { return Observable.empty() }
+        let meetup = this.meetups.value[index.section].items[index.row]
         if let token = Token.decodeJWT, let userId = token.body["userId"] as? Int {
           if userId == this.meetups.value[index.section].items[index.row].user.id {
-            return this.meetups.value[index.section].items.remove(at: index.row)
+            return this.deleteMeetup(id: meetup.id).map { ($0, meetup) }
+          } else {
+            if let invite = meetup.invitations.first(where: { $0.invitee.id == userId }) {
+              return this.deleteMeetup(id: invite.id, host: false).map { ($0, meetup) }
+            }
           }
-          this.authCheck.on(.next(false))
-          return nil
         }
-        this.authCheck.on(.next(false))
-        return nil
+        this.authCheck.onNext(false)
+        return Observable.empty()
       }
-      .filterNil()
-      .flatMapLatest { self.deleteMeetup(meetupId: $0.id) }
+      .flatMap { $0 }
+      .map { $0.1 }
+      .map { [weak self] meetup -> Void in
+        guard let this = self else { return }
+        if let index = this.meetups.value[0].items.index(of: meetup) {
+          this.meetups.value[0].items.remove(at: index)
+        } else {
+          this.authCheck.onNext(false)
+        }
+      }
       .subscribe(onNext: { [weak self] _ in
         guard let this = self else { return }
         this.authCheck.on(.next(true))
@@ -90,9 +101,14 @@ public class MeetupViewModel: MeetupViewModelProtocol {
       .catchErrorJustReturn([])
   }
   
-  private func deleteMeetup(meetupId id: Int) -> Observable<Response> {
-    return provider.rx.request(.deleteMeetup(id))
-      .asObservable()
+  private func deleteMeetup(id: Int, host: Bool = true) -> Observable<Response> {
+    if host {
+      return provider.rx.request(.deleteMeetup(id))
+        .asObservable()
+    } else {
+      return provider.rx.request(.deleteInvitation(id))
+        .asObservable()
+    }
   }
 }
 
