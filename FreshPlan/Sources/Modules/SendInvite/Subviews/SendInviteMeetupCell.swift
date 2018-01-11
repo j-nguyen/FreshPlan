@@ -44,7 +44,10 @@ public final class SendInviteMeetupCell: UITableViewCell{
   public var modelSelected: Observable<Meetup> {
     return meetupPicker.rx.itemSelected
       .asObservable()
-      .map { self.meetups.value[$0.component] }
+      .map { [weak self] (component, row) -> Meetup? in
+        return self?.meetups.value[component]
+      }
+      .filterNil()
   }
   
   // initializer require for tableview cell
@@ -124,9 +127,10 @@ public final class SendInviteMeetupCell: UITableViewCell{
     
     meetupPicker.rx.itemSelected
       .asObservable()
-      .map { [unowned self] (component, row) -> Meetup in
-        return self.meetups.value[component]
+      .map { [weak self] (component, row) -> Meetup? in
+        return self?.meetups.value[component]
       }
+      .filterNil()
       .map { $0.title }
       .bind(to: textField.rx.text)
       .disposed(by: disposeBag)
