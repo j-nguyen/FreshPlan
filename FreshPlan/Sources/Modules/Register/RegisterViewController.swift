@@ -137,6 +137,7 @@ public final class RegisterViewController: UIViewController {
     displayNameField.placeholder = "Display Name"
     displayNameField.autocapitalizationType = .none
     displayNameField.returnKeyType = .next
+    displayNameField.autocorrectionType = .no
     
     displayNameFieldController = MDCTextInputControllerDefault(textInput: displayNameField)
     

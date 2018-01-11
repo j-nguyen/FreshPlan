@@ -186,10 +186,9 @@ public class FriendViewController: UIViewController {
       .asObservable()
       .filter { $0 }
       .subscribe(onNext: { [weak self] _ in
-        self?.navigationController?.dismiss(animated: true, completion: {
-          let message = MDCSnackbarMessage(text: "Successfully sent friend request!")
-          MDCSnackbarManager.show(message)
-        })
+        self?.navigationController?.popViewController(animated: true)
+        let message = MDCSnackbarMessage(text: "Successfully sent friend request!")
+        MDCSnackbarManager.show(message)
       })
       .disposed(by: disposeBag)
   
