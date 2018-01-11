@@ -97,8 +97,7 @@ public final class AddMeetupViewController: UIViewController {
     
     dataSource = RxTableViewSectionedReloadDataSource(
       configureCell: { [weak self] dataSource, tableView, index, model in
-        guard let this = self else { fatalError() }
-        
+        guard let this = self else { return UITableViewCell() }
         switch dataSource[index] {
         case let .name(_, label):
           let cell = tableView.dequeueCell(ofType: AddMeetupTextFieldCell.self, for: index)
