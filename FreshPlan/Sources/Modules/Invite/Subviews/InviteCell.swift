@@ -99,6 +99,7 @@ public class InviteCell: UITableViewCell {
     
     meetUpNameLabel.snp.makeConstraints { make in
       make.left.equalTo(inviteImageView.snp.right).offset(10)
+      make.right.equalTo(inviterImageView.snp.left)
       make.top.equalTo(contentView).offset(20)
     }
     
