@@ -79,12 +79,15 @@ public final class MeetupCell: UITableViewCell {
   
   private func prepareNameLabel() {
     nameLabel = UILabel()
+    nameLabel.numberOfLines = 0
+    nameLabel.lineBreakMode = .byWordWrapping
     nameLabel.font = MDCTypography.subheadFont()
     
     contentView.addSubview(nameLabel)
     
     nameLabel.snp.makeConstraints { make in
       make.left.equalTo(typeImageView.snp.right).offset(10)
+      make.right.equalTo(contentView)
       make.top.equalTo(contentView).offset(20)
     }
     
@@ -102,12 +105,15 @@ public final class MeetupCell: UITableViewCell {
   
   private func prepareDateLabel() {
     dateLabel = UILabel()
+    dateLabel.numberOfLines = 0
+    dateLabel.lineBreakMode = .byWordWrapping
     dateLabel.font = MDCTypography.captionFont()
     
     contentView.addSubview(dateLabel)
     
     dateLabel.snp.makeConstraints { make in
       make.left.equalTo(typeImageView.snp.right).offset(10)
+      make.right.equalTo(contentView)
       make.top.equalTo(nameLabel.snp.bottom).offset(5)
     }
     
