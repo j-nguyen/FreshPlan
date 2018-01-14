@@ -67,8 +67,6 @@ public final class SettingsViewController: UIViewController {
   private func prepareTableView() {
     // set layout margins to fix
     tableView = UITableView(frame: .zero, style: .grouped)
-    tableView.layoutMargins = UIEdgeInsets.zero
-    tableView.separatorInset = UIEdgeInsets.zero
     tableView.registerCell(SettingsCell.self)
     tableView.registerCell(SettingsSwitchCell.self)
     
