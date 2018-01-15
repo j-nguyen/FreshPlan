@@ -23,14 +23,17 @@ extension Token {
 			.map { token in
         if let token = token {
           if token.expired {
-            removeToken()
             return -1
           }
           return token.body["userId"] as! Int
         }
-        removeToken()
         return -1
       }
+      .do(onNext: { token in
+        if token == -1 {
+          removeToken()
+        }
+      })
 	}
   
   // Decodes the token
