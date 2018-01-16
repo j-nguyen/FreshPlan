@@ -74,7 +74,7 @@ public class ProfileViewModel: ProfileViewModelProtocol {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd hh:mm:ss"
         let date = df.string(from: user.createdAt)
-        return SectionItem.joined(order: 2, title: "Last Joined:", description: date)
+        return SectionItem.joined(order: 2, title: "Joined:", description: date)
     }
     
     let profileSection = Observable.from([profile, email, createdAt])
