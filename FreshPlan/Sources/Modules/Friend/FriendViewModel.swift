@@ -51,7 +51,6 @@ public class FriendViewModel: FriendViewModelProtocol {
       .disposed(by: disposeBag)
     
     let profile = friend.map { SectionItem.profileTitle(order: 0, profileURL: $0.profileURL, fullName: $0.displayName) }
-    let email = friend.map { SectionItem.info(order: 1, type: "Email:", title: $0.email) }
     let createdAt = friend
       .map { friend -> SectionItem in
         let df = DateFormatter()
@@ -60,7 +59,7 @@ public class FriendViewModel: FriendViewModelProtocol {
         return SectionItem.info(order: 2, type: "Joined:", title: date)
       }
     
-    Observable.from([profile, email, createdAt])
+    Observable.from([profile, createdAt])
       .flatMap { $0 }
       .toArray()
       .map { $0.sorted(by: { $0.order < $1.order }) }
