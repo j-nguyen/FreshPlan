@@ -42,13 +42,13 @@ public final class MeetupInviteCell: UITableViewCell {
   
   private func prepareDisplayNameLabel() {
     displayNameLabel = UILabel()
-    displayNameLabel.font = MDCTypography.body2Font()
+    displayNameLabel.font = MDCTypography.subheadFont()
     
     contentView.addSubview(displayNameLabel)
     
     displayNameLabel.snp.makeConstraints { make in
       make.left.equalTo(contentView).offset(5)
-      make.top.equalTo(contentView).offset(5)
+      make.centerY.equalTo(contentView)
     }
     
     displayName
