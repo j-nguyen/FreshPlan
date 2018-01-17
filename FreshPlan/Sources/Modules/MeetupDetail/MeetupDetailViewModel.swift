@@ -120,7 +120,7 @@ public class MeetupDetailViewModel: MeetupDetailViewModelProtocol {
       .map { $0.invitations }
       .map { invitations -> [SectionItem] in
         return invitations.enumerated().map { (index, invite) -> SectionItem in
-          return SectionItem.invitations(order: index, inviteeId: invite.invitee.id, invitee: invite.invitee.displayName, email: invite.invitee.email, accepted: invite.accepted)
+          return SectionItem.invitations(order: index, inviteeId: invite.invitee.id, invitee: invite.invitee.displayName, accepted: invite.accepted)
         }
       }
       .map { $0.sorted(by: { $0.order < $1.order } )}
@@ -154,7 +154,7 @@ extension MeetupDetailViewModel {
     case location(order: Int, title: String, latitude: Double, longitude: Double)
     case directions(order: Int, text: String, latitude: Double, longitude: Double)
     case other(order: Int, notes: String)
-    case invitations(order: Int, inviteeId: Int, invitee: String, email: String, accepted: Bool)
+    case invitations(order: Int, inviteeId: Int, invitee: String, accepted: Bool)
   }
 }
 
@@ -211,7 +211,7 @@ extension MeetupDetailViewModel.SectionItem: Equatable {
       return order
     case .other(let order, _):
       return order
-    case .invitations(let order, _, _, _, _):
+    case .invitations(let order, _, _, _):
       return order
     }
   }
