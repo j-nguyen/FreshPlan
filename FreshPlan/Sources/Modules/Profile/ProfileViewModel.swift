@@ -67,7 +67,6 @@ public class ProfileViewModel: ProfileViewModelProtocol {
       .share()
     
     let profile = user.elements().map { SectionItem.profile(order: 0, profileURL: $0.profileURL, fullName: $0.displayName) }
-    let email = user.elements().map { SectionItem.email(order: 1, title: "Email:", description: $0.email) }
     let createdAt = user
       .elements()
       .map { user -> SectionItem in
@@ -77,7 +76,7 @@ public class ProfileViewModel: ProfileViewModelProtocol {
         return SectionItem.joined(order: 2, title: "Joined:", description: date)
     }
     
-    let profileSection = Observable.from([profile, email, createdAt])
+    let profileSection = Observable.from([profile, createdAt])
       .flatMap { $0 }
       .toArray()
       .map { $0.sorted(by: { $0.order < $1.order }) }
@@ -210,7 +209,6 @@ extension ProfileViewModel {
   
   public enum SectionItem {
     case profile(order: Int, profileURL: String, fullName: String)
-    case email(order: Int, title: String, description: String)
     case displayName(order: Int, title: String, name: String)
     case joined(order: Int, title: String, description: String)
     case friend(id: Int, displayName: String)
@@ -310,8 +308,6 @@ extension ProfileViewModel.SectionItem {
     case let .profile(order, _, _):
       return order
     case let .displayName(order, _, _):
-      return order
-    case let .email(order, _, _):
       return order
     default:
       return 0
