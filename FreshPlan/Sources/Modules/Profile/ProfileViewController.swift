@@ -186,6 +186,11 @@ public final class ProfileViewController: UIViewController {
           cell.title.on(.next(title))
           cell.info.on(.next(name))
           return cell
+        case let .email(_, title, description):
+          let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
+          cell.title.on(.next(title))
+          cell.info.on(.next(description))
+          return cell
         case let .joined(_, title, description):
           let cell = table.dequeueCell(ofType: ProfileUserInfoCell.self, for: index)
           cell.title.on(.next(title))

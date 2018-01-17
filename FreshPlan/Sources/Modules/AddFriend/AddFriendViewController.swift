@@ -130,7 +130,6 @@ public final class AddFriendViewController: UIViewController {
       .asObservable()
       .bind(to: tableView.rx.items(cellIdentifier: String(describing: FriendCell.self))) { (index, friend, cell) in
         cell.textLabel?.text = friend.displayName
-        cell.detailTextLabel?.text = friend.email
       }
       .disposed(by: disposeBag)
     

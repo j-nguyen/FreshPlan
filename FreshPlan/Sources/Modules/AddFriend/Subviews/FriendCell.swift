@@ -14,7 +14,7 @@ public class FriendCell: UITableViewCell {
   private var inkViewController: MDCInkTouchController!
   
   public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-    super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+    super.init(style: .default, reuseIdentifier: reuseIdentifier)
     prepareView()
   }
   
@@ -29,6 +29,7 @@ public class FriendCell: UITableViewCell {
   private func prepareView() {
     selectionStyle = .none
     prepareInkView()
+    textLabel?.font = MDCTypography.subheadFont()
   }
   
   private func prepareInkView() {
