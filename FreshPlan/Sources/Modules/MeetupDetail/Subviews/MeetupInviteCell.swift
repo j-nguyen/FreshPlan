@@ -15,12 +15,10 @@ import MaterialComponents
 public final class MeetupInviteCell: UITableViewCell {
   // MARK: Subject
   public var displayName: PublishSubject<String> = PublishSubject()
-  public var email: PublishSubject<String> = PublishSubject()
   public var accepted: PublishSubject<Bool> = PublishSubject()
   
   // MARK: Views
   private var displayNameLabel: UILabel!
-  private var emailLabel: UILabel!
   private var acceptedImageView: UIImageView!
   private var inkViewController: MDCInkTouchController!
   
@@ -38,42 +36,24 @@ public final class MeetupInviteCell: UITableViewCell {
   private func prepareView() {
     selectionStyle = .none
     prepareDisplayNameLabel()
-    prepareEmailLabel()
     prepareAcceptedImageView()
     prepareInkView()
   }
   
   private func prepareDisplayNameLabel() {
     displayNameLabel = UILabel()
-    displayNameLabel.font = MDCTypography.body2Font()
+    displayNameLabel.font = MDCTypography.subheadFont()
     
     contentView.addSubview(displayNameLabel)
     
     displayNameLabel.snp.makeConstraints { make in
       make.left.equalTo(contentView).offset(5)
-      make.top.equalTo(contentView).offset(5)
+      make.centerY.equalTo(contentView)
     }
     
     displayName
       .asObservable()
       .bind(to: displayNameLabel.rx.text)
-      .disposed(by: disposeBag)
-  }
-  
-  private func prepareEmailLabel() {
-    emailLabel = UILabel()
-    emailLabel.font = MDCTypography.body1Font()
-    
-    contentView.addSubview(emailLabel)
-    
-    emailLabel.snp.makeConstraints { make in
-      make.left.equalTo(contentView).offset(5)
-      make.top.equalTo(displayNameLabel.snp.bottom).offset(5)
-    }
-    
-    email
-      .asObservable()
-      .bind(to: emailLabel.rx.text)
       .disposed(by: disposeBag)
   }
   

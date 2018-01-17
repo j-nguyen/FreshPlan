@@ -37,7 +37,7 @@ public final class HomeViewController: UITabBarController {
     )
     
     inviteController.tabBarItem = UITabBarItem(
-      title: "Invitions",
+      title: "Invitations",
       image: UIImage(named: "ic_markunread_mailbox")?.withRenderingMode(.alwaysTemplate),
       tag: 1
     )

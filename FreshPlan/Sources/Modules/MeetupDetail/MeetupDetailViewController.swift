@@ -160,10 +160,9 @@ public class MeetupDetailViewController: UIViewController {
         let cell = tableView.dequeueCell(ofType: MeetupDirectionCell.self, for: index)
         cell.title.on(.next(text))
         return cell
-      case let .invitations(_, _, invitee, email, accepted):
+      case let .invitations(_, _, invitee, accepted):
         let cell = tableView.dequeueCell(ofType: MeetupInviteCell.self, for: index)
         cell.displayName.on(.next(invitee))
-        cell.email.on(.next(email))
         cell.accepted.on(.next(accepted))
         return cell
       case let .other(_, notes):
@@ -190,7 +189,7 @@ public class MeetupDetailViewController: UIViewController {
               "longitude": longitude
             ]
           )
-        case let .invitations(_, inviteeId, _, _, _):
+        case let .invitations(_, inviteeId, _, _):
           try? this.router.route(
             from: this,
             to: MeetupDetailRouter.Routes.invitee.rawValue,

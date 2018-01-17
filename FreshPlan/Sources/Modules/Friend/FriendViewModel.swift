@@ -57,7 +57,7 @@ public class FriendViewModel: FriendViewModelProtocol {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd hh:mm:ss"
         let date = df.string(from: friend.createdAt)
-        return SectionItem.info(order: 2, type: "Last Joined:", title: date)
+        return SectionItem.info(order: 2, type: "Joined:", title: date)
       }
     
     Observable.from([profile, email, createdAt])
